@@ -15,6 +15,11 @@ package frc.robot;
 public final class Constants {
   public static final int climberLeft = 13; // Kraken X60
   public static final int climberRight = 14; //Kraken X60
+
+  // PWM outputs
+  public static final int lightsBlinkin = 9; // REV Blinkin
+
+
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
