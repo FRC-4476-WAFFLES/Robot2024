@@ -13,14 +13,23 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  public static final int climberLeft = 13; // Kraken X60
-  public static final int climberRight = 14; //Kraken X60
+  public static final int Elevator1 = 13; // Kraken X60
+  public static final int Elevator2 = 14; //Kraken X60
+
+
+  
 
   // PWM outputs
   public static final int lightsBlinkin = 9; // REV Blinkin
 
+  // Digital input
+
+  public static final int elevatorZero = 1; // Hall Effect
+
 
   public static class OperatorConstants {
-    public static final int kDriverControllerPort = 0;
+    public static final int leftJoystick = 0;
+    public static final int rightJoystick = 1;
+    public static final int kDriverControllerPort = 2;
   }
 }
