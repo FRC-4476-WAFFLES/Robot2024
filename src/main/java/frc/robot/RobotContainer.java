@@ -7,7 +7,10 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.elevator.ElevatorMove;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.ExampleSubsystem;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -24,11 +27,15 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   public static final LightSubsystem lightSubsystem = new LightSubsystem();
+  public static final Elevator ElevatorSubsystem = new Elevator();
 
   private final ActivateLightColour updateLights = new ActivateLightColour();
+  private final ElevatorMove elevatorMove = new ElevatorMove();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
+  private final Joystick leftJoystick = new Joystick(OperatorConstants.leftJoystick);
+  private final Joystick rightJoystick = new Joystick(OperatorConstants.rightJoystick);
+  private final CommandXboxController operatorController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -37,6 +44,7 @@ public class RobotContainer {
     configureBindings();
 
     lightSubsystem.setDefaultCommand(updateLights);
+    ElevatorSubsystem.setDefaultCommand(elevatorMove);
   }
 
   /**
@@ -55,7 +63,9 @@ public class RobotContainer {
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    operatorController.b().whileFalse(m_exampleSubsystem.exampleMethodCommand());
+    operatorController.a().toggleOnTrue(elevatorMove);
+  
   }
 
   /**

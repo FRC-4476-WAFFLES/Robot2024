@@ -1,0 +1,84 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
+package frc.robot.subsystems;
+
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import com.ctre.phoenix6.*;
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
+import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.controls.PositionVoltage;
+import com.ctre.phoenix6.hardware.TalonFX;
+import frc.robot.Constants;
+
+public class Elevator extends SubsystemBase {
+  /** Creates a new Elevator. */
+    private final TalonFX Elevator1;
+    private final TalonFX Elevator2;
+    private final DigitalInput elevatorZero;
+    private double target = 0;
+
+    private final CurrentLimitsConfigs elevatorCurrentLimits = new CurrentLimitsConfigs();
+  public Elevator() {
+    Elevator1 = new TalonFX(Constants.Elevator1);
+    Elevator2 = new TalonFX(Constants.Elevator2);
+    elevatorZero = new DigitalInput(Constants.elevatorZero);
+
+    Elevator2.setControl(new Follower(Constants.Elevator1, true));
+
+
+
+    TalonFXConfiguration elevatorConfig = new TalonFXConfiguration();
+    elevatorCurrentLimits.SupplyCurrentLimit = 40;
+    elevatorCurrentLimits.SupplyCurrentThreshold = 60;
+    elevatorCurrentLimits.SupplyCurrentThreshold = 1.0;
+    elevatorCurrentLimits.SupplyCurrentLimitEnable = true;
+    elevatorCurrentLimits.StatorCurrentLimit = 40;
+    elevatorCurrentLimits.StatorCurrentLimitEnable = true;
+
+    elevatorConfig.CurrentLimits = elevatorCurrentLimits;
+
+    var slot0Configs = new Slot0Configs();
+    slot0Configs.kS = 1;
+    slot0Configs.kP = 1;
+    slot0Configs.kD = 0.1;
+
+    elevatorConfig.Slot0 = slot0Configs;
+
+    Elevator1.getConfigurator().apply(elevatorConfig);
+    Elevator2.getConfigurator().apply(elevatorConfig);
+  }
+
+
+
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+    final TrapezoidProfile elevatorTrapezoidProfile = new TrapezoidProfile(new TrapezoidProfile.Constraints(90, 20));
+    TrapezoidProfile.State elevatorGoal = new TrapezoidProfile.State(target, 0); 
+    TrapezoidProfile.State elevatorSetpoint = new TrapezoidProfile.State();
+
+    final PositionVoltage elevatorRequest = new PositionVoltage(0).withSlot(0);
+
+    elevatorSetpoint = elevatorTrapezoidProfile.calculate(0.020, elevatorSetpoint, elevatorGoal);
+
+    elevatorRequest.Position = elevatorSetpoint.position;
+    elevatorRequest.Velocity = elevatorSetpoint.velocity;
+
+    Elevator1.setControl(elevatorRequest);
+
+    if (!elevatorZero.get()){
+      Elevator1.setPosition(0);
+    }
+
+  }
+
+  public void setTarget(double target){
+    this.target = target;
+  }
+}
