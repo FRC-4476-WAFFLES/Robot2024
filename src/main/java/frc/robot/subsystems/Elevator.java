@@ -36,7 +36,6 @@ public class Elevator extends SubsystemBase {
     TalonFXConfiguration elevatorConfig = new TalonFXConfiguration();
     elevatorCurrentLimits.SupplyCurrentLimit = 40;
     elevatorCurrentLimits.SupplyCurrentThreshold = 60;
-    elevatorCurrentLimits.SupplyCurrentThreshold = 1.0;
     elevatorCurrentLimits.SupplyCurrentLimitEnable = true;
     elevatorCurrentLimits.StatorCurrentLimit = 40;
     elevatorCurrentLimits.StatorCurrentLimitEnable = true;
