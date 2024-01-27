@@ -3,7 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
@@ -28,7 +28,7 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   public static final LightSubsystem lightSubsystem = new LightSubsystem();
   public static final Elevator ElevatorSubsystem = new Elevator();
-
+  public static final IntakeSubsystem intakesubsystem = new IntakeSubsystem();
   private final ActivateLightColour updateLights = new ActivateLightColour();
   private final ElevatorMove elevatorMove = new ElevatorMove();
 

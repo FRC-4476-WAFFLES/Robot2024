@@ -13,8 +13,10 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+  public static final int Intake = 9; //Kraken X60
   public static final int Elevator1 = 13; // Kraken X60
   public static final int Elevator2 = 14; //Kraken X60
+  public static final int IntakeIR = 17; // canandcolor
 
 
   
