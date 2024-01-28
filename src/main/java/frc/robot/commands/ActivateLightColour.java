@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.LightSubsystem.LightColours;
+import frc.robot.commands.Intake.*;
 
 import static frc.robot.RobotContainer.*;
 
@@ -19,31 +20,36 @@ public class ActivateLightColour extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    
-  }
-
-  
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
-    lightSubsystem.setLightColour(LightColours.GRAY);
 
-    /*if (ready to score) {
-        lightSubsystem.setLightColour(LightColours.LIGHTGREEN);
-      } else if (intakes game piece) {
+    // Checks if these conditions are happening (will change later when the rest of the code is finished)
+    boolean readytoScore = true;
+    boolean shooterLinedUp = true;
+    boolean wheelSpeedIsLinedUp = true;
+
+    // Calls intake method
+    IntakeIn intakedGamePiece = new IntakeIn();
+    
+    // Sets default colours
+    lightSubsystem.setLightColour(LightColours.RED);
+
+    // If certain conditions are fufilled, the robot's lights change colours
+    if (readytoScore) {
+        lightSubsystem.setLightColour(LightColours.LAWNGREEN);
+      } else if (intakedGamePiece.isFinished() == false) {
         lightSubsystem.setLightColour(LightColours.DARKGREEN);
-      } else if (both shooter lined up and wheel speed good) {
+      } else if (shooterLinedUp && wheelSpeedIsLinedUp) {
         lightSubsystem.setLightColour(LightColours.DARKGREEN);
-      } else if (only the shooter lined up) {
+      } else if (shooterLinedUp) {
         lightSubsystem.setLightColour(LightColours.YELLOW);
-      } else if (only wheel speed good) {
+      } else if (wheelSpeedIsLinedUp) {
         lightSubsystem.setLightColour(LightColours.ORANGE);
       }
         
-        */
       
 
   }
