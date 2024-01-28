@@ -10,10 +10,13 @@ import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import frc.robot.Constants;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.PositionVoltage;
+import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
+import com.reduxrobotics.sensors.canandcolor.Canandcolor;
 
 public class ShooterSubsystem extends SubsystemBase {
   private final TalonFX angler;
@@ -21,6 +24,15 @@ public class ShooterSubsystem extends SubsystemBase {
   private final TalonFX shooterTop;
   private final TalonFX shooterBottom;
   private double anglerTarget = 0;
+  private double LaunchMotorSpeed = 0;
+  private final Canandcolor shooterIR;
+  private final double AnglerEncoderResolution = 2048;
+  private final double AnglerGearboxReduction = 250;
+  private final double TicksToAnglerDegrees =(AnglerEncoderResolution/360)* AnglerGearboxReduction;
+  private final double ZeroConversion = -10;
+  private final double AbsolouteEncoderOffset = 90;
+  private final double FakeToReal = AbsolouteEncoderOffset+ZeroConversion;
+  private final double ConvertedAbsolouteAngle;
 
   private final DutyCycleEncoder anglerAbsoluteEncoder;
   private final CurrentLimitsConfigs currentLimitsConfig;
@@ -35,12 +47,12 @@ public class ShooterSubsystem extends SubsystemBase {
     shooterTop = new TalonFX(Constants.shooterTop);
     shooterBottom = new TalonFX(Constants.shooterBottom);  
     anglerAbsoluteEncoder = new DutyCycleEncoder(Constants.anglerAbsoluteEncoder);
+    shooterIR = new Canandcolor(Constants.shooterIR);
 
     // Inversion
     angler.setInverted(false);
     feeder.setInverted(false);
-    shooterTop.setInverted(false);
-    shooterBottom.setInverted(true);
+    
     
     // Current
     currentLimitsConfig = new CurrentLimitsConfigs();
@@ -70,6 +82,7 @@ public class ShooterSubsystem extends SubsystemBase {
     shooterSlot0Configs.kI = 0.5;
     shooterSlot0Configs.kD = 0.0001;
     shooterSlot0Configs.kV = 0.12; 
+    shooterSlot0Configs.kS = 0.05;
 
     // Position PID for angler
     Slot0Configs anglerSlot0Configs = new Slot0Configs();
@@ -87,7 +100,18 @@ public class ShooterSubsystem extends SubsystemBase {
     shooterTop.getConfigurator().apply(shooterSlot0Configs);    
     shooterBottom.getConfigurator().apply(shooterSlot0Configs);
     angler.getConfigurator().apply(anglerSlot0Configs);
-}
+
+    shooterTop.setControl(new Follower(Constants.shooterBottom, true));
+
+    if((anglerAbsoluteEncoder.get()+FakeToReal)>360){
+      ConvertedAbsolouteAngle= anglerAbsoluteEncoder.get()+FakeToReal-360;
+    }
+    else {
+      ConvertedAbsolouteAngle=anglerAbsoluteEncoder.get()+FakeToReal;
+    }
+    angler.setPosition(ConvertedAbsolouteAngle* TicksToAnglerDegrees);
+
+  }
 
   @Override
   public void periodic() {
@@ -101,5 +125,26 @@ public class ShooterSubsystem extends SubsystemBase {
     anglerSetpoint = anglerTrapezoidProfile.calculate(0.020, anglerSetpoint, anglerGoal);
 
     anglerRequest.Position = anglerSetpoint.position;
+    // set shooter speed
+    final VelocityVoltage shooterSpeedRequest = new VelocityVoltage(0).withSlot(0);
+    shooterTop.setControl(shooterSpeedRequest.withVelocity(LaunchMotorSpeed));
+  }
+
+
+  public void SetShooterSpeed(double Speed){
+    this.LaunchMotorSpeed=Speed;
+  }
+  public void SetAnglerSetPoint(double SetPoint){
+    this.anglerTarget=SetPoint;
+  }
+
+  public boolean isnote() {
+    if(shooterIR.getProximity()>10) {// change this value when tuning
+      return true;
+    }
+    else {
+      return false;
+    }
+    //250:1
   }
 }

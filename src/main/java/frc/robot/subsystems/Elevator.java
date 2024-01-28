@@ -81,3 +81,4 @@ public class Elevator extends SubsystemBase {
     this.target = target;
   }
 }
+//1.625 od winch 19.0625 ratio (Brandon is quite sure)
