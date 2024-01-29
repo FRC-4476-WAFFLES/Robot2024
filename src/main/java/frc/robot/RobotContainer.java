@@ -8,6 +8,8 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.elevator.ElevatorMove;
+import frc.robot.commands.shooter.ScoreNote;
+import frc.robot.commands.shooter.SpinUp;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
@@ -15,7 +17,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.LightSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.commands.ActivateLightColour;
+import frc.robot.commands.Intake.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -24,13 +28,21 @@ import frc.robot.commands.ActivateLightColour;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
+
+  // The robot's subsystems 
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   public static final LightSubsystem lightSubsystem = new LightSubsystem();
   public static final Elevator ElevatorSubsystem = new Elevator();
   public static final IntakeSubsystem intakesubsystem = new IntakeSubsystem();
+  public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+
+  //The Robots Commands
   private final ActivateLightColour updateLights = new ActivateLightColour();
   private final ElevatorMove elevatorMove = new ElevatorMove();
+  private final IntakeIn intakeIn = new IntakeIn();
+  private final IntakeOut intakeOut = new IntakeOut();
+  private final ScoreNote scoreNote = new ScoreNote();
+  private final SpinUp spinUp = new SpinUp();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final Joystick leftJoystick = new Joystick(OperatorConstants.leftJoystick);
@@ -65,6 +77,10 @@ public class RobotContainer {
     // cancelling on release.
     operatorController.b().whileFalse(m_exampleSubsystem.exampleMethodCommand());
     operatorController.a().toggleOnTrue(elevatorMove);
+    operatorController.povLeft().whileTrue(intakeIn);
+    operatorController.povRight().whileTrue(intakeOut);
+    operatorController.rightBumper().whileTrue(scoreNote);
+    operatorController.leftBumper().whileTrue(spinUp);
   
   }
 

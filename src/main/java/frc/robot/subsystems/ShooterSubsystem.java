@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import frc.robot.Constants;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VelocityVoltage;
@@ -17,22 +18,28 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.reduxrobotics.sensors.canandcolor.Canandcolor;
+import java.lang.Math;
 
 public class ShooterSubsystem extends SubsystemBase {
   private final TalonFX angler;
   private final TalonFX feeder;
   private final TalonFX shooterTop;
   private final TalonFX shooterBottom;
+  private final Canandcolor shooterIR;
+
   private double anglerTarget = 0;
   private double LaunchMotorSpeed = 0;
-  private final Canandcolor shooterIR;
+  private double FeederSpeed = 0;
+
   private final double AnglerEncoderResolution = 2048;
   private final double AnglerGearboxReduction = 250;
-  private final double TicksToAnglerDegrees =(AnglerEncoderResolution/360)* AnglerGearboxReduction;
+  private final double TicksToAnglerDegrees = (AnglerEncoderResolution / 360) * AnglerGearboxReduction;
   private final double ZeroConversion = -10;
   private final double AbsolouteEncoderOffset = 90;
-  private final double FakeToReal = AbsolouteEncoderOffset+ZeroConversion;
+  private final double FakeToReal = AbsolouteEncoderOffset + ZeroConversion;
   private final double ConvertedAbsolouteAngle;
+  private final double ShooterDeadZone = 5;
+  private final double AnglerDeadZone = 4;
 
   private final DutyCycleEncoder anglerAbsoluteEncoder;
   private final CurrentLimitsConfigs currentLimitsConfig;
@@ -103,13 +110,14 @@ public class ShooterSubsystem extends SubsystemBase {
 
     shooterTop.setControl(new Follower(Constants.shooterBottom, true));
 
-    if((anglerAbsoluteEncoder.get()+FakeToReal)>360){
-      ConvertedAbsolouteAngle= anglerAbsoluteEncoder.get()+FakeToReal-360;
+    if ((anglerAbsoluteEncoder.get() + FakeToReal) > 360) {
+      ConvertedAbsolouteAngle = anglerAbsoluteEncoder.get() + FakeToReal - 360;
     }
     else {
-      ConvertedAbsolouteAngle=anglerAbsoluteEncoder.get()+FakeToReal;
+      ConvertedAbsolouteAngle = anglerAbsoluteEncoder.get() + FakeToReal;
     }
-    angler.setPosition(ConvertedAbsolouteAngle* TicksToAnglerDegrees);
+
+    angler.setPosition(ConvertedAbsolouteAngle * TicksToAnglerDegrees);
 
   }
 
@@ -128,8 +136,33 @@ public class ShooterSubsystem extends SubsystemBase {
     // set shooter speed
     final VelocityVoltage shooterSpeedRequest = new VelocityVoltage(0).withSlot(0);
     shooterTop.setControl(shooterSpeedRequest.withVelocity(LaunchMotorSpeed));
+    final DutyCycleOut FeederDutyCycle = new DutyCycleOut(0.0);
+
+    feeder.setControl(FeederDutyCycle.withOutput(FeederSpeed));
+  
   }
 
+  public boolean isGoodShooterAngle(){
+    if(Math.abs(angler.getPosition() - anglerTarget) < AnglerDeadZone) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  public boolean isGoodSpeed() {
+    if(Math.abs(shooterTop.getVelocity() - LaunchMotorSpeed) < ShooterDeadZone){
+      return true;
+    }
+    else{
+      return false;
+    }
+
+  }
+  public void SetFeederSpeed(double Speed){
+    this.FeederSpeed=Speed;
+  }
 
   public void SetShooterSpeed(double Speed){
     this.LaunchMotorSpeed=Speed;
