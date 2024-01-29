@@ -143,7 +143,7 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public boolean isGoodShooterAngle(){
-    if(Math.abs(angler.getPosition() - anglerTarget) < AnglerDeadZone) {
+    if(Math.abs(angler.getPosition().getValueAsDouble() - anglerTarget) < AnglerDeadZone) {
       return true;
     }
     else {
@@ -152,7 +152,7 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public boolean isGoodSpeed() {
-    if(Math.abs(shooterTop.getVelocity() - LaunchMotorSpeed) < ShooterDeadZone){
+    if(Math.abs(shooterTop.getVelocity().getValueAsDouble() - LaunchMotorSpeed) < ShooterDeadZone){
       return true;
     }
     else{
