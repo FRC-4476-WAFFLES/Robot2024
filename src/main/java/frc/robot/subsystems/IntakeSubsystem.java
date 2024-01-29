@@ -3,39 +3,38 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems;
-import com.ctre.phoenix6.*;
-import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
-import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.DutyCycleOut;
-import com.ctre.phoenix6.controls.compound.Diff_DutyCycleOut_Position;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.reduxrobotics.*;
-import com.reduxrobotics.frames.FrameData;
 import com.reduxrobotics.sensors.canandcolor.Canandcolor;
-import com.reduxrobotics.sensors.canandcolor.digout.DigoutMode.DutyCycle;
+
 public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
   private final TalonFX intake;
   private final Canandcolor intakeIR; 
   private final CurrentLimitsConfigs intakeCurrentLimitsConfigs = new CurrentLimitsConfigs();
- private double IntakeSpeed = 0;
+  private double IntakeSpeed = 0;
+
   public IntakeSubsystem() {
     intake = new TalonFX(Constants.Intake);
     intakeIR = new Canandcolor(Constants.IntakeIR);
-TalonFXConfiguration intakeConfig = new TalonFXConfiguration();
-intakeCurrentLimitsConfigs.SupplyCurrentLimit = 40;
-intakeCurrentLimitsConfigs.SupplyCurrentThreshold = 60;
-intakeCurrentLimitsConfigs.SupplyCurrentLimitEnable = true;
-intakeCurrentLimitsConfigs.StatorCurrentLimit = 40;
-intakeCurrentLimitsConfigs.StatorCurrentLimitEnable = true;
+    TalonFXConfiguration intakeConfig = new TalonFXConfiguration();
 
-intakeConfig.CurrentLimits = intakeCurrentLimitsConfigs;
+    intakeCurrentLimitsConfigs.SupplyCurrentLimit = 40;
+    intakeCurrentLimitsConfigs.SupplyCurrentThreshold = 60;
+    intakeCurrentLimitsConfigs.SupplyCurrentLimitEnable = true;
 
-intake.getConfigurator().apply(intakeConfig);
+    intakeCurrentLimitsConfigs.StatorCurrentLimit = 40;
+    intakeCurrentLimitsConfigs.StatorCurrentLimitEnable = true;
 
+    intakeConfig.CurrentLimits = intakeCurrentLimitsConfigs;
+
+    intake.getConfigurator().apply(intakeConfig);
   }
 
   @Override
@@ -44,16 +43,18 @@ intake.getConfigurator().apply(intakeConfig);
     final DutyCycleOut intakeDutyCycle = new DutyCycleOut(0.0);
 
     intake.setControl(intakeDutyCycle.withOutput(IntakeSpeed));
-
   }
-    public void SetIntakeSpeed(double Speed){
-      this.IntakeSpeed=Speed;
+
+  public void SetIntakeSpeed(double Speed){
+    this.IntakeSpeed = Speed;
+  }
+
+  public boolean isnote() {
+    if(intakeIR.getProximity() > 10) { // Change this value when tuning
+      return true;
     }
-public boolean isnote() {
-if(intakeIR.getProximity()>10){// change this value when tuning
-  return true;
-}else{
-  return false;
-}
+    else {
+      return false;
+    }
   }
 }

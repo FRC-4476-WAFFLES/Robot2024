@@ -7,7 +7,6 @@ package frc.robot.subsystems;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.ctre.phoenix6.*;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
@@ -81,3 +80,4 @@ public class Elevator extends SubsystemBase {
     this.target = target;
   }
 }
+//1.625 od winch 19.0625 ratio (Brandon is quite sure)

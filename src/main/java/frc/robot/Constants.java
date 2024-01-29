@@ -13,10 +13,15 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+  public static final int angler = 5; //Falcon 500
+  public static final int feeder = 6; //Kraken X60
+  public static final int shooterTop = 7; //Kraken X60
+  public static final int shooterBottom = 8; //Kraken X60
   public static final int Intake = 9; //Kraken X60
   public static final int Elevator1 = 13; // Kraken X60
   public static final int Elevator2 = 14; //Kraken X60
   public static final int IntakeIR = 17; // canandcolor
+  public static final int shooterIR = 18; //canandcolour
 
 
   
@@ -27,7 +32,7 @@ public final class Constants {
   // Digital input
 
   public static final int elevatorZero = 1; // Hall Effect
-
+  public static final int anglerAbsoluteEncoder = 4;
 
   public static class OperatorConstants {
     public static final int leftJoystick = 0;
