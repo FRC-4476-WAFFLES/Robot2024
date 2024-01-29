@@ -21,16 +21,20 @@ import com.reduxrobotics.sensors.canandcolor.Canandcolor;
 import java.lang.Math;
 
 public class ShooterSubsystem extends SubsystemBase {
+  // Motors and Sensors
   private final TalonFX angler;
   private final TalonFX feeder;
   private final TalonFX shooterTop;
   private final TalonFX shooterBottom;
   private final Canandcolor shooterIR;
+  private final DutyCycleEncoder anglerAbsoluteEncoder;
 
+  // Configs
   private double anglerTarget = 0;
   private double LaunchMotorSpeed = 0;
   private double FeederSpeed = 0;
-
+  
+  // Constants
   private final double AnglerEncoderResolution = 2048;
   private final double AnglerGearboxReduction = 250;
   private final double TicksToAnglerDegrees = (AnglerEncoderResolution / 360) * AnglerGearboxReduction;
@@ -41,7 +45,6 @@ public class ShooterSubsystem extends SubsystemBase {
   private final double ShooterDeadZone = 5;
   private final double AnglerDeadZone = 4;
 
-  private final DutyCycleEncoder anglerAbsoluteEncoder;
   private final CurrentLimitsConfigs currentLimitsConfig;
 
   /** Creates a new Shooter. */
@@ -91,10 +94,13 @@ public class ShooterSubsystem extends SubsystemBase {
     shooterSlot0Configs.kV = 0.12; 
     shooterSlot0Configs.kS = 0.05;
 
+    //TODO Set up PID settings for feeder.
+
     // Position PID for angler
     Slot0Configs anglerSlot0Configs = new Slot0Configs();
     anglerSlot0Configs.kP = 2.4;
     anglerSlot0Configs.kD = 0.1;
+    anglerSlot0Configs.kS  = 1;
 
     angler.setPosition(0);
 
@@ -110,6 +116,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     shooterTop.setControl(new Follower(Constants.shooterBottom, true));
 
+    // Configuration of relative encoder to absolute encoder for the angler
     if ((anglerAbsoluteEncoder.get() + FakeToReal) > 360) {
       ConvertedAbsolouteAngle = anglerAbsoluteEncoder.get() + FakeToReal - 360;
     }
@@ -124,6 +131,8 @@ public class ShooterSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    
+    // Angler motion profiling
     final TrapezoidProfile anglerTrapezoidProfile = new TrapezoidProfile (new TrapezoidProfile.Constraints(90,20));
     TrapezoidProfile.State anglerGoal = new TrapezoidProfile.State(anglerTarget,0);
     TrapezoidProfile.State anglerSetpoint = new TrapezoidProfile.State();
@@ -131,13 +140,16 @@ public class ShooterSubsystem extends SubsystemBase {
     final PositionVoltage anglerRequest = new PositionVoltage(0).withSlot(0);
 
     anglerSetpoint = anglerTrapezoidProfile.calculate(0.020, anglerSetpoint, anglerGoal);
-
+    //TODO limit range of angles for angler to be set at to prevent damage/smashing into robot.
     anglerRequest.Position = anglerSetpoint.position;
+    
     // set shooter speed
     final VelocityVoltage shooterSpeedRequest = new VelocityVoltage(0).withSlot(0);
     shooterTop.setControl(shooterSpeedRequest.withVelocity(LaunchMotorSpeed));
     final DutyCycleOut FeederDutyCycle = new DutyCycleOut(0.0);
 
+    //TODO set up velocity PID control for feeder
+    // Set feeder speed
     feeder.setControl(FeederDutyCycle.withOutput(FeederSpeed));
   
   }

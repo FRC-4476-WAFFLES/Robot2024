@@ -3,23 +3,25 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.elevator.ElevatorMove;
-import frc.robot.commands.shooter.ScoreNote;
-import frc.robot.commands.shooter.SpinUp;
-import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.ExampleSubsystem;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
+
+// Subsystems
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.LightSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+
+// Commands
+import frc.robot.commands.elevator.ElevatorMove;
+import frc.robot.commands.intake.*;
+import frc.robot.commands.shooter.*;
 import frc.robot.commands.ActivateLightColour;
-import frc.robot.commands.Intake.*;
+//import edu.wpi.first.wpilibj.Joystick;
+
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -30,10 +32,9 @@ import frc.robot.commands.Intake.*;
 public class RobotContainer {
 
   // The robot's subsystems 
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   public static final LightSubsystem lightSubsystem = new LightSubsystem();
-  public static final Elevator ElevatorSubsystem = new Elevator();
-  public static final IntakeSubsystem intakesubsystem = new IntakeSubsystem();
+  public static final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
+  public static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 
   //The Robots Commands
@@ -43,10 +44,14 @@ public class RobotContainer {
   private final IntakeOut intakeOut = new IntakeOut();
   private final ScoreNote scoreNote = new ScoreNote();
   private final SpinUp spinUp = new SpinUp();
+  //TODO Amp Command
+  //TODO Command to raise and lower the elevator
+  //TODO Create command for close speaker shot
+  //TODO Trap Command
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final Joystick leftJoystick = new Joystick(OperatorConstants.leftJoystick);
-  private final Joystick rightJoystick = new Joystick(OperatorConstants.rightJoystick);
+  //private final Joystick leftJoystick = new Joystick(OperatorConstants.leftJoystick);
+  //private final Joystick rightJoystick = new Joystick(OperatorConstants.rightJoystick);
   private final CommandXboxController operatorController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
@@ -56,7 +61,7 @@ public class RobotContainer {
     configureBindings();
 
     lightSubsystem.setDefaultCommand(updateLights);
-    ElevatorSubsystem.setDefaultCommand(elevatorMove);
+    elevatorSubsystem.setDefaultCommand(elevatorMove);
   }
 
   /**
@@ -70,13 +75,10 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
+   
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    operatorController.b().whileFalse(m_exampleSubsystem.exampleMethodCommand());
-    operatorController.a().toggleOnTrue(elevatorMove);
     operatorController.povLeft().whileTrue(intakeIn);
     operatorController.povRight().whileTrue(intakeOut);
     operatorController.rightBumper().whileTrue(scoreNote);
@@ -89,8 +91,4 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
-  }
 }

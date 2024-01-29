@@ -12,7 +12,7 @@ public class ElevatorMove extends Command {
   /** Creates a new ElevatorMove. */
   public ElevatorMove() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(ElevatorSubsystem);
+    addRequirements(elevatorSubsystem);
   }
 
   // Called when the command is initially scheduled.

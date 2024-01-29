@@ -5,7 +5,6 @@
 package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.ShooterSubsystem;
 import static frc.robot.RobotContainer.*;
 
 public class ScoreNote extends Command {
@@ -23,6 +22,8 @@ public class ScoreNote extends Command {
   @Override
   public void execute() {
     if(shooterSubsystem.isGoodSpeed()){
+      //TODO Only shoot if elevator is in right spot
+      //TODO only shoot if angler is in right spot
       shooterSubsystem.SetFeederSpeed(1);
     }
   }

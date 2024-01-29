@@ -49,7 +49,7 @@ public class IntakeSubsystem extends SubsystemBase {
     this.IntakeSpeed = Speed;
   }
 
-  public boolean isnote() {
+  public boolean isNote() {
     if(intakeIR.getProximity() > 10) { // Change this value when tuning
       return true;
     }

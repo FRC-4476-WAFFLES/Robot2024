@@ -15,7 +15,7 @@ import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import frc.robot.Constants;
 
-public class Elevator extends SubsystemBase {
+public class ElevatorSubsystem extends SubsystemBase {
   /** Creates a new Elevator. */
     private final TalonFX Elevator1;
     private final TalonFX Elevator2;
@@ -23,7 +23,7 @@ public class Elevator extends SubsystemBase {
     private double target = 0;
 
     private final CurrentLimitsConfigs elevatorCurrentLimits = new CurrentLimitsConfigs();
-  public Elevator() {
+  public ElevatorSubsystem() {
     Elevator1 = new TalonFX(Constants.Elevator1);
     Elevator2 = new TalonFX(Constants.Elevator2);
     elevatorZero = new DigitalInput(Constants.elevatorZero);

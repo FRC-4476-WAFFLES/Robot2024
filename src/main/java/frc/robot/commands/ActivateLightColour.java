@@ -5,8 +5,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.intake.*;
 import frc.robot.subsystems.LightSubsystem.LightColours;
-import frc.robot.commands.Intake.*;
 
 import static frc.robot.RobotContainer.*;
 
@@ -30,8 +30,11 @@ public class ActivateLightColour extends Command {
     boolean readytoScore = true;
     boolean shooterLinedUp = true;
     boolean wheelSpeedIsLinedUp = true;
+    //TODO make these conditions in subsystems so that we can reference them and update colors
+    
 
     // Calls intake method
+    //TODO we should use isNote method instead here.
     IntakeIn intakedGamePiece = new IntakeIn();
     
     // Sets default colours
