@@ -22,7 +22,7 @@ public class ScoreNote extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(shooterSubsystem.isGoodSpeed()){
+    if(shooterSubsystem.isGoodSpeed()&& shooterSubsystem.isGoodShooterAngle()){ // Also Only Run If Elevator Is In Right Place
       shooterSubsystem.SetFeederSpeed(1);
     }
   }

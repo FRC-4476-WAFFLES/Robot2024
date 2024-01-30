@@ -39,4 +39,8 @@ public final class Constants {
     public static final int rightJoystick = 1;
     public static final int kDriverControllerPort = 2;
   }
+  public static class ShooterConstants {
+    public static final double anglerUpperLimit = 1; // tune these values
+    public static final double anglerLowerLimit = 1;// tune these values
+  }
 }
