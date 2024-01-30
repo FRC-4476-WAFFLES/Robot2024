@@ -22,7 +22,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public IntakeSubsystem() {
     intake = new TalonFX(Constants.Intake);
-    intakeIR = new Canandcolor(Constants.IntakeIR);
+    intakeIR = new Canandcolor(Constants.intakeIR);
     TalonFXConfiguration intakeConfig = new TalonFXConfiguration();
 
     intakeCurrentLimitsConfigs.SupplyCurrentLimit = 40;

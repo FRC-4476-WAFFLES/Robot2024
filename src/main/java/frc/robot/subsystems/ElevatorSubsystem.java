@@ -24,11 +24,11 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     private final CurrentLimitsConfigs elevatorCurrentLimits = new CurrentLimitsConfigs();
   public ElevatorSubsystem() {
-    Elevator1 = new TalonFX(Constants.Elevator1);
-    Elevator2 = new TalonFX(Constants.Elevator2);
+    Elevator1 = new TalonFX(Constants.elevator1);
+    Elevator2 = new TalonFX(Constants.elevator2);
     elevatorZero = new DigitalInput(Constants.elevatorZero);
 
-    Elevator2.setControl(new Follower(Constants.Elevator1, true));
+    Elevator2.setControl(new Follower(Constants.elevator1, true));
 
 
 

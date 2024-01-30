@@ -13,15 +13,35 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  public static final int angler = 5; //Falcon 500
-  public static final int feeder = 6; //Kraken X60
-  public static final int shooterTop = 7; //Kraken X60
-  public static final int shooterBottom = 8; //Kraken X60
-  public static final int Intake = 9; //Kraken X60
-  public static final int Elevator1 = 13; // Kraken X60
-  public static final int Elevator2 = 14; //Kraken X60
-  public static final int IntakeIR = 17; // canandcolor
-  public static final int shooterIR = 18; //canandcolour
+
+  // CAN IDs
+
+  // Drive Motors
+  public static final int steeringFrontLeft = 1; // Kraken X60
+  public static final int drivingFrontLeft = 2; // Kraken X60
+  public static final int steeringFrontRight = 3; // Kraken X60
+  public static final int drivingFrontRight = 4; // Kraken X60
+  public static final int steeringBackLeft = 5; // Kraken X60
+  public static final int drivingBackLeft = 6; // Kraken X60
+  public static final int steeringBackRight = 7; // Kraken X60
+  public static final int drivingBackRight = 8; // Kraken X60
+
+  // Mechanism Motors
+  public static final int Intake = 9; // Falcon 500
+  public static final int shooterTop = 10; // Falcon 500
+  public static final int shooterBottom = 11; // Falcon 500
+  public static final int feeder = 12; //Falon 500
+  public static final int angler = 13; //Falcon 500
+  public static final int elevator1 = 14; // Kraken X60
+  public static final int elevator2 = 15; // Kraken X60
+
+  // Sensors
+  public static final int intakeIR = 21; // canandcolor
+  public static final int shooterIR = 22; // canandcolour
+  public static final int frontLeftAbsoluteEncoder = 23; // CANcoder
+  public static final int frontRightAbsoluteEncoder = 24; // CANcoder
+  public static final int backLeftAbsoluteEncoder = 25; // CANcoder
+  public static final int backRightAbsoluteEncoder = 26; // CANcoder
 
 
   
@@ -32,7 +52,7 @@ public final class Constants {
   // Digital input
 
   public static final int elevatorZero = 1; // Hall Effect
-  public static final int anglerAbsoluteEncoder = 4;
+  public static final int anglerAbsoluteEncoder = 4; // REV Through Bore
 
   public static class OperatorConstants {
     public static final int leftJoystick = 0;
