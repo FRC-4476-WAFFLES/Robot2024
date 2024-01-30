@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import frc.robot.Constants;
@@ -15,6 +16,7 @@ import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.reduxrobotics.sensors.canandcolor.Canandcolor;
@@ -100,7 +102,13 @@ public class ShooterSubsystem extends SubsystemBase {
     Slot0Configs anglerSlot0Configs = new Slot0Configs();
     anglerSlot0Configs.kP = 2.4;
     anglerSlot0Configs.kD = 0.1;
-    anglerSlot0Configs.kS  = 1;
+    anglerSlot0Configs.kS = 1;
+
+    // PID for feeder
+    Slot0Configs feederSlot0Configs = new Slot0Configs();
+    feederSlot0Configs.kP = 0.1; 
+    feederSlot0Configs.kD = 0.1;
+    feederSlot0Configs.kV = 1;
 
     angler.setPosition(0);
 
@@ -113,6 +121,7 @@ public class ShooterSubsystem extends SubsystemBase {
     shooterTop.getConfigurator().apply(shooterSlot0Configs);    
     shooterBottom.getConfigurator().apply(shooterSlot0Configs);
     angler.getConfigurator().apply(anglerSlot0Configs);
+    feeder.getConfigurator().apply(feederSlot0Configs);
 
     shooterTop.setControl(new Follower(Constants.shooterBottom, true));
 
@@ -134,9 +143,10 @@ public class ShooterSubsystem extends SubsystemBase {
     
     // Angler motion profiling
     final TrapezoidProfile anglerTrapezoidProfile = new TrapezoidProfile (new TrapezoidProfile.Constraints(90,20));
+    anglerTarget=MathUtil.clamp(anglerTarget, Constants.ShooterConstants.anglerLowerLimit, Constants.ShooterConstants.anglerUpperLimit);
     TrapezoidProfile.State anglerGoal = new TrapezoidProfile.State(anglerTarget,0);
     TrapezoidProfile.State anglerSetpoint = new TrapezoidProfile.State();
-
+    
     final PositionVoltage anglerRequest = new PositionVoltage(0).withSlot(0);
 
     anglerSetpoint = anglerTrapezoidProfile.calculate(0.020, anglerSetpoint, anglerGoal);
@@ -146,11 +156,8 @@ public class ShooterSubsystem extends SubsystemBase {
     // set shooter speed
     final VelocityVoltage shooterSpeedRequest = new VelocityVoltage(0).withSlot(0);
     shooterTop.setControl(shooterSpeedRequest.withVelocity(LaunchMotorSpeed));
-    final DutyCycleOut FeederDutyCycle = new DutyCycleOut(0.0);
-
-    //TODO set up velocity PID control for feeder
-    // Set feeder speed
-    feeder.setControl(FeederDutyCycle.withOutput(FeederSpeed));
+    final VelocityVoltage feederSpeedRequest = new VelocityVoltage(0).withSlot(0);
+    feeder.setControl(feederSpeedRequest.withVelocity(FeederSpeed));
   
   }
 

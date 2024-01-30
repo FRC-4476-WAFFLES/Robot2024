@@ -21,9 +21,7 @@ public class ScoreNote extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(shooterSubsystem.isGoodSpeed()){
-      //TODO Only shoot if elevator is in right spot
-      //TODO only shoot if angler is in right spot
+    if(shooterSubsystem.isGoodSpeed()&& shooterSubsystem.isGoodShooterAngle()){ //TODO Also Only Run If Elevator Is In Right Place
       shooterSubsystem.SetFeederSpeed(1);
     }
   }
