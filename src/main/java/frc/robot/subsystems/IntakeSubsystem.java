@@ -15,14 +15,22 @@ import com.reduxrobotics.sensors.canandcolor.Canandcolor;
 
 public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
+
   private final TalonFX intake;
+
   private final Canandcolor intakeIR; 
   private final CurrentLimitsConfigs intakeCurrentLimitsConfigs = new CurrentLimitsConfigs();
+  
   private double IntakeSpeed = 0;
 
+  private final double IR_RANGE = 10;
+
   public IntakeSubsystem() {
+
     intake = new TalonFX(Constants.Intake);
     intakeIR = new Canandcolor(Constants.intakeIR);
+
+    // Set the current limits for the intake
     TalonFXConfiguration intakeConfig = new TalonFXConfiguration();
 
     intakeCurrentLimitsConfigs.SupplyCurrentLimit = 40;
@@ -45,16 +53,20 @@ public class IntakeSubsystem extends SubsystemBase {
     intake.setControl(intakeDutyCycle.withOutput(IntakeSpeed));
   }
 
-  public void SetIntakeSpeed(double Speed){
-    this.IntakeSpeed = Speed;
+  /**
+   * Sets the speed of the intake
+   * @param speed -1 to 1 for intake speed
+   */
+  public void SetIntakeSpeed(double speed){
+    this.IntakeSpeed = speed;
   }
 
+   /**
+   * Returns if there is a note in the intake
+   * @return true: if note is in intake
+   * <li>false: if note is not in intake</li>
+   */
   public boolean isNote() {
-    if(intakeIR.getProximity() > 10) { // Change this value when tuning
-      return true;
-    }
-    else {
-      return false;
-    }
+    return intakeIR.getProximity() > IR_RANGE;
   }
 }

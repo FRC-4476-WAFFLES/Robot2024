@@ -19,18 +19,21 @@ public class ElevatorSubsystem extends SubsystemBase {
   /** Creates a new Elevator. */
     private final TalonFX Elevator1;
     private final TalonFX Elevator2;
+
     private final DigitalInput elevatorZero;
-    private double target = 0;
+
+    private double elevatorTargetPosition = 0;
 
     private final CurrentLimitsConfigs elevatorCurrentLimits = new CurrentLimitsConfigs();
+
   public ElevatorSubsystem() {
+
     Elevator1 = new TalonFX(Constants.elevator1);
     Elevator2 = new TalonFX(Constants.elevator2);
+
     elevatorZero = new DigitalInput(Constants.elevatorZero);
 
     Elevator2.setControl(new Follower(Constants.elevator1, true));
-
-
 
     TalonFXConfiguration elevatorConfig = new TalonFXConfiguration();
     elevatorCurrentLimits.SupplyCurrentLimit = 40;
@@ -40,7 +43,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     elevatorCurrentLimits.StatorCurrentLimitEnable = true;
 
     elevatorConfig.CurrentLimits = elevatorCurrentLimits;
-
+    
+    // Set PIDF values
     var slot0Configs = new Slot0Configs();
     slot0Configs.kS = 1;
     slot0Configs.kP = 1;
@@ -58,7 +62,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     final TrapezoidProfile elevatorTrapezoidProfile = new TrapezoidProfile(new TrapezoidProfile.Constraints(90, 20));
-    TrapezoidProfile.State elevatorGoal = new TrapezoidProfile.State(target, 0); 
+    TrapezoidProfile.State elevatorGoal = new TrapezoidProfile.State(elevatorTargetPosition, 0); 
     TrapezoidProfile.State elevatorSetpoint = new TrapezoidProfile.State();
 
     final PositionVoltage elevatorRequest = new PositionVoltage(0).withSlot(0);
@@ -66,18 +70,19 @@ public class ElevatorSubsystem extends SubsystemBase {
     elevatorSetpoint = elevatorTrapezoidProfile.calculate(0.020, elevatorSetpoint, elevatorGoal);
 
     elevatorRequest.Position = elevatorSetpoint.position;
-    elevatorRequest.Velocity = elevatorSetpoint.velocity;
 
     Elevator1.setControl(elevatorRequest);
 
+    // Set elevator to zero if hall effect is triggered
     if (!elevatorZero.get()){
       Elevator1.setPosition(0);
     }
 
   }
 
-  public void setTarget(double target){
-    this.target = target;
+  public void setElevatorTargetPosition(double target){
+    //TODO convert targets units to inches for easier tuning
+    this.elevatorTargetPosition = target;
   }
 }
 //1.625 od winch 19.0625 ratio (Brandon is quite sure)

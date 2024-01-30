@@ -32,9 +32,9 @@ public class ShooterSubsystem extends SubsystemBase {
   private final DutyCycleEncoder anglerAbsoluteEncoder;
 
   // Configs
-  private double anglerTarget = 0;
-  private double shooterSpeed = 0;
-  private double feederSpeed = 0;
+  private double anglerTargetPosition = 0;
+  private double shooterTargetSpeed = 0;
+  private double feederTargetSpeed = 0;
   
   // Constants
   private final double ANGLER_ENCODER_RESOLUTION = 2048;
@@ -143,25 +143,26 @@ public class ShooterSubsystem extends SubsystemBase {
     
     // Angler motion profiling
     final TrapezoidProfile anglerTrapezoidProfile = new TrapezoidProfile (new TrapezoidProfile.Constraints(90,20));
-    anglerTarget=MathUtil.clamp(anglerTarget, Constants.ShooterConstants.anglerLowerLimit, Constants.ShooterConstants.anglerUpperLimit);
-    TrapezoidProfile.State anglerGoal = new TrapezoidProfile.State(anglerTarget,0);
+
+    // Set angler position with limits to not damage robot
+    anglerTargetPosition = MathUtil.clamp(anglerTargetPosition, Constants.ShooterConstants.anglerLowerLimit, Constants.ShooterConstants.anglerUpperLimit);
+
+    TrapezoidProfile.State anglerGoal = new TrapezoidProfile.State(anglerTargetPosition,0);
     TrapezoidProfile.State anglerSetpoint = new TrapezoidProfile.State();
     
     final PositionVoltage anglerRequest = new PositionVoltage(0).withSlot(0);
 
     anglerSetpoint = anglerTrapezoidProfile.calculate(0.020, anglerSetpoint, anglerGoal);
 
-    //TODO limit range of angles for angler to be set at to prevent damage/smashing into robot.
-
     anglerRequest.Position = anglerSetpoint.position;
     
     // set shooter speed
     final VelocityVoltage shooterSpeedRequest = new VelocityVoltage(0).withSlot(0);
-    shooterTop.setControl(shooterSpeedRequest.withVelocity(shooterSpeed));
+    shooterTop.setControl(shooterSpeedRequest.withVelocity(shooterTargetSpeed));
 
     // set feeder speed
     final VelocityVoltage feederSpeedRequest = new VelocityVoltage(0).withSlot(0);
-    feeder.setControl(feederSpeedRequest.withVelocity(feederSpeed));
+    feeder.setControl(feederSpeedRequest.withVelocity(feederTargetSpeed));
   
   }
 
@@ -172,7 +173,7 @@ public class ShooterSubsystem extends SubsystemBase {
    * <li>false: if angler is not at desired angle</li>
    */
     public boolean isGoodShooterAngle(){
-      return Math.abs(angler.getPosition().getValueAsDouble() - anglerTarget) < ANGLER_DEAD_ZONE;
+      return Math.abs(angler.getPosition().getValueAsDouble() - anglerTargetPosition) < ANGLER_DEAD_ZONE;
   }
 
   /**
@@ -181,7 +182,7 @@ public class ShooterSubsystem extends SubsystemBase {
    * <li>false: if shooter is not at desired speed</li>
    */
   public boolean isGoodSpeed() {
-      return Math.abs(shooterTop.getVelocity().getValueAsDouble() - shooterSpeed) < SHOOTER_DEAD_ZONE;
+      return Math.abs(shooterTop.getVelocity().getValueAsDouble() - shooterTargetSpeed) < SHOOTER_DEAD_ZONE;
   }
 
   /**
@@ -189,8 +190,8 @@ public class ShooterSubsystem extends SubsystemBase {
    * @param speed
    * in rotations per second
    */
-  public void setFeederSpeed(double speed){
-    this.feederSpeed = speed;
+  public void setFeederTargetSpeed(double speed){
+    this.feederTargetSpeed = speed;
   }
 
   /**
@@ -198,8 +199,8 @@ public class ShooterSubsystem extends SubsystemBase {
    * @param speed
    * in rotations per second
    */
-  public void setShooterSpeed(double speed){
-    this.shooterSpeed = speed;
+  public void setShooterTargetSpeed(double speed){
+    this.shooterTargetSpeed = speed;
   }
 
   /** 
@@ -208,7 +209,7 @@ public class ShooterSubsystem extends SubsystemBase {
   * in degrees of the angler
   */
   public void setAnglerPosition(double position){
-    this.anglerTarget = position;
+    this.anglerTargetPosition = position;
   }
 
   /**
@@ -216,7 +217,7 @@ public class ShooterSubsystem extends SubsystemBase {
    * @return true: if note is in shooter
    * <li>false: if note is not in shooter</li>
    */
-  public boolean isnote() {
+  public boolean isNote() {
     return shooterIR.getProximity() > IR_RANGE;
   }
 }
