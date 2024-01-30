@@ -23,13 +23,13 @@ public class SpinUp extends Command {
   @Override
   public void execute() {
     //TODO Calculate range based on robot pose
-    shooterSubsystem.SetShooterSpeed(73);
+    shooterSubsystem.setShooterSpeed(73);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shooterSubsystem.SetShooterSpeed(0);
+    shooterSubsystem.setShooterSpeed(0);
   }
 
   // Returns true when the command should end.

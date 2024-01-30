@@ -22,14 +22,14 @@ public class ScoreNote extends Command {
   @Override
   public void execute() {
     if(shooterSubsystem.isGoodSpeed()&& shooterSubsystem.isGoodShooterAngle()){ //TODO Also Only Run If Elevator Is In Right Place
-      shooterSubsystem.SetFeederSpeed(1);
+      shooterSubsystem.setFeederSpeed(1);
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shooterSubsystem.SetFeederSpeed(0);
+    shooterSubsystem.setFeederSpeed(0);
   }
 
   // Returns true when the command should end.

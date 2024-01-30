@@ -3,23 +3,23 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems;
+import frc.robot.Constants;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
-import frc.robot.Constants;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
+
 import com.reduxrobotics.sensors.canandcolor.Canandcolor;
+
 import java.lang.Math;
 
 public class ShooterSubsystem extends SubsystemBase {
@@ -33,19 +33,20 @@ public class ShooterSubsystem extends SubsystemBase {
 
   // Configs
   private double anglerTarget = 0;
-  private double LaunchMotorSpeed = 0;
-  private double FeederSpeed = 0;
+  private double shooterSpeed = 0;
+  private double feederSpeed = 0;
   
   // Constants
-  private final double AnglerEncoderResolution = 2048;
-  private final double AnglerGearboxReduction = 250;
-  private final double TicksToAnglerDegrees = (AnglerEncoderResolution / 360) * AnglerGearboxReduction;
+  private final double ANGLER_ENCODER_RESOLUTION = 2048;
+  private final double ANGLER_GEARBOX_REDUCTION = 250;
+  private final double TICKS_TO_ANGLER_DEGREES = (ANGLER_ENCODER_RESOLUTION / 360) * ANGLER_GEARBOX_REDUCTION;
   private final double ZeroConversion = -10;
   private final double AbsolouteEncoderOffset = 90;
   private final double FakeToReal = AbsolouteEncoderOffset + ZeroConversion;
   private final double ConvertedAbsolouteAngle;
-  private final double ShooterDeadZone = 5;
-  private final double AnglerDeadZone = 4;
+  private final double SHOOTER_DEAD_ZONE = 5;
+  private final double ANGLER_DEAD_ZONE = 4;
+  private final double IR_RANGE = 10;
 
   private final CurrentLimitsConfigs currentLimitsConfig;
 
@@ -96,8 +97,6 @@ public class ShooterSubsystem extends SubsystemBase {
     shooterSlot0Configs.kV = 0.12; 
     shooterSlot0Configs.kS = 0.05;
 
-    //TODO Set up PID settings for feeder.
-
     // Position PID for angler
     Slot0Configs anglerSlot0Configs = new Slot0Configs();
     anglerSlot0Configs.kP = 2.4;
@@ -118,6 +117,7 @@ public class ShooterSubsystem extends SubsystemBase {
     feeder.getConfigurator().apply(generalConfigs);
     angler.getConfigurator().apply(generalConfigs);
 
+    // Apply PID
     shooterTop.getConfigurator().apply(shooterSlot0Configs);    
     shooterBottom.getConfigurator().apply(shooterSlot0Configs);
     angler.getConfigurator().apply(anglerSlot0Configs);
@@ -133,7 +133,7 @@ public class ShooterSubsystem extends SubsystemBase {
       ConvertedAbsolouteAngle = anglerAbsoluteEncoder.get() + FakeToReal;
     }
 
-    angler.setPosition(ConvertedAbsolouteAngle * TicksToAnglerDegrees);
+    angler.setPosition(ConvertedAbsolouteAngle * TICKS_TO_ANGLER_DEGREES);
 
   }
 
@@ -150,53 +150,73 @@ public class ShooterSubsystem extends SubsystemBase {
     final PositionVoltage anglerRequest = new PositionVoltage(0).withSlot(0);
 
     anglerSetpoint = anglerTrapezoidProfile.calculate(0.020, anglerSetpoint, anglerGoal);
+
     //TODO limit range of angles for angler to be set at to prevent damage/smashing into robot.
+
     anglerRequest.Position = anglerSetpoint.position;
     
     // set shooter speed
     final VelocityVoltage shooterSpeedRequest = new VelocityVoltage(0).withSlot(0);
-    shooterTop.setControl(shooterSpeedRequest.withVelocity(LaunchMotorSpeed));
+    shooterTop.setControl(shooterSpeedRequest.withVelocity(shooterSpeed));
+
+    // set feeder speed
     final VelocityVoltage feederSpeedRequest = new VelocityVoltage(0).withSlot(0);
-    feeder.setControl(feederSpeedRequest.withVelocity(FeederSpeed));
+    feeder.setControl(feederSpeedRequest.withVelocity(feederSpeed));
   
   }
 
-  public boolean isGoodShooterAngle(){
-    if(Math.abs(angler.getPosition().getValueAsDouble() - anglerTarget) < AnglerDeadZone) {
-      return true;
-    }
-    else {
-      return false;
-    }
+  /**
+   * Returns if the angler is at the desired angle
+   * <p>Units are in degrees of the angler</p>
+   * @return true: if angler is at desired angle
+   * <li>false: if angler is not at desired angle</li>
+   */
+    public boolean isGoodShooterAngle(){
+      return Math.abs(angler.getPosition().getValueAsDouble() - anglerTarget) < ANGLER_DEAD_ZONE;
   }
 
+  /**
+   * Returns if the shooter is at the desired speed
+   * @return true: if shooter is at desired speed
+   * <li>false: if shooter is not at desired speed</li>
+   */
   public boolean isGoodSpeed() {
-    if(Math.abs(shooterTop.getVelocity().getValueAsDouble() - LaunchMotorSpeed) < ShooterDeadZone){
-      return true;
-    }
-    else{
-      return false;
-    }
-
-  }
-  public void SetFeederSpeed(double Speed){
-    this.FeederSpeed=Speed;
+      return Math.abs(shooterTop.getVelocity().getValueAsDouble() - shooterSpeed) < SHOOTER_DEAD_ZONE;
   }
 
-  public void SetShooterSpeed(double Speed){
-    this.LaunchMotorSpeed=Speed;
-  }
-  public void SetAnglerSetPoint(double SetPoint){
-    this.anglerTarget=SetPoint;
+  /**
+   * Sets speed of the feeder wheels
+   * @param speed
+   * in rotations per second
+   */
+  public void setFeederSpeed(double speed){
+    this.feederSpeed = speed;
   }
 
+  /**
+   * Sets speed of the shooter wheels
+   * @param speed
+   * in rotations per second
+   */
+  public void setShooterSpeed(double speed){
+    this.shooterSpeed = speed;
+  }
+
+  /** 
+   * Sets the position of the angler
+  * @param position
+  * in degrees of the angler
+  */
+  public void setAnglerPosition(double position){
+    this.anglerTarget = position;
+  }
+
+  /**
+   * Returns if there is a note in the shooter
+   * @return true: if note is in shooter
+   * <li>false: if note is not in shooter</li>
+   */
   public boolean isnote() {
-    if(shooterIR.getProximity()>10) {// change this value when tuning
-      return true;
-    }
-    else {
-      return false;
-    }
-    //250:1
+    return shooterIR.getProximity() > IR_RANGE;
   }
 }
