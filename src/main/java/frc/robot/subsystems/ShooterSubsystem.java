@@ -6,13 +6,9 @@ package frc.robot.subsystems;
 import frc.robot.Constants;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
-import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
@@ -24,28 +20,20 @@ import java.lang.Math;
 
 public class ShooterSubsystem extends SubsystemBase {
   // Motors and Sensors
-  private final TalonFX angler;
   private final TalonFX feeder;
   private final TalonFX shooterTop;
   private final TalonFX shooterBottom;
   private final Canandcolor shooterIR;
-  private final DutyCycleEncoder anglerAbsoluteEncoder;
-
+  
+  
   // Configs
-  private double anglerTargetPosition = 0;
+  
   private double shooterTargetSpeed = 0;
   private double feederTargetSpeed = 0;
   
   // Constants
-  private final double ANGLER_ENCODER_RESOLUTION = 2048;
-  private final double ANGLER_GEARBOX_REDUCTION = 250;
-  private final double TICKS_TO_ANGLER_DEGREES = (ANGLER_ENCODER_RESOLUTION / 360) * ANGLER_GEARBOX_REDUCTION;
-  private final double ZeroConversion = -10;
-  private final double AbsolouteEncoderOffset = 90;
-  private final double FakeToReal = AbsolouteEncoderOffset + ZeroConversion;
-  private final double ConvertedAbsolouteAngle;
+  
   private final double SHOOTER_DEAD_ZONE = 5;
-  private final double ANGLER_DEAD_ZONE = 4;
   private final double IR_RANGE = 10;
 
   private final CurrentLimitsConfigs currentLimitsConfig;
@@ -55,15 +43,15 @@ public class ShooterSubsystem extends SubsystemBase {
     TalonFXConfiguration generalConfigs = new TalonFXConfiguration();
 
     // Instantiate motors and encoders
-    angler = new TalonFX(Constants.angler);
+    
     feeder = new TalonFX(Constants.feeder);
     shooterTop = new TalonFX(Constants.shooterTop);
     shooterBottom = new TalonFX(Constants.shooterBottom);  
-    anglerAbsoluteEncoder = new DutyCycleEncoder(Constants.anglerAbsoluteEncoder);
+    
     shooterIR = new Canandcolor(Constants.shooterIR);
 
     // Inversion
-    angler.setInverted(false);
+    
     feeder.setInverted(false);
     
     
@@ -97,64 +85,34 @@ public class ShooterSubsystem extends SubsystemBase {
     shooterSlot0Configs.kV = 0.12; 
     shooterSlot0Configs.kS = 0.05;
 
-    // Position PID for angler
-    Slot0Configs anglerSlot0Configs = new Slot0Configs();
-    anglerSlot0Configs.kP = 2.4;
-    anglerSlot0Configs.kD = 0.1;
-    anglerSlot0Configs.kS = 1;
-
     // PID for feeder
     Slot0Configs feederSlot0Configs = new Slot0Configs();
     feederSlot0Configs.kP = 0.1; 
     feederSlot0Configs.kD = 0.1;
     feederSlot0Configs.kV = 1;
 
-    angler.setPosition(0);
+   
 
     // Apply configs
     shooterTop.getConfigurator().apply(generalConfigs);
     shooterBottom.getConfigurator().apply(generalConfigs);
     feeder.getConfigurator().apply(generalConfigs);
-    angler.getConfigurator().apply(generalConfigs);
+    
 
     // Apply PID
     shooterTop.getConfigurator().apply(shooterSlot0Configs);    
     shooterBottom.getConfigurator().apply(shooterSlot0Configs);
-    angler.getConfigurator().apply(anglerSlot0Configs);
+    
     feeder.getConfigurator().apply(feederSlot0Configs);
 
     shooterTop.setControl(new Follower(Constants.shooterBottom, true));
-
-    // Configuration of relative encoder to absolute encoder for the angler
-    if ((anglerAbsoluteEncoder.get() + FakeToReal) > 360) {
-      ConvertedAbsolouteAngle = anglerAbsoluteEncoder.get() + FakeToReal - 360;
-    }
-    else {
-      ConvertedAbsolouteAngle = anglerAbsoluteEncoder.get() + FakeToReal;
-    }
-
-    angler.setPosition(ConvertedAbsolouteAngle * TICKS_TO_ANGLER_DEGREES);
 
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    
-    // Angler motion profiling
-    final TrapezoidProfile anglerTrapezoidProfile = new TrapezoidProfile (new TrapezoidProfile.Constraints(90,20));
-
-    // Set angler position with limits to not damage robot
-    anglerTargetPosition = MathUtil.clamp(anglerTargetPosition, Constants.ShooterConstants.anglerLowerLimit, Constants.ShooterConstants.anglerUpperLimit);
-
-    TrapezoidProfile.State anglerGoal = new TrapezoidProfile.State(anglerTargetPosition,0);
-    TrapezoidProfile.State anglerSetpoint = new TrapezoidProfile.State();
-    
-    final PositionVoltage anglerRequest = new PositionVoltage(0).withSlot(0);
-
-    anglerSetpoint = anglerTrapezoidProfile.calculate(0.020, anglerSetpoint, anglerGoal);
-
-    anglerRequest.Position = anglerSetpoint.position;
+  
     
     // set shooter speed
     final VelocityVoltage shooterSpeedRequest = new VelocityVoltage(0).withSlot(0);
@@ -166,16 +124,7 @@ public class ShooterSubsystem extends SubsystemBase {
   
   }
 
-  /**
-   * Returns if the angler is at the desired angle
-   * <p>Units are in degrees of the angler</p>
-   * @return true: if angler is at desired angle
-   * <li>false: if angler is not at desired angle</li>
-   */
-    public boolean isGoodShooterAngle(){
-      return Math.abs(angler.getPosition().getValueAsDouble() - anglerTargetPosition) < ANGLER_DEAD_ZONE;
-  }
-
+  
   /**
    * Returns if the shooter is at the desired speed
    * @return true: if shooter is at desired speed
@@ -203,15 +152,7 @@ public class ShooterSubsystem extends SubsystemBase {
     this.shooterTargetSpeed = speed;
   }
 
-  /** 
-   * Sets the position of the angler
-  * @param position
-  * in degrees of the angler
-  */
-  public void setAnglerPosition(double position){
-    this.anglerTargetPosition = position;
-  }
-
+  
   /**
    * Returns if there is a note in the shooter
    * @return true: if note is in shooter

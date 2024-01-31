@@ -7,17 +7,17 @@ import frc.robot.Constants.OperatorConstants;
 
 // Subsystems
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.AnglerSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.LightSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 // Commands
-import frc.robot.commands.elevator.ElevatorMove;
+import frc.robot.commands.elevator.ElevatorHome;
 import frc.robot.commands.intake.*;
 import frc.robot.commands.shooter.*;
 import frc.robot.commands.ActivateLightColour;
 //import edu.wpi.first.wpilibj.Joystick;
-
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -36,10 +36,11 @@ public class RobotContainer {
   public static final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
   public static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+  public static final AnglerSubsystem anglerSubsystem = new AnglerSubsystem();
 
   //The Robots Commands
   private final ActivateLightColour updateLights = new ActivateLightColour();
-  private final ElevatorMove elevatorMove = new ElevatorMove();
+  private final ElevatorHome elevatorHome = new ElevatorHome();
   private final IntakeIn intakeIn = new IntakeIn();
   private final IntakeOut intakeOut = new IntakeOut();
   private final ScoreNote scoreNote = new ScoreNote();
@@ -61,7 +62,7 @@ public class RobotContainer {
     configureBindings();
 
     lightSubsystem.setDefaultCommand(updateLights);
-    elevatorSubsystem.setDefaultCommand(elevatorMove);
+    elevatorSubsystem.setDefaultCommand(elevatorHome);
   }
 
   /**

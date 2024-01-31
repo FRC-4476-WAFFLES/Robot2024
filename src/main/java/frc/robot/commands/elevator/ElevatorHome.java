@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import static frc.robot.RobotContainer.*;
 
 
-public class ElevatorMove extends Command {
+public class ElevatorHome extends Command {
   /** Creates a new ElevatorMove. */
-  public ElevatorMove() {
+  public ElevatorHome() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(elevatorSubsystem);
   }
