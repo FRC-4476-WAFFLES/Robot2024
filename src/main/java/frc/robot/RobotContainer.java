@@ -13,9 +13,10 @@ import frc.robot.subsystems.LightSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 // Commands
-import frc.robot.commands.elevator.ElevatorHome;
+import frc.robot.commands.elevator.*;
 import frc.robot.commands.intake.*;
 import frc.robot.commands.shooter.*;
+import frc.robot.commands.superstructure.*;
 import frc.robot.commands.ActivateLightColour;
 //import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -45,9 +46,11 @@ public class RobotContainer {
   private final IntakeOut intakeOut = new IntakeOut();
   private final ScoreNote scoreNote = new ScoreNote();
   private final SpinUp spinUp = new SpinUp();
-  //TODO Amp Command
+  private final SuperstructureHome superstructureHome = new SuperstructureHome();
+  private final SuperstructureAmp superstructureAmp = new SuperstructureAmp();
+  private final SuperstructureCloseSpeaker superstructureCloseSpeaker = new SuperstructureCloseSpeaker();
+  private final SuperstructureIntake superstructureIntake = new SuperstructureIntake();
   //TODO Command to raise and lower the elevator
-  //TODO Create command for close speaker shot
   //TODO Trap Command
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -62,7 +65,6 @@ public class RobotContainer {
     configureBindings();
 
     lightSubsystem.setDefaultCommand(updateLights);
-    elevatorSubsystem.setDefaultCommand(elevatorHome);
   }
 
   /**
@@ -84,7 +86,8 @@ public class RobotContainer {
     operatorController.povRight().whileTrue(intakeOut);
     operatorController.rightBumper().whileTrue(scoreNote);
     operatorController.leftBumper().whileTrue(spinUp);
-  
+    operatorController.x().whileTrue(superstructureAmp);
+    operatorController.b().whileTrue(superstructureCloseSpeaker);
   }
 
   /**

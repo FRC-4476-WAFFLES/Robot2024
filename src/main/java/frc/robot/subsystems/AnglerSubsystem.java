@@ -111,11 +111,11 @@ public class AnglerSubsystem extends SubsystemBase {
   }
   /** 
    * Sets the position of the angler
-  * @param position
+  * @param angle
   * in degrees of the angler
   */
-  public void setAnglerPosition(double position){
-    this.anglerTargetPosition = position;
+  public void setAnglerTargetPosition(double angle){
+    this.anglerTargetPosition = angle;
   }
 
 }

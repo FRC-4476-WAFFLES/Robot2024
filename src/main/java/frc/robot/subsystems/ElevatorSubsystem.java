@@ -80,9 +80,9 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   }
 
-  public void setElevatorTargetPosition(double target){
+  public void setElevatorTargetPosition(double position){
     //TODO convert targets units to inches for easier tuning
-    this.elevatorTargetPosition = target;
+    this.elevatorTargetPosition = position;
   }
 }
 //1.625 od winch 19.0625 ratio (Brandon is quite sure)
