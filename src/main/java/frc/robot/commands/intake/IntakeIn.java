@@ -25,9 +25,23 @@ public class IntakeIn extends Command {
   @Override
   public void execute() {
     
-    intakeSubsystem.SetIntakeSpeed(1.0);
-    
     //TODO Add code to only intake until first IR sensor if elevator + angler is at right height and angle
+
+    SuperstructureIntake makeRobotReady = new SuperstructureIntake();
+
+    makeRobotReady.execute();
+
+    if (shooterSubsystem.isNote()) {
+        // If a note is in the shooter feeder or intake, stop intake
+        intakeSubsystem.SetIntakeSpeed(0);
+        shooterSubsystem.setFeederTargetSpeed(0);
+
+    } else if (makeRobotReady.isFinished()) {
+      // If robot is ready, intake with feeder
+      intakeSubsystem.SetIntakeSpeed(1);
+      shooterSubsystem.setFeederTargetSpeed(1);
+    }
+
     //TODO if elevator and angler is at right height, intake using feeder as well.
     //TODO stop spinning feeder if 2nd ir sensor is triggered
 

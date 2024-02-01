@@ -24,6 +24,8 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     private double elevatorTargetPosition = 0;
 
+    private final double ELEVATOR_DEAD_ZONE = 5;
+
     private final CurrentLimitsConfigs elevatorCurrentLimits = new CurrentLimitsConfigs();
 
   public ElevatorSubsystem() {
@@ -84,5 +86,14 @@ public class ElevatorSubsystem extends SubsystemBase {
     //TODO convert targets units to inches for easier tuning
     this.elevatorTargetPosition = position;
   }
+  //1.625 od winch 19.0625 ratio (Brandon is quite sure)
+
+  /**
+   * Returns if the elevator is at the desired postion
+   * @return true: if elevator is at desired position
+   * <li>false: if elevator is not at desired position</li>
+   */
+  public boolean isGoodElevator() {
+    return Math.abs(Elevator1.getPosition().getValueAsDouble() - elevatorTargetPosition) < ELEVATOR_DEAD_ZONE;
+  }
 }
-//1.625 od winch 19.0625 ratio (Brandon is quite sure)

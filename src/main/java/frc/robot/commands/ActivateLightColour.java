@@ -5,8 +5,11 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.intake.*;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LightSubsystem.LightColours;
+import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.AnglerSubsystem;
+import frc.robot.subsystems.ElevatorSubsystem;
 
 import static frc.robot.RobotContainer.*;
 
@@ -26,16 +29,12 @@ public class ActivateLightColour extends Command {
   @Override
   public void execute() {
 
-    // Checks if these conditions are happening (will change later when the rest of the code is finished)
+    // Calls these methods
     boolean readytoScore = true;
-    boolean shooterLinedUp = true;
-    boolean wheelSpeedIsLinedUp = true;
-    //TODO make these conditions in subsystems so that we can reference them and update colors
-    
-
-    // Calls intake method
-    //TODO we should use isNote method instead here.
-    IntakeIn intakedGamePiece = new IntakeIn();
+    ShooterSubsystem shooterLinedUp = new ShooterSubsystem();
+    IntakeSubsystem intakedGamePiece = new IntakeSubsystem();
+    AnglerSubsystem anglerLinedUp = new AnglerSubsystem();
+    ElevatorSubsystem elevatorLinedUp = new ElevatorSubsystem();
     
     // Sets default colours
     lightSubsystem.setLightColour(LightColours.RED);
@@ -43,14 +42,16 @@ public class ActivateLightColour extends Command {
     // If certain conditions are fufilled, the robot's lights change colours
     if (readytoScore) {
         lightSubsystem.setLightColour(LightColours.LAWNGREEN);
-      } else if (intakedGamePiece.isFinished() == false) {
+      } else if (intakedGamePiece.isNote() == true) {
         lightSubsystem.setLightColour(LightColours.DARKGREEN);
-      } else if (shooterLinedUp && wheelSpeedIsLinedUp) {
+      } else if (shooterLinedUp.isGoodSpeed() && anglerLinedUp.isGoodShooterAngle() && elevatorLinedUp.isGoodElevator()) {
         lightSubsystem.setLightColour(LightColours.DARKGREEN);
-      } else if (shooterLinedUp) {
+      } else if (anglerLinedUp.isGoodShooterAngle()) {
         lightSubsystem.setLightColour(LightColours.YELLOW);
-      } else if (wheelSpeedIsLinedUp) {
+      } else if (shooterLinedUp.isGoodSpeed()) {
         lightSubsystem.setLightColour(LightColours.ORANGE);
+      } else if (elevatorLinedUp.isGoodElevator()) {
+        lightSubsystem.setLightColour(LightColours.VIOLET);
       }
         
       

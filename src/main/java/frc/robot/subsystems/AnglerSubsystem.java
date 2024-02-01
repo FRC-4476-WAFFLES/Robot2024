@@ -106,7 +106,7 @@ public class AnglerSubsystem extends SubsystemBase {
    * @return true: if angler is at desired angle
    * <li>false: if angler is not at desired angle</li>
    */
-  public boolean isGoodShooterAngle(){
+  public boolean isGoodShooterAngle() {
     return Math.abs(angler.getPosition().getValueAsDouble() - anglerTargetPosition) < ANGLER_DEAD_ZONE;
   }
   /** 
