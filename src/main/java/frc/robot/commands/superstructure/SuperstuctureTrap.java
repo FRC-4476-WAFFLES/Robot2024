@@ -2,41 +2,33 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.intake;
+package frc.robot.commands.superstructure;
 
 import edu.wpi.first.wpilibj2.command.Command;
-
 import static frc.robot.RobotContainer.*;
 
-public class IntakeOut extends Command {
-  /** Creates a new IntakeOut. */
-  public IntakeOut() {
+public class SuperstuctureTrap extends Command {
+  /** Creates a new SuperstuctureTrap. */
+  public SuperstuctureTrap() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(intakeSubsystem);
+    addRequirements(elevatorSubsystem, anglerSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intakeSubsystem.SetIntakeSpeed(-1.0);
-    // TODO if elevator and angler is in intake position outtake the feeder as well.
+    elevatorSubsystem.setElevatorTargetPosition(5000);
+    anglerSubsystem.setAnglerTargetPosition(-10);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-     intakeSubsystem.SetIntakeSpeed(0);
-     
-     
-     shooterSubsystem.setFeederTargetSpeed(-1);
   }
-  
 
   // Returns true when the command should end.
   @Override

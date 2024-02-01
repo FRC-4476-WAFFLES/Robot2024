@@ -44,13 +44,13 @@ public class ActivateLightColour extends Command {
         lightSubsystem.setLightColour(LightColours.LAWNGREEN);
       } else if (intakedGamePiece.isNote() == true) {
         lightSubsystem.setLightColour(LightColours.DARKGREEN);
-      } else if (shooterLinedUp.isGoodSpeed() && anglerLinedUp.isGoodShooterAngle() && elevatorLinedUp.isGoodElevator()) {
+      } else if (shooterLinedUp.isGoodSpeed() && anglerLinedUp.isGoodShooterAngle() && elevatorLinedUp.isGoodElevatorPosition()) {
         lightSubsystem.setLightColour(LightColours.DARKGREEN);
       } else if (anglerLinedUp.isGoodShooterAngle()) {
         lightSubsystem.setLightColour(LightColours.YELLOW);
       } else if (shooterLinedUp.isGoodSpeed()) {
         lightSubsystem.setLightColour(LightColours.ORANGE);
-      } else if (elevatorLinedUp.isGoodElevator()) {
+      } else if (elevatorLinedUp.isGoodElevatorPosition()) {
         lightSubsystem.setLightColour(LightColours.VIOLET);
       }
         

@@ -24,33 +24,37 @@ public class IntakeIn extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
-    //TODO Add code to only intake until first IR sensor if elevator + angler is at right height and angle
 
-    SuperstructureIntake makeRobotReady = new SuperstructureIntake();
+    SuperstructureIntake superstructureIntakePosition = new SuperstructureIntake();
 
-    makeRobotReady.execute();
+    superstructureIntakePosition.execute();
 
     if (shooterSubsystem.isNote()) {
-        // If a note is in the shooter feeder or intake, stop intake
-        intakeSubsystem.SetIntakeSpeed(0);
-        shooterSubsystem.setFeederTargetSpeed(0);
-
-    } else if (makeRobotReady.isFinished()) {
+      // If a note is in the shooter feeder or intake, stop intake
+      intakeSubsystem.SetIntakeSpeed(0);
+      shooterSubsystem.setFeederTargetSpeed(0);
+    } 
+    else if (superstructureIntakePosition.isFinished()) {
       // If robot is ready, intake with feeder
       intakeSubsystem.SetIntakeSpeed(1);
       shooterSubsystem.setFeederTargetSpeed(1);
     }
-
-    //TODO if elevator and angler is at right height, intake using feeder as well.
-    //TODO stop spinning feeder if 2nd ir sensor is triggered
-
+    else if (intakeSubsystem.isNote()) {
+      // If a note is in the intake, stop intake until robot shooter is in position
+      intakeSubsystem.SetIntakeSpeed(0);
+    }
+    else {
+      // If robot is not ready, intake without feeder
+      intakeSubsystem.SetIntakeSpeed(1);
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     intakeSubsystem.SetIntakeSpeed(0);
+    SuperstructureIntake superstructureIntakePosition = new SuperstructureIntake();
+    superstructureIntakePosition.end(interrupted);
   }
 
   // Returns true when the command should end.

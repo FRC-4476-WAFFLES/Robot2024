@@ -86,6 +86,23 @@ public class ElevatorSubsystem extends SubsystemBase {
     //TODO convert targets units to inches for easier tuning
     this.elevatorTargetPosition = position;
   }
+
+  /**
+   * Returns the current position of the elevator
+   * @return the current position of the elevator in ticks
+   */
+  public double getElevatorPosition(){
+    return Elevator1.getPosition().getValueAsDouble();
+  }
+
+  /**
+   * Returns the target position of the elevator
+   * @return the target position of the elevator in ticks
+   */
+  public double getElevatorTargetPosition(){
+    return elevatorTargetPosition;
+  }
+
   //1.625 od winch 19.0625 ratio (Brandon is quite sure)
 
   /**
@@ -93,7 +110,7 @@ public class ElevatorSubsystem extends SubsystemBase {
    * @return true: if elevator is at desired position
    * <li>false: if elevator is not at desired position</li>
    */
-  public boolean isGoodElevator() {
+  public boolean isGoodElevatorPosition() {
     return Math.abs(Elevator1.getPosition().getValueAsDouble() - elevatorTargetPosition) < ELEVATOR_DEAD_ZONE;
   }
 }

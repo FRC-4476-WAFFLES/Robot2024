@@ -41,7 +41,7 @@ public class RobotContainer {
 
   //The Robots Commands
   private final ActivateLightColour updateLights = new ActivateLightColour();
-  private final ElevatorHome elevatorHome = new ElevatorHome();
+  private final ElevatorUp elevatorHome = new ElevatorUp();
   private final IntakeIn intakeIn = new IntakeIn();
   private final IntakeOut intakeOut = new IntakeOut();
   private final ScoreNote scoreNote = new ScoreNote();
@@ -88,6 +88,7 @@ public class RobotContainer {
     operatorController.leftBumper().whileTrue(spinUp);
     operatorController.x().whileTrue(superstructureAmp);
     operatorController.b().whileTrue(superstructureCloseSpeaker);
+   
   }
 
   /**
