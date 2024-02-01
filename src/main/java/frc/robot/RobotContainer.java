@@ -4,21 +4,31 @@
 
 package frc.robot;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.Constants.DriveConstants;
+import frc.robot.generated.TunerConstants;
 
 // Subsystems
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.AnglerSubsystem;
+import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.LightSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
-
+import frc.robot.utils.Telemetry;
 // Commands
 import frc.robot.commands.elevator.*;
 import frc.robot.commands.intake.*;
 import frc.robot.commands.shooter.*;
 import frc.robot.commands.superstructure.*;
 import frc.robot.commands.ActivateLightColour;
-//import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.commands.drive.*;
+
+import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
+import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
+import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.SteerRequestType;
+
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -32,12 +42,19 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
 
+  // Replace with CommandPS4Controller or CommandJoystick if needed
+  private final CommandJoystick leftJoystick = new CommandJoystick(OperatorConstants.leftJoystick);
+  private final CommandJoystick rightJoystick = new CommandJoystick(OperatorConstants.rightJoystick);
+  private final CommandXboxController operatorController =
+      new CommandXboxController(OperatorConstants.kDriverControllerPort);
+
   // The robot's subsystems 
   public static final LightSubsystem lightSubsystem = new LightSubsystem();
   public static final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
   public static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   public static final AnglerSubsystem anglerSubsystem = new AnglerSubsystem();
+  public static final DriveSubsystem driveSubsystem = TunerConstants.DriveTrain;
 
   //The Robots Commands
   private final ActivateLightColour updateLights = new ActivateLightColour();
@@ -53,11 +70,19 @@ public class RobotContainer {
   //TODO Command to raise and lower the elevator
   //TODO Trap Command
 
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  //private final Joystick leftJoystick = new Joystick(OperatorConstants.leftJoystick);
-  //private final Joystick rightJoystick = new Joystick(OperatorConstants.rightJoystick);
-  private final CommandXboxController operatorController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  private final DriveTeleop driveTeleop = new DriveTeleop(
+    () -> leftJoystick.getY() * DriveConstants.maxSpeed, 
+    () -> leftJoystick.getX() * DriveConstants.maxSpeed, 
+    () -> rightJoystick.getX() * DriveConstants.maxAngularSpeed
+  );
+
+  /* Example path follower. Replace "Tests" with auto name from PathPlanner */
+  private Command exampleAuto = driveSubsystem.getAutoPath("Tests");
+
+  private final Telemetry logger = new Telemetry(DriveConstants.maxSpeed);
+
+  // Configure swerve requests for teleop driving and automatic rotation alignment
+  private final SwerveRequest.FieldCentricFacingAngle pointAtAngle = new SwerveRequest.FieldCentricFacingAngle();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -65,6 +90,9 @@ public class RobotContainer {
     configureBindings();
 
     lightSubsystem.setDefaultCommand(updateLights);
+    driveSubsystem.setDefaultCommand(driveTeleop);
+
+    driveSubsystem.registerTelemetry(logger::telemeterize);
   }
 
   /**
@@ -78,16 +106,20 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-   
+
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
+    leftJoystick.button(0).whileTrue(driveSubsystem.applyRequest(() -> new SwerveRequest.SwerveDriveBrake()));
+
     operatorController.povLeft().whileTrue(intakeIn);
     operatorController.povRight().whileTrue(intakeOut);
     operatorController.rightBumper().whileTrue(scoreNote);
     operatorController.leftBumper().whileTrue(spinUp);
     operatorController.x().whileTrue(superstructureAmp);
     operatorController.b().whileTrue(superstructureCloseSpeaker);
+
+    
   }
 
   /**
@@ -95,4 +127,7 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
+  public Command getAutonomousCommand() {
+    return exampleAuto;
+  }
 }
