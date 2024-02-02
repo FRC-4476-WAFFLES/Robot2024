@@ -79,6 +79,8 @@ public final class Constants {
   }
 
   public static class ElevatorConstants {
-    public static final double elevatorHeightIncrement = 5;
+    public static final double elevatorMinHeight = 5;
+    public static final double elevatorMaxHeight = 15;
+    public static final double elevatorTriggerConstantMultiplier = 5;
   }
 }

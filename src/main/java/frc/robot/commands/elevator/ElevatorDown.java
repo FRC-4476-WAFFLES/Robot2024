@@ -26,11 +26,9 @@ public class ElevatorDown extends Command {
   @Override
   public void execute() {
 
-    double minHeight = 5;
-    double maxHeight = 10; 
-
-    if (elevatorSubsystem.getElevatorTargetPosition() > minHeight && elevatorSubsystem.getElevatorTargetPosition() < maxHeight) {
-      elevatorSubsystem.incrementTargetPosition(operatorController.getLeftTriggerAxis() * Constants.ElevatorConstants.elevatorHeightIncrement * -1);
+    // Move elevator down if left trigger is held
+    if (elevatorSubsystem.getElevatorTargetPosition() > Constants.ElevatorConstants.elevatorMinHeight && elevatorSubsystem.getElevatorTargetPosition() < Constants.ElevatorConstants.elevatorMaxHeight) {
+      elevatorSubsystem.adjustTargetPosition(operatorController.getLeftTriggerAxis() * Constants.ElevatorConstants.elevatorTriggerConstantMultiplier * -1);
     }
 
   }

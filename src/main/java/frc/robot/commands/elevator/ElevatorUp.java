@@ -31,17 +31,11 @@ public class ElevatorUp extends Command {
   public void execute() {
     // private double currentElevatorPosition = elevatorSubsystem.getElevatorPosition();=
 
-    double minHeight = 5;
-    double maxHeight = 10; 
 
-    if (elevatorSubsystem.getElevatorTargetPosition() > minHeight && elevatorSubsystem.getElevatorTargetPosition() < maxHeight) {
-      elevatorSubsystem.incrementTargetPosition(operatorController.getRightTriggerAxis() * Constants.ElevatorConstants.elevatorHeightIncrement);
+    // Move elevator up if right trigger is held
+    if (elevatorSubsystem.getElevatorTargetPosition() > Constants.ElevatorConstants.elevatorMinHeight && elevatorSubsystem.getElevatorTargetPosition() < Constants.ElevatorConstants.elevatorMaxHeight) {
+      elevatorSubsystem.adjustTargetPosition(operatorController.getRightTriggerAxis() * Constants.ElevatorConstants.elevatorTriggerConstantMultiplier);
     }
-
-
-
-    // Change target based on buttons
-
   }
 
   // Called once the command ends or is interrupted.

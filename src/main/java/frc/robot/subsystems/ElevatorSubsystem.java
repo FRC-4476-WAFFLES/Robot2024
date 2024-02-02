@@ -114,7 +114,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     return Math.abs(Elevator1.getPosition().getValueAsDouble() - elevatorTargetPosition) < ELEVATOR_DEAD_ZONE;
   }
 
-  public void incrementTargetPosition(double increment) {
-    elevatorTargetPosition += increment;
+  public void adjustTargetPosition(double change) {
+    elevatorTargetPosition += change;
   }
 }
