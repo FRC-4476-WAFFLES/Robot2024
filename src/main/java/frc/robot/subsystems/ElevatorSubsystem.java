@@ -113,4 +113,8 @@ public class ElevatorSubsystem extends SubsystemBase {
   public boolean isGoodElevatorPosition() {
     return Math.abs(Elevator1.getPosition().getValueAsDouble() - elevatorTargetPosition) < ELEVATOR_DEAD_ZONE;
   }
+
+  public void incrementTargetPosition(double increment) {
+    elevatorTargetPosition += increment;
+  }
 }

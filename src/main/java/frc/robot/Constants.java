@@ -77,4 +77,8 @@ public final class Constants {
     public static final Pose2d blueGoalPose = new Pose2d(1, 1, new Rotation2d(0));
 
   }
+
+  public static class ElevatorConstants {
+    public static final double elevatorHeightIncrement = 5;
+  }
 }

@@ -12,7 +12,7 @@ import static frc.robot.RobotContainer.*;
 public class SpinUp extends Command {
   /** Creates a new SpinUp. */
   public SpinUp() {
-    addRequirements(shooterSubsystem);
+    addRequirements(shooterSubsystem, anglerSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -25,7 +25,9 @@ public class SpinUp extends Command {
   public void execute() {
     //TODO Calculate range based on robot pose
     double distance = driveSubsystem.getDistanceToGoal();
-    shooterSubsystem.setShooterTargetSpeed(73);
+    double speed = calculateSpeedOffDistance(distance);
+
+    shooterSubsystem.setShooterTargetSpeed(speed);
   }
 
   // Called once the command ends or is interrupted.
@@ -39,4 +41,22 @@ public class SpinUp extends Command {
   public boolean isFinished() {
     return false;
   }
+
+  private double calculateSpeedOffDistance(double distance) {
+
+    // TODO: Replace nums with real ones
+    return 5 * Math.pow(distance, 2) + 5 * distance + 5;
+  }
+
+  private double calculateAngleOffDistance() {
+
+    double height = elevatorSubsystem.getElevatorTargetPosition();
+    double distance = driveSubsystem.getDistanceToGoal();
+
+    return 5 * distance + 5;
+
+    // TODO: Make aiming shooter run spin up
+  }
+
+  
 }

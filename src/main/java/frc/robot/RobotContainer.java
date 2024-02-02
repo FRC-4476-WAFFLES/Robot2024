@@ -45,8 +45,10 @@ public class RobotContainer {
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandJoystick leftJoystick = new CommandJoystick(OperatorConstants.leftJoystick);
   private final CommandJoystick rightJoystick = new CommandJoystick(OperatorConstants.rightJoystick);
-  private final CommandXboxController operatorController =
+  public static final CommandXboxController operatorController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  public double rightTriggerStrength = 1;
+  public double leftTriggerStrength = 1;
 
   // The robot's subsystems 
   public static final LightSubsystem lightSubsystem = new LightSubsystem();
@@ -67,6 +69,7 @@ public class RobotContainer {
   private final SuperstructureAmp superstructureAmp = new SuperstructureAmp();
   private final SuperstructureCloseSpeaker superstructureCloseSpeaker = new SuperstructureCloseSpeaker();
   private final SuperstructureIntake superstructureIntake = new SuperstructureIntake();
+
   //TODO Command to raise and lower the elevator
   //TODO Trap Command
 
@@ -122,8 +125,7 @@ public class RobotContainer {
     operatorController.x().whileTrue(superstructureAmp);
     operatorController.b().whileTrue(superstructureCloseSpeaker);
     rightJoystick.button(1).whileTrue(driveAndAimAtGoal);
-
-    
+    operatorController.rightTrigger().whileTrue(ElevatorUp);
   }
 
   /**

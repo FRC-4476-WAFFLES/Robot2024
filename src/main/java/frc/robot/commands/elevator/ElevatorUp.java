@@ -5,6 +5,11 @@
 package frc.robot.commands.elevator;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Constants;
+import frc.robot.Robot;
+import frc.robot.RobotContainer;
+
 import static frc.robot.RobotContainer.*;
 
 
@@ -24,8 +29,18 @@ public class ElevatorUp extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //private double currentElevatorPosition = elevatorSubsystem.getElevatorPosition();
+    // private double currentElevatorPosition = elevatorSubsystem.getElevatorPosition();=
 
+    double minHeight = 5;
+    double maxHeight = 10; 
+
+    if (elevatorSubsystem.getElevatorTargetPosition() > minHeight && elevatorSubsystem.getElevatorTargetPosition() < maxHeight) {
+      elevatorSubsystem.incrementTargetPosition(operatorController.getRightTriggerAxis() * Constants.ElevatorConstants.elevatorHeightIncrement);
+    }
+
+
+
+    // Change target based on buttons
 
   }
 
