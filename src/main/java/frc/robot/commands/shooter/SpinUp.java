@@ -5,6 +5,7 @@
 package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.DriveSubsystem;
 
 import static frc.robot.RobotContainer.*;
 
@@ -23,6 +24,7 @@ public class SpinUp extends Command {
   @Override
   public void execute() {
     //TODO Calculate range based on robot pose
+    double distance = driveSubsystem.getDistanceToGoal();
     shooterSubsystem.setShooterTargetSpeed(73);
   }
 

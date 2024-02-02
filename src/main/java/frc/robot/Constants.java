@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import frc.robot.generated.TunerConstants;
 
 /**
@@ -69,5 +71,10 @@ public final class Constants {
   public static class DriveConstants {
     public static final double maxSpeed = TunerConstants.kSpeedAt12VoltsMps;
     public static final double maxAngularSpeed = 6; // Max Rad/s
+
+    // TODO: Put actual values
+    public static final Pose2d redGoalPose = new Pose2d(1, 1, new Rotation2d(0));
+    public static final Pose2d blueGoalPose = new Pose2d(1, 1, new Rotation2d(0));
+
   }
 }

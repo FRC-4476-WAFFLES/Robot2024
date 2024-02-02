@@ -76,6 +76,9 @@ public class RobotContainer {
     () -> rightJoystick.getX() * DriveConstants.maxAngularSpeed
   );
 
+  private final DriveAndPointAtTarget driveAndAimAtGoal = new DriveAndPointAtTarget(() -> leftJoystick.getY() * DriveConstants.maxSpeed, () -> leftJoystick.getX() * DriveConstants.maxSpeed, driveSubsystem::getAngleToGoal);
+
+
   /* Example path follower. Replace "Tests" with auto name from PathPlanner */
   private Command exampleAuto = driveSubsystem.getAutoPath("Tests");
 
@@ -110,7 +113,7 @@ public class RobotContainer {
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    leftJoystick.button(0).whileTrue(driveSubsystem.applyRequest(() -> new SwerveRequest.SwerveDriveBrake()));
+    
 
     operatorController.povLeft().whileTrue(intakeIn);
     operatorController.povRight().whileTrue(intakeOut);
@@ -118,6 +121,7 @@ public class RobotContainer {
     operatorController.leftBumper().whileTrue(spinUp);
     operatorController.x().whileTrue(superstructureAmp);
     operatorController.b().whileTrue(superstructureCloseSpeaker);
+    rightJoystick.button(1).whileTrue(driveAndAimAtGoal);
 
     
   }

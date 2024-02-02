@@ -14,11 +14,16 @@ import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.Constants;
 import frc.robot.generated.TunerConstants;
 
 /**
@@ -103,5 +108,36 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
             updateSimState(deltaTime, RobotController.getBatteryVoltage());
         });
         m_simNotifier.startPeriodic(kSimLoopPeriod);
+    }
+
+    public Rotation2d getAngleToGoal() {
+        Pose2d poseOfGoal;
+
+        // Set goal pose based on alliance
+        if(DriverStation.getAlliance().get() == Alliance.Red) {
+            poseOfGoal = Constants.DriveConstants.redGoalPose;
+        } else {
+            poseOfGoal = Constants.DriveConstants.blueGoalPose;
+        }
+
+        Transform2d robotToGoal = poseOfGoal.minus(getRobotPose());
+        double angle = Math.atan(robotToGoal.getY()/robotToGoal.getX());
+
+        return new Rotation2d(angle);
+    }
+
+    public double getDistanceToGoal() {
+        Pose2d poseOfGoal;
+
+        // Set goal pose based on alliance
+        if(DriverStation.getAlliance().get() == Alliance.Red) {
+            poseOfGoal = Constants.DriveConstants.redGoalPose;
+        } else {
+            poseOfGoal = Constants.DriveConstants.blueGoalPose;
+        }
+
+        double distance = poseOfGoal.minus(getRobotPose()).getTranslation().getNorm();
+        
+        return distance;
     }
 }
