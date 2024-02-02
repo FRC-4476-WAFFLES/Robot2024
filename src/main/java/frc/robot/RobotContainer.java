@@ -60,7 +60,8 @@ public class RobotContainer {
 
   //The Robots Commands
   private final ActivateLightColour updateLights = new ActivateLightColour();
-  private final ElevatorUp elevatorHome = new ElevatorUp();
+  private final ElevatorUp elevatorUp = new ElevatorUp();
+  private final ElevatorDown elevatorDown = new ElevatorDown();
   private final IntakeIn intakeIn = new IntakeIn();
   private final IntakeOut intakeOut = new IntakeOut();
   private final ScoreNote scoreNote = new ScoreNote();
@@ -69,6 +70,7 @@ public class RobotContainer {
   private final SuperstructureAmp superstructureAmp = new SuperstructureAmp();
   private final SuperstructureCloseSpeaker superstructureCloseSpeaker = new SuperstructureCloseSpeaker();
   private final SuperstructureIntake superstructureIntake = new SuperstructureIntake();
+  
 
   //TODO Command to raise and lower the elevator
   //TODO Trap Command
@@ -125,7 +127,8 @@ public class RobotContainer {
     operatorController.x().whileTrue(superstructureAmp);
     operatorController.b().whileTrue(superstructureCloseSpeaker);
     rightJoystick.button(1).whileTrue(driveAndAimAtGoal);
-    operatorController.rightTrigger().whileTrue(ElevatorUp);
+    operatorController.rightTrigger().whileTrue(elevatorUp);
+    operatorController.leftTrigger().whileTrue(elevatorDown);
   }
 
   /**
