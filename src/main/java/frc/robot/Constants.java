@@ -58,6 +58,11 @@ public final class Constants {
   public static final int elevatorZero = 1; // Hall Effect
   public static final int anglerAbsoluteEncoder = 4; // REV Through Bore
 
+  // Limelights
+
+  public static final String limeLightRight = "limeLight1";
+  public static final String limeLightLeft = "limeLight2";
+
   public static class OperatorConstants {
     public static final int leftJoystick = 0;
     public static final int rightJoystick = 1;
