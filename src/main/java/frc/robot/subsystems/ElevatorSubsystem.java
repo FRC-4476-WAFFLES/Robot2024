@@ -89,7 +89,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   /**
    * Returns the current position of the elevator
-   * @return the current position of the elevator in ticks
+   * @return the current position of the elevator in rotations
    */
   public double getElevatorPosition(){
     return Elevator1.getPosition().getValueAsDouble();
@@ -97,10 +97,18 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   /**
    * Returns the target position of the elevator
-   * @return the target position of the elevator in ticks
+   * @return the target position of the elevator in rotations
    */
   public double getElevatorTargetPosition(){
     return elevatorTargetPosition;
+  }
+
+  public double rotationsToInches(double rotations){
+   return (rotations/19.0625)*(1.625*Math.PI);
+  }
+
+  public double inchesToRotations (double inches){
+    return (inches*19.0625)/(1.625/Math.PI);
   }
 
   //1.625 od winch 19.0625 ratio (Brandon is quite sure)
