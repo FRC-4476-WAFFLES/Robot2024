@@ -21,6 +21,7 @@ import frc.robot.commands.intake.*;
 import frc.robot.commands.shooter.*;
 import frc.robot.commands.superstructure.*;
 import frc.robot.commands.ActivateLightColour;
+import frc.robot.commands.ShootWhileMoving;
 import frc.robot.commands.drive.*;
 
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
@@ -81,7 +82,16 @@ public class RobotContainer {
     () -> rightJoystick.getX() * DriveConstants.maxAngularSpeed
   );
 
-  private final DriveAndPointAtTarget driveAndAimAtGoal = new DriveAndPointAtTarget(() -> leftJoystick.getY() * DriveConstants.maxSpeed, () -> leftJoystick.getX() * DriveConstants.maxSpeed, driveSubsystem::getAngleToGoal);
+  private final ShootWhileMoving shootWhileMoving = new ShootWhileMoving(
+    () -> leftJoystick.getY() * DriveConstants.maxSpeed, 
+    () -> leftJoystick.getX() * DriveConstants.maxSpeed
+  );
+
+  private final DriveAndPointAtTarget driveAndAimAtGoal = new DriveAndPointAtTarget(
+    () -> leftJoystick.getY() * DriveConstants.maxSpeed, 
+    () -> leftJoystick.getX() * DriveConstants.maxSpeed, 
+    driveSubsystem::getAngleToGoal
+  );
 
 
   /* Example path follower. Replace "Tests" with auto name from PathPlanner */
@@ -123,12 +133,23 @@ public class RobotContainer {
     operatorController.povLeft().whileTrue(intakeIn);
     operatorController.povRight().whileTrue(intakeOut);
     operatorController.rightBumper().whileTrue(scoreNote);
-    operatorController.leftBumper().whileTrue(spinUp);
     operatorController.x().whileTrue(superstructureAmp);
     operatorController.b().whileTrue(superstructureCloseSpeaker);
-    rightJoystick.button(1).whileTrue(driveAndAimAtGoal);
     operatorController.rightTrigger().whileTrue(elevatorUp);
     operatorController.leftTrigger().whileTrue(elevatorDown);
+
+    // Example of conditionally enabling shooting while moving (SWM)
+    // Left Joystick button 1 is stand-in button for enabling SWM, change this for driver preference
+    // Commands are bound in the following manner: 
+    // spinUp runs while (spinupButton && !(aimButton && swmButton)) == true
+    // driveAndAimAtGoal runs while (aimButton && !(spinupButton && swmButton)) == true
+    // shootWhileMoving runs while (aimButton && spinupButton && swmButton) == true
+    final var spinupButton = operatorController.leftBumper();
+    final var aimButton = rightJoystick.button(1);
+    final var swmButton = leftJoystick.button(1);
+    spinupButton.and(aimButton.and(swmButton).negate()).whileTrue(spinUp);
+    aimButton.and(spinupButton.and(swmButton).negate()).whileTrue(driveAndAimAtGoal);
+    aimButton.and(spinupButton).and(swmButton).whileTrue(shootWhileMoving);
   }
 
   /**
