@@ -7,9 +7,9 @@ package frc.robot.commands.superstructure;
 import edu.wpi.first.wpilibj2.command.Command;
 import static frc.robot.RobotContainer.*;
 
-public class SuperstructureIntake extends Command {
-  /** Creates a new SuperstructureIntake. */
-  public SuperstructureIntake() {
+public class SuperstuctureTrap extends Command {
+  /** Creates a new SuperstuctureTrap. */
+  public SuperstuctureTrap() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(elevatorSubsystem, anglerSubsystem);
   }
@@ -21,17 +21,18 @@ public class SuperstructureIntake extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    elevatorSubsystem.setElevatorTargetPosition(500);
-    anglerSubsystem.setAnglerTargetPosition(45);
+    elevatorSubsystem.setElevatorTargetPosition(5000);
+    anglerSubsystem.setAnglerTargetPosition(-10);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return anglerSubsystem.isGoodShooterAngle() && elevatorSubsystem.isGoodElevatorPosition();
+    return false;
   }
 }

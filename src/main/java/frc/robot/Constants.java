@@ -51,12 +51,17 @@ public final class Constants {
   
 
   // PWM outputs
-  public static final int lightsBlinkin = 9; // REV Blinkin
+  public static final int lightsBlinkin = 1; // REV Blinkin
 
   // Digital input
 
   public static final int elevatorZero = 1; // Hall Effect
   public static final int anglerAbsoluteEncoder = 4; // REV Through Bore
+
+  // Limelights
+
+  public static final String limeLightRight = "limeLight1";
+  public static final String limeLightLeft = "limeLight2";
 
   public static class OperatorConstants {
     public static final int leftJoystick = 0;
@@ -76,5 +81,11 @@ public final class Constants {
     public static final Pose2d redGoalPose = new Pose2d(1, 1, new Rotation2d(0));
     public static final Pose2d blueGoalPose = new Pose2d(1, 1, new Rotation2d(0));
 
+  }
+
+  public static class ElevatorConstants {
+    public static final double elevatorMinHeight = 5;
+    public static final double elevatorMaxHeight = 15;
+    public static final double elevatorTriggerConstantMultiplier = 5;
   }
 }

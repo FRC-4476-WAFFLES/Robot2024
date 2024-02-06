@@ -5,14 +5,17 @@
 package frc.robot.commands.elevator;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Constants;
+import frc.robot.Robot;
+import frc.robot.RobotContainer;
+
 import static frc.robot.RobotContainer.*;
 
-
-public class ElevatorHome extends Command {
-  /** Creates a new ElevatorMove. */
-  public ElevatorHome() {
+public class ElevatorDown extends Command {
+  /** Creates a new ElevatorDown. */
+  public ElevatorDown() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(elevatorSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -21,7 +24,14 @@ public class ElevatorHome extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+
+    // Move elevator down if left trigger is held
+    if (elevatorSubsystem.getElevatorTargetPosition() > Constants.ElevatorConstants.elevatorMinHeight && elevatorSubsystem.getElevatorTargetPosition() < Constants.ElevatorConstants.elevatorMaxHeight) {
+      elevatorSubsystem.adjustTargetPosition(operatorController.getLeftTriggerAxis() * Constants.ElevatorConstants.elevatorTriggerConstantMultiplier * -1);
+    }
+
+  }
 
   // Called once the command ends or is interrupted.
   @Override

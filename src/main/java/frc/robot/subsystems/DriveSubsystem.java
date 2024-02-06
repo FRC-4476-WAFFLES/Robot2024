@@ -1,5 +1,4 @@
 package frc.robot.subsystems;
-
 import java.util.function.Supplier;
 
 import com.ctre.phoenix6.Utils;
@@ -20,11 +19,13 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
 import frc.robot.generated.TunerConstants;
+import frc.robot.utils.LimelightHelpers;
 
 /**
  * Class that extends the Phoenix SwerveDrivetrain class and implements subsystem
@@ -108,6 +109,24 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
             updateSimState(deltaTime, RobotController.getBatteryVoltage());
         });
         m_simNotifier.startPeriodic(kSimLoopPeriod);
+    }
+
+    public void updateOdometryFromLimeLight() {
+        LimelightHelpers.Results limeLightRightResult = LimelightHelpers.getLatestResults(Constants.limeLightRight).targetingResults;
+        LimelightHelpers.Results limeLightLeftResult = LimelightHelpers.getLatestResults(Constants.limeLightLeft).targetingResults;
+
+        if (limeLightRightResult.valid
+        && limeLightLeftResult.valid && Math.abs(getCurrentRobotChassisSpeeds().vxMetersPerSecond) < 1 
+        && Math.abs(getCurrentRobotChassisSpeeds().vyMetersPerSecond) < 1 
+        && Math.abs(getCurrentRobotChassisSpeeds().omegaRadiansPerSecond) < 1) 
+        {
+            this.m_odometry.addVisionMeasurement(limeLightRightResult.getBotPose2d_wpiBlue(), Timer.getFPGATimestamp()
+            - (limeLightRightResult.latency_capture / 1000.0)
+            - (limeLightRightResult.latency_pipeline / 1000.0));
+            this.m_odometry.addVisionMeasurement(limeLightLeftResult.getBotPose2d_wpiBlue(), Timer.getFPGATimestamp()
+            - (limeLightLeftResult.latency_capture / 1000.0)
+            - (limeLightLeftResult.latency_pipeline / 1000.0));
+        }
     }
 
     public Rotation2d getAngleToGoal() {
