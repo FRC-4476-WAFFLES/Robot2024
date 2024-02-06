@@ -51,7 +51,7 @@ public final class Constants {
   
 
   // PWM outputs
-  public static final int lightsBlinkin = 9; // REV Blinkin
+  public static final int lightsBlinkin = 1; // REV Blinkin
 
   // Digital input
 
