@@ -15,6 +15,16 @@ import static frc.robot.RobotContainer.*;
 public class ShootWhileMoving extends DriveAndPointAtTarget {
   static Rotation2d targetHeading;
 
+  /** Basic multiplier to tune to account for air resistance.
+   *  Make this less than 1 to have robot turn less to account for tangential motion.
+   *  Make this greater than 1 to have robot turn more. */
+  private double tangentialMultiplier = 1.0;
+
+  /** Basic multiplier to tune to account for air resistance.
+   *  Make this less than 1 to have shooter change angle less to account for radial motion.
+   *  Make this greater than 1 to have shooter angle more. */
+  private double radialMultiplier = 1.0;
+
   /** Creates a new ShootWhileMoving. */
   public ShootWhileMoving(DoubleSupplier xVelocitySupplier, DoubleSupplier yVelocitySupplier) {
     super(xVelocitySupplier, yVelocitySupplier, () -> targetHeading);
@@ -52,13 +62,13 @@ public class ShootWhileMoving extends DriveAndPointAtTarget {
     double v_shooter_y = v_shooter * Math.sin(theta_shooter);
 
     // Angle robot to cancel out tangential velocity of projectile relative to goal
-    targetHeading = new Rotation2d(Math.asin(-v_tangential / v_shooter_x));
+    targetHeading = new Rotation2d(Math.asin(-v_tangential / v_shooter_x * tangentialMultiplier));
 
     // Calculate radial velocity of projectile
     double v_projectile_radial = v_shooter_x * targetHeading.getCos() + v_radial;
 
     // Calculate new vertical velocity of shooter based on the ratio of original to new shooter horizontal velocity
-    double v_shooterNew_y = Math.sqrt(v_shooter_x / v_projectile_radial) * v_shooter_y;
+    double v_shooterNew_y = Math.sqrt(v_shooter_x / v_projectile_radial) * v_shooter_y * radialMultiplier;
 
     double theta_shooterNew = Math.atan2(v_shooterNew_y, v_projectile_radial);
 
