@@ -134,6 +134,7 @@ public class RobotContainer {
     rightJoystick.button(1).whileTrue(driveAndAimAtGoal);
     operatorController.rightTrigger().whileTrue(elevatorUp);
     operatorController.leftTrigger().whileTrue(elevatorDown);
+
   }
 
   /**
@@ -145,6 +146,7 @@ public class RobotContainer {
     // Add other commands to be able to run them in autos
     NamedCommands.registerCommand("intakeIn", intakeIn);
     NamedCommands.registerCommand("scoreNote", scoreNote);
+
   }
 
   /**

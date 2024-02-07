@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
+import com.ctre.phoenix.SignalLogger;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -32,8 +34,14 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+
+    //WPI Logger
     DataLogManager.start();
     DriverStation.startDataLog(DataLogManager.getLog());
+
+    // CTRE Logger
+    SignalLogger.start();
+
   }
 
   /**
