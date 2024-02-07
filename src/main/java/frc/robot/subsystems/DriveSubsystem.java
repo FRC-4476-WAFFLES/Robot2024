@@ -1,4 +1,5 @@
 package frc.robot.subsystems;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import com.ctre.phoenix6.Utils;
@@ -6,8 +7,10 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrain;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrainConstants;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
+import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
@@ -36,7 +39,11 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
     private Notifier m_simNotifier = null;
     private double m_lastSimTime;
 
-    private final SwerveRequest.ApplyChassisSpeeds autoRequest = new SwerveRequest.ApplyChassisSpeeds();
+    private final SwerveRequest.ApplyChassisSpeeds autoRequest = new SwerveRequest.ApplyChassisSpeeds()
+        .withDriveRequestType(DriveRequestType.Velocity);
+
+    private boolean autoSWM = false;
+    private Rotation2d autoSWMHeading = new Rotation2d();
 
     public DriveSubsystem(SwerveDrivetrainConstants driveTrainConstants, double OdometryUpdateFrequency, SwerveModuleConstants... modules) {
         super(driveTrainConstants, OdometryUpdateFrequency, modules);
@@ -60,20 +67,32 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
         }
 
         AutoBuilder.configureHolonomic(
-            ()->this.getState().Pose, // Supplier of current robot pose
+            this::getRobotPose, // Supplier of current robot pose
             this::seedFieldRelative,  // Consumer for seeding pose against auto
             this::getCurrentRobotChassisSpeeds,
             (speeds)->this.setControl(autoRequest.withSpeeds(speeds)), // Consumer of ChassisSpeeds to drive the robot
             new HolonomicPathFollowerConfig(
                 new PIDConstants(10, 0, 0), // TODO: Tune path following PID
-                    new PIDConstants(10, 0, 0),
-                    TunerConstants.kSpeedAt12VoltsMps,
-                    driveBaseRadius,
-                    new ReplanningConfig()
-                ),
-            ()->false, // TODO: Change this if the path needs to be flipped on red vs blue
+                new PIDConstants(10, 0, 0),
+                TunerConstants.kSpeedAt12VoltsMps,
+                driveBaseRadius,
+                new ReplanningConfig()
+            ),
+            () -> {
+                // Boolean supplier that controls when the path will be mirrored for the red alliance
+                // This will flip the path being followed to the red side of the field.
+                // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+  
+                var alliance = DriverStation.getAlliance();
+                if (alliance.isPresent()) {
+                    return alliance.get() == DriverStation.Alliance.Red;
+                }
+                return false;
+            },
             this // Add this subsystem to requirements
         );
+
+        PPHolonomicDriveController.setRotationTargetOverride(this::getRotationTargetOverride);
     }
 
     public Command applyRequest(Supplier<SwerveRequest> requestSupplier) {
@@ -82,6 +101,25 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
 
     public Command getAutoPath(String pathName) {
         return new PathPlannerAuto(pathName);
+    }
+
+    public Optional<Rotation2d> getRotationTargetOverride(){
+        // If SWM in auto
+        if(autoSWM) {
+            // Return an optional containing the rotation override (this should be a field relative rotation)
+            return Optional.of(autoSWMHeading);
+        } else {
+            // return an empty optional when we don't want to override the path's rotation
+            return Optional.empty();
+        }
+    }
+
+    public boolean isAutoSWM() {
+        return autoSWM;
+    }
+
+    public void setAutoSWM(boolean autoSWM) {
+        this.autoSWM = autoSWM;
     }
 
     public ChassisSpeeds getCurrentRobotChassisSpeeds() {
