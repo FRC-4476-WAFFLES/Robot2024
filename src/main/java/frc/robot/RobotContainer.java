@@ -23,10 +23,11 @@ import frc.robot.commands.superstructure.*;
 import frc.robot.commands.ActivateLightColour;
 import frc.robot.commands.drive.*;
 
-import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
-import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
-import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.SteerRequestType;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -83,17 +84,14 @@ public class RobotContainer {
 
   private final DriveAndPointAtTarget driveAndAimAtGoal = new DriveAndPointAtTarget(() -> leftJoystick.getY() * DriveConstants.maxSpeed, () -> leftJoystick.getX() * DriveConstants.maxSpeed, driveSubsystem::getAngleToGoal);
 
-
-  /* Example path follower. Replace "Tests" with auto name from PathPlanner */
-  private Command exampleAuto = driveSubsystem.getAutoPath("Tests");
+  private final SendableChooser<Command> autoChooser;
 
   private final Telemetry logger = new Telemetry(DriveConstants.maxSpeed);
 
-  // Configure swerve requests for teleop driving and automatic rotation alignment
-  private final SwerveRequest.FieldCentricFacingAngle pointAtAngle = new SwerveRequest.FieldCentricFacingAngle();
-
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    // Register named commands for auto
+    registerNamedCommands();
     // Configure the trigger bindings
     configureBindings();
 
@@ -101,6 +99,13 @@ public class RobotContainer {
     driveSubsystem.setDefaultCommand(driveTeleop);
 
     driveSubsystem.registerTelemetry(logger::telemeterize);
+
+    // Build an auto chooser. This will use Commands.none() as the default option.
+    // Another option is to specify the default auto by its name
+    // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
+    autoChooser = AutoBuilder.buildAutoChooser();
+
+    SmartDashboard.putData("Auto Chooser", autoChooser);
   }
 
   /**
@@ -129,6 +134,19 @@ public class RobotContainer {
     rightJoystick.button(1).whileTrue(driveAndAimAtGoal);
     operatorController.rightTrigger().whileTrue(elevatorUp);
     operatorController.leftTrigger().whileTrue(elevatorDown);
+
+  }
+
+  /**
+   * Use this method to define name->command mappings. Names will be used by PathPlanner to 
+   * call commands in full autos. 
+   */
+  private void registerNamedCommands() {
+    // Register Named Commands
+    // Add other commands to be able to run them in autos
+    NamedCommands.registerCommand("intakeIn", intakeIn);
+    NamedCommands.registerCommand("scoreNote", scoreNote);
+
   }
 
   /**
@@ -137,6 +155,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return exampleAuto;
+    return autoChooser.getSelected();
   }
 }
