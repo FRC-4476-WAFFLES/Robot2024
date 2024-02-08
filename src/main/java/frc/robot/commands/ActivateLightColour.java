@@ -10,6 +10,7 @@ import frc.robot.subsystems.LightSubsystem.LightColours;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.AnglerSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
+import edu.wpi.first.wpilibj.Timer;
 
 import static frc.robot.RobotContainer.*;
 
@@ -17,42 +18,48 @@ public class ActivateLightColour extends Command {
   /** Creates a new ActivateLightColour. */
   public ActivateLightColour() {
     // Use addRequirements() here to declare subsystem dependencies.
-
     addRequirements(lightSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
-    // Calls these methods
-    boolean readytoScore = true;
     ShooterSubsystem shooter = new ShooterSubsystem();
     IntakeSubsystem intake = new IntakeSubsystem();
     AnglerSubsystem angler = new AnglerSubsystem();
     ElevatorSubsystem elevator = new ElevatorSubsystem();
     
-    // Sets default colours
-    lightSubsystem.setLightColour(LightColours.RED);
-
     // If certain conditions are fufilled, the robot's lights change colours
-    if (readytoScore) {
-        lightSubsystem.setLightColour(LightColours.LAWNGREEN);
-      } else if (intake.isNote() == true) {
-        lightSubsystem.setLightColour(LightColours.DARKGREEN);
-      } else if (shooter.isGoodSpeed() && angler.isGoodShooterAngle() && elevator.isGoodElevatorPosition()) {
-        lightSubsystem.setLightColour(LightColours.DARKGREEN);
-      } else if (angler.isGoodShooterAngle()) {
-        lightSubsystem.setLightColour(LightColours.YELLOW);
-      } else if (shooter.isGoodSpeed()) {
-        lightSubsystem.setLightColour(LightColours.ORANGE);
-      } else if (elevator.isGoodElevatorPosition()) {
-        lightSubsystem.setLightColour(LightColours.VIOLET);
-      }
+    if(shooter.isGoodSpeed() && angler.isGoodShooterAngle() && elevator.isGoodElevatorPosition()){
+      // Ready to shoot  
+      lightSubsystem.blinkBetweenColours(LightColours.LAWNGREEN, LightColours.BLACK);
+    } 
+    else if (17 < Timer.getMatchTime() && Timer.getMatchTime() < 23){
+      // Endgame warning
+      lightSubsystem.blinkBetweenColours(LightColours.RED, LightColours.WHITE);
+    }
+    else if (intake.isRunning()){
+      // Intake running
+      lightSubsystem.blinkBetweenColours(LightColours.YELLOW, LightColours.BLACK);
+    }
+    else if(intake.isNote()){
+      // Note in Intake
+      lightSubsystem.blinkBetweenColours(LightColours.VIOLET, LightColours.BLACK);
+    }
+    else if (shooter.isNote()) {
+      // Note in Shooter
+      lightSubsystem.setLightColour(LightColours.VIOLET);
+    }
+    else {
+      // Default
+      lightSubsystem.setLightColour(LightColours.YELLOW);
+    }
         
       
 

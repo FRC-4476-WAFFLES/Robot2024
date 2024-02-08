@@ -69,4 +69,12 @@ public class IntakeSubsystem extends SubsystemBase {
   public boolean isNote() {
     return intakeIR.getProximity() > IR_RANGE;
   }
+  /**
+   * Returns if the intake is running
+   * @return true: if intake is running
+   * <li>false: if intake is not running</li>
+   */
+  public boolean isRunning() {
+    return IntakeSpeed != 0;
+  } 
 }
