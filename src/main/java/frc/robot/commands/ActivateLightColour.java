@@ -31,10 +31,10 @@ public class ActivateLightColour extends Command {
 
     // Calls these methods
     boolean readytoScore = true;
-    ShooterSubsystem shooterLinedUp = new ShooterSubsystem();
-    IntakeSubsystem intakedGamePiece = new IntakeSubsystem();
-    AnglerSubsystem anglerLinedUp = new AnglerSubsystem();
-    ElevatorSubsystem elevatorLinedUp = new ElevatorSubsystem();
+    ShooterSubsystem shooter = new ShooterSubsystem();
+    IntakeSubsystem intake = new IntakeSubsystem();
+    AnglerSubsystem angler = new AnglerSubsystem();
+    ElevatorSubsystem elevator = new ElevatorSubsystem();
     
     // Sets default colours
     lightSubsystem.setLightColour(LightColours.RED);
@@ -42,15 +42,15 @@ public class ActivateLightColour extends Command {
     // If certain conditions are fufilled, the robot's lights change colours
     if (readytoScore) {
         lightSubsystem.setLightColour(LightColours.LAWNGREEN);
-      } else if (intakedGamePiece.isNote() == true) {
+      } else if (intake.isNote() == true) {
         lightSubsystem.setLightColour(LightColours.DARKGREEN);
-      } else if (shooterLinedUp.isGoodSpeed() && anglerLinedUp.isGoodShooterAngle() && elevatorLinedUp.isGoodElevatorPosition()) {
+      } else if (shooter.isGoodSpeed() && angler.isGoodShooterAngle() && elevator.isGoodElevatorPosition()) {
         lightSubsystem.setLightColour(LightColours.DARKGREEN);
-      } else if (anglerLinedUp.isGoodShooterAngle()) {
+      } else if (angler.isGoodShooterAngle()) {
         lightSubsystem.setLightColour(LightColours.YELLOW);
-      } else if (shooterLinedUp.isGoodSpeed()) {
+      } else if (shooter.isGoodSpeed()) {
         lightSubsystem.setLightColour(LightColours.ORANGE);
-      } else if (elevatorLinedUp.isGoodElevatorPosition()) {
+      } else if (elevator.isGoodElevatorPosition()) {
         lightSubsystem.setLightColour(LightColours.VIOLET);
       }
         
