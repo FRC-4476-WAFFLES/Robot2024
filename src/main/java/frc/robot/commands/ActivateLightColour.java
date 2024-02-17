@@ -5,11 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LightSubsystem.LightColours;
-import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.subsystems.AnglerSubsystem;
-import frc.robot.subsystems.ElevatorSubsystem;
 import edu.wpi.first.wpilibj.Timer;
 
 import static frc.robot.RobotContainer.*;
