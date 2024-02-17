@@ -29,14 +29,9 @@ public class ActivateLightColour extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    ShooterSubsystem shooter = new ShooterSubsystem();
-    IntakeSubsystem intake = new IntakeSubsystem();
-    AnglerSubsystem angler = new AnglerSubsystem();
-    ElevatorSubsystem elevator = new ElevatorSubsystem();
     
     // If certain conditions are fufilled, the robot's lights change colours
-    if(shooter.isGoodSpeed() && angler.isGoodShooterAngle() && elevator.isGoodElevatorPosition()){
+    if(shooterSubsystem.isGoodSpeed() && anglerSubsystem.isGoodShooterAngle() && elevatorSubsystem.isGoodElevatorPosition()){
       // Ready to shoot  
       lightSubsystem.blinkBetweenColours(LightColours.LAWNGREEN, LightColours.BLACK);
     } 
@@ -44,15 +39,15 @@ public class ActivateLightColour extends Command {
       // Endgame warning
       lightSubsystem.blinkBetweenColours(LightColours.RED, LightColours.WHITE);
     }
-    else if (intake.isRunning()){
+    else if (intakeSubsystem.isRunning()){
       // Intake running
       lightSubsystem.blinkBetweenColours(LightColours.YELLOW, LightColours.BLACK);
     }
-    else if(intake.isNote()){
+    else if(intakeSubsystem.isNote()){
       // Note in Intake
       lightSubsystem.blinkBetweenColours(LightColours.VIOLET, LightColours.BLACK);
     }
-    else if (shooter.isNote()) {
+    else if (shooterSubsystem.isNote()) {
       // Note in Shooter
       lightSubsystem.setLightColour(LightColours.VIOLET);
     }
