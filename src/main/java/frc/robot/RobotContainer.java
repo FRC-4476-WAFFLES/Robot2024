@@ -73,7 +73,6 @@ public class RobotContainer {
   private final SuperstructureIntake superstructureIntake  = null; //= new SuperstructureIntake();
   
 
-  //TODO Command to raise and lower the elevator
   //TODO Trap Command
 
   private final DriveTeleop driveTeleop = new DriveTeleop(
