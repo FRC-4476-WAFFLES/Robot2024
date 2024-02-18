@@ -59,7 +59,7 @@ public class LightSubsystem extends SubsystemBase {
   }
 
   /** Creates a new LightController. */
-  public LightSubsystem() {
+public LightSubsystem() {
     blinkTimer.reset();
     blinkTimer.start();
   }

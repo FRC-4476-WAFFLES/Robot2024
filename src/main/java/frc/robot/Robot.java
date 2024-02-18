@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
-import com.ctre.phoenix.SignalLogger;
+//import com.ctre.phoenix.SignalLogger;
 
 
 /**
@@ -40,7 +40,7 @@ public class Robot extends TimedRobot {
     DriverStation.startDataLog(DataLogManager.getLog());
 
     // CTRE Logger
-    SignalLogger.start();
+   // SignalLogger.start();
 
   }
 

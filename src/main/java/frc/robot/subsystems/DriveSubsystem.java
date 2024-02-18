@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
@@ -196,5 +197,18 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
         double distance = poseOfGoal.minus(getRobotPose()).getTranslation().getNorm();
         
         return distance;
+    }
+
+    public void periodic() {
+        for(int i = 0; i <=3; i++) {
+            // Target position and speed
+            SmartDashboard.putNumber("module" + String.valueOf(i) + "TargetPosition", getModule(i).getTargetState().angle.getDegrees());
+            SmartDashboard.putNumber("module" + String.valueOf(i) + "TargetSpeed", getModule(i).getTargetState().speedMetersPerSecond);
+
+            // Current position and speed
+            SmartDashboard.putNumber("module" + String.valueOf(i) + "CurrentPosition", getModule(i).getCurrentState().angle.getDegrees());
+            SmartDashboard.putNumber("module" + String.valueOf(i) + "CurrentSpeed", getModule(i).getCurrentState().speedMetersPerSecond);
+        }
+        
     }
 }

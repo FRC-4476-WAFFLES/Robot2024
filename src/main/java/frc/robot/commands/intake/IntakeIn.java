@@ -5,14 +5,15 @@
 package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.superstructure.*;
+//import frc.robot.commands.superstructure.*;
 
 import static frc.robot.RobotContainer.*;
 public class IntakeIn extends Command {
   /** Creates a new IntakeMove. */
   public IntakeIn() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(intakeSubsystem, anglerSubsystem, elevatorSubsystem);
+   // addRequirements(intakeSubsystem, anglerSubsystem, elevatorSubsystem);
+   addRequirements(intakeSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -25,36 +26,37 @@ public class IntakeIn extends Command {
   @Override
   public void execute() {
 
-    SuperstructureIntake superstructureIntakePosition = new SuperstructureIntake();
+    // SuperstructureIntake superstructureIntakePosition = new SuperstructureIntake();
 
-    superstructureIntakePosition.execute();
+    // superstructureIntakePosition.execute();
 
-    if (shooterSubsystem.isNote()) {
-      // If a note is in the shooter feeder or intake, stop intake
-      intakeSubsystem.SetIntakeSpeed(0);
-      shooterSubsystem.setFeederTargetSpeed(0);
-    } 
-    else if (superstructureIntakePosition.isFinished()) {
-      // If robot is ready, intake with feeder
-      intakeSubsystem.SetIntakeSpeed(1);
-      shooterSubsystem.setFeederTargetSpeed(1);
-    }
-    else if (intakeSubsystem.isNote()) {
-      // If a note is in the intake, stop intake until robot shooter is in position
-      intakeSubsystem.SetIntakeSpeed(0);
-    }
-    else {
-      // If robot is not ready, intake without feeder
-      intakeSubsystem.SetIntakeSpeed(1);
-    }
+    // if (shooterSubsystem.isNote()) {
+    //   // If a note is in the shooter feeder or intake, stop intake
+    //   intakeSubsystem.SetIntakeSpeed(0);
+    //   shooterSubsystem.setFeederTargetSpeed(0);
+    // } 
+    // else if (superstructureIntakePosition.isFinished()) {
+    //   // If robot is ready, intake with feeder
+    //   intakeSubsystem.SetIntakeSpeed(1);
+    //   shooterSubsystem.setFeederTargetSpeed(1);
+    // }
+    // else if (intakeSubsystem.isNote()) {
+    //   // If a note is in the intake, stop intake until robot shooter is in position
+    //   intakeSubsystem.SetIntakeSpeed(0);
+    // }
+    // else {
+    //   // If robot is not ready, intake without feeder
+    //   intakeSubsystem.SetIntakeSpeed(1);
+    // }
+    intakeSubsystem.SetIntakeSpeed(1);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     intakeSubsystem.SetIntakeSpeed(0);
-    SuperstructureIntake superstructureIntakePosition = new SuperstructureIntake();
-    superstructureIntakePosition.end(interrupted);
+    // SuperstructureIntake superstructureIntakePosition = new SuperstructureIntake();
+    // superstructureIntakePosition.end(interrupted);
   }
 
   // Returns true when the command should end.

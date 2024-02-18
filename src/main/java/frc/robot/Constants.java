@@ -46,6 +46,7 @@ public final class Constants {
   public static final int frontRightAbsoluteEncoder = 24; // CANcoder
   public static final int backLeftAbsoluteEncoder = 25; // CANcoder
   public static final int backRightAbsoluteEncoder = 26; // CANcoder
+  public static final int pidgeon = 27;
 
 
   

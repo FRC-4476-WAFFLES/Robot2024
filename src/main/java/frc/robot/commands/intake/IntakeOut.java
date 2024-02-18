@@ -34,7 +34,7 @@ public class IntakeOut extends Command {
      intakeSubsystem.SetIntakeSpeed(0);
      
      
-     shooterSubsystem.setFeederTargetSpeed(-1);
+     //shooterSubsystem.setFeederTargetSpeed(-1);
   }
   
 

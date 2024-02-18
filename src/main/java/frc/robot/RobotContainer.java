@@ -52,37 +52,37 @@ public class RobotContainer {
   public double leftTriggerStrength = 1;
 
   // The robot's subsystems 
-  public static final LightSubsystem lightSubsystem = new LightSubsystem();
-  public static final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
+  public static final LightSubsystem lightSubsystem = null; //new LightSubsystem();
+  public static final ElevatorSubsystem elevatorSubsystem = null; // new ElevatorSubsystem();
   public static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-  public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-  public static final AnglerSubsystem anglerSubsystem = new AnglerSubsystem();
+  public static final ShooterSubsystem shooterSubsystem  = null; //= new ShooterSubsystem();
+  public static final AnglerSubsystem anglerSubsystem  = null; //= new AnglerSubsystem();
   public static final DriveSubsystem driveSubsystem = TunerConstants.DriveTrain;
 
   //The Robots Commands
-  private final ActivateLightColour updateLights = new ActivateLightColour();
-  private final ElevatorUp elevatorUp = new ElevatorUp();
-  private final ElevatorDown elevatorDown = new ElevatorDown();
+  private final ActivateLightColour updateLights = null; // = new ActivateLightColour();
+  private final ElevatorUp elevatorUp  = null; //= new ElevatorUp();
+  private final ElevatorDown elevatorDown  = null; //= new ElevatorDown();
   private final IntakeIn intakeIn = new IntakeIn();
   private final IntakeOut intakeOut = new IntakeOut();
-  private final ScoreNote scoreNote = new ScoreNote();
-  private final SpinUp spinUp = new SpinUp();
-  private final SuperstructureHome superstructureHome = new SuperstructureHome();
-  private final SuperstructureAmp superstructureAmp = new SuperstructureAmp();
-  private final SuperstructureCloseSpeaker superstructureCloseSpeaker = new SuperstructureCloseSpeaker();
-  private final SuperstructureIntake superstructureIntake = new SuperstructureIntake();
+  private final ScoreNote scoreNote  = null; //= new ScoreNote();
+  private final SpinUp spinUp  = null; //= new SpinUp();
+  private final SuperstructureHome superstructureHome  = null; //= new SuperstructureHome();
+  private final SuperstructureAmp superstructureAmp = null; // = new SuperstructureAmp();
+  private final SuperstructureCloseSpeaker superstructureCloseSpeaker  = null; //= new SuperstructureCloseSpeaker();
+  private final SuperstructureIntake superstructureIntake  = null; //= new SuperstructureIntake();
   
 
   //TODO Command to raise and lower the elevator
   //TODO Trap Command
 
   private final DriveTeleop driveTeleop = new DriveTeleop(
-    () -> leftJoystick.getY() * DriveConstants.maxSpeed, 
-    () -> leftJoystick.getX() * DriveConstants.maxSpeed, 
-    () -> rightJoystick.getX() * DriveConstants.maxAngularSpeed
+    () -> -leftJoystick.getY() * DriveConstants.maxSpeed, 
+    () -> -leftJoystick.getX() * DriveConstants.maxSpeed, 
+    () -> -rightJoystick.getX() * DriveConstants.maxAngularSpeed
   );
 
-  private final DriveAndPointAtTarget driveAndAimAtGoal = new DriveAndPointAtTarget(() -> leftJoystick.getY() * DriveConstants.maxSpeed, () -> leftJoystick.getX() * DriveConstants.maxSpeed, driveSubsystem::getAngleToGoal);
+  // private final DriveAndPointAtTarget driveAndAimAtGoal = new DriveAndPointAtTarget(() -> leftJoystick.getY() * DriveConstants.maxSpeed, () -> leftJoystick.getX() * DriveConstants.maxSpeed, driveSubsystem::getAngleToGoal);
 
   private final SendableChooser<Command> autoChooser;
 
@@ -95,7 +95,7 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
 
-    lightSubsystem.setDefaultCommand(updateLights);
+    // lightSubsystem.setDefaultCommand(updateLights);
     driveSubsystem.setDefaultCommand(driveTeleop);
 
     driveSubsystem.registerTelemetry(logger::telemeterize);
@@ -127,13 +127,13 @@ public class RobotContainer {
 
     operatorController.povLeft().whileTrue(intakeIn);
     operatorController.povRight().whileTrue(intakeOut);
-    operatorController.rightBumper().whileTrue(scoreNote);
-    operatorController.leftBumper().whileTrue(spinUp);
-    operatorController.x().whileTrue(superstructureAmp);
-    operatorController.b().whileTrue(superstructureCloseSpeaker);
-    rightJoystick.button(1).whileTrue(driveAndAimAtGoal);
-    operatorController.rightTrigger().whileTrue(elevatorUp);
-    operatorController.leftTrigger().whileTrue(elevatorDown);
+    // operatorController.rightBumper().whileTrue(scoreNote);
+    // operatorController.leftBumper().whileTrue(spinUp);
+    // operatorController.x().whileTrue(superstructureAmp);
+    // operatorController.b().whileTrue(superstructureCloseSpeaker);
+    // rightJoystick.button(1).whileTrue(driveAndAimAtGoal);
+    // operatorController.rightTrigger().whileTrue(elevatorUp);
+    // operatorController.leftTrigger().whileTrue(elevatorDown);
 
   }
 
@@ -144,8 +144,8 @@ public class RobotContainer {
   private void registerNamedCommands() {
     // Register Named Commands
     // Add other commands to be able to run them in autos
-    NamedCommands.registerCommand("intakeIn", intakeIn);
-    NamedCommands.registerCommand("scoreNote", scoreNote);
+    // NamedCommands.registerCommand("intakeIn", intakeIn);
+    // NamedCommands.registerCommand("scoreNote", scoreNote);
 
   }
 
