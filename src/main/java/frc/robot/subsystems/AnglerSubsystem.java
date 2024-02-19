@@ -4,14 +4,19 @@
 
 package frc.robot.subsystems;
 
+import java.sql.Driver;
+
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.PositionVoltage;
+import com.ctre.phoenix6.controls.StaticBrake;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -23,14 +28,14 @@ public class AnglerSubsystem extends SubsystemBase {
 
   private final DutyCycleEncoder anglerAbsoluteEncoder;
 
-  private final double ANGLER_ENCODER_RESOLUTION = 2048;
-  private final double ANGLER_GEARBOX_REDUCTION = 250;
-  private final double TICKS_TO_ANGLER_DEGREES = (ANGLER_ENCODER_RESOLUTION / 360) * ANGLER_GEARBOX_REDUCTION;
-  private final double ZeroConversion = -10;
-  private final double AbsolouteEncoderOffset = 90;
-  private final double FakeToReal = AbsolouteEncoderOffset + ZeroConversion;
+  private final double ANGLER_GEARBOX_REDUCTION = 250; // Ratio
+  private final double ROTATIONS_TO_DEGREES = ANGLER_GEARBOX_REDUCTION*360; // Degrees
+  private final double ZeroConversion = -9.79; // Degrees
+  private final double AbsolouteEncoderOffset = 0.1; // Rotations
+  private final double CONVERSION_ABS_TO_GOOD_DEGREES = AbsolouteEncoderOffset*360 + ZeroConversion; // Degrees
   private final double ConvertedAbsolouteAngle;
   private final double ANGLER_DEAD_ZONE = 4;
+  private boolean no_move = false;
   private final CurrentLimitsConfigs currentLimitsConfig;
 
   private double anglerTargetPosition = 0;
@@ -66,40 +71,52 @@ public class AnglerSubsystem extends SubsystemBase {
     angler.setPosition(0);
 
     angler.getConfigurator().apply(generalConfigs);
+    angler.setNeutralMode(NeutralModeValue.Brake);
 
     angler.getConfigurator().apply(anglerSlot0Configs);
 
     // Configuration of relative encoder to absolute encoder for the angler
-    if ((anglerAbsoluteEncoder.getAbsolutePosition() + FakeToReal) > 360) {
-      ConvertedAbsolouteAngle = anglerAbsoluteEncoder.getAbsolutePosition() + FakeToReal - 360;
-    }
-    else {
-      ConvertedAbsolouteAngle = anglerAbsoluteEncoder.getAbsolutePosition() + FakeToReal;
+
+    if(anglerAbsoluteEncoder.getAbsolutePosition() > Constants.ShooterConstants.anglerUpperLimit || 
+    anglerAbsoluteEncoder.getAbsolutePosition() < Constants.ShooterConstants.anglerLowerLimit) {
+      // Print error message
+      
+      no_move = true;
     }
 
-    angler.setPosition(ConvertedAbsolouteAngle * TICKS_TO_ANGLER_DEGREES);
+    if ((anglerAbsoluteEncoder.getAbsolutePosition()*360 + CONVERSION_ABS_TO_GOOD_DEGREES) > 360) {
+      ConvertedAbsolouteAngle = anglerAbsoluteEncoder.getAbsolutePosition()*360 + CONVERSION_ABS_TO_GOOD_DEGREES - 360;
+    }
+    else {
+      ConvertedAbsolouteAngle = anglerAbsoluteEncoder.getAbsolutePosition()*360 + CONVERSION_ABS_TO_GOOD_DEGREES;
+    }
+
+    angler.setPosition(ConvertedAbsolouteAngle * ROTATIONS_TO_DEGREES);
 
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    if(!no_move){
+      // Angler motion profiling
+      final TrapezoidProfile anglerTrapezoidProfile = new TrapezoidProfile (new TrapezoidProfile.Constraints(90,20));
 
-    // Angler motion profiling
-    final TrapezoidProfile anglerTrapezoidProfile = new TrapezoidProfile (new TrapezoidProfile.Constraints(90,20));
+      // Set angler position with limits to not damage robot
+      anglerTargetPosition = MathUtil.clamp(anglerTargetPosition, Constants.ShooterConstants.anglerLowerLimit, Constants.ShooterConstants.anglerUpperLimit);
 
-    // Set angler position with limits to not damage robot
-    anglerTargetPosition = MathUtil.clamp(anglerTargetPosition, Constants.ShooterConstants.anglerLowerLimit, Constants.ShooterConstants.anglerUpperLimit);
+      TrapezoidProfile.State anglerGoal = new TrapezoidProfile.State(anglerTargetPosition,0);
+      TrapezoidProfile.State anglerSetpoint = new TrapezoidProfile.State();
+      
+      final PositionVoltage anglerRequest = new PositionVoltage(0).withSlot(0);
 
-    TrapezoidProfile.State anglerGoal = new TrapezoidProfile.State(anglerTargetPosition,0);
-    TrapezoidProfile.State anglerSetpoint = new TrapezoidProfile.State();
-    
-    final PositionVoltage anglerRequest = new PositionVoltage(0).withSlot(0);
+      anglerSetpoint = anglerTrapezoidProfile.calculate(0.020, anglerSetpoint, anglerGoal);
 
-    anglerSetpoint = anglerTrapezoidProfile.calculate(0.020, anglerSetpoint, anglerGoal);
-
-    anglerRequest.Position = anglerSetpoint.position;
-
+      anglerRequest.Position = anglerSetpoint.position;
+    }
+    else {
+      DriverStation.reportError("Angler Absolute Encoder is out of bounds", false);
+    }
     SmartDashboard.putNumber("Angler Setpoint", anglerSetpoint.position);
     SmartDashboard.putNumber("Angler Position", angler.getPosition().getValueAsDouble());
     SmartDashboard.putNumber("Throughbore Calculated", ConvertedAbsolouteAngle);
