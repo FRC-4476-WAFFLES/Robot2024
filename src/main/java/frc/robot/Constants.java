@@ -70,9 +70,9 @@ public final class Constants {
     public static final int kDriverControllerPort = 2;
   }
   public static class ShooterConstants {
-    public static final double anglerUpperLimit = 40; // degrees
-    public static final double anglerLowerLimit = -10;// degrees
-    public static final double anglerUpperLimitInRotations = 1; // rotations
+    public static final double anglerUpperLimit = 119; // degrees
+    public static final double anglerLowerLimit = 23;// degrees
+    public static final double anglerUpperLimitInRotations = 0.868; // rotations
     public static final double anglerLowerLimitInRotations = -0.25; // rotations
   }
 

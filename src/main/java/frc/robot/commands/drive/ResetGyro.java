@@ -2,15 +2,16 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.utils;
+package frc.robot.commands.drive;
 
 import edu.wpi.first.wpilibj2.command.Command;
-
+import static frc.robot.RobotContainer.*;
 
 public class ResetGyro extends Command {
   /** Creates a new ResetGyro. */
   public ResetGyro() {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(driveSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -20,7 +21,7 @@ public class ResetGyro extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
+    driveSubsystem.seedFieldRelative();
   }
 
   // Called once the command ends or is interrupted.

@@ -52,8 +52,7 @@ public class ShooterSubsystem extends SubsystemBase {
     // SmartDashboard.putNumber("FeederP", 0.3);
     // SmartDashboard.putNumber("FeederD", 0.00001);
     // SmartDashboard.putNumber("FeederV", 0.115);
-    SmartDashboard.putNumber("ShooterSpeed", 0);
-    SmartDashboard.putNumber("FeederSpeed", 0);
+
 
     // Instantiate motors and encoders
     
@@ -161,7 +160,7 @@ public class ShooterSubsystem extends SubsystemBase {
     // feeder.getConfigurator().apply(feederSlot0Configs);
 
     setShooterTargetSpeed(SmartDashboard.getNumber("ShooterSpeed", 0));
-    setFeederTargetSpeed(SmartDashboard.getNumber("FeederSpeed", 0));
+    setFeederTargetSpeed(SmartDashboard.getNumber("Feeder Speed", 0));
   }
 
   

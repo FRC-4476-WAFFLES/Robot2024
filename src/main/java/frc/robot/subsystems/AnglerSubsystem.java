@@ -18,6 +18,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -28,20 +29,35 @@ public class AnglerSubsystem extends SubsystemBase {
 
   private final DutyCycleEncoder anglerAbsoluteEncoder;
 
-  private final double ANGLER_GEARBOX_REDUCTION = 250; // Ratio
-  private final double ROTATIONS_TO_DEGREES = ANGLER_GEARBOX_REDUCTION*360; // Degrees
-  private final double ZeroConversion = -9.79; // Degrees
-  private final double AbsolouteEncoderOffset = 0.1; // Rotations
-  private final double CONVERSION_ABS_TO_GOOD_DEGREES = AbsolouteEncoderOffset*360 + ZeroConversion; // Degrees
+  private final double ANGLER_GEARBOX_REDUCTION = (62/18)*25; // Ratio
+  private final double OVERALL_REDUCTION = ANGLER_GEARBOX_REDUCTION*(48/16); // Ratio
+  private final double DEGREES_TO_ROTATIONS = ANGLER_GEARBOX_REDUCTION / 360; // Rotations
+  private final double ZeroConversion = -9.79*3; // Degrees
+  private final double AbsolouteEncoderOffset = 0.669; // Rotations
+  private final double CONVERSION_ABS_TO_GOOD_DEGREES = AbsolouteEncoderOffset * 360 + ZeroConversion; // Degrees
   private final double ConvertedAbsolouteAngle;
   private final double ANGLER_DEAD_ZONE = 4;
   private boolean no_move = false;
+  private boolean checkNotMove = true;
   private final CurrentLimitsConfigs currentLimitsConfig;
 
   private double anglerTargetPosition = 0;
+  private double previousTargetPosition = anglerTargetPosition;
+  private double profileStartPosition = 0;
+  private double profileStartVelocity = 0;
+
+  private Timer profileTimer = new Timer();
+  private boolean previousEnabled = false;
 
   public AnglerSubsystem() {
-    
+    SmartDashboard.putNumber("angler P", 0);
+    SmartDashboard.putNumber("angler I", 0);
+    SmartDashboard.putNumber("angler D", 0);
+    SmartDashboard.putNumber("angler S", 0);
+    SmartDashboard.putNumber("angler V", 0);
+    SmartDashboard.putNumber("Angler Setpoint", 0);
+    SmartDashboard.putNumber("angler max accel", 2);
+    SmartDashboard.putNumber("angler max vel", 90);
     angler = new TalonFX(Constants.angler);
     TalonFXConfiguration generalConfigs = new TalonFXConfiguration();
     anglerAbsoluteEncoder = new DutyCycleEncoder(Constants.anglerAbsoluteEncoder);
@@ -71,56 +87,87 @@ public class AnglerSubsystem extends SubsystemBase {
     angler.setPosition(0);
 
     angler.getConfigurator().apply(generalConfigs);
-    angler.setNeutralMode(NeutralModeValue.Brake);
+    angler.setNeutralMode(NeutralModeValue.Coast);
 
     angler.getConfigurator().apply(anglerSlot0Configs);
 
+
     // Configuration of relative encoder to absolute encoder for the angler
+    System.err.println(anglerAbsoluteEncoder.getAbsolutePosition());
 
-    if(anglerAbsoluteEncoder.getAbsolutePosition() > Constants.ShooterConstants.anglerUpperLimit || 
-    anglerAbsoluteEncoder.getAbsolutePosition() < Constants.ShooterConstants.anglerLowerLimit) {
-      // Print error message
-      
-      no_move = true;
-    }
-
-    if ((anglerAbsoluteEncoder.getAbsolutePosition()*360 + CONVERSION_ABS_TO_GOOD_DEGREES) > 360) {
-      ConvertedAbsolouteAngle = anglerAbsoluteEncoder.getAbsolutePosition()*360 + CONVERSION_ABS_TO_GOOD_DEGREES - 360;
+    if (((anglerAbsoluteEncoder.getAbsolutePosition()*360) + CONVERSION_ABS_TO_GOOD_DEGREES) > 360) {
+      ConvertedAbsolouteAngle = (anglerAbsoluteEncoder.getAbsolutePosition()*360) + CONVERSION_ABS_TO_GOOD_DEGREES - 360;
     }
     else {
-      ConvertedAbsolouteAngle = anglerAbsoluteEncoder.getAbsolutePosition()*360 + CONVERSION_ABS_TO_GOOD_DEGREES;
+      ConvertedAbsolouteAngle = (anglerAbsoluteEncoder.getAbsolutePosition()*360) + CONVERSION_ABS_TO_GOOD_DEGREES;
     }
 
-    angler.setPosition(ConvertedAbsolouteAngle * ROTATIONS_TO_DEGREES);
+    angler.setPosition(ConvertedAbsolouteAngle / 3 * DEGREES_TO_ROTATIONS);
 
+    profileTimer.start();
   }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    if(checkNotMove && anglerAbsoluteEncoder.getAbsolutePosition() != 0) {
+      if(anglerAbsoluteEncoder.getAbsolutePosition() > Constants.ShooterConstants.anglerUpperLimitInRotations) {
+      // Print error message
+      no_move = true;
+      }
+      checkNotMove = false;
+    }
+    
+    boolean isEnabled = DriverStation.isEnabled();
+    if (isEnabled && !previousEnabled) {
+      profileTimer.restart();
+    } else if (!isEnabled) {
+      profileTimer.stop();
+    }
+    previousEnabled = isEnabled;
+
+    SmartDashboard.putBoolean("Does it not move", no_move); // This method will be called once per scheduler run
     if(!no_move){
+      setAnglerTargetPosition(SmartDashboard.getNumber("Angler Setpoint", 0));
       // Angler motion profiling
-      final TrapezoidProfile anglerTrapezoidProfile = new TrapezoidProfile (new TrapezoidProfile.Constraints(90,20));
+      final TrapezoidProfile anglerTrapezoidProfile = new TrapezoidProfile (new TrapezoidProfile.Constraints(
+        SmartDashboard.getNumber("angler max vel", 90),
+        SmartDashboard.getNumber("angler max accel", 2)
+      ));
 
       // Set angler position with limits to not damage robot
-      anglerTargetPosition = MathUtil.clamp(anglerTargetPosition, Constants.ShooterConstants.anglerLowerLimit, Constants.ShooterConstants.anglerUpperLimit);
+      anglerTargetPosition = MathUtil.clamp(anglerTargetPosition, Constants.ShooterConstants.anglerLowerLimit, Constants.ShooterConstants.anglerUpperLimit)/360*OVERALL_REDUCTION;
 
       TrapezoidProfile.State anglerGoal = new TrapezoidProfile.State(anglerTargetPosition,0);
-      TrapezoidProfile.State anglerSetpoint = new TrapezoidProfile.State();
+      TrapezoidProfile.State anglerSetpoint = new TrapezoidProfile.State(profileStartPosition, profileStartVelocity);
       
       final PositionVoltage anglerRequest = new PositionVoltage(0).withSlot(0);
 
-      anglerSetpoint = anglerTrapezoidProfile.calculate(0.020, anglerSetpoint, anglerGoal);
+      anglerSetpoint = anglerTrapezoidProfile.calculate(profileTimer.get(), anglerSetpoint, anglerGoal);
 
       anglerRequest.Position = anglerSetpoint.position;
+      anglerRequest.Velocity = anglerSetpoint.velocity;
+      angler.setControl(anglerRequest);
+
+      
+      SmartDashboard.putNumber("Angler Position Rotation", angler.getPosition().getValueAsDouble());
+      SmartDashboard.putNumber("Angler Degrees", (angler.getPosition().getValueAsDouble()*360/OVERALL_REDUCTION));
+      SmartDashboard.putNumber("Throughbore Calculated", ConvertedAbsolouteAngle);
+      SmartDashboard.putNumber("Raw Abs enc", anglerAbsoluteEncoder.getAbsolutePosition());
+      SmartDashboard.putNumber("Angler Setpoint Trapezoid", anglerSetpoint.position);
+      SmartDashboard.putNumber("Angler Goal", anglerGoal.position);
+    
+      Slot0Configs anglerSlot0Configs = new Slot0Configs();
+      
+      anglerSlot0Configs.kP = SmartDashboard.getNumber("angler P", 0); 
+      anglerSlot0Configs.kD = SmartDashboard.getNumber("angler D", 0);
+      anglerSlot0Configs.kS = SmartDashboard.getNumber("angler S", 0);
+      anglerSlot0Configs.kV = SmartDashboard.getNumber("angler V", 0);
+      angler.getConfigurator().apply(anglerSlot0Configs);
     }
     else {
-      DriverStation.reportError("Angler Absolute Encoder is out of bounds", false);
+      System.err.println("Angler Absolute Encoder is out of bounds");
     }
-    SmartDashboard.putNumber("Angler Setpoint", anglerSetpoint.position);
-    SmartDashboard.putNumber("Angler Position", angler.getPosition().getValueAsDouble());
-    SmartDashboard.putNumber("Throughbore Calculated", ConvertedAbsolouteAngle);
-    SmartDashboard.putNumber("Raw Abs enc", anglerAbsoluteEncoder.getAbsolutePosition());
+ 
   }
 
   /** 
@@ -139,6 +186,13 @@ public class AnglerSubsystem extends SubsystemBase {
   */
   public void setAnglerTargetPosition(double angle){
     this.anglerTargetPosition = angle;
+    if (this.anglerTargetPosition != this.previousTargetPosition) {
+      profileTimer.reset();
+      profileTimer.start();
+      this.previousTargetPosition = this.anglerTargetPosition;
+      this.profileStartPosition = this.angler.getPosition().getValueAsDouble();
+      this.profileStartVelocity = this.angler.getVelocity().getValueAsDouble();
+    }
   }
 
 }
