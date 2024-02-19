@@ -44,6 +44,17 @@ public class ShooterSubsystem extends SubsystemBase {
   public ShooterSubsystem() {
     TalonFXConfiguration generalConfigs = new TalonFXConfiguration();
 
+    // SmartDashboard.putNumber("ShooterP", 0.09);
+    // SmartDashboard.putNumber("ShooterI", 0);
+    // SmartDashboard.putNumber("ShooterD", 0.0001);
+    // SmartDashboard.putNumber("ShooterV", 0.115);
+    // SmartDashboard.putNumber("ShooterS", 0);
+    // SmartDashboard.putNumber("FeederP", 0.3);
+    // SmartDashboard.putNumber("FeederD", 0.00001);
+    // SmartDashboard.putNumber("FeederV", 0.115);
+    SmartDashboard.putNumber("ShooterSpeed", 0);
+    SmartDashboard.putNumber("FeederSpeed", 0);
+
     // Instantiate motors and encoders
     
     feeder = new TalonFX(Constants.feeder);
@@ -81,17 +92,17 @@ public class ShooterSubsystem extends SubsystemBase {
 
     // Velocity PID for shooters 
     Slot0Configs shooterSlot0Configs = new Slot0Configs();
-    shooterSlot0Configs.kP = 0.11;
-    shooterSlot0Configs.kI = 0.5;
+    shooterSlot0Configs.kP = 0.09;
+    shooterSlot0Configs.kI = 0.0;
     shooterSlot0Configs.kD = 0.0001;
-    shooterSlot0Configs.kV = 0.12; 
-    shooterSlot0Configs.kS = 0.05;
+    shooterSlot0Configs.kV = 0.115; 
+    shooterSlot0Configs.kS = 0.0;
 
     // PID for feeder
     Slot0Configs feederSlot0Configs = new Slot0Configs();
-    feederSlot0Configs.kP = 0.1; 
-    feederSlot0Configs.kD = 0.1;
-    feederSlot0Configs.kV = 1;
+    feederSlot0Configs.kP = 0.3; 
+    feederSlot0Configs.kD = 0.00001;
+    feederSlot0Configs.kV = 0.115;
 
    
 
@@ -100,7 +111,7 @@ public class ShooterSubsystem extends SubsystemBase {
     // shooter1Configs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
     shooter1.getConfigurator().apply(generalConfigs.withMotorOutput(new MotorOutputConfigs().withInverted(InvertedValue.Clockwise_Positive)));
     shooter2.getConfigurator().apply(generalConfigs);
-    feeder.getConfigurator().apply(generalConfigs);
+    feeder.getConfigurator().apply(generalConfigs.withMotorOutput(new MotorOutputConfigs().withInverted(InvertedValue.CounterClockwise_Positive)));
     
 
     // Apply PID
@@ -130,7 +141,27 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Feeder Speed", feeder.getVelocity().getValueAsDouble());
     SmartDashboard.putNumber("Shooter Setpoint", shooterTargetSpeed);
     SmartDashboard.putNumber("Feeder Setpoint", feederTargetSpeed);
-    
+
+     // Velocity PID for shooters 
+    //  Slot0Configs shooterSlot0Configs = new Slot0Configs();
+    //  shooterSlot0Configs.kP = SmartDashboard.getNumber("ShooterP", 0);
+    //  shooterSlot0Configs.kI = SmartDashboard.getNumber("ShooterI", 0);
+    //  shooterSlot0Configs.kD = SmartDashboard.getNumber("ShooterD", 0);
+    //  shooterSlot0Configs.kV =  SmartDashboard.getNumber("ShooterV", 0); 
+    //  shooterSlot0Configs.kS = SmartDashboard.getNumber("ShooterS", 0);
+ 
+    //  // PID for feeder
+    //  Slot0Configs feederSlot0Configs = new Slot0Configs();
+    //  feederSlot0Configs.kP = SmartDashboard.getNumber("FeederP", 0.3); 
+    //  feederSlot0Configs.kD = SmartDashboard.getNumber("FeederD", 0.00001);
+    //  feederSlot0Configs.kV = SmartDashboard.getNumber("FeederV", .115);
+ 
+    // shooter1.getConfigurator().apply(shooterSlot0Configs);
+    // shooter2.getConfigurator().apply(shooterSlot0Configs);
+    // feeder.getConfigurator().apply(feederSlot0Configs);
+
+    setShooterTargetSpeed(SmartDashboard.getNumber("ShooterSpeed", 0));
+    setFeederTargetSpeed(SmartDashboard.getNumber("FeederSpeed", 0));
   }
 
   
