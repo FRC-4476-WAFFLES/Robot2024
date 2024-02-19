@@ -41,7 +41,7 @@ public class Robot extends TimedRobot {
     DriverStation.startDataLog(DataLogManager.getLog());
 
     // CTRE Logger
-   SignalLogger.start();
+    SignalLogger.start();
 
   }
 

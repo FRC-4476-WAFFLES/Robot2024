@@ -13,6 +13,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -69,11 +70,11 @@ public class AnglerSubsystem extends SubsystemBase {
     angler.getConfigurator().apply(anglerSlot0Configs);
 
     // Configuration of relative encoder to absolute encoder for the angler
-    if ((anglerAbsoluteEncoder.get() + FakeToReal) > 360) {
-      ConvertedAbsolouteAngle = anglerAbsoluteEncoder.get() + FakeToReal - 360;
+    if ((anglerAbsoluteEncoder.getAbsolutePosition() + FakeToReal) > 360) {
+      ConvertedAbsolouteAngle = anglerAbsoluteEncoder.getAbsolutePosition() + FakeToReal - 360;
     }
     else {
-      ConvertedAbsolouteAngle = anglerAbsoluteEncoder.get() + FakeToReal;
+      ConvertedAbsolouteAngle = anglerAbsoluteEncoder.getAbsolutePosition() + FakeToReal;
     }
 
     angler.setPosition(ConvertedAbsolouteAngle * TICKS_TO_ANGLER_DEGREES);
@@ -98,9 +99,14 @@ public class AnglerSubsystem extends SubsystemBase {
     anglerSetpoint = anglerTrapezoidProfile.calculate(0.020, anglerSetpoint, anglerGoal);
 
     anglerRequest.Position = anglerSetpoint.position;
+
+    SmartDashboard.putNumber("Angler Setpoint", anglerSetpoint.position);
+    SmartDashboard.putNumber("Angler Position", angler.getPosition().getValueAsDouble());
+    SmartDashboard.putNumber("Throughbore Calculated", ConvertedAbsolouteAngle);
+    SmartDashboard.putNumber("Raw Abs enc", anglerAbsoluteEncoder.getAbsolutePosition());
   }
 
-  /**
+  /** 
    * Returns if the angler is at the desired angle
    * <p>Units are in degrees of the angler</p>
    * @return true: if angler is at desired angle

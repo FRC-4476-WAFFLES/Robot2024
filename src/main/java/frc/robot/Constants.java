@@ -32,8 +32,8 @@ public final class Constants {
 
   // Mechanism Motors
   public static final int Intake = 9; // Falcon 500
-  public static final int shooterTop = 10; // Falcon 500
-  public static final int shooterBottom = 11; // Falcon 500
+  public static final int shooter1 = 10; // Falcon 500
+  public static final int shooter2 = 11; // Falcon 500
   public static final int feeder = 12; //Falon 500
   public static final int angler = 13; //Falcon 500
   public static final int elevator1 = 14; // Kraken X60

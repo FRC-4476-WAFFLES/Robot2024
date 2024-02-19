@@ -55,8 +55,8 @@ public class RobotContainer {
   public static final LightSubsystem lightSubsystem = null; //new LightSubsystem();
   public static final ElevatorSubsystem elevatorSubsystem = null; // new ElevatorSubsystem();
   public static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-  public static final ShooterSubsystem shooterSubsystem  = null; //= new ShooterSubsystem();
-  public static final AnglerSubsystem anglerSubsystem  = null; //= new AnglerSubsystem();
+  public static final ShooterSubsystem shooterSubsystem  = new ShooterSubsystem();
+  public static final AnglerSubsystem anglerSubsystem  = new AnglerSubsystem();
   public static final DriveSubsystem driveSubsystem = TunerConstants.DriveTrain;
 
   //The Robots Commands

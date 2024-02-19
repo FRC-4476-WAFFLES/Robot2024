@@ -4,14 +4,16 @@
 
 package frc.robot.subsystems;
 import frc.robot.Constants;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
+import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 
 import com.reduxrobotics.sensors.canandcolor.Canandcolor;
@@ -21,8 +23,8 @@ import java.lang.Math;
 public class ShooterSubsystem extends SubsystemBase {
   // Motors and Sensors
   private final TalonFX feeder;
-  private final TalonFX shooterTop;
-  private final TalonFX shooterBottom;
+  private final TalonFX shooter1;
+  private final TalonFX shooter2;
   private final Canandcolor shooterIR;
   
   
@@ -45,15 +47,15 @@ public class ShooterSubsystem extends SubsystemBase {
     // Instantiate motors and encoders
     
     feeder = new TalonFX(Constants.feeder);
-    shooterTop = new TalonFX(Constants.shooterTop);
-    shooterBottom = new TalonFX(Constants.shooterBottom);  
+    shooter1 = new TalonFX(Constants.shooter1);
+    shooter2 = new TalonFX(Constants.shooter2);  
     
     shooterIR = new Canandcolor(Constants.shooterIR);
 
     // Inversion
     
     feeder.setInverted(false);
-    
+    // shooter1.setInverted(true);
     
     // Current
     currentLimitsConfig = new CurrentLimitsConfigs();
@@ -94,18 +96,20 @@ public class ShooterSubsystem extends SubsystemBase {
    
 
     // Apply configs
-    shooterTop.getConfigurator().apply(generalConfigs);
-    shooterBottom.getConfigurator().apply(generalConfigs);
+    // TalonFXConfiguration shooter1Configs = generalConfigs;
+    // shooter1Configs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+    shooter1.getConfigurator().apply(generalConfigs.withMotorOutput(new MotorOutputConfigs().withInverted(InvertedValue.Clockwise_Positive)));
+    shooter2.getConfigurator().apply(generalConfigs);
     feeder.getConfigurator().apply(generalConfigs);
     
 
     // Apply PID
-    shooterTop.getConfigurator().apply(shooterSlot0Configs);    
-    shooterBottom.getConfigurator().apply(shooterSlot0Configs);
+    shooter1.getConfigurator().apply(shooterSlot0Configs);    
+    shooter2.getConfigurator().apply(shooterSlot0Configs);
     
     feeder.getConfigurator().apply(feederSlot0Configs);
 
-    shooterTop.setControl(new Follower(Constants.shooterBottom, true));
+    shooter2.setControl(new Follower(Constants.shooter1, true));
 
   }
 
@@ -116,12 +120,17 @@ public class ShooterSubsystem extends SubsystemBase {
     
     // set shooter speed
     final VelocityVoltage shooterSpeedRequest = new VelocityVoltage(0).withSlot(0);
-    shooterTop.setControl(shooterSpeedRequest.withVelocity(shooterTargetSpeed));
+    shooter1.setControl(shooterSpeedRequest.withVelocity(shooterTargetSpeed));
 
     // set feeder speed
     final VelocityVoltage feederSpeedRequest = new VelocityVoltage(0).withSlot(0);
     feeder.setControl(feederSpeedRequest.withVelocity(feederTargetSpeed));
   
+    SmartDashboard.putNumber("Shooter Speed", shooter1.getVelocity().getValueAsDouble());
+    SmartDashboard.putNumber("Feeder Speed", feeder.getVelocity().getValueAsDouble());
+    SmartDashboard.putNumber("Shooter Setpoint", shooterTargetSpeed);
+    SmartDashboard.putNumber("Feeder Setpoint", feederTargetSpeed);
+    
   }
 
   
@@ -131,7 +140,7 @@ public class ShooterSubsystem extends SubsystemBase {
    * <li>false: if shooter is not at desired speed</li>
    */
   public boolean isGoodSpeed() {
-      return Math.abs(shooterTop.getVelocity().getValueAsDouble() - shooterTargetSpeed) < SHOOTER_DEAD_ZONE;
+      return Math.abs(shooter1.getVelocity().getValueAsDouble() - shooterTargetSpeed) < SHOOTER_DEAD_ZONE;
   }
 
   /**
