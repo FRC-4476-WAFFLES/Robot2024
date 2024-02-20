@@ -29,13 +29,12 @@ public class AnglerSubsystem extends SubsystemBase {
 
   private final DutyCycleEncoder anglerAbsoluteEncoder;
 
-  private final double ANGLER_GEARBOX_REDUCTION = (62/18)*25; // Ratio
-  private final double OVERALL_REDUCTION = ANGLER_GEARBOX_REDUCTION*(48/16); // Ratio
-  private final double DEGREES_TO_ROTATIONS = ANGLER_GEARBOX_REDUCTION / 360; // Rotations
-  private final double ZeroConversion = -9.79*3; // Degrees
-  private final double AbsolouteEncoderOffset = 0.669; // Rotations
-  private final double CONVERSION_ABS_TO_GOOD_DEGREES = AbsolouteEncoderOffset * 360 + ZeroConversion; // Degrees
-  private final double ConvertedAbsolouteAngle;
+  private final double OVERALL_REDUCTION = (62/18)*25*(48/16); // Ratio to whole
+  private final double ENCODER_REDUCTION = (62/18)*25;
+  private final double DEGREES_TO_ROTATIONS = OVERALL_REDUCTION / 360;
+  private final double DEGREE_OFFSET_RATIO = -9.79/0.106;
+  private double tryCounter=0;
+
   private final double ANGLER_DEAD_ZONE = 4;
   private boolean no_move = false;
   private boolean checkNotMove = true;
@@ -95,26 +94,23 @@ public class AnglerSubsystem extends SubsystemBase {
     // Configuration of relative encoder to absolute encoder for the angler
     System.err.println(anglerAbsoluteEncoder.getAbsolutePosition());
 
-    if (((anglerAbsoluteEncoder.getAbsolutePosition()*360) + CONVERSION_ABS_TO_GOOD_DEGREES) > 360) {
-      ConvertedAbsolouteAngle = (anglerAbsoluteEncoder.getAbsolutePosition()*360) + CONVERSION_ABS_TO_GOOD_DEGREES - 360;
-    }
-    else {
-      ConvertedAbsolouteAngle = (anglerAbsoluteEncoder.getAbsolutePosition()*360) + CONVERSION_ABS_TO_GOOD_DEGREES;
-    }
-
-    angler.setPosition(ConvertedAbsolouteAngle / 3 * DEGREES_TO_ROTATIONS);
-
     profileTimer.start();
   }
 
   @Override
   public void periodic() {
     if(checkNotMove && anglerAbsoluteEncoder.getAbsolutePosition() != 0) {
-      if(anglerAbsoluteEncoder.getAbsolutePosition() > Constants.ShooterConstants.anglerUpperLimitInRotations) {
-      // Print error message
-      no_move = true;
+      tryCounter ++;
+      if(tryCounter > 1000){
+        angler.setPosition((anglerAbsoluteEncoder.getAbsolutePosition()*ENCODER_REDUCTION)-50.6);
+        if(anglerAbsoluteEncoder.getAbsolutePosition() > Constants.ShooterConstants.anglerUpperLimitInRotations) {
+        // Print error message
+          no_move = true;
+        }
+        checkNotMove = false;
       }
-      checkNotMove = false;
+      
+      
     }
     
     boolean isEnabled = DriverStation.isEnabled();
@@ -151,7 +147,6 @@ public class AnglerSubsystem extends SubsystemBase {
       
       SmartDashboard.putNumber("Angler Position Rotation", angler.getPosition().getValueAsDouble());
       SmartDashboard.putNumber("Angler Degrees", (angler.getPosition().getValueAsDouble()*360/OVERALL_REDUCTION));
-      SmartDashboard.putNumber("Throughbore Calculated", ConvertedAbsolouteAngle);
       SmartDashboard.putNumber("Raw Abs enc", anglerAbsoluteEncoder.getAbsolutePosition());
       SmartDashboard.putNumber("Angler Setpoint Trapezoid", anglerSetpoint.position);
       SmartDashboard.putNumber("Angler Goal", anglerGoal.position);
