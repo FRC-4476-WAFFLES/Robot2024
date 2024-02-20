@@ -16,7 +16,6 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-import com.ctre.phoenix6.utility.Signal;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -86,9 +85,9 @@ public class AnglerSubsystem extends SubsystemBase {
 
     private void configurePositionPID() {
         Slot0Configs anglerSlot0Configs = new Slot0Configs();
-        anglerSlot0Configs.kP = 2.4;
-        anglerSlot0Configs.kD = 0.1;
-        anglerSlot0Configs.kS = 1;
+        anglerSlot0Configs.kP = 0.7;
+        anglerSlot0Configs.kD = 0;
+        anglerSlot0Configs.kV = 0;
 
         angler.setPosition(0);
         angler.getConfigurator().apply(anglerSlot0Configs);
@@ -105,7 +104,7 @@ public class AnglerSubsystem extends SubsystemBase {
         setAnglerTargetPosition(SmartDashboard.getNumber("Angler Setpoint", 0));
         executeAnglerMotionProfiling();
         updateSmartDashboard();
-        updatePIDConstants();
+        //updatePIDConstants();
     }
 
     private void manageProfileTimer() {
@@ -120,8 +119,7 @@ public class AnglerSubsystem extends SubsystemBase {
 
     private void executeAnglerMotionProfiling() {
         TrapezoidProfile anglerTrapezoidProfile = new TrapezoidProfile(new TrapezoidProfile.Constraints(
-                SmartDashboard.getNumber("Angler max vel", 90),
-                SmartDashboard.getNumber("Angler max accel", 2)
+                100,800
         ));
 
         anglerTargetPositionRotations = MathUtil.clamp(anglerTargetPositionRotations,
@@ -137,6 +135,7 @@ public class AnglerSubsystem extends SubsystemBase {
         anglerRequest.Position = anglerSetpoint.position;
         anglerRequest.Velocity = anglerSetpoint.velocity;
         angler.setControl(anglerRequest);
+ 
 
     }
 
@@ -144,7 +143,7 @@ public class AnglerSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Angler Position Rotation", angler.getPosition().getValueAsDouble());
         SmartDashboard.putNumber("Angler Degrees", (angler.getPosition().getValueAsDouble() * 360 / OVERALL_REDUCTION));
         SmartDashboard.putNumber("Raw Abs enc", anglerAbsoluteEncoder.getAbsolutePosition());
-        SmartDashboard.putNumber("Angler Target Position", anglerTargetPositionRotations);
+        SmartDashboard.putNumber("Angler Target Position", anglerTargetPositionRotations);   
     }
 
     private void updatePIDConstants() {
