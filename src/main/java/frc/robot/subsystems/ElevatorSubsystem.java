@@ -4,8 +4,12 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
@@ -27,6 +31,13 @@ public class ElevatorSubsystem extends SubsystemBase {
     private final double ELEVATOR_DEAD_ZONE = 5;
 
     private final CurrentLimitsConfigs elevatorCurrentLimits = new CurrentLimitsConfigs();
+
+    private Timer profileTimer = new Timer();
+    private boolean previousEnabled = false;
+
+    private double previousTargetPosition = elevatorTargetPosition;
+    private double profileStartPosition = 0;
+    private double profileStartVelocity = 0;
 
   public ElevatorSubsystem() {
 
@@ -56,6 +67,8 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     Elevator1.getConfigurator().apply(elevatorConfig);
     Elevator2.getConfigurator().apply(elevatorConfig);
+
+    profileTimer.start();
   }
 
 
@@ -63,17 +76,12 @@ public class ElevatorSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    final TrapezoidProfile elevatorTrapezoidProfile = new TrapezoidProfile(new TrapezoidProfile.Constraints(90, 20));
-    TrapezoidProfile.State elevatorGoal = new TrapezoidProfile.State(elevatorTargetPosition, 0); 
-    TrapezoidProfile.State elevatorSetpoint = new TrapezoidProfile.State();
+    manageProfileTimer();
+    setElevatorTargetPosition(SmartDashboard.getNumber("Elevator Setpoint", 0));
+    executeElevatorMotionProfiling();
+    updatePIDConstants();
+    updateSmartDashboard();
 
-    final PositionVoltage elevatorRequest = new PositionVoltage(0).withSlot(0);
-
-    elevatorSetpoint = elevatorTrapezoidProfile.calculate(0.020, elevatorSetpoint, elevatorGoal);
-
-    elevatorRequest.Position = elevatorSetpoint.position;
-
-    Elevator1.setControl(elevatorRequest);
 
     // Set elevator to zero if hall effect is triggered
     if (!elevatorZero.get()){
@@ -82,9 +90,59 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   }
 
+  private void updateSmartDashboard(){
+    SmartDashboard.putNumber("Elevator Position", Elevator1.getPosition().getValueAsDouble());
+    SmartDashboard.putNumber("Elevator Velocity", Elevator1.getVelocity().getValueAsDouble());
+    SmartDashboard.putNumber("Elevator Target Position", elevatorTargetPosition);
+  }
+
+  private void updatePIDConstants(){
+    Slot0Configs slot0Configs = new Slot0Configs();
+    slot0Configs.kP = SmartDashboard.getNumber("Elevator kP", 0);
+    slot0Configs.kI = SmartDashboard.getNumber("Elevator kI", 0);
+    slot0Configs.kD = SmartDashboard.getNumber("Elevator kD", 0);
+    slot0Configs.kV = SmartDashboard.getNumber("Elevator kV", 0);
+    slot0Configs.kS = SmartDashboard.getNumber("Elevator kS", 0);
+  }
+
+  private void manageProfileTimer() {
+        boolean isEnabled = DriverStation.isEnabled();
+        if (isEnabled && !previousEnabled) {
+            profileTimer.restart();
+        } else if (!isEnabled) {
+            profileTimer.stop();
+        }
+        previousEnabled = isEnabled;
+    }
+
+  private void executeElevatorMotionProfiling() {
+        TrapezoidProfile anglerTrapezoidProfile = new TrapezoidProfile(new TrapezoidProfile.Constraints(
+                SmartDashboard.getNumber("Elevator Max V", 90),
+                SmartDashboard.getNumber("Elevator Max A", 2)
+        ));
+
+        TrapezoidProfile.State elevatorGoal = new TrapezoidProfile.State(elevatorTargetPosition, 0);
+        TrapezoidProfile.State elevatorSetpoint = new TrapezoidProfile.State(profileStartPosition, profileStartVelocity);
+
+        elevatorSetpoint = anglerTrapezoidProfile.calculate(profileTimer.get(), elevatorSetpoint, elevatorGoal);
+
+        PositionVoltage elevatorRequest = new PositionVoltage(0).withSlot(0);
+        elevatorRequest.Position = elevatorSetpoint.position;
+        elevatorRequest.Velocity = elevatorSetpoint.velocity;
+        Elevator1.setControl(elevatorRequest);
+
+    }
+
   public void setElevatorTargetPosition(double position){
     //TODO convert targets units to inches for easier tuning
     this.elevatorTargetPosition = position;
+    if(this.elevatorTargetPosition != this.previousTargetPosition){
+      profileTimer.reset();
+      profileTimer.start();
+      this.previousTargetPosition = this.elevatorTargetPosition;
+      this.profileStartPosition = this.Elevator1.getPosition().getValueAsDouble();
+      this.profileStartVelocity = this.Elevator1.getVelocity().getValueAsDouble();
+    }
   }
 
   /**
