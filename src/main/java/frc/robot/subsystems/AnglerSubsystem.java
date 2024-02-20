@@ -11,6 +11,7 @@ import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.StaticBrake;
+import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
@@ -99,57 +100,24 @@ public class AnglerSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if(checkNotMove && anglerAbsoluteEncoder.getAbsolutePosition() != 0) {
-      tryCounter ++;
-      if(tryCounter > 1000){
-        angler.setPosition((anglerAbsoluteEncoder.getAbsolutePosition()*ENCODER_REDUCTION)-50.6);
-        if(anglerAbsoluteEncoder.getAbsolutePosition() > Constants.ShooterConstants.anglerUpperLimitInRotations) {
-        // Print error message
-          no_move = true;
-        }
-        checkNotMove = false;
-      }
-      
-      
-    }
-    
-    boolean isEnabled = DriverStation.isEnabled();
-    if (isEnabled && !previousEnabled) {
-      profileTimer.restart();
-    } else if (!isEnabled) {
-      profileTimer.stop();
-    }
-    previousEnabled = isEnabled;
 
-    SmartDashboard.putBoolean("Does it not move", no_move); // This method will be called once per scheduler run
-    if(!no_move){
-      setAnglerTargetPosition(SmartDashboard.getNumber("Angler Setpoint", 0));
-      // Angler motion profiling
-      final TrapezoidProfile anglerTrapezoidProfile = new TrapezoidProfile (new TrapezoidProfile.Constraints(
-        SmartDashboard.getNumber("angler max vel", 90),
-        SmartDashboard.getNumber("angler max accel", 2)
-      ));
+    setAnglerTargetPosition(SmartDashboard.getNumber("Angler Setpoint", 0));
 
-      // Set angler position with limits to not damage robot
-      anglerTargetPosition = MathUtil.clamp(anglerTargetPosition, Constants.ShooterConstants.anglerLowerLimit, Constants.ShooterConstants.anglerUpperLimit)/360*OVERALL_REDUCTION;
 
-      TrapezoidProfile.State anglerGoal = new TrapezoidProfile.State(anglerTargetPosition,0);
-      TrapezoidProfile.State anglerSetpoint = new TrapezoidProfile.State(profileStartPosition, profileStartVelocity);
-      
-      final PositionVoltage anglerRequest = new PositionVoltage(0).withSlot(0);
+      // // Set angler position with limits to not damage robot
+      anglerTargetPosition = MathUtil.clamp(anglerTargetPosition, Constants.ShooterConstants.anglerLowerLimit, Constants.ShooterConstants.anglerUpperLimit);
 
-      anglerSetpoint = anglerTrapezoidProfile.calculate(profileTimer.get(), anglerSetpoint, anglerGoal);
 
-      anglerRequest.Position = anglerSetpoint.position;
-      anglerRequest.Velocity = anglerSetpoint.velocity;
-      angler.setControl(anglerRequest);
+      // set feeder speed
+      final PositionVoltage shooterPositionRequest = new PositionVoltage(0).withSlot(0);
+      angler.setControl(shooterPositionRequest.withPosition(anglerTargetPosition));
 
       
       SmartDashboard.putNumber("Angler Position Rotation", angler.getPosition().getValueAsDouble());
       SmartDashboard.putNumber("Angler Degrees", (angler.getPosition().getValueAsDouble()*360/OVERALL_REDUCTION));
       SmartDashboard.putNumber("Raw Abs enc", anglerAbsoluteEncoder.getAbsolutePosition());
-      SmartDashboard.putNumber("Angler Setpoint Trapezoid", anglerSetpoint.position);
-      SmartDashboard.putNumber("Angler Goal", anglerGoal.position);
+      SmartDashboard.putNumber("Angler Target Position", anglerTargetPosition);
+      SmartDashboard.putNumber("Current pos", angler.getPosition().getValueAsDouble());
     
       Slot0Configs anglerSlot0Configs = new Slot0Configs();
       
@@ -158,10 +126,7 @@ public class AnglerSubsystem extends SubsystemBase {
       anglerSlot0Configs.kS = SmartDashboard.getNumber("angler S", 0);
       anglerSlot0Configs.kV = SmartDashboard.getNumber("angler V", 0);
       angler.getConfigurator().apply(anglerSlot0Configs);
-    }
-    else {
-      System.err.println("Angler Absolute Encoder is out of bounds");
-    }
+    
  
   }
 
@@ -180,14 +145,7 @@ public class AnglerSubsystem extends SubsystemBase {
   * in degrees of the angler
   */
   public void setAnglerTargetPosition(double angle){
-    this.anglerTargetPosition = angle;
-    if (this.anglerTargetPosition != this.previousTargetPosition) {
-      profileTimer.reset();
-      profileTimer.start();
-      this.previousTargetPosition = this.anglerTargetPosition;
-      this.profileStartPosition = this.angler.getPosition().getValueAsDouble();
-      this.profileStartVelocity = this.angler.getVelocity().getValueAsDouble();
-    }
+    this.anglerTargetPosition = angle*(OVERALL_REDUCTION/360);
   }
 
 }
