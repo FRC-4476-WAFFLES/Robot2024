@@ -30,7 +30,7 @@ public class SpinUp extends Command {
   @Override
   public void execute() {
     double distance = driveSubsystem.getDistanceToGoal();
-    double speed = calculateSpeedOffDistance(distance);
+    double speed = calculateSpeedOffDistanceShoot(distance);
 
     shooterSubsystem.setShooterTargetSpeed(speed);
   }
@@ -47,8 +47,8 @@ public class SpinUp extends Command {
     return false;
   }
 
-  private double calculateSpeedOffDistance(double distance) {
-
+  private double calculateSpeedOffDistanceShoot(double distance) {
+  
     // Basic interpolation
     
     final InterpolatingDoubleTreeMap shooterSpeedMap = new InterpolatingDoubleTreeMap();
@@ -76,7 +76,32 @@ public class SpinUp extends Command {
     // TODO: Replace nums with real ones
     return shooterSpeedMap.get(distance);
   }
+private double calculateSpeedOffDistanceFeed(double distance) {
+final InterpolatingDoubleTreeMap feederSpeedMap = new InterpolatingDoubleTreeMap();
+   
+    feederSpeedMap.put(0.0, 0.0);
+    feederSpeedMap.put(1.0, 1.0);
+    feederSpeedMap.put(2.0, 2.0);
+    feederSpeedMap.put(3.0, 3.0);
+    feederSpeedMap.put(4.0, 4.0);
+    feederSpeedMap.put(5.0, 5.0);
+    feederSpeedMap.put(6.0, 6.0);
+    feederSpeedMap.put(7.0, 7.0);
+    feederSpeedMap.put(8.0, 8.0);
+    feederSpeedMap.put(9.0, 9.0);
+    feederSpeedMap.put(10.0, 10.0);
 
+    // Fancy interpolation with a matrix?
+
+    final InterpolatingMatrixTreeMap <Double, N1, N2> feederSpeedMap2 = new InterpolatingMatrixTreeMap<>();
+
+
+    feederSpeedMap2.put(null, null);
+
+    
+    // TODO: Replace nums with real ones
+    return feederSpeedMap.get(distance);
+  }
   private double calculateAngleOffDistance() {
 
     double height = elevatorSubsystem.getElevatorTargetPosition();

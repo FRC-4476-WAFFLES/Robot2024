@@ -167,8 +167,7 @@ public class AnglerSubsystem extends SubsystemBase {
         this.anglerTargetPositionRotations = angle * (OVERALL_REDUCTION / 360);
         this.anglerTargetPositonDegrees = angle;
         if (this.anglerTargetPositionRotations != this.previousTargetPosition) {
-            profileTimer.reset();
-            profileTimer.start();
+            profileTimer.restart();
             this.previousTargetPosition = this.anglerTargetPositionRotations;
             this.profileStartPosition = this.angler.getPosition().getValueAsDouble();
             this.profileStartVelocity = this.angler.getVelocity().getValueAsDouble();

@@ -5,6 +5,9 @@
 package frc.robot.commands.drive;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import static frc.robot.RobotContainer.*;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 
 public class BasicFieldReset extends Command {
   /** Creates a new BasicFieldReset. */
@@ -20,7 +23,7 @@ public class BasicFieldReset extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    driveSubsystem.seedFieldRelative(new Pose2d(1.38, 5.53, new Rotation2d(180));
+    driveSubsystem.seedFieldRelative(new Pose2d(1.38, 5.53, new Rotation2d(180)));
   }
 
   // Called once the command ends or is interrupted.

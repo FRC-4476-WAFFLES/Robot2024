@@ -39,6 +39,16 @@ public class ElevatorSubsystem extends SubsystemBase {
     private double profileStartPosition = 0;
     private double profileStartVelocity = 0;
 
+  private void initializeSmartDashboard() {
+      SmartDashboard.putNumber("Elevator P", 0);
+      SmartDashboard.putNumber("Elevator D", 0);
+      SmartDashboard.putNumber("Elevator S", 0);
+      SmartDashboard.putNumber("Elevator V", 0);
+      SmartDashboard.putNumber("Elevator Setpoint", 0);
+      SmartDashboard.putNumber("Elevator max accel", 2);
+      SmartDashboard.putNumber("Elevator max vel", 90);
+  }
+
   public ElevatorSubsystem() {
 
     Elevator1 = new TalonFX(Constants.elevator1);
@@ -99,7 +109,6 @@ public class ElevatorSubsystem extends SubsystemBase {
   private void updatePIDConstants(){
     Slot0Configs slot0Configs = new Slot0Configs();
     slot0Configs.kP = SmartDashboard.getNumber("Elevator kP", 0);
-    slot0Configs.kI = SmartDashboard.getNumber("Elevator kI", 0);
     slot0Configs.kD = SmartDashboard.getNumber("Elevator kD", 0);
     slot0Configs.kV = SmartDashboard.getNumber("Elevator kV", 0);
     slot0Configs.kS = SmartDashboard.getNumber("Elevator kS", 0);
@@ -137,8 +146,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     //TODO convert targets units to inches for easier tuning
     this.elevatorTargetPosition = position;
     if(this.elevatorTargetPosition != this.previousTargetPosition){
-      profileTimer.reset();
-      profileTimer.start();
+      profileTimer.restart();
       this.previousTargetPosition = this.elevatorTargetPosition;
       this.profileStartPosition = this.Elevator1.getPosition().getValueAsDouble();
       this.profileStartVelocity = this.Elevator1.getVelocity().getValueAsDouble();
