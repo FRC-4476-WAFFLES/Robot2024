@@ -71,6 +71,8 @@ public class RobotContainer {
   private final SuperstructureAmp superstructureAmp = null; // = new SuperstructureAmp();
   private final SuperstructureCloseSpeaker superstructureCloseSpeaker  = null; //= new SuperstructureCloseSpeaker();
   private final SuperstructureIntake superstructureIntake  = null; //= new SuperstructureIntake();
+  private final BasicFieldReset basicFieldReset = new BasicFieldReset();
+  private final ResetGyro resetGyro = new ResetGyro();
   
 
   //TODO Trap Command
@@ -134,6 +136,11 @@ public class RobotContainer {
     // operatorController.rightTrigger().whileTrue(elevatorUp);
     // operatorController.leftTrigger().whileTrue(elevatorDown);
 
+    rightJoystick.button(8).whileTrue(basicFieldReset);
+    leftJoystick.button(8).whileTrue(basicFieldReset);
+
+    rightJoystick.button(9).whileTrue(resetGyro);
+    leftJoystick.button(9).whileTrue(resetGyro);
   }
 
   /**
