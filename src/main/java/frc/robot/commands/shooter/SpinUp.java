@@ -4,7 +4,12 @@
 
 package frc.robot.commands.shooter;
 
+import edu.wpi.first.math.InterpolatingMatrixTreeMap;
+import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
+import edu.wpi.first.math.interpolation.InterpolatingTreeMap;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N2;
 
 import static frc.robot.RobotContainer.*;
 
@@ -17,7 +22,9 @@ public class SpinUp extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+   
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -42,8 +49,32 @@ public class SpinUp extends Command {
 
   private double calculateSpeedOffDistance(double distance) {
 
+    // Basic interpolation
+    
+    final InterpolatingDoubleTreeMap shooterSpeedMap = new InterpolatingDoubleTreeMap();
+   
+    shooterSpeedMap.put(0.0, 0.0);
+    shooterSpeedMap.put(1.0, 1.0);
+    shooterSpeedMap.put(2.0, 2.0);
+    shooterSpeedMap.put(3.0, 3.0);
+    shooterSpeedMap.put(4.0, 4.0);
+    shooterSpeedMap.put(5.0, 5.0);
+    shooterSpeedMap.put(6.0, 6.0);
+    shooterSpeedMap.put(7.0, 7.0);
+    shooterSpeedMap.put(8.0, 8.0);
+    shooterSpeedMap.put(9.0, 9.0);
+    shooterSpeedMap.put(10.0, 10.0);
+
+    // Fancy interpolation with a matrix?
+
+    final InterpolatingMatrixTreeMap <Double, N1, N2> shooterSpeedMap2 = new InterpolatingMatrixTreeMap<>();
+
+
+    shooterSpeedMap2.put(null, null);
+
+    
     // TODO: Replace nums with real ones
-    return 5 * Math.pow(distance, 2) + 5 * distance + 5;
+    return shooterSpeedMap.get(distance);
   }
 
   private double calculateAngleOffDistance() {
