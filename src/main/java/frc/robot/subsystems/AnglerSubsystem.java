@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import static frc.robot.RobotContainer.elevatorSubsystem;
+
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
@@ -18,6 +20,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 
 import frc.robot.Constants;
@@ -121,8 +124,8 @@ public class AnglerSubsystem extends SubsystemBase {
         ));
 
         anglerTargetPositionRotations = MathUtil.clamp(anglerTargetPositionRotations,
-                Constants.ShooterConstants.anglerLowerLimit,
-                Constants.ShooterConstants.anglerUpperLimit);
+                getAnglerBottomLimit(elevatorSubsystem.getElevatorPosition()),
+                getAnglerTopLimit(elevatorSubsystem.getElevatorPosition());
 
         TrapezoidProfile.State anglerGoal = new TrapezoidProfile.State(anglerTargetPositionRotations, 0);
         TrapezoidProfile.State anglerSetpoint = new TrapezoidProfile.State(profileStartPosition, profileStartVelocity);
@@ -170,5 +173,33 @@ public class AnglerSubsystem extends SubsystemBase {
             this.profileStartPosition = this.angler.getPosition().getValueAsDouble();
             this.profileStartVelocity = this.angler.getVelocity().getValueAsDouble();
         }
+    }
+
+    public double getAnglerTopLimit(double elevatorPosition) {
+        final InterpolatingDoubleTreeMap anglerTopLimitMap = new InterpolatingDoubleTreeMap();
+        // Input is elevator position, output is highest possible angler position
+
+        //TODO TUNE
+
+        anglerTopLimitMap.put(0.0, 0.0);
+        anglerTopLimitMap.put(1.0, 1.0);
+        anglerTopLimitMap.put(2.0, 2.0);
+        anglerTopLimitMap.put(3.0, 3.0);
+
+        return anglerTopLimitMap.get(elevatorPosition);
+    }
+
+    public double getAnglerBottomLimit(double elevatorPosition) {
+        final InterpolatingDoubleTreeMap anglerBottomLimitMap = new InterpolatingDoubleTreeMap();
+        // Input is elevator position, output is lowest possible angler position
+
+        //TODO TUNE
+
+        anglerBottomLimitMap.put(0.0, 0.0);
+        anglerBottomLimitMap.put(1.0, 1.0);
+        anglerBottomLimitMap.put(2.0, 2.0);
+        anglerBottomLimitMap.put(3.0, 3.0);
+
+        return anglerBottomLimitMap.get(elevatorPosition);
     }
 }

@@ -109,7 +109,6 @@ final InterpolatingDoubleTreeMap feederSpeedMap = new InterpolatingDoubleTreeMap
 
     return 5 * distance + 5;
 
-    // TODO: Make aiming shooter run spin up
   }
 
   

@@ -70,10 +70,11 @@ public final class Constants {
     public static final int kDriverControllerPort = 2;
   }
   public static class ShooterConstants {
-    public static final double anglerUpperLimit = 96; // degrees
-    public static final double anglerLowerLimit = -29;// degrees
-    public static final double anglerUpperLimitInRotations = 0.868; // rotations
-    public static final double anglerLowerLimitInRotations = -0.25; // rotations
+    // not used, using interpolation from anglerSubsystem.getAnglerTopLimit()
+    //public static final double anglerUpperLimit = 96; // degrees
+    //public static final double anglerLowerLimit = -29;// degrees
+    //public static final double anglerUpperLimitInRotations = 0.868; // rotations
+    //public static final double anglerLowerLimitInRotations = -0.25; // rotations
   }
 
   public static class DriveConstants {
