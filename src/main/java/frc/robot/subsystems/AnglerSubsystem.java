@@ -180,13 +180,19 @@ public class AnglerSubsystem extends SubsystemBase {
         // Input is elevator position, output is highest possible angler position
 
         //TODO TUNE
+        
 
         anglerTopLimitMap.put(0.0, 0.0);
         anglerTopLimitMap.put(1.0, 1.0);
         anglerTopLimitMap.put(2.0, 2.0);
         anglerTopLimitMap.put(3.0, 3.0);
 
-        return anglerTopLimitMap.get(elevatorPosition);
+        if (elevatorPosition < 123) {
+            return 123;
+        }
+        else{
+            return anglerTopLimitMap.get(elevatorPosition);
+        }
     }
 
     public double getAnglerBottomLimit(double elevatorPosition) {
@@ -200,6 +206,11 @@ public class AnglerSubsystem extends SubsystemBase {
         anglerBottomLimitMap.put(2.0, 2.0);
         anglerBottomLimitMap.put(3.0, 3.0);
 
-        return anglerBottomLimitMap.get(elevatorPosition);
+        if (elevatorPosition < 123) {
+            return 123;
+        }
+        else{
+            return anglerBottomLimitMap.get(elevatorPosition);
+        }
     }
 }
