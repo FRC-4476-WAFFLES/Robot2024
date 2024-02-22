@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
@@ -20,18 +21,22 @@ import com.reduxrobotics.sensors.canandcolor.Canandcolor;
 
 import java.lang.Math;
 
+import javax.swing.text.Position;
+
 public class ShooterSubsystem extends SubsystemBase {
   // Motors and Sensors
   private final TalonFX feeder;
   private final TalonFX shooter1;
   private final TalonFX shooter2;
   private final Canandcolor shooterIR;
+  private boolean feederVelocityControl = true;
   
   
   // Configs
   
   private double shooterTargetSpeed = 0;
   private double feederTargetSpeed = 0;
+  private double feederTargetPosition = 0;
   
   // Constants
   
@@ -132,9 +137,16 @@ public class ShooterSubsystem extends SubsystemBase {
     final VelocityVoltage shooterSpeedRequest = new VelocityVoltage(0).withSlot(0);
     shooter1.setControl(shooterSpeedRequest.withVelocity(shooterTargetSpeed));
 
-    // set feeder speed
-    final VelocityVoltage feederSpeedRequest = new VelocityVoltage(0).withSlot(0);
-    feeder.setControl(feederSpeedRequest.withVelocity(feederTargetSpeed));
+
+    if (feederVelocityControl) {
+      // set feeder speed
+      final VelocityVoltage feederSpeedRequest = new VelocityVoltage(0).withSlot(0);
+      feeder.setControl(feederSpeedRequest.withVelocity(feederTargetSpeed));
+    } else {
+      final PositionVoltage feederPositionRequest = new PositionVoltage(0).withSlot(0);
+      feeder.setControl(feederPositionRequest.withPosition(feederTargetPosition));
+    }
+    
   
     SmartDashboard.putNumber("Shooter Speed", shooter1.getVelocity().getValueAsDouble());
     SmartDashboard.putNumber("Feeder Speed", feeder.getVelocity().getValueAsDouble());
@@ -179,9 +191,19 @@ public class ShooterSubsystem extends SubsystemBase {
    * in rotations per second
    */
   public void setFeederTargetSpeed(double speed){
+    feederVelocityControl = true;
     this.feederTargetSpeed = speed;
   }
 
+  /**
+   * Sets position of the feeder wheels
+   * @param position
+   * in rotations
+   */
+  public void setFeederTargetPosition(double position){
+     feederVelocityControl = false;
+    this.feederTargetPosition = position;
+  }
   /**
    * Sets speed of the shooter wheels
    * @param speed
@@ -191,6 +213,9 @@ public class ShooterSubsystem extends SubsystemBase {
     this.shooterTargetSpeed = speed;
   }
 
+  public double getFeederPosition() {
+    return feeder.getPosition().getValueAsDouble();
+  }
   
   /**
    * Returns if there is a note in the shooter

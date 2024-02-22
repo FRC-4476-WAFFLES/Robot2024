@@ -35,14 +35,7 @@ public class SuperstructureIntake extends Command {
   public void end(boolean interrupted) {
     SuperstructureHome superstructureHome = new SuperstructureHome();
     superstructureHome.execute();
-    shooterSubsystem.setFeederTargetSpeed(-90);
-    try {
-      Thread.sleep(200);
-    } catch (InterruptedException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    shooterSubsystem.setFeederTargetSpeed(0);
+    shooterSubsystem.setFeederTargetPosition(shooterSubsystem.getFeederPosition()-2);
     
   }
 
