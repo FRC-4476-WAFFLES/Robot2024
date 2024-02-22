@@ -53,7 +53,7 @@ public class RobotContainer {
 
   // The robot's subsystems 
   public static final LightSubsystem lightSubsystem = null; //new LightSubsystem();
-  public static final ElevatorSubsystem elevatorSubsystem = null; // new ElevatorSubsystem();
+  public static final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
   public static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public static final ShooterSubsystem shooterSubsystem  = new ShooterSubsystem();
   public static final AnglerSubsystem anglerSubsystem  = new AnglerSubsystem();
@@ -65,12 +65,12 @@ public class RobotContainer {
   private final ElevatorDown elevatorDown  = null; //= new ElevatorDown();
   private final IntakeIn intakeIn = new IntakeIn();
   private final IntakeOut intakeOut = new IntakeOut();
-  private final ScoreNote scoreNote  = null; //= new ScoreNote();
+  private final ScoreNote scoreNote  = new ScoreNote();
   private final SpinUp spinUp  = null; //= new SpinUp();
-  private final SuperstructureHome superstructureHome  = null; //= new SuperstructureHome();
-  private final SuperstructureAmp superstructureAmp = null; // = new SuperstructureAmp();
-  private final SuperstructureCloseSpeaker superstructureCloseSpeaker  = null; //= new SuperstructureCloseSpeaker();
-  private final SuperstructureIntake superstructureIntake  = null; //= new SuperstructureIntake();
+  private final SuperstructureHome superstructureHome = new SuperstructureHome();
+  private final SuperstructureAmp superstructureAmp = new SuperstructureAmp();
+  private final SuperstructureCloseSpeaker superstructureCloseSpeaker  = new SuperstructureCloseSpeaker();
+  private final SuperstructureIntake superstructureIntake  = new SuperstructureIntake();
   private final BasicFieldReset basicFieldReset = new BasicFieldReset();
   private final ResetGyro resetGyro = new ResetGyro();
   
@@ -98,6 +98,7 @@ public class RobotContainer {
 
     // lightSubsystem.setDefaultCommand(updateLights);
     driveSubsystem.setDefaultCommand(driveTeleop);
+    
 
     driveSubsystem.registerTelemetry(logger::telemeterize);
 
@@ -128,10 +129,10 @@ public class RobotContainer {
 
     operatorController.povLeft().whileTrue(intakeIn);
     operatorController.povRight().whileTrue(intakeOut);
-    // operatorController.rightBumper().whileTrue(scoreNote);
+    operatorController.rightBumper().whileTrue(scoreNote);
     // operatorController.leftBumper().whileTrue(spinUp);
-    // operatorController.x().whileTrue(superstructureAmp);
-    // operatorController.b().whileTrue(superstructureCloseSpeaker);
+    operatorController.x().whileTrue(superstructureAmp);
+    operatorController.b().whileTrue(superstructureCloseSpeaker);
     // rightJoystick.button(1).whileTrue(driveAndAimAtGoal);
     // operatorController.rightTrigger().whileTrue(elevatorUp);
     // operatorController.leftTrigger().whileTrue(elevatorDown);

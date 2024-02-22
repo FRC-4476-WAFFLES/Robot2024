@@ -21,9 +21,9 @@ public class ScoreNote extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(shooterSubsystem.isGoodSpeed() && anglerSubsystem.isGoodShooterAngle() && elevatorSubsystem.isGoodElevatorPosition()){ 
-      shooterSubsystem.setFeederTargetSpeed(1);
-    }
+    //if(shooterSubsystem.isGoodSpeed() && anglerSubsystem.isGoodShooterAngle() && elevatorSubsystem.isGoodElevatorPosition()){ 
+      shooterSubsystem.setFeederTargetSpeed(100);
+    //}
   }
 
   // Called once the command ends or is interrupted.

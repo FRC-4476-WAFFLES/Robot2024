@@ -100,8 +100,6 @@ public class AnglerSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         manageProfileTimer();
-
-        setAnglerTargetPosition(SmartDashboard.getNumber("Angler Setpoint", 0));
         executeAnglerMotionProfiling();
         updateSmartDashboard();
         //updatePIDConstants();

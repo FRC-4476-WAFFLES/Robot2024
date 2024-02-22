@@ -22,12 +22,15 @@ public class SuperstructureHome extends Command {
   @Override
   public void execute() {
     elevatorSubsystem.setElevatorTargetPosition(0);
-    anglerSubsystem.setAnglerTargetPosition(0);
+    anglerSubsystem.setAnglerTargetPosition(36);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    SuperstructureHome superstructureHome = new SuperstructureHome();
+    superstructureHome.execute();
+  }
 
   // Returns true when the command should end.
   @Override

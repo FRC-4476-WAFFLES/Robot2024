@@ -5,6 +5,8 @@
 package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.superstructure.SuperstructureHome;
+import frc.robot.commands.superstructure.SuperstructureIntake;
 
 import static frc.robot.RobotContainer.*;
 
@@ -25,6 +27,9 @@ public class IntakeOut extends Command {
   @Override
   public void execute() {
     intakeSubsystem.SetIntakeSpeed(-1.0);
+    shooterSubsystem.setFeederTargetSpeed(-100);
+    SuperstructureIntake superstructureIntakePosition = new SuperstructureIntake();
+    superstructureIntakePosition.execute();
     // TODO if elevator and angler is in intake position outtake the feeder as well.
   }
 
@@ -32,8 +37,9 @@ public class IntakeOut extends Command {
   @Override
   public void end(boolean interrupted) {
      intakeSubsystem.SetIntakeSpeed(0);
-     
-     
+     shooterSubsystem.setFeederTargetSpeed(0);
+     SuperstructureHome superstructureHomePosition = new SuperstructureHome();
+     superstructureHomePosition.execute();
      //shooterSubsystem.setFeederTargetSpeed(-1);
   }
   

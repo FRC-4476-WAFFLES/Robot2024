@@ -28,6 +28,7 @@ public class SuperstuctureTrap extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    shooterSubsystem.setShooterTargetSpeed(0);
   }
 
   // Returns true when the command should end.

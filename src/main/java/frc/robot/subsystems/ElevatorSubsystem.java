@@ -39,17 +39,19 @@ public class ElevatorSubsystem extends SubsystemBase {
     private double profileStartPosition = 0;
     private double profileStartVelocity = 0;
 
-  private void initializeSmartDashboard() {
-      SmartDashboard.putNumber("Elevator P", 0);
-      SmartDashboard.putNumber("Elevator D", 0);
-      SmartDashboard.putNumber("Elevator S", 0);
-      SmartDashboard.putNumber("Elevator V", 0);
-      SmartDashboard.putNumber("Elevator Setpoint", 0);
-      SmartDashboard.putNumber("Elevator max accel", 2);
-      SmartDashboard.putNumber("Elevator max vel", 90);
-  }
+
+  
 
   public ElevatorSubsystem() {
+
+    SmartDashboard.putNumber("Elevator P", 0);
+    SmartDashboard.putNumber("Elevator D", 0);
+    SmartDashboard.putNumber("Elevator S", 0);
+    SmartDashboard.putNumber("Elevator V", 0);
+    SmartDashboard.putNumber("Elevator Setpoint", 0);
+    SmartDashboard.putNumber("Elevator Max A", 2);
+    SmartDashboard.putNumber("Elevator Max V", 90);
+
 
     Elevator1 = new TalonFX(Constants.elevator1);
     Elevator2 = new TalonFX(Constants.elevator2);
@@ -69,9 +71,9 @@ public class ElevatorSubsystem extends SubsystemBase {
     
     // Set PIDF values
     var slot0Configs = new Slot0Configs();
-    slot0Configs.kS = 1;
-    slot0Configs.kP = 1;
-    slot0Configs.kD = 0.1;
+    slot0Configs.kS = 0;
+    slot0Configs.kP = 1.3;
+    slot0Configs.kD = 0.01;
 
     elevatorConfig.Slot0 = slot0Configs;
 
@@ -87,9 +89,8 @@ public class ElevatorSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     manageProfileTimer();
-    setElevatorTargetPosition(SmartDashboard.getNumber("Elevator Setpoint", 0));
     executeElevatorMotionProfiling();
-    updatePIDConstants();
+    //updatePIDConstants();
     updateSmartDashboard();
 
 
@@ -103,7 +104,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   private void updateSmartDashboard(){
     SmartDashboard.putNumber("Elevator Position", Elevator1.getPosition().getValueAsDouble());
     SmartDashboard.putNumber("Elevator Velocity", Elevator1.getVelocity().getValueAsDouble());
-    SmartDashboard.putNumber("Elevator Target Position", elevatorTargetPosition);
+    SmartDashboard.putNumber("Elevator Setpoint", elevatorTargetPosition);
   }
 
   private void updatePIDConstants(){
@@ -126,9 +127,9 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   private void executeElevatorMotionProfiling() {
         TrapezoidProfile anglerTrapezoidProfile = new TrapezoidProfile(new TrapezoidProfile.Constraints(
-                SmartDashboard.getNumber("Elevator Max V", 90),
-                SmartDashboard.getNumber("Elevator Max A", 2)
-        ));
+                110,
+                170)
+        );
 
         TrapezoidProfile.State elevatorGoal = new TrapezoidProfile.State(elevatorTargetPosition, 0);
         TrapezoidProfile.State elevatorSetpoint = new TrapezoidProfile.State(profileStartPosition, profileStartVelocity);
@@ -140,10 +141,13 @@ public class ElevatorSubsystem extends SubsystemBase {
         elevatorRequest.Velocity = elevatorSetpoint.velocity;
         Elevator1.setControl(elevatorRequest);
 
+        SmartDashboard.putNumber("Elevator Setpoint Step", elevatorSetpoint.position);
+
     }
 
   public void setElevatorTargetPosition(double position){
     //TODO convert targets units to inches for easier tuning
+    System.err.println(position);
     this.elevatorTargetPosition = position;
     if(this.elevatorTargetPosition != this.previousTargetPosition){
       profileTimer.restart();

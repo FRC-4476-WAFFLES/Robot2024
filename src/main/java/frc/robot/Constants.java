@@ -71,7 +71,7 @@ public final class Constants {
   }
   public static class ShooterConstants {
     public static final double anglerUpperLimit = 96; // degrees
-    public static final double anglerLowerLimit = 0;// degrees
+    public static final double anglerLowerLimit = -29;// degrees
     public static final double anglerUpperLimitInRotations = 0.868; // rotations
     public static final double anglerLowerLimitInRotations = -0.25; // rotations
   }

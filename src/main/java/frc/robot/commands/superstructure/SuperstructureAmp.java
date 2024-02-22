@@ -21,13 +21,23 @@ public class SuperstructureAmp extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    elevatorSubsystem.setElevatorTargetPosition(5000);
-    anglerSubsystem.setAnglerTargetPosition(-10);
+    elevatorSubsystem.setElevatorTargetPosition(26);
+    shooterSubsystem.setShooterTargetSpeed(10);
+    
+    if(elevatorSubsystem.getElevatorPosition() > 24) {
+      anglerSubsystem.setAnglerTargetPosition(-29);
+    }
+    
+    
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    SuperstructureHome superstructureHome = new SuperstructureHome();
+    superstructureHome.execute();
+    shooterSubsystem.setShooterTargetSpeed(0);
+  }
 
   // Returns true when the command should end.
   @Override

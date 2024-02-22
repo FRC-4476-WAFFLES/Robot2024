@@ -159,8 +159,8 @@ public class ShooterSubsystem extends SubsystemBase {
     // shooter2.getConfigurator().apply(shooterSlot0Configs);
     // feeder.getConfigurator().apply(feederSlot0Configs);
 
-    setShooterTargetSpeed(SmartDashboard.getNumber("ShooterSpeed", 0));
-    setFeederTargetSpeed(SmartDashboard.getNumber("Feeder Speed", 0));
+    setShooterTargetSpeed(SmartDashboard.getNumber("Shooter Setpoint", 0));
+    setFeederTargetSpeed(SmartDashboard.getNumber("Feeder Setpoint", 0));
   }
 
   

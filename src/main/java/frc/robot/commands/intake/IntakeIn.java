@@ -5,7 +5,7 @@
 package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj2.command.Command;
-//import frc.robot.commands.superstructure.*;
+import frc.robot.commands.superstructure.*;
 
 import static frc.robot.RobotContainer.*;
 public class IntakeIn extends Command {
@@ -26,7 +26,7 @@ public class IntakeIn extends Command {
   @Override
   public void execute() {
 
-    // SuperstructureIntake superstructureIntakePosition = new SuperstructureIntake();
+    SuperstructureIntake superstructureIntakePosition = new SuperstructureIntake();
 
     // superstructureIntakePosition.execute();
 
@@ -48,15 +48,17 @@ public class IntakeIn extends Command {
     //   // If robot is not ready, intake without feeder
     //   intakeSubsystem.SetIntakeSpeed(1);
     // }
+    superstructureIntakePosition.execute();
     intakeSubsystem.SetIntakeSpeed(1);
+    shooterSubsystem.setFeederTargetSpeed(100);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     intakeSubsystem.SetIntakeSpeed(0);
-    // SuperstructureIntake superstructureIntakePosition = new SuperstructureIntake();
-    // superstructureIntakePosition.end(interrupted);
+    SuperstructureIntake superstructureIntakePosition = new SuperstructureIntake();
+    superstructureIntakePosition.end(interrupted);
   }
 
   // Returns true when the command should end.
