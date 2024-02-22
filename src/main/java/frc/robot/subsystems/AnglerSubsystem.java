@@ -125,7 +125,7 @@ public class AnglerSubsystem extends SubsystemBase {
 
         anglerTargetPositionRotations = MathUtil.clamp(anglerTargetPositionRotations,
                 getAnglerBottomLimit(elevatorSubsystem.getElevatorPosition()),
-                getAnglerTopLimit(elevatorSubsystem.getElevatorPosition());
+                getAnglerTopLimit(elevatorSubsystem.getElevatorPosition()));
 
         TrapezoidProfile.State anglerGoal = new TrapezoidProfile.State(anglerTargetPositionRotations, 0);
         TrapezoidProfile.State anglerSetpoint = new TrapezoidProfile.State(profileStartPosition, profileStartVelocity);
