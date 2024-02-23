@@ -16,10 +16,13 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
-
+import com.ctre.phoenix6.configs.Slot1Configs;
 import com.reduxrobotics.sensors.canandcolor.Canandcolor;
 
 import java.lang.Math;
+import static java.lang.Math.abs;
+
+
 
 import javax.swing.text.Position;
 
@@ -30,6 +33,7 @@ public class ShooterSubsystem extends SubsystemBase {
   private final TalonFX shooter2;
   private final Canandcolor shooterIR;
   private boolean feederVelocityControl = true;
+  
   
   
   // Configs
@@ -112,6 +116,11 @@ public class ShooterSubsystem extends SubsystemBase {
     feederSlot0Configs.kD = 0.00001;
     feederSlot0Configs.kV = 0.115;
 
+    Slot1Configs feederSlot1Configs = new Slot1Configs();
+    feederSlot1Configs.kP = 0.3;
+    feederSlot1Configs.kD = 0.00001;
+    feederSlot1Configs.kV = 0.115;
+
    
 
     // Apply configs
@@ -127,6 +136,7 @@ public class ShooterSubsystem extends SubsystemBase {
     shooter2.getConfigurator().apply(shooterSlot0Configs);
     
     feeder.getConfigurator().apply(feederSlot0Configs);
+    feeder.getConfigurator().apply(feederSlot1Configs);
 
     shooter2.setControl(new Follower(Constants.shooter1, true));
 
@@ -147,8 +157,14 @@ public class ShooterSubsystem extends SubsystemBase {
       // set feeder speed
       final VelocityVoltage feederSpeedRequest = new VelocityVoltage(0).withSlot(0);
       feeder.setControl(feederSpeedRequest.withVelocity(feederTargetSpeed));
+
+      // If shooter is stopped, back off the feeder
+      
+      if (abs(shooter1.getVelocity().getValueAsDouble() - shooterTargetSpeed) < SHOOTER_DEAD_ZONE) {
+        setFeederTargetPosition(getFeederPosition() - 1);
+      }
     } else {
-      final PositionVoltage feederPositionRequest = new PositionVoltage(0).withSlot(0);
+      final PositionVoltage feederPositionRequest = new PositionVoltage(0).withSlot(1);
       feeder.setControl(feederPositionRequest.withPosition(feederTargetPosition));
     }
     

@@ -36,10 +36,7 @@ public class SuperstructureIntake extends Command {
   public void end(boolean interrupted) {
     SuperstructureHome superstructureHome = new SuperstructureHome();
     superstructureHome.execute();
-    shooterSubsystem.setFeederTargetSpeed(0);
-    shooterSubsystem.setFeederTargetPosition(shooterSubsystem.getFeederPosition()+4);
-    SmartDashboard.putNumber("Feeder Position", shooterSubsystem.getFeederPosition());
-    
+    shooterSubsystem.setFeederTargetSpeed(0);   
   }
 
   // Returns true when the command should end.
