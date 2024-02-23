@@ -71,6 +71,7 @@ public class RobotContainer {
   private final SuperstructureAmp superstructureAmp = new SuperstructureAmp();
   private final SuperstructureCloseSpeaker superstructureCloseSpeaker  = new SuperstructureCloseSpeaker();
   private final SuperstructureIntake superstructureIntake  = new SuperstructureIntake();
+  private final SuperstructureTestShot superstructureTestShot = new SuperstructureTestShot();
   private final BasicFieldReset basicFieldReset = new BasicFieldReset();
   private final ResetGyro resetGyro = new ResetGyro();
   
@@ -98,7 +99,7 @@ public class RobotContainer {
 
     // lightSubsystem.setDefaultCommand(updateLights);
     driveSubsystem.setDefaultCommand(driveTeleop);
-    
+
 
     driveSubsystem.registerTelemetry(logger::telemeterize);
 
@@ -133,6 +134,7 @@ public class RobotContainer {
     // operatorController.leftBumper().whileTrue(spinUp);
     operatorController.x().whileTrue(superstructureAmp);
     operatorController.b().whileTrue(superstructureCloseSpeaker);
+    operatorController.y().whileTrue(superstructureTestShot);
     // rightJoystick.button(1).whileTrue(driveAndAimAtGoal);
     // operatorController.rightTrigger().whileTrue(elevatorUp);
     // operatorController.leftTrigger().whileTrue(elevatorDown);

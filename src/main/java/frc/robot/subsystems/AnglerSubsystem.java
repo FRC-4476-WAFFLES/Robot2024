@@ -124,8 +124,8 @@ public class AnglerSubsystem extends SubsystemBase {
         ));
 
         anglerTargetPositionRotations = MathUtil.clamp(anglerTargetPositionRotations,
-                getAnglerBottomLimit(elevatorSubsystem.getElevatorPosition()),
-                getAnglerTopLimit(elevatorSubsystem.getElevatorPosition()));
+                getAnglerTopLimit(elevatorSubsystem.getElevatorPosition()),
+                getAnglerBottomLimit(elevatorSubsystem.getElevatorPosition()));
 
         TrapezoidProfile.State anglerGoal = new TrapezoidProfile.State(anglerTargetPositionRotations, 0);
         TrapezoidProfile.State anglerSetpoint = new TrapezoidProfile.State(profileStartPosition, profileStartVelocity);
@@ -183,12 +183,11 @@ public class AnglerSubsystem extends SubsystemBase {
         
 
         anglerTopLimitMap.put(0.0, 0.0);
-        anglerTopLimitMap.put(1.0, 1.0);
-        anglerTopLimitMap.put(2.0, 2.0);
-        anglerTopLimitMap.put(3.0, 3.0);
+        anglerTopLimitMap.put(10.0, 0.0);
+        anglerTopLimitMap.put(20.0, -12.0);
 
-        if (elevatorPosition < 123) {
-            return 123;
+        if (elevatorPosition > 25) {
+            return -29;
         }
         else{
             return anglerTopLimitMap.get(elevatorPosition);
@@ -201,13 +200,14 @@ public class AnglerSubsystem extends SubsystemBase {
 
         //TODO TUNE
 
-        anglerBottomLimitMap.put(0.0, 0.0);
-        anglerBottomLimitMap.put(1.0, 1.0);
-        anglerBottomLimitMap.put(2.0, 2.0);
-        anglerBottomLimitMap.put(3.0, 3.0);
+        anglerBottomLimitMap.put(0.0, 60.5);
+        anglerBottomLimitMap.put(10.0, 73.5);
+        anglerBottomLimitMap.put(20.0, 90.0);
 
-        if (elevatorPosition < 123) {
-            return 123;
+        
+
+        if (elevatorPosition > 25) {
+            return 92;
         }
         else{
             return anglerBottomLimitMap.get(elevatorPosition);

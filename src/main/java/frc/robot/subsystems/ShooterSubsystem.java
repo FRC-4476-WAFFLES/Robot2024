@@ -62,6 +62,10 @@ public class ShooterSubsystem extends SubsystemBase {
     // Instantiate motors and encoders
     
     feeder = new TalonFX(Constants.feeder);
+    SmartDashboard.putNumber("Feeder Position", getFeederPosition());
+    SmartDashboard.putNumber("Feeder Target Position", 0);
+    SmartDashboard.putBoolean("Feeder Velocity Control", feederVelocityControl);
+
     shooter1 = new TalonFX(Constants.shooter1);
     shooter2 = new TalonFX(Constants.shooter2);  
     
@@ -138,6 +142,7 @@ public class ShooterSubsystem extends SubsystemBase {
     shooter1.setControl(shooterSpeedRequest.withVelocity(shooterTargetSpeed));
 
 
+    SmartDashboard.putBoolean("Feeder Velocity Control", feederVelocityControl);
     if (feederVelocityControl) {
       // set feeder speed
       final VelocityVoltage feederSpeedRequest = new VelocityVoltage(0).withSlot(0);
@@ -152,6 +157,7 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Feeder Speed", feeder.getVelocity().getValueAsDouble());
     SmartDashboard.putNumber("Shooter Setpoint", shooterTargetSpeed);
     SmartDashboard.putNumber("Feeder Setpoint", feederTargetSpeed);
+    SmartDashboard.putNumber("Feeder Position", getFeederPosition());
 
      // Velocity PID for shooters 
     //  Slot0Configs shooterSlot0Configs = new Slot0Configs();
@@ -171,8 +177,8 @@ public class ShooterSubsystem extends SubsystemBase {
     // shooter2.getConfigurator().apply(shooterSlot0Configs);
     // feeder.getConfigurator().apply(feederSlot0Configs);
 
-    setShooterTargetSpeed(SmartDashboard.getNumber("Shooter Setpoint", 0));
-    setFeederTargetSpeed(SmartDashboard.getNumber("Feeder Setpoint", 0));
+   // setShooterTargetSpeed(SmartDashboard.getNumber("Shooter Setpoint", 0));
+  //  setFeederTargetSpeed(SmartDashboard.getNumber("Feeder Setpoint", 0));
   }
 
   
@@ -192,6 +198,7 @@ public class ShooterSubsystem extends SubsystemBase {
    */
   public void setFeederTargetSpeed(double speed){
     feederVelocityControl = true;
+    System.err.println("Velocity Control True");
     this.feederTargetSpeed = speed;
   }
 
@@ -203,6 +210,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public void setFeederTargetPosition(double position){
      feederVelocityControl = false;
     this.feederTargetPosition = position;
+    SmartDashboard.putNumber("Feeder Target Position", position);
   }
   /**
    * Sets speed of the shooter wheels

@@ -4,6 +4,7 @@
 
 package frc.robot.commands.superstructure;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import static frc.robot.RobotContainer.*;
 
@@ -12,6 +13,7 @@ public class SuperstructureIntake extends Command {
   public SuperstructureIntake() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(elevatorSubsystem, anglerSubsystem);
+    SmartDashboard.putNumber("Feeder Position", shooterSubsystem.getFeederPosition());
   }
 
   // Called when the command is initially scheduled.
@@ -22,10 +24,9 @@ public class SuperstructureIntake extends Command {
   @Override
   public void execute() {
     elevatorSubsystem.setElevatorTargetPosition(25);
-    
 
     if(elevatorSubsystem.getElevatorPosition() > 10) {
-      anglerSubsystem.setAnglerTargetPosition(91.7);
+      anglerSubsystem.setAnglerTargetPosition(93.0);
     }
     
   }
@@ -35,7 +36,9 @@ public class SuperstructureIntake extends Command {
   public void end(boolean interrupted) {
     SuperstructureHome superstructureHome = new SuperstructureHome();
     superstructureHome.execute();
-    shooterSubsystem.setFeederTargetPosition(shooterSubsystem.getFeederPosition()-2);
+    shooterSubsystem.setFeederTargetSpeed(0);
+    shooterSubsystem.setFeederTargetPosition(shooterSubsystem.getFeederPosition()+4);
+    SmartDashboard.putNumber("Feeder Position", shooterSubsystem.getFeederPosition());
     
   }
 

@@ -24,9 +24,7 @@ public class SuperstructureAmp extends Command {
     elevatorSubsystem.setElevatorTargetPosition(26);
     shooterSubsystem.setShooterTargetSpeed(10);
     
-    if(elevatorSubsystem.getElevatorPosition() > 24) {
-      anglerSubsystem.setAnglerTargetPosition(-29);
-    }
+    anglerSubsystem.setAnglerTargetPosition(-29);
     
     
   }
