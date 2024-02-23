@@ -24,10 +24,8 @@ public class SuperstructureIntake extends Command {
   @Override
   public void execute() {
     elevatorSubsystem.setElevatorTargetPosition(25);
-
-    if(elevatorSubsystem.getElevatorPosition() > 10) {
-      anglerSubsystem.setAnglerTargetPosition(93.0);
-    }
+    anglerSubsystem.setAnglerTargetPosition(93.0);
+  
     
   }
 

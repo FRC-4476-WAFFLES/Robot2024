@@ -55,6 +55,8 @@ public class AnglerSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Angler Setpoint", 0);
         SmartDashboard.putNumber("Angler max accel", 2);
         SmartDashboard.putNumber("Angler max vel", 90);
+        SmartDashboard.putNumber("Angler Bottom Limit",0);
+        SmartDashboard.putNumber("Angler Top Limit",0);
     }
 
     private void initializeSubsystem() {
@@ -123,9 +125,7 @@ public class AnglerSubsystem extends SubsystemBase {
                 100,800
         ));
 
-        anglerTargetPositionRotations = MathUtil.clamp(anglerTargetPositionRotations,
-                getAnglerTopLimit(elevatorSubsystem.getElevatorPosition()),
-                getAnglerBottomLimit(elevatorSubsystem.getElevatorPosition()));
+
 
         TrapezoidProfile.State anglerGoal = new TrapezoidProfile.State(anglerTargetPositionRotations, 0);
         TrapezoidProfile.State anglerSetpoint = new TrapezoidProfile.State(profileStartPosition, profileStartVelocity);
@@ -166,7 +166,9 @@ public class AnglerSubsystem extends SubsystemBase {
 
     public void setAnglerTargetPosition(double angle) {
         this.anglerTargetPositionRotations = angle * (OVERALL_REDUCTION / 360);
-        this.anglerTargetPositonDegrees = angle;
+        this.anglerTargetPositonDegrees = MathUtil.clamp(angle, 
+        getAnglerTopLimit(elevatorSubsystem.getElevatorPosition()), 
+        getAnglerBottomLimit(elevatorSubsystem.getElevatorPosition()));
         if (this.anglerTargetPositionRotations != this.previousTargetPosition) {
             profileTimer.restart();
             this.previousTargetPosition = this.anglerTargetPositionRotations;
@@ -200,8 +202,8 @@ public class AnglerSubsystem extends SubsystemBase {
 
         //TODO TUNE
 
-        anglerBottomLimitMap.put(0.0, 60.5);
-        anglerBottomLimitMap.put(10.0, 73.5);
+        anglerBottomLimitMap.put(0.0, 55.5);
+        anglerBottomLimitMap.put(10.0, 68.5);
         anglerBottomLimitMap.put(20.0, 90.0);
 
         
