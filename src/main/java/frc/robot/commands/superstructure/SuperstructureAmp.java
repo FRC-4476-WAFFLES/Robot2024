@@ -21,6 +21,7 @@ public class SuperstructureAmp extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    elevatorSubsystem.isClimbing = false;
     elevatorSubsystem.setElevatorTargetPosition(26);
     shooterSubsystem.setShooterTargetSpeed(10);
     

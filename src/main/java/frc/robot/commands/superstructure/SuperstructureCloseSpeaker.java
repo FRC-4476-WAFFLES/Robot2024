@@ -21,6 +21,7 @@ public class SuperstructureCloseSpeaker extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    elevatorSubsystem.isClimbing = false;
     elevatorSubsystem.setElevatorTargetPosition(25);
     anglerSubsystem.setAnglerTargetPosition(68);
     shooterSubsystem.setShooterTargetSpeed(40);

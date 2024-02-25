@@ -21,6 +21,7 @@ public class SuperstructureStash extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    elevatorSubsystem.isClimbing = false;
     elevatorSubsystem.setElevatorTargetPosition(10);
     anglerSubsystem.setAnglerTargetPosition(0);
   }

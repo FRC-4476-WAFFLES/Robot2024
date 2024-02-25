@@ -21,8 +21,14 @@ public class SuperstructureHome extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    elevatorSubsystem.setElevatorTargetPosition(22.8);
-    anglerSubsystem.setAnglerTargetPosition(94.5);
+    if (elevatorSubsystem.isClimbing) {
+      elevatorSubsystem.setElevatorTargetPosition(0);
+      anglerSubsystem.setAnglerTargetPosition(0);
+    } else {
+      elevatorSubsystem.setElevatorTargetPosition(22.8);
+      anglerSubsystem.setAnglerTargetPosition(94.5);
+    }
+  
   
   }
 

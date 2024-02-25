@@ -26,6 +26,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     private final TalonFX Elevator1;
     private final TalonFX Elevator2;
 
+    public boolean isClimbing = false;
+
     private final DigitalInput elevatorZero;
 
     private final DigitalInput coastSwitch;
