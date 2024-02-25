@@ -52,7 +52,7 @@ public class RobotContainer {
   public double leftTriggerStrength = 1;
 
   // The robot's subsystems 
-  public static final LightSubsystem lightSubsystem = null; //new LightSubsystem();
+  public static final LightSubsystem lightSubsystem = new LightSubsystem();
   public static final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
   public static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public static final ShooterSubsystem shooterSubsystem  = new ShooterSubsystem();
@@ -60,7 +60,7 @@ public class RobotContainer {
   public static final DriveSubsystem driveSubsystem = TunerConstants.DriveTrain;
 
   //The Robots Commands
-  private final ActivateLightColour updateLights = null; // = new ActivateLightColour();
+  private final ActivateLightColour updateLights = new ActivateLightColour();
   private final ElevatorUp elevatorUp  = null; //= new ElevatorUp();
   private final ElevatorDown elevatorDown  = null; //= new ElevatorDown();
   private final IntakeIn intakeIn = new IntakeIn();
@@ -99,6 +99,8 @@ public class RobotContainer {
 
     // lightSubsystem.setDefaultCommand(updateLights);
     driveSubsystem.setDefaultCommand(driveTeleop);
+    lightSubsystem.setDefaultCommand(updateLights);
+    anglerSubsystem.setDefaultCommand(superstructureHome);
 
 
     driveSubsystem.registerTelemetry(logger::telemeterize);

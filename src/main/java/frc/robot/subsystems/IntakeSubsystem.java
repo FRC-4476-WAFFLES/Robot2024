@@ -46,6 +46,8 @@ public class IntakeSubsystem extends SubsystemBase {
     intake.getConfigurator().apply(intakeConfig);
 
     SmartDashboard.putBoolean("Note Detected Current Draw", isNoteCurrentDetection());
+    SmartDashboard.putNumber("Intake Speed Setpoint", IntakeSpeed);
+    SmartDashboard.putBoolean("Intake is running", isRunning());
   }
 
   @Override
@@ -54,6 +56,8 @@ public class IntakeSubsystem extends SubsystemBase {
     final DutyCycleOut intakeDutyCycle = new DutyCycleOut(0.0);
 
     intake.setControl(intakeDutyCycle.withOutput(IntakeSpeed));
+
+    SmartDashboard.putNumber("Intake Stator Current", intake.getStatorCurrent().getValueAsDouble());
   }
 
   /**
@@ -82,6 +86,6 @@ public class IntakeSubsystem extends SubsystemBase {
   } 
 
   public boolean isNoteCurrentDetection() {
-    return intake.getSupplyCurrent().getValueAsDouble() > 60;
+    return intake.getStatorCurrent().getValueAsDouble() > 34;
   }
 }

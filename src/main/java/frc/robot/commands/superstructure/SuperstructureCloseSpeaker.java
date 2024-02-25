@@ -23,7 +23,7 @@ public class SuperstructureCloseSpeaker extends Command {
   public void execute() {
     elevatorSubsystem.setElevatorTargetPosition(25);
     anglerSubsystem.setAnglerTargetPosition(68);
-    shooterSubsystem.setShooterTargetSpeed(50);
+    shooterSubsystem.setShooterTargetSpeed(40);
   }
 
   // Called once the command ends or is interrupted.

@@ -23,8 +23,8 @@ public class SuperstructureIntake extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    elevatorSubsystem.setElevatorTargetPosition(25);
-    anglerSubsystem.setAnglerTargetPosition(93.0);
+    elevatorSubsystem.setElevatorTargetPosition(26);
+    anglerSubsystem.setAnglerTargetPosition(86.7);
   
     
   }

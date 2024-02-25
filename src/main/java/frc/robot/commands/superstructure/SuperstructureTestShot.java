@@ -17,12 +17,16 @@ public class SuperstructureTestShot extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    SuperstructureHome home = new SuperstructureHome();
+    home.end(true);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    elevatorSubsystem.setElevatorTargetPosition(SmartDashboard.getNumber("Elevator Setpoint", 0));
+
+    elevatorSubsystem.setElevatorTargetPosition(SmartDashboard.getNumber("Elevator Setpoint", 6));
     anglerSubsystem.setAnglerTargetPosition(SmartDashboard.getNumber("Angler Setpoint", 0));
     shooterSubsystem.setShooterTargetSpeed(SmartDashboard.getNumber("Shooter Setpoint", 0));
   }
@@ -30,8 +34,8 @@ public class SuperstructureTestShot extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    SuperstructureHome home = new SuperstructureHome();
-    home.schedule();
+    // SuperstructureHome home = new SuperstructureHome();
+    // home.schedule();
     shooterSubsystem.setShooterTargetSpeed(0);
   }
 

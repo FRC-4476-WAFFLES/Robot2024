@@ -28,7 +28,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     private double elevatorTargetPosition = 0;
 
-    private final double ELEVATOR_DEAD_ZONE = 5;
+    private final double ELEVATOR_DEAD_ZONE = 1;
 
     private final CurrentLimitsConfigs elevatorCurrentLimits = new CurrentLimitsConfigs();
 
@@ -48,7 +48,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Elevator D", 0);
     SmartDashboard.putNumber("Elevator S", 0);
     SmartDashboard.putNumber("Elevator V", 0);
-    SmartDashboard.putNumber("Elevator Setpoint", 0);
+    SmartDashboard.putNumber("Elevator Setpoint", 5);
     SmartDashboard.putNumber("Elevator Max A", 2);
     SmartDashboard.putNumber("Elevator Max V", 90);
 
@@ -99,12 +99,14 @@ public class ElevatorSubsystem extends SubsystemBase {
       Elevator1.setPosition(0);
     }
 
+    System.err.println("Elevator setpoint: " + elevatorTargetPosition);
+
   }
 
   private void updateSmartDashboard(){
     SmartDashboard.putNumber("Elevator Position", Elevator1.getPosition().getValueAsDouble());
     SmartDashboard.putNumber("Elevator Velocity", Elevator1.getVelocity().getValueAsDouble());
-    SmartDashboard.putNumber("Elevator Setpoint", elevatorTargetPosition);
+  
   }
 
   private void updatePIDConstants(){

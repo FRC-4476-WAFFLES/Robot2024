@@ -27,7 +27,7 @@ import frc.robot.Constants;
 
 public class AnglerSubsystem extends SubsystemBase {
     private static final double OVERALL_REDUCTION = (62 / 18) * 25 * (48 / 16); // Ratio from the motor to the shooter pivot shaft
-    private static final double ANGLER_DEAD_ZONE = 4;
+    private static final double ANGLER_DEAD_ZONE = 1;
 
     private TalonFX angler;
     private DutyCycleEncoder anglerAbsoluteEncoder;
@@ -108,6 +108,8 @@ public class AnglerSubsystem extends SubsystemBase {
         executeAnglerMotionProfiling();
         updateSmartDashboard();
         //updatePIDConstants();
+
+        System.err.println(anglerTargetPositonDegrees);
     }
 
     private void manageProfileTimer() {
@@ -145,6 +147,9 @@ public class AnglerSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Angler Degrees", (angler.getPosition().getValueAsDouble() * 360 / OVERALL_REDUCTION));
         SmartDashboard.putNumber("Raw Abs enc", anglerAbsoluteEncoder.getAbsolutePosition());
         SmartDashboard.putNumber("Angler Target Position", anglerTargetPositionRotations);   
+        SmartDashboard.putNumber("Angler Bottom Limit",getAnglerBottomLimit(elevatorSubsystem.getElevatorPosition()));
+        SmartDashboard.putNumber("Angler Top Limit",getAnglerTopLimit(elevatorSubsystem.getElevatorPosition()));
+        //SmartDashboard.putNumber("Angler Setpoint", anglerTargetPositonDegrees);
     }
 
     private void updatePIDConstants() {
@@ -165,10 +170,10 @@ public class AnglerSubsystem extends SubsystemBase {
     }
 
     public void setAnglerTargetPosition(double angle) {
-        this.anglerTargetPositionRotations = angle * (OVERALL_REDUCTION / 360);
         this.anglerTargetPositonDegrees = MathUtil.clamp(angle, 
         getAnglerTopLimit(elevatorSubsystem.getElevatorPosition()), 
         getAnglerBottomLimit(elevatorSubsystem.getElevatorPosition()));
+        this.anglerTargetPositionRotations = anglerTargetPositonDegrees * (OVERALL_REDUCTION / 360);
         if (this.anglerTargetPositionRotations != this.previousTargetPosition) {
             profileTimer.restart();
             this.previousTargetPosition = this.anglerTargetPositionRotations;
@@ -189,9 +194,11 @@ public class AnglerSubsystem extends SubsystemBase {
         anglerTopLimitMap.put(20.0, -12.0);
 
         if (elevatorPosition > 25) {
+            System.err.println("anglerTOPLimitMap: 92");
             return -29;
         }
         else{
+            System.err.println("anglerBottomLimitMap: " + anglerTopLimitMap.get(elevatorPosition));
             return anglerTopLimitMap.get(elevatorPosition);
         }
     }
@@ -209,9 +216,11 @@ public class AnglerSubsystem extends SubsystemBase {
         
 
         if (elevatorPosition > 25) {
+            System.err.println("anglerBottomLimitMap: 92");
             return 92;
         }
         else{
+            System.err.println("anglerBottomLimitMap: " + anglerBottomLimitMap.get(elevatorPosition));
             return anglerBottomLimitMap.get(elevatorPosition);
         }
     }

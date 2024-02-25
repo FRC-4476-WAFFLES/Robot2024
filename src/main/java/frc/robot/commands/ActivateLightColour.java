@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.LightSubsystem.LightColours;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 
 import static frc.robot.RobotContainer.*;
@@ -25,11 +26,13 @@ public class ActivateLightColour extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
+    // System.err.println("Running Lights");
     
     // If certain conditions are fufilled, the robot's lights change colours
-    if(shooterSubsystem.isGoodSpeed() && anglerSubsystem.isGoodShooterAngle() && elevatorSubsystem.isGoodElevatorPosition()){
+    if(shooterSubsystem.isGoodSpeed() && anglerSubsystem.isGoodShooterAngle() && elevatorSubsystem.isGoodElevatorPosition() && shooterSubsystem.isShooterRunning()){
       // Ready to shoot  
-      lightSubsystem.blinkBetweenColours(LightColours.LAWNGREEN, LightColours.BLACK);
+      lightSubsystem.blinkBetweenColours(LightColours.GREEN, LightColours.BLACK);
     } 
     else if (17 < Timer.getMatchTime() && Timer.getMatchTime() < 23){
       // Endgame warning
@@ -39,7 +42,7 @@ public class ActivateLightColour extends Command {
       // Intake running
       lightSubsystem.blinkBetweenColours(LightColours.YELLOW, LightColours.BLACK);
     }
-    else if(intakeSubsystem.isNote()){
+    else if(intakeSubsystem.isNoteCurrentDetection()){
       // Note in Intake
       lightSubsystem.blinkBetweenColours(LightColours.VIOLET, LightColours.BLACK);
     }
@@ -48,8 +51,14 @@ public class ActivateLightColour extends Command {
       lightSubsystem.setLightColour(LightColours.VIOLET);
     }
     else {
-      // Default
-      lightSubsystem.setLightColour(LightColours.YELLOW);
+      var alliance = DriverStation.getAlliance();
+      if (alliance.get() == DriverStation.Alliance.Blue) {
+          lightSubsystem.setLightColour(LightColours.HEARTBEAT_BLUE);
+      }
+      else {
+          lightSubsystem.setLightColour(LightColours.HEARTBEAT_RED);
+      }
+
     }
         
       

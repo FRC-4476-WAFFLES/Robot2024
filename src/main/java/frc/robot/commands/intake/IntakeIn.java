@@ -50,7 +50,7 @@ public class IntakeIn extends Command {
     // }
     superstructureIntakePosition.execute();
     intakeSubsystem.SetIntakeSpeed(1);
-    shooterSubsystem.setFeederTargetSpeed(100);
+    shooterSubsystem.setFeederTargetSpeed(1000);
   }
 
   // Called once the command ends or is interrupted.

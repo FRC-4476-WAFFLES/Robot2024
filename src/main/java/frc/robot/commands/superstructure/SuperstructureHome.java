@@ -21,15 +21,14 @@ public class SuperstructureHome extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    elevatorSubsystem.setElevatorTargetPosition(0);
-    anglerSubsystem.setAnglerTargetPosition(62);
+    elevatorSubsystem.setElevatorTargetPosition(22.8);
+    anglerSubsystem.setAnglerTargetPosition(94.5);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    SuperstructureHome superstructureHome = new SuperstructureHome();
-    superstructureHome.execute();
+    
   }
 
   // Returns true when the command should end.

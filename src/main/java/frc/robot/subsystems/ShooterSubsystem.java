@@ -45,6 +45,7 @@ public class ShooterSubsystem extends SubsystemBase {
   // Constants
   
   private final double SHOOTER_DEAD_ZONE = 5;
+  private final double FEEDER_DEAD_ZONE = 2;
   private final double IR_RANGE = 10;
 
   private final CurrentLimitsConfigs currentLimitsConfig;
@@ -61,12 +62,12 @@ public class ShooterSubsystem extends SubsystemBase {
     // SmartDashboard.putNumber("FeederP", 0.3);
     // SmartDashboard.putNumber("FeederD", 0.00001);
     // SmartDashboard.putNumber("FeederV", 0.115);
+    SmartDashboard.putNumber("Shooter Setpoint", 0);
 
 
     // Instantiate motors and encoders
     
     feeder = new TalonFX(Constants.feeder);
-    SmartDashboard.putNumber("Feeder Position", getFeederPosition());
     SmartDashboard.putNumber("Feeder Target Position", 0);
     SmartDashboard.putBoolean("Feeder Velocity Control", feederVelocityControl);
 
@@ -158,10 +159,11 @@ public class ShooterSubsystem extends SubsystemBase {
       final VelocityVoltage feederSpeedRequest = new VelocityVoltage(0).withSlot(0);
       feeder.setControl(feederSpeedRequest.withVelocity(feederTargetSpeed));
 
-      // If shooter is stopped, back off the feeder
+      // If feeder is stopped, back off the feeder
       
-      if (abs(shooter1.getVelocity().getValueAsDouble() - shooterTargetSpeed) < SHOOTER_DEAD_ZONE) {
-        setFeederTargetPosition(getFeederPosition() - 1);
+      if (abs(feeder.getVelocity().getValueAsDouble()) < FEEDER_DEAD_ZONE) {
+        feeder.setPosition(0);
+        setFeederTargetPosition(-1);
       }
     } else {
       final PositionVoltage feederPositionRequest = new PositionVoltage(0).withSlot(1);
@@ -171,8 +173,8 @@ public class ShooterSubsystem extends SubsystemBase {
   
     SmartDashboard.putNumber("Shooter Speed", shooter1.getVelocity().getValueAsDouble());
     SmartDashboard.putNumber("Feeder Speed", feeder.getVelocity().getValueAsDouble());
-    SmartDashboard.putNumber("Shooter Setpoint", shooterTargetSpeed);
-    SmartDashboard.putNumber("Feeder Setpoint", feederTargetSpeed);
+    // SmartDashboard.putNumber("Shooter Setpoint", shooterTargetSpeed);
+    // SmartDashboard.putNumber("Feeder Setpoint", feederTargetSpeed);
     SmartDashboard.putNumber("Feeder Position", getFeederPosition());
 
      // Velocity PID for shooters 
@@ -239,6 +241,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public double getFeederPosition() {
     return feeder.getPosition().getValueAsDouble();
+  }
+
+  public boolean isShooterRunning(){
+    return shooterTargetSpeed != 0;
   }
   
   /**
