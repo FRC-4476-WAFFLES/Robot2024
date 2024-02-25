@@ -46,10 +46,10 @@ public class ActivateLightColour extends Command {
       // Note in Intake
       lightSubsystem.blinkBetweenColours(LightColours.VIOLET, LightColours.BLACK);
     }
-    else if (shooterSubsystem.isNote()) {
-      // Note in Shooter
-      lightSubsystem.setLightColour(LightColours.VIOLET);
-    }
+    // else if (shooterSubsystem.isNote()) {
+    //   // Note in Shooter
+    //   lightSubsystem.setLightColour(LightColours.VIOLET);
+    // }
     else {
       var alliance = DriverStation.getAlliance();
       if (alliance.get() == DriverStation.Alliance.Blue) {

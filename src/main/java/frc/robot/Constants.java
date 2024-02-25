@@ -58,6 +58,7 @@ public final class Constants {
 
   public static final int elevatorZero = 1; // Hall Effect
   public static final int anglerAbsoluteEncoder = 4; // REV Through Bore
+  public static final int coastModeSwitch = 5; // Limit Switch
 
   // Limelights
 

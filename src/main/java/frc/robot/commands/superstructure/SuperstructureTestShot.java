@@ -18,8 +18,7 @@ public class SuperstructureTestShot extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    SuperstructureHome home = new SuperstructureHome();
-    home.end(true);
+  
   }
 
   // Called every time the scheduler runs while the command is scheduled.

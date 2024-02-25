@@ -12,14 +12,14 @@ import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.reduxrobotics.sensors.canandcolor.Canandcolor;
+//import com.reduxrobotics.sensors.canandcolor.Canandcolor;
 
 public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
 
   private final TalonFX intake;
 
-  private final Canandcolor intakeIR; 
+  //private final Canandcolor intakeIR; 
   private final CurrentLimitsConfigs intakeCurrentLimitsConfigs = new CurrentLimitsConfigs();
   
   private double IntakeSpeed = 0;
@@ -29,7 +29,7 @@ public class IntakeSubsystem extends SubsystemBase {
   public IntakeSubsystem() {
 
     intake = new TalonFX(Constants.Intake);
-    intakeIR = new Canandcolor(Constants.intakeIR);
+    //intakeIR = new Canandcolor(Constants.intakeIR);
 
     // Set the current limits for the intake
     TalonFXConfiguration intakeConfig = new TalonFXConfiguration();
@@ -73,9 +73,9 @@ public class IntakeSubsystem extends SubsystemBase {
    * @return true: if note is in intake
    * <li>false: if note is not in intake</li>
    */
-  public boolean isNote() {
-    return intakeIR.getProximity() > IR_RANGE;
-  }
+  // public boolean isNote() {
+  //   return intakeIR.getProximity() > IR_RANGE;
+  // }
   /**
    * Returns if the intake is running
    * @return true: if intake is running

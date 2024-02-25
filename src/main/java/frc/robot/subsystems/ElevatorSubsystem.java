@@ -17,6 +17,8 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
+
 import frc.robot.Constants;
 
 public class ElevatorSubsystem extends SubsystemBase {
@@ -26,6 +28,8 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     private final DigitalInput elevatorZero;
 
+    private final DigitalInput coastSwitch;
+   
     private double elevatorTargetPosition = 0;
 
     private final double ELEVATOR_DEAD_ZONE = 1;
@@ -57,7 +61,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     Elevator2 = new TalonFX(Constants.elevator2);
 
     elevatorZero = new DigitalInput(Constants.elevatorZero);
-
+    coastSwitch = new DigitalInput(Constants.coastModeSwitch);
+   
     Elevator2.setControl(new Follower(Constants.elevator1, true));
 
     TalonFXConfiguration elevatorConfig = new TalonFXConfiguration();
@@ -92,6 +97,16 @@ public class ElevatorSubsystem extends SubsystemBase {
     executeElevatorMotionProfiling();
     //updatePIDConstants();
     updateSmartDashboard();
+    SmartDashboard.putBoolean("COAST STUFF", coastSwitch.get());
+    if (!getCoastSwitch()){
+      Elevator1.setNeutralMode(NeutralModeValue.Coast);
+      Elevator2.setNeutralMode(NeutralModeValue.Coast);
+    }
+    else{
+      Elevator1.setNeutralMode(NeutralModeValue.Brake);
+      Elevator2.setNeutralMode(NeutralModeValue.Brake);
+    }
+
 
 
     // Set elevator to zero if hall effect is triggered
@@ -99,7 +114,6 @@ public class ElevatorSubsystem extends SubsystemBase {
       Elevator1.setPosition(0);
     }
 
-    System.err.println("Elevator setpoint: " + elevatorTargetPosition);
 
   }
 
@@ -149,7 +163,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   public void setElevatorTargetPosition(double position){
     //TODO convert targets units to inches for easier tuning
-    System.err.println(position);
+   
     this.elevatorTargetPosition = position;
     if(this.elevatorTargetPosition != this.previousTargetPosition){
       profileTimer.restart();
@@ -196,5 +210,9 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   public void adjustTargetPosition(double change) {
     elevatorTargetPosition += change;
+  }
+
+  public boolean getCoastSwitch(){
+    return coastSwitch.get();
   }
 }

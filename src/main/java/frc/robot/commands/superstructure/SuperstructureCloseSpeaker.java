@@ -30,8 +30,6 @@ public class SuperstructureCloseSpeaker extends Command {
   @Override
   public void end(boolean interrupted) {
     shooterSubsystem.setShooterTargetSpeed(0);
-    SuperstructureHome superstructureHome = new SuperstructureHome();
-    superstructureHome.execute();
   }
 
   // Returns true when the command should end.

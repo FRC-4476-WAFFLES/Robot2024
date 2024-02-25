@@ -48,9 +48,10 @@ public class IntakeIn extends Command {
     //   // If robot is not ready, intake without feeder
     //   intakeSubsystem.SetIntakeSpeed(1);
     // }
-    superstructureIntakePosition.execute();
+    superstructureIntakePosition.schedule();
     intakeSubsystem.SetIntakeSpeed(1);
-    shooterSubsystem.setFeederTargetSpeed(1000);
+    shooterSubsystem.setFeederTargetSpeed(100);
+    
   }
 
   // Called once the command ends or is interrupted.
@@ -59,6 +60,7 @@ public class IntakeIn extends Command {
     intakeSubsystem.SetIntakeSpeed(0);
     SuperstructureIntake superstructureIntakePosition = new SuperstructureIntake();
     superstructureIntakePosition.end(interrupted);
+    shooterSubsystem.setFeederTargetSpeed(0);
   }
 
   // Returns true when the command should end.

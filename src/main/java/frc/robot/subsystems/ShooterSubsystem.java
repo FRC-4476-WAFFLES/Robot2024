@@ -17,7 +17,7 @@ import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.Slot1Configs;
-import com.reduxrobotics.sensors.canandcolor.Canandcolor;
+//import com.reduxrobotics.sensors.canandcolor.Canandcolor;
 
 import java.lang.Math;
 import static java.lang.Math.abs;
@@ -31,7 +31,7 @@ public class ShooterSubsystem extends SubsystemBase {
   private final TalonFX feeder;
   private final TalonFX shooter1;
   private final TalonFX shooter2;
-  private final Canandcolor shooterIR;
+  //private final Canandcolor shooterIR;
   private boolean feederVelocityControl = true;
   
   
@@ -69,12 +69,12 @@ public class ShooterSubsystem extends SubsystemBase {
     
     feeder = new TalonFX(Constants.feeder);
     SmartDashboard.putNumber("Feeder Target Position", 0);
-    SmartDashboard.putBoolean("Feeder Velocity Control", feederVelocityControl);
+    //SmartDashboard.putBoolean("Feeder Velocity Control", feederVelocityControl);
 
     shooter1 = new TalonFX(Constants.shooter1);
     shooter2 = new TalonFX(Constants.shooter2);  
     
-    shooterIR = new Canandcolor(Constants.shooterIR);
+    //shooterIR = new Canandcolor(Constants.shooterIR);
 
     // Inversion
     
@@ -153,7 +153,7 @@ public class ShooterSubsystem extends SubsystemBase {
     shooter1.setControl(shooterSpeedRequest.withVelocity(shooterTargetSpeed));
 
 
-    SmartDashboard.putBoolean("Feeder Velocity Control", feederVelocityControl);
+    //SmartDashboard.putBoolean("Feeder Velocity Control", feederVelocityControl);
     if (feederVelocityControl) {
       // set feeder speed
       final VelocityVoltage feederSpeedRequest = new VelocityVoltage(0).withSlot(0);
@@ -216,7 +216,7 @@ public class ShooterSubsystem extends SubsystemBase {
    */
   public void setFeederTargetSpeed(double speed){
     feederVelocityControl = true;
-    System.err.println("Velocity Control True");
+
     this.feederTargetSpeed = speed;
   }
 
@@ -252,7 +252,7 @@ public class ShooterSubsystem extends SubsystemBase {
    * @return true: if note is in shooter
    * <li>false: if note is not in shooter</li>
    */
-  public boolean isNote() {
-    return shooterIR.getProximity() > IR_RANGE;
-  }
+  // public boolean isNote() {
+  //   return shooterIR.getProximity() > IR_RANGE;
+  // }
 }

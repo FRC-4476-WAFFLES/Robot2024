@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -22,6 +23,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import static frc.robot.RobotContainer.*;
 
 import frc.robot.Constants;
 
@@ -32,6 +34,7 @@ public class AnglerSubsystem extends SubsystemBase {
     private TalonFX angler;
     private DutyCycleEncoder anglerAbsoluteEncoder;
     private CurrentLimitsConfigs currentLimitsConfig;
+    
 
     private double anglerTargetPositionRotations = 0;
     private double anglerTargetPositonDegrees = 0;
@@ -64,10 +67,12 @@ public class AnglerSubsystem extends SubsystemBase {
         anglerAbsoluteEncoder = new DutyCycleEncoder(Constants.anglerAbsoluteEncoder);
 
         angler.setInverted(false);
+     
 
         configureCurrentLimits();
         configurePositionPID();
-        configureNeutralMode();
+     
+    
 
         profileTimer.start();
     }
@@ -98,18 +103,24 @@ public class AnglerSubsystem extends SubsystemBase {
         angler.getConfigurator().apply(anglerSlot0Configs);
     }
 
-    private void configureNeutralMode() {
-        angler.setNeutralMode(NeutralModeValue.Coast);
-    }
+
 
     @Override
     public void periodic() {
         manageProfileTimer();
         executeAnglerMotionProfiling();
         updateSmartDashboard();
+           if(!elevatorSubsystem.getCoastSwitch()){
+            angler.setNeutralMode(NeutralModeValue.Coast);
+            System.err.println("coast Angle");
+        }
+        else{
+            angler.setNeutralMode(NeutralModeValue.Brake);
+            System.err.println("break angle");
+        }
         //updatePIDConstants();
 
-        System.err.println(anglerTargetPositonDegrees);
+    
     }
 
     private void manageProfileTimer() {
@@ -194,11 +205,11 @@ public class AnglerSubsystem extends SubsystemBase {
         anglerTopLimitMap.put(20.0, -12.0);
 
         if (elevatorPosition > 25) {
-            System.err.println("anglerTOPLimitMap: 92");
+            
             return -29;
         }
         else{
-            System.err.println("anglerBottomLimitMap: " + anglerTopLimitMap.get(elevatorPosition));
+            
             return anglerTopLimitMap.get(elevatorPosition);
         }
     }
@@ -216,11 +227,11 @@ public class AnglerSubsystem extends SubsystemBase {
         
 
         if (elevatorPosition > 25) {
-            System.err.println("anglerBottomLimitMap: 92");
+            
             return 92;
         }
         else{
-            System.err.println("anglerBottomLimitMap: " + anglerBottomLimitMap.get(elevatorPosition));
+            
             return anglerBottomLimitMap.get(elevatorPosition);
         }
     }

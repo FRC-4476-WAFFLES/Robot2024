@@ -37,11 +37,11 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
 
     //WPI Logger
-    DataLogManager.start();
-    DriverStation.startDataLog(DataLogManager.getLog());
+    DataLogManager.stop();
+    //DriverStation.startDataLog(DataLogManager.getLog());
 
     // CTRE Logger
-    SignalLogger.start();
+    SignalLogger.stop();
 
   }
 
