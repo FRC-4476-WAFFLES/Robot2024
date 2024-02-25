@@ -34,7 +34,7 @@ public class ActivateLightColour extends Command {
       // Ready to shoot  
       lightSubsystem.blinkBetweenColours(LightColours.GREEN, LightColours.BLACK);
     } 
-    else if (17 < Timer.getMatchTime() && Timer.getMatchTime() < 23){
+    else if (15 < Timer.getMatchTime() && Timer.getMatchTime() < 25){
       // Endgame warning
       lightSubsystem.blinkBetweenColours(LightColours.RED, LightColours.WHITE);
     }

@@ -4,6 +4,7 @@
 
 package frc.robot.commands.drive;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.DriveConstants;
 
@@ -41,13 +42,15 @@ public class DriveTeleop extends Command {
     driveSubsystem.setControl(
       new SwerveRequest.FieldCentric()
         .withDeadband(DriveConstants.maxSpeed * 0.03)
-        .withRotationalDeadband(DriveConstants.maxAngularSpeed * 0.01) // Add a 10% deadband to translation and rotation
+        .withRotationalDeadband(DriveConstants.maxAngularSpeed * 0.01)
         .withDriveRequestType(DriveRequestType.Velocity)
         .withSteerRequestType(SteerRequestType.MotionMagic)
         .withVelocityX(xVelocitySupplier.getAsDouble())
         .withVelocityY(yVelocitySupplier.getAsDouble())
         .withRotationalRate(thetaVelocitySupplier.getAsDouble())
     );
+    
+    SmartDashboard.putNumber("Robot Pose Stuff", driveSubsystem.getRobotPose().getRotation().getDegrees());
   }
 
   // Called once the command ends or is interrupted.

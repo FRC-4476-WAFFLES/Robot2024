@@ -75,6 +75,7 @@ public class RobotContainer {
   private final BasicFieldReset basicFieldReset = new BasicFieldReset();
   private final ResetGyro resetGyro = new ResetGyro();
   private final SuperstructureClimb superstructureClimb = new SuperstructureClimb();
+  private final SuperstructureStash superstructureStash = new SuperstructureStash();
   
 
   //TODO Trap Command
@@ -139,6 +140,7 @@ public class RobotContainer {
     operatorController.b().whileTrue(superstructureCloseSpeaker);
     operatorController.y().whileTrue(superstructureTestShot);
     operatorController.a().whileTrue(superstructureClimb);
+    operatorController.rightStick().whileTrue(superstructureStash);
     // rightJoystick.button(1).whileTrue(driveAndAimAtGoal);
     // operatorController.rightTrigger().whileTrue(elevatorUp);
     // operatorController.leftTrigger().whileTrue(elevatorDown);

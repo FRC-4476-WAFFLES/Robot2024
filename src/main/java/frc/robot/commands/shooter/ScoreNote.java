@@ -24,6 +24,9 @@ public class ScoreNote extends Command {
     if(shooterSubsystem.isGoodSpeed() && anglerSubsystem.isGoodShooterAngle() && elevatorSubsystem.isGoodElevatorPosition() && shooterSubsystem.isShooterRunning()){
       shooterSubsystem.setFeederTargetSpeed(100);
     }
+    else if(!driveSubsystem.isShooterTowardGoal()){
+      shooterSubsystem.setFeederTargetSpeed(-100);
+    }
   }
 
   // Called once the command ends or is interrupted.

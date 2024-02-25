@@ -22,13 +22,23 @@ public class SuperstructureStash extends Command {
   @Override
   public void execute() {
     elevatorSubsystem.isClimbing = false;
-    elevatorSubsystem.setElevatorTargetPosition(10);
+    elevatorSubsystem.setElevatorTargetPosition(13);
     anglerSubsystem.setAnglerTargetPosition(0);
+    if (driveSubsystem.isShooterTowardGoal()){
+      shooterSubsystem.setShooterTargetSpeed(40);
+    }
+    else{
+      shooterSubsystem.setShooterTargetSpeed(0);
+    }
+
+ 
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    shooterSubsystem.setShooterTargetSpeed(0);
+  }
 
   // Returns true when the command should end.
   @Override

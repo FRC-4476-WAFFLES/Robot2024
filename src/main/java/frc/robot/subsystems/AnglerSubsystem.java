@@ -112,11 +112,10 @@ public class AnglerSubsystem extends SubsystemBase {
         updateSmartDashboard();
            if(!elevatorSubsystem.getCoastSwitch()){
             angler.setNeutralMode(NeutralModeValue.Coast);
-            System.err.println("coast Angle");
         }
         else{
             angler.setNeutralMode(NeutralModeValue.Brake);
-            System.err.println("break angle");
+    
         }
         //updatePIDConstants();
 

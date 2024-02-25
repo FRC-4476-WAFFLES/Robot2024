@@ -23,8 +23,9 @@ public class BasicFieldReset extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // Reset the robot's position to the starting position in front of blue speaker against the subwoofer
-    driveSubsystem.seedFieldRelative(new Pose2d(1.38, 5.53, new Rotation2d(180)));
+    // Reset the robot's position to the starting position in front of red speaker against the subwoofer
+    System.err.println("Basic Reset");
+    driveSubsystem.seedFieldRelative(new Pose2d(15.0792, 5.53, new Rotation2d(0)));
   }
 
   // Called once the command ends or is interrupted.
