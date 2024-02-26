@@ -12,7 +12,7 @@ public class SuperstructureTestShot extends Command {
   /** Creates a new SuperstructureTestShot. */
   public SuperstructureTestShot() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(shooterSubsystem, anglerSubsystem, elevatorSubsystem);
+    addRequirements(anglerSubsystem, elevatorSubsystem);
   }
 
   // Called when the command is initially scheduled.

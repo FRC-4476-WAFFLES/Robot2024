@@ -99,10 +99,9 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
 
-    // lightSubsystem.setDefaultCommand(updateLights);
     driveSubsystem.setDefaultCommand(driveTeleop);
     lightSubsystem.setDefaultCommand(updateLights);
-    anglerSubsystem.setDefaultCommand(superstructureHome);
+    elevatorSubsystem.setDefaultCommand(superstructureHome);
 
 
     driveSubsystem.registerTelemetry(logger::telemeterize);

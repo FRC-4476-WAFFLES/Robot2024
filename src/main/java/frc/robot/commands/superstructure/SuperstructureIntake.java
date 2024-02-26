@@ -24,7 +24,7 @@ public class SuperstructureIntake extends Command {
   @Override
   public void execute() {
     elevatorSubsystem.isClimbing = false;
-    elevatorSubsystem.setElevatorTargetPosition(26);
+    elevatorSubsystem.setElevatorTargetPosition(32);
     anglerSubsystem.setAnglerTargetPosition(86.7);
   
     
@@ -33,6 +33,8 @@ public class SuperstructureIntake extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    // SuperstructureHome superstructureHome = new SuperstructureHome();
+    // superstructureHome.schedule();
  
   }
 

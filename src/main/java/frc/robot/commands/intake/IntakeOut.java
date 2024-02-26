@@ -14,7 +14,7 @@ public class IntakeOut extends Command {
   /** Creates a new IntakeOut. */
   public IntakeOut() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(intakeSubsystem);
+    addRequirements(intakeSubsystem, elevatorSubsystem, anglerSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -28,8 +28,10 @@ public class IntakeOut extends Command {
   public void execute() {
     intakeSubsystem.SetIntakeSpeed(-1.0);
     shooterSubsystem.setFeederTargetSpeed(-100);
-    SuperstructureIntake superstructureIntakePosition = new SuperstructureIntake();
-    superstructureIntakePosition.execute();
+    elevatorSubsystem.isClimbing = false;
+    elevatorSubsystem.setElevatorTargetPosition(32);
+    anglerSubsystem.setAnglerTargetPosition(86.7);
+  
     // TODO if elevator and angler is in intake position outtake the feeder as well.
   }
 
@@ -38,8 +40,7 @@ public class IntakeOut extends Command {
   public void end(boolean interrupted) {
      intakeSubsystem.SetIntakeSpeed(0);
      shooterSubsystem.setFeederTargetSpeed(0);
-     SuperstructureHome superstructureHomePosition = new SuperstructureHome();
-     superstructureHomePosition.execute();
+ 
      //shooterSubsystem.setFeederTargetSpeed(-1);
   }
   

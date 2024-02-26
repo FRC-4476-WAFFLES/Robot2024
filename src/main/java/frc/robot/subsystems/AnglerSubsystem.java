@@ -82,9 +82,9 @@ public class AnglerSubsystem extends SubsystemBase {
 
         currentLimitsConfig.SupplyCurrentLimitEnable = true;
         currentLimitsConfig.StatorCurrentLimitEnable = true;
-        currentLimitsConfig.SupplyCurrentLimit = 60;
+        currentLimitsConfig.SupplyCurrentLimit = 40;
         currentLimitsConfig.StatorCurrentLimit = 40;
-        currentLimitsConfig.SupplyCurrentThreshold = 60;
+        currentLimitsConfig.SupplyCurrentThreshold = 40;
         currentLimitsConfig.SupplyTimeThreshold = 1;
 
         TalonFXConfiguration generalConfigs = new TalonFXConfiguration();

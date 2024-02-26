@@ -13,7 +13,7 @@ public class IntakeIn extends Command {
   public IntakeIn() {
     // Use addRequirements() here to declare subsystem dependencies.
    // addRequirements(intakeSubsystem, anglerSubsystem, elevatorSubsystem);
-   addRequirements(intakeSubsystem);
+   addRequirements(intakeSubsystem, elevatorSubsystem, anglerSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -26,7 +26,7 @@ public class IntakeIn extends Command {
   @Override
   public void execute() {
 
-    SuperstructureIntake superstructureIntakePosition = new SuperstructureIntake();
+   
 
     // superstructureIntakePosition.execute();
 
@@ -48,7 +48,10 @@ public class IntakeIn extends Command {
     //   // If robot is not ready, intake without feeder
     //   intakeSubsystem.SetIntakeSpeed(1);
     // }
-    superstructureIntakePosition.schedule();
+    elevatorSubsystem.isClimbing = false;
+    elevatorSubsystem.setElevatorTargetPosition(32);
+    anglerSubsystem.setAnglerTargetPosition(86.7);
+  
     intakeSubsystem.SetIntakeSpeed(1);
     shooterSubsystem.setFeederTargetSpeed(100);
     
@@ -58,8 +61,6 @@ public class IntakeIn extends Command {
   @Override
   public void end(boolean interrupted) {
     intakeSubsystem.SetIntakeSpeed(0);
-    SuperstructureIntake superstructureIntakePosition = new SuperstructureIntake();
-    superstructureIntakePosition.end(interrupted);
     shooterSubsystem.setFeederTargetSpeed(0);
   }
 
