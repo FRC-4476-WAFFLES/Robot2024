@@ -134,13 +134,13 @@ public class RobotContainer {
     operatorController.povLeft().whileTrue(intakeIn);
     operatorController.povRight().whileTrue(intakeOut);
     operatorController.rightBumper().whileTrue(scoreNote);
-    // operatorController.leftBumper().whileTrue(spinUp);
     operatorController.x().whileTrue(superstructureAmp);
     operatorController.b().whileTrue(superstructureCloseSpeaker);
     operatorController.y().whileTrue(superstructureTestShot);
     operatorController.a().whileTrue(superstructureClimb);
     operatorController.rightStick().whileTrue(superstructureStash);
     // rightJoystick.button(1).whileTrue(driveAndAimAtGoal);
+    // rightJoystick.button(1).whileTrue(spinUp);
     // operatorController.rightTrigger().whileTrue(elevatorUp);
     // operatorController.leftTrigger().whileTrue(elevatorDown);
 
