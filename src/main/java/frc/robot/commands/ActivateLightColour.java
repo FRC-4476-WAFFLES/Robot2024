@@ -27,29 +27,32 @@ public class ActivateLightColour extends Command {
   @Override
   public void execute() {
 
-    // System.err.println("Running Lights");
+    final double matchTimer = Timer.getMatchTime();
     
     // If certain conditions are fufilled, the robot's lights change colours
     if(shooterSubsystem.isGoodSpeed() && anglerSubsystem.isGoodShooterAngle() && elevatorSubsystem.isGoodElevatorPosition() && shooterSubsystem.isShooterRunning()){
       // Ready to shoot  
-      lightSubsystem.blinkBetweenColours(LightColours.GREEN, LightColours.BLACK);
+      lightSubsystem.setLightColour(LightColours.GREEN);
     } 
-    else if (15 < Timer.getMatchTime() && Timer.getMatchTime() < 25){
+    else if (20 < matchTimer && matchTimer < 25){
       // Endgame warning
       lightSubsystem.blinkBetweenColours(LightColours.RED, LightColours.WHITE);
     }
-    else if (intakeSubsystem.isRunning()){
+    else if (intakeSubsystem.isRunning() && anglerSubsystem.isGoodShooterAngle() && elevatorSubsystem.isGoodElevatorPosition()){
       // Intake running
       lightSubsystem.blinkBetweenColours(LightColours.YELLOW, LightColours.BLACK);
     }
     else if(intakeSubsystem.isNoteCurrentDetection()){
       // Note in Intake
-      lightSubsystem.blinkBetweenColours(LightColours.VIOLET, LightColours.BLACK);
+      lightSubsystem.setLightColour(LightColours.VIOLET);
     }
     // else if (shooterSubsystem.isNote()) {
     //   // Note in Shooter
     //   lightSubsystem.setLightColour(LightColours.VIOLET);
     // }
+    else if(matchTimer < 5){
+      lightSubsystem.setLightColour(LightColours.WHITE);
+    }
     else {
       var alliance = DriverStation.getAlliance();
       if (alliance.get() == DriverStation.Alliance.Blue) {

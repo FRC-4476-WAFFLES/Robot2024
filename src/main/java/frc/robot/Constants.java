@@ -82,7 +82,6 @@ public final class Constants {
     public static final double maxSpeed = TunerConstants.kSpeedAt12VoltsMps;
     public static final double maxAngularSpeed = 6; // Max Rad/s
 
-    // TODO: Put actual values
     public static final Pose2d redGoalPose = new Pose2d((16.4592 - 0.17), 5.56, new Rotation2d(180));
     public static final Pose2d blueGoalPose = new Pose2d(0.17, 5.56, new Rotation2d(0));
     
