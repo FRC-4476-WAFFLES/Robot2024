@@ -47,9 +47,9 @@ public class DriveAndPointAtTarget extends Command {
         .withVelocityY(yVelocitySupplier.getAsDouble())
         .withTargetDirection(thetaSupplier.get());
     
-    request.HeadingController.setP(.1);
-    request.HeadingController.setD(0);
-
+    request.HeadingController.setP(1.0); // these values still kinda suck
+    request.HeadingController.setD(0.01); // these values still kinda suck
+    request.HeadingController.enableContinuousInput(-Math.PI, Math.PI);
     driveSubsystem.setControl(request);
   }
 

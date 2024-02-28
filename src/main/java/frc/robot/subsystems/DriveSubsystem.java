@@ -182,7 +182,8 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
             poseOfGoal = Constants.DriveConstants.blueGoalPose;
         }
 
-        return poseOfGoal.minus(getRobotPose()).getTranslation().getAngle();
+        //return poseOfGoal.minus(getRobotPose()).getTranslation().getAngle();
+        return new Rotation2d(Math.PI);
     }
 
     public double getDistanceToGoal() {
