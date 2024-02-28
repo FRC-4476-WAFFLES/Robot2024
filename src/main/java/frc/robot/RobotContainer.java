@@ -86,7 +86,7 @@ public class RobotContainer {
     () -> rightJoystick.getX() * DriveConstants.maxAngularSpeed
   );
 
-  // private final DriveAndPointAtTarget driveAndAimAtGoal = new DriveAndPointAtTarget(() -> leftJoystick.getY() * DriveConstants.maxSpeed, () -> leftJoystick.getX() * DriveConstants.maxSpeed, driveSubsystem::getAngleToGoal);
+  private final DriveAndPointAtTarget driveAndAimAtGoal = new DriveAndPointAtTarget(() -> leftJoystick.getY() * DriveConstants.maxSpeed, () -> leftJoystick.getX() * DriveConstants.maxSpeed, driveSubsystem::getAngleToGoal);
 
   private final SendableChooser<Command> autoChooser;
 
@@ -139,7 +139,7 @@ public class RobotContainer {
     operatorController.y().whileTrue(superstructureTestShot);
     operatorController.a().whileTrue(superstructureClimb);
     operatorController.rightStick().whileTrue(superstructureStash);
-    // rightJoystick.button(1).whileTrue(driveAndAimAtGoal);
+    rightJoystick.button(1).whileTrue(driveAndAimAtGoal);
     // rightJoystick.button(1).whileTrue(spinUp);
     // operatorController.rightTrigger().whileTrue(elevatorUp);
     // operatorController.leftTrigger().whileTrue(elevatorDown);
