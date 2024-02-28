@@ -51,6 +51,7 @@ public class DriveAndPointAtTarget extends Command {
     request.HeadingController.setD(0.01); // these values still kinda suck
     request.HeadingController.enableContinuousInput(-Math.PI, Math.PI);
     driveSubsystem.setControl(request);
+    driveSubsystem.getDistanceToGoal();
   }
 
   // Called once the command ends or is interrupted.
