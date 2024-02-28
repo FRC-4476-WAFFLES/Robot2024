@@ -107,6 +107,19 @@ final InterpolatingDoubleTreeMap feederSpeedMap = new InterpolatingDoubleTreeMap
     double height = elevatorSubsystem.getElevatorTargetPosition();
     double distance = driveSubsystem.getDistanceToGoal();
 
+    final InterpolatingDoubleTreeMap shooterAngleMap = new InterpolatingDoubleTreeMap();
+
+    shooterAngleMap.put(0.0, 0.0);
+    shooterAngleMap.put(1.0, 1.0);
+    shooterAngleMap.put(2.0, 2.0);
+    shooterAngleMap.put(3.0, 3.0);
+    shooterAngleMap.put(4.0, 4.0);
+    shooterAngleMap.put(5.0, 5.0);
+    shooterAngleMap.put(6.0, 6.0);
+    shooterAngleMap.put(7.0, 7.0);
+    shooterAngleMap.put(8.0, 8.0);
+    shooterAngleMap.put(9.0, 9.0);
+    shooterAngleMap.put(10.0, 10.0);
     return 5 * distance + 5;
 
   }

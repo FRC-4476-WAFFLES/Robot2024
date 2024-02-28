@@ -150,23 +150,23 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
         m_simNotifier.startPeriodic(kSimLoopPeriod);
     }
 
-    public void updateOdometryFromLimeLight() {
-        LimelightHelpers.Results limeLightRightResult = LimelightHelpers.getLatestResults(Constants.limeLightRight).targetingResults;
-        LimelightHelpers.Results limeLightLeftResult = LimelightHelpers.getLatestResults(Constants.limeLightLeft).targetingResults;
+    // public void updateOdometryFromLimeLight() {
+    //     LimelightHelpers.Results limeLightRightResult = LimelightHelpers.getLatestResults(Constants.limeLightRight).targetingResults;
+    //     LimelightHelpers.Results limeLightLeftResult = LimelightHelpers.getLatestResults(Constants.limeLightLeft).targetingResults;
 
-        if (limeLightRightResult.valid
-        && limeLightLeftResult.valid && Math.abs(getCurrentRobotChassisSpeeds().vxMetersPerSecond) < 1 
-        && Math.abs(getCurrentRobotChassisSpeeds().vyMetersPerSecond) < 1 
-        && Math.abs(getCurrentRobotChassisSpeeds().omegaRadiansPerSecond) < 1) 
-        {
-            this.m_odometry.addVisionMeasurement(limeLightRightResult.getBotPose2d_wpiBlue(), Timer.getFPGATimestamp()
-            - (limeLightRightResult.latency_capture / 1000.0)
-            - (limeLightRightResult.latency_pipeline / 1000.0));
-            this.m_odometry.addVisionMeasurement(limeLightLeftResult.getBotPose2d_wpiBlue(), Timer.getFPGATimestamp()
-            - (limeLightLeftResult.latency_capture / 1000.0)
-            - (limeLightLeftResult.latency_pipeline / 1000.0));
-        }
-    }
+    //     if (limeLightRightResult.valid
+    //     && limeLightLeftResult.valid && Math.abs(getCurrentRobotChassisSpeeds().vxMetersPerSecond) < 1 
+    //     && Math.abs(getCurrentRobotChassisSpeeds().vyMetersPerSecond) < 1 
+    //     && Math.abs(getCurrentRobotChassisSpeeds().omegaRadiansPerSecond) < 1) 
+    //     {
+    //         this.m_odometry.addVisionMeasurement(limeLightRightResult.getBotPose2d_wpiBlue(), Timer.getFPGATimestamp()
+    //         - (limeLightRightResult.latency_capture / 1000.0)
+    //         - (limeLightRightResult.latency_pipeline / 1000.0));
+    //         this.m_odometry.addVisionMeasurement(limeLightLeftResult.getBotPose2d_wpiBlue(), Timer.getFPGATimestamp()
+    //         - (limeLightLeftResult.latency_capture / 1000.0)
+    //         - (limeLightLeftResult.latency_pipeline / 1000.0));
+    //     }
+    // }
 
     public boolean isShooterTowardGoal(){
         return Math.abs(getRobotPose().getRotation().getDegrees()) < 90;

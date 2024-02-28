@@ -81,9 +81,9 @@ public class RobotContainer {
   //TODO Trap Command
 
   private final DriveTeleop driveTeleop = new DriveTeleop(
-    () -> -leftJoystick.getY() * DriveConstants.maxSpeed, 
-    () -> -leftJoystick.getX() * DriveConstants.maxSpeed, 
-    () -> -rightJoystick.getX() * DriveConstants.maxAngularSpeed
+    () -> leftJoystick.getY() * DriveConstants.maxSpeed, 
+    () -> leftJoystick.getX() * DriveConstants.maxSpeed, 
+    () -> rightJoystick.getX() * DriveConstants.maxAngularSpeed
   );
 
   // private final DriveAndPointAtTarget driveAndAimAtGoal = new DriveAndPointAtTarget(() -> leftJoystick.getY() * DriveConstants.maxSpeed, () -> leftJoystick.getX() * DriveConstants.maxSpeed, driveSubsystem::getAngleToGoal);
