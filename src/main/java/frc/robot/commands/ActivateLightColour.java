@@ -50,7 +50,7 @@ public class ActivateLightColour extends Command {
     //   // Note in Shooter
     //   lightSubsystem.setLightColour(LightColours.VIOLET);
     // }
-    else if(matchTimer < 5){
+    else if(0 < matchTimer && matchTimer < 5){
       lightSubsystem.setLightColour(LightColours.WHITE);
     }
     else {
