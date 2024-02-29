@@ -31,7 +31,10 @@ public class SpinUp extends Command {
   public void execute() {
     double distance = driveSubsystem.getDistanceToGoal();
     double speed = calculateSpeedOffDistanceShoot(distance);
+    double angle = calculateAngleOffDistance(distance);
 
+    elevatorSubsystem.setElevatorTargetPosition(27);
+    anglerSubsystem.setAnglerTargetPosition(angle);
     shooterSubsystem.setShooterTargetSpeed(speed);
   }
 
@@ -53,27 +56,14 @@ public class SpinUp extends Command {
     
     final InterpolatingDoubleTreeMap shooterSpeedMap = new InterpolatingDoubleTreeMap();
    
-    shooterSpeedMap.put(0.0, 0.0);
-    shooterSpeedMap.put(1.0, 1.0);
-    shooterSpeedMap.put(2.0, 2.0);
-    shooterSpeedMap.put(3.0, 3.0);
-    shooterSpeedMap.put(4.0, 4.0);
-    shooterSpeedMap.put(5.0, 5.0);
-    shooterSpeedMap.put(6.0, 6.0);
-    shooterSpeedMap.put(7.0, 7.0);
-    shooterSpeedMap.put(8.0, 8.0);
-    shooterSpeedMap.put(9.0, 9.0);
-    shooterSpeedMap.put(10.0, 10.0);
+    shooterSpeedMap.put(0.9, 40.0);
+    shooterSpeedMap.put(1.8542, 60.0);
+    shooterSpeedMap.put(2.54, 60.0);
+    shooterSpeedMap.put(3.0988, 70.0);
+    shooterSpeedMap.put(3.556, 75.0);
+    shooterSpeedMap.put(4.3688, 100.0);
+   
 
-    // Fancy interpolation with a matrix?
-
-    final InterpolatingMatrixTreeMap <Double, N1, N2> shooterSpeedMap2 = new InterpolatingMatrixTreeMap<>();
-
-
-    shooterSpeedMap2.put(null, null);
-
-    
-    // TODO: Replace nums with real ones
     return shooterSpeedMap.get(distance);
   }
 private double calculateSpeedOffDistanceFeed(double distance) {
@@ -102,25 +92,21 @@ final InterpolatingDoubleTreeMap feederSpeedMap = new InterpolatingDoubleTreeMap
     // TODO: Replace nums with real ones
     return feederSpeedMap.get(distance);
   }
-  private double calculateAngleOffDistance() {
+  private double calculateAngleOffDistance(double distance) {
 
     double height = elevatorSubsystem.getElevatorTargetPosition();
-    double distance = driveSubsystem.getDistanceToGoal();
+
 
     final InterpolatingDoubleTreeMap shooterAngleMap = new InterpolatingDoubleTreeMap();
 
-    shooterAngleMap.put(0.0, 0.0);
-    shooterAngleMap.put(1.0, 1.0);
-    shooterAngleMap.put(2.0, 2.0);
-    shooterAngleMap.put(3.0, 3.0);
-    shooterAngleMap.put(4.0, 4.0);
-    shooterAngleMap.put(5.0, 5.0);
-    shooterAngleMap.put(6.0, 6.0);
-    shooterAngleMap.put(7.0, 7.0);
-    shooterAngleMap.put(8.0, 8.0);
-    shooterAngleMap.put(9.0, 9.0);
-    shooterAngleMap.put(10.0, 10.0);
-    return 5 * distance + 5;
+    shooterAngleMap.put(0.9, 68.0); 
+    shooterAngleMap.put(1.8542, 47.0);
+    shooterAngleMap.put(2.54, 41.0);
+    shooterAngleMap.put(3.0988, 38.0);
+    shooterAngleMap.put(3.556, 35.0);
+    shooterAngleMap.put(4.3688, 29.0);
+
+    return shooterAngleMap.get(distance);
 
   }
 

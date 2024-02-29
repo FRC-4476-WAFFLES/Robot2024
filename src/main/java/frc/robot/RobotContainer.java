@@ -66,7 +66,7 @@ public class RobotContainer {
   private final IntakeIn intakeIn = new IntakeIn();
   private final IntakeOut intakeOut = new IntakeOut();
   private final ScoreNote scoreNote  = new ScoreNote();
-  private final SpinUp spinUp  = null; //= new SpinUp();
+  private final SpinUp spinUp  = new SpinUp();
   private final SuperstructureHome superstructureHome = new SuperstructureHome();
   private final SuperstructureAmp superstructureAmp = new SuperstructureAmp();
   private final SuperstructureCloseSpeaker superstructureCloseSpeaker  = new SuperstructureCloseSpeaker();
@@ -140,7 +140,7 @@ public class RobotContainer {
     operatorController.a().whileTrue(superstructureClimb);
     operatorController.rightStick().whileTrue(superstructureStash);
     rightJoystick.button(1).whileTrue(driveAndAimAtGoal);
-    // rightJoystick.button(1).whileTrue(spinUp);
+    rightJoystick.button(1).whileTrue(spinUp);
     // operatorController.rightTrigger().whileTrue(elevatorUp);
     // operatorController.leftTrigger().whileTrue(elevatorDown);
 
