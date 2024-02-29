@@ -33,6 +33,8 @@ public class SpinUp extends Command {
     double speed = calculateSpeedOffDistanceShoot(distance);
     double angle = calculateAngleOffDistance(distance);
 
+    System.out.println("running spinup");
+
     elevatorSubsystem.setElevatorTargetPosition(27);
     anglerSubsystem.setAnglerTargetPosition(angle);
     shooterSubsystem.setShooterTargetSpeed(speed);
@@ -42,6 +44,7 @@ public class SpinUp extends Command {
   @Override
   public void end(boolean interrupted) {
     shooterSubsystem.setShooterTargetSpeed(0);
+    System.out.println("ending spinup");
   }
 
   // Returns true when the command should end.
