@@ -181,8 +181,12 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
         } else {
             poseOfGoal = Constants.DriveConstants.blueGoalPose;
         }
-        SmartDashboard.putNumber("AngleToGoal", poseOfGoal.minus(getRobotPose()).getTranslation().getAngle().getDegrees());
-        return poseOfGoal.minus(getRobotPose()).getTranslation().getAngle();
+
+
+        double angleToGoal = Math.tanh((getRobotPose().getX()-poseOfGoal.getX())/(getRobotPose().getY()-poseOfGoal.getY()));
+        SmartDashboard.putNumber("AngleToGoal", angleToGoal);
+        // return poseOfGoal.minus(getRobotPose()).getTranslation().getAngle();
+        return new Rotation2d(angleToGoal);
         //return new Rotation2d(Math.PI);
     }
 
