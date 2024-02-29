@@ -10,7 +10,7 @@ import static frc.robot.RobotContainer.*;
 public class ScoreNote extends Command {
   /** Creates a new ScoreNote. */
   public ScoreNote() {
-    addRequirements(shooterSubsystem);
+    //addRequirements(shooterSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

@@ -16,7 +16,7 @@ import static frc.robot.RobotContainer.*;
 public class SpinUp extends Command {
   /** Creates a new SpinUp. */
   public SpinUp() {
-    addRequirements(shooterSubsystem, anglerSubsystem);
+    addRequirements(shooterSubsystem, anglerSubsystem, elevatorSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -64,7 +64,7 @@ public class SpinUp extends Command {
     shooterSpeedMap.put(2.54, 60.0);
     shooterSpeedMap.put(3.0988, 70.0);
     shooterSpeedMap.put(3.556, 75.0);
-    shooterSpeedMap.put(4.3688, 100.0);
+    shooterSpeedMap.put(6.0, 100.0);
    
 
     return shooterSpeedMap.get(distance);
@@ -102,12 +102,16 @@ final InterpolatingDoubleTreeMap feederSpeedMap = new InterpolatingDoubleTreeMap
 
     final InterpolatingDoubleTreeMap shooterAngleMap = new InterpolatingDoubleTreeMap();
 
-    shooterAngleMap.put(0.9, 68.0); 
-    shooterAngleMap.put(1.8542, 47.0);
-    shooterAngleMap.put(2.54, 41.0);
+    shooterAngleMap.put(1.1977, 68.0); 
+    shooterAngleMap.put(1.999, 56.0); 
+    shooterAngleMap.put(2.54, 45.0);
+    shooterAngleMap.put(2.773, 44.0);
     shooterAngleMap.put(3.0988, 38.0);
-    shooterAngleMap.put(3.556, 35.0);
-    shooterAngleMap.put(4.3688, 29.0);
+    shooterAngleMap.put(3.556, 37.0);
+    shooterAngleMap.put(3.8813, 35.0);
+    shooterAngleMap.put(4.3688, 33.0);
+    shooterAngleMap.put(4.5626, 30.0);
+    shooterAngleMap.put(5.8711, 28.0);
 
     return shooterAngleMap.get(distance);
 
