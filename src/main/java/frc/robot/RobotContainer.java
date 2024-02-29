@@ -77,6 +77,7 @@ public class RobotContainer {
   private final SuperstructureClimb superstructureClimb = new SuperstructureClimb();
   private final SuperstructureStash superstructureStash = new SuperstructureStash();
   
+  
 
   //TODO Trap Command
 
@@ -91,6 +92,7 @@ public class RobotContainer {
   private final SendableChooser<Command> autoChooser;
 
   private final Telemetry logger = new Telemetry(DriveConstants.maxSpeed);
+  
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -139,8 +141,8 @@ public class RobotContainer {
     operatorController.y().whileTrue(superstructureTestShot);
     operatorController.a().whileTrue(superstructureClimb);
     operatorController.rightStick().whileTrue(superstructureStash);
-    rightJoystick.button(1).whileTrue(driveAndAimAtGoal);
-    rightJoystick.button(1).whileTrue(spinUp);
+    rightJoystick.button(1).whileTrue(driveAndAimAtGoal.alongWith(spinUp));
+    // rightJoystick.button(1).whileTrue(spinUp);
     // operatorController.rightTrigger().whileTrue(elevatorUp);
     // operatorController.leftTrigger().whileTrue(elevatorDown);
 
