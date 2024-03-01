@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 import frc.robot.Constants;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -31,6 +32,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   private final TalonFX shooter1;
   private final TalonFX shooter2;
+  private final AnalogInput shooterIR;
   //private final Canandcolor shooterIR;
   
   
@@ -71,6 +73,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     shooter1 = new TalonFX(Constants.shooter1);
     shooter2 = new TalonFX(Constants.shooter2);  
+    shooterIR = new AnalogInput(Constants.shooterIR);
     
     //shooterIR = new Canandcolor(Constants.shooterIR);
 
@@ -138,7 +141,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
 
   
-    
+    SmartDashboard.putNumber("IR Proximity", shooterIR.getVoltage()); 
   
     SmartDashboard.putNumber("Shooter Speed", shooter1.getVelocity().getValueAsDouble());
     

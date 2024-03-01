@@ -40,7 +40,6 @@ public final class Constants {
   public static final int elevator2 = 15; // Kraken X60
 
   // Sensors
-  public static final int intakeIR = 21; // canandcolor
   public static final int shooterIR = 22; // canandcolour
   public static final int frontLeftAbsoluteEncoder = 23; // CANcoder
   public static final int frontRightAbsoluteEncoder = 24; // CANcoder
@@ -49,7 +48,9 @@ public final class Constants {
   public static final int pidgeon = 27;
 
 
-  
+  // Analog
+
+  public static final int intakeIR = 4; // Analog IR Sensor
 
   // PWM outputs
   public static final int lightsBlinkin = 4; // REV Blinkin
