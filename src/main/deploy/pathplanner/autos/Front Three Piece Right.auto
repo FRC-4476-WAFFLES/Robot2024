@@ -64,6 +64,49 @@
           "data": {
             "name": "scoreNote"
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "intakeIn"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Middle Close to Right Close"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "intakeOff"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "aimAtGoal"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "spinUp"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "scoreNote"
+          }
         }
       ]
     }
