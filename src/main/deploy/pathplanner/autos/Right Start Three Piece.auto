@@ -1,0 +1,68 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.3949707899415797,
+      "y": 3.3490197889486693
+    },
+    "rotation": -179.81147277079174
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "aimAtGoal"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "spinUp"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "scoreNote"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right Start to Score Middle Rightmost"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "scoreNote"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right Shooting to middle second rightmost"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "scoreNote"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

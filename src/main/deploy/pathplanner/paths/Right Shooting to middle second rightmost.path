@@ -1,0 +1,121 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 5.145126653889672,
+        "y": 2.0429953587179908
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.4138361003994735,
+        "y": 1.4272981273235277
+      },
+      "isLocked": false,
+      "linkedName": "Shooting Right Far"
+    },
+    {
+      "anchor": {
+        "x": 8.214284064931766,
+        "y": 2.4348026877871947
+      },
+      "prevControl": {
+        "x": 7.626573071327961,
+        "y": 2.453460179647632
+      },
+      "nextControl": {
+        "x": 9.314877329408656,
+        "y": 2.399863219073644
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.145126653889672,
+        "y": 2.0429953587179908
+      },
+      "prevControl": {
+        "x": 6.02202877133028,
+        "y": 1.3246819220911186
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Shooting Right Far"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.7,
+      "rotationDegrees": -172.5379226763065,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "intakeIn"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 2.0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "intakeOff"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "aimAtGoal"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "spinUp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 4.5,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 500.0,
+    "maxAngularAcceleration": 600.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 142.22431569404537,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": null,
+  "previewStartingState": {
+    "rotation": 142.65065095535945,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}
