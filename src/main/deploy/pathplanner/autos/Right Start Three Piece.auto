@@ -45,6 +45,12 @@
         {
           "type": "named",
           "data": {
+            "name": "aimAtGoal"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "scoreNote"
           }
         },
@@ -52,6 +58,12 @@
           "type": "path",
           "data": {
             "pathName": "Right Shooting to middle second rightmost"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "aimAtGoal"
           }
         },
         {

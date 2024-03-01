@@ -45,6 +45,12 @@
         {
           "type": "named",
           "data": {
+            "name": "aimAtGoal"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "scoreNote"
           }
         }
