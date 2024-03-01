@@ -20,6 +20,12 @@
         {
           "type": "named",
           "data": {
+            "name": "spinUp"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "scoreNote"
           }
         },
@@ -45,6 +51,12 @@
           "type": "named",
           "data": {
             "name": "aimAtGoal"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "spinUp"
           }
         },
         {

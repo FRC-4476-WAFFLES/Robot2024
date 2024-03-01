@@ -21,6 +21,7 @@ import static frc.robot.RobotContainer.*;
 public class DriveAndPointAtTarget extends Command {
   private final DoubleSupplier xVelocitySupplier;
   private final DoubleSupplier yVelocitySupplier;
+  private FieldCentricFacingAngle request;
   private final Supplier<Rotation2d> thetaSupplier;
 
   /** Creates a new DriveAndPointAtTarget. */
@@ -39,7 +40,7 @@ public class DriveAndPointAtTarget extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    FieldCentricFacingAngle request = new SwerveRequest.FieldCentricFacingAngle()
+    request = new SwerveRequest.FieldCentricFacingAngle()
         .withDeadband(DriveConstants.maxSpeed * 0.03) // Add a 3% deadband to translation
         .withDriveRequestType(DriveRequestType.Velocity)
         .withSteerRequestType(SteerRequestType.MotionMagic)
@@ -56,11 +57,14 @@ public class DriveAndPointAtTarget extends Command {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    driveSubsystem.setControl(new SwerveRequest.Idle());
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    request.HeadingController.setTolerance(0.05);
+    return request.HeadingController.atSetpoint();
   }
 }

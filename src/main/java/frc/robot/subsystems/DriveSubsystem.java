@@ -73,8 +73,8 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
             this::getCurrentRobotChassisSpeeds,
             (speeds)->this.setControl(autoRequest.withSpeeds(speeds)), // Consumer of ChassisSpeeds to drive the robot
             new HolonomicPathFollowerConfig(
-                new PIDConstants(10, 0, 0), // TODO: Tune path following PID
-                new PIDConstants(10, 0, 0),
+                new PIDConstants(0.0075, 0, 0.1), // TODO: Tune path following PID
+                new PIDConstants(0.05, 0, 0),
                 TunerConstants.kSpeedAt12VoltsMps,
                 driveBaseRadius,
                 new ReplanningConfig()

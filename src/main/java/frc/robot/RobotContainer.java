@@ -161,7 +161,8 @@ public class RobotContainer {
   private void registerNamedCommands() {
     // Register Named Commands
     // Add other commands to be able to run them in autos
-    NamedCommands.registerCommand("aimAtGoal", driveAndAimAtGoal.alongWith(spinUp));
+    NamedCommands.registerCommand("aimAtGoal", driveAndAimAtGoal);
+    NamedCommands.registerCommand("spinUp", spinUp);
     NamedCommands.registerCommand("scoreNote", scoreNote.withTimeout(1.0));
     NamedCommands.registerCommand("intakeIn", intakeIn);
     NamedCommands.registerCommand("intakeOff", new InstantCommand(() -> intakeIn.cancel()));
