@@ -74,6 +74,12 @@
             {
               "type": "named",
               "data": {
+                "name": "intakeOff"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
                 "name": "aimAtGoal"
               }
             },
@@ -81,12 +87,6 @@
               "type": "named",
               "data": {
                 "name": "spinUp"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "intakeOff"
               }
             }
           ]

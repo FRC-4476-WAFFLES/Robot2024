@@ -106,6 +106,7 @@ final InterpolatingDoubleTreeMap feederSpeedMap = new InterpolatingDoubleTreeMap
 
     double height = elevatorSubsystem.getElevatorTargetPosition();
 
+    // Key is distance from goal in meters, value is angle in degrees
 
     final InterpolatingDoubleTreeMap shooterAngleMap = new InterpolatingDoubleTreeMap();
 

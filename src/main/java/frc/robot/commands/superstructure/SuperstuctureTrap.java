@@ -11,7 +11,7 @@ public class SuperstuctureTrap extends Command {
   /** Creates a new SuperstuctureTrap. */
   public SuperstuctureTrap() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(elevatorSubsystem, anglerSubsystem);
+    addRequirements(elevatorSubsystem, anglerSubsystem, shooterSubsystem);
   }
 
   // Called when the command is initially scheduled.

@@ -11,7 +11,7 @@ public class SuperstructureCloseSpeaker extends Command {
   /** Creates a new SuperstructureCloseSpeaker. */
   public SuperstructureCloseSpeaker() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(elevatorSubsystem, anglerSubsystem);
+    addRequirements(elevatorSubsystem, anglerSubsystem, shooterSubsystem);
   }
 
   // Called when the command is initially scheduled.

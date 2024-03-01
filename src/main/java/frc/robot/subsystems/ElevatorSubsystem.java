@@ -162,7 +162,10 @@ public class ElevatorSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Elevator Setpoint Step", elevatorSetpoint.position);
 
     }
-
+/**
+ * Sets the target position of the elevator
+ * @param position in rotations
+ */
   public void setElevatorTargetPosition(double position){
     //TODO convert targets units to inches for easier tuning
    

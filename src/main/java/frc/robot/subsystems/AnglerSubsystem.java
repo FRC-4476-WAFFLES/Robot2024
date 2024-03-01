@@ -95,7 +95,7 @@ public class AnglerSubsystem extends SubsystemBase {
 
     private void configurePositionPID() {
         Slot0Configs anglerSlot0Configs = new Slot0Configs();
-        anglerSlot0Configs.kP = 0.7;
+        anglerSlot0Configs.kP = 0.9;
         anglerSlot0Configs.kD = 0;
         anglerSlot0Configs.kV = 0;
 
@@ -110,7 +110,7 @@ public class AnglerSubsystem extends SubsystemBase {
         manageProfileTimer();
         executeAnglerMotionProfiling();
         updateSmartDashboard();
-           if(!elevatorSubsystem.getCoastSwitch()){
+        if(!elevatorSubsystem.getCoastSwitch()){
             angler.setNeutralMode(NeutralModeValue.Coast);
         }
         else{
@@ -178,7 +178,10 @@ public class AnglerSubsystem extends SubsystemBase {
     public boolean isGoodShooterAngle() {
         return Math.abs(getAnglerDegrees() - this.anglerTargetPositonDegrees) < ANGLER_DEAD_ZONE;
     }
-
+    /**
+     * Sets the target position of the angler
+     * @param angle in degrees
+     */
     public void setAnglerTargetPosition(double angle) {
         this.anglerTargetPositonDegrees = MathUtil.clamp(angle, 
         getAnglerTopLimit(elevatorSubsystem.getElevatorPosition()), 

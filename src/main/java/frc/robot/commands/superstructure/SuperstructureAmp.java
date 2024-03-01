@@ -11,7 +11,7 @@ public class SuperstructureAmp extends Command {
   /** Creates a new SuperstructureAmp. */
   public SuperstructureAmp() {
     // Use addRequirements() here to declare subsystem dependencies.\
-    addRequirements(elevatorSubsystem, anglerSubsystem);
+    addRequirements(elevatorSubsystem, anglerSubsystem, shooterSubsystem);
   }
 
   // Called when the command is initially scheduled.
