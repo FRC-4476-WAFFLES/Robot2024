@@ -14,7 +14,7 @@ public class IntakeOut extends Command {
   /** Creates a new IntakeOut. */
   public IntakeOut() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(intakeSubsystem, elevatorSubsystem, anglerSubsystem);
+    addRequirements(intakeSubsystem, elevatorSubsystem, anglerSubsystem, feederSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -27,7 +27,7 @@ public class IntakeOut extends Command {
   @Override
   public void execute() {
     intakeSubsystem.SetIntakeSpeed(-1.0);
-    shooterSubsystem.setFeederTargetSpeed(-100);
+    feederSubsystem.setFeederTargetSpeed(-100);
     elevatorSubsystem.isClimbing = false;
     elevatorSubsystem.setElevatorTargetPosition(32);
     anglerSubsystem.setAnglerTargetPosition(86.7);
@@ -39,7 +39,7 @@ public class IntakeOut extends Command {
   @Override
   public void end(boolean interrupted) {
      intakeSubsystem.SetIntakeSpeed(0);
-     shooterSubsystem.setFeederTargetSpeed(0);
+     feederSubsystem.setFeederTargetSpeed(0);
  
      //shooterSubsystem.setFeederTargetSpeed(-1);
   }

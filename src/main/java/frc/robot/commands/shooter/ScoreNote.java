@@ -10,7 +10,7 @@ import static frc.robot.RobotContainer.*;
 public class ScoreNote extends Command {
   /** Creates a new ScoreNote. */
   public ScoreNote() {
-    //addRequirements(shooterSubsystem);
+    addRequirements(feederSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -22,17 +22,17 @@ public class ScoreNote extends Command {
   @Override
   public void execute() {
     if(shooterSubsystem.isGoodSpeed() && anglerSubsystem.isGoodShooterAngle() && elevatorSubsystem.isGoodElevatorPosition() && shooterSubsystem.isShooterRunning()){
-      shooterSubsystem.setFeederTargetSpeed(100);
+      feederSubsystem.setFeederTargetSpeed(100);
     }
     else if(!driveSubsystem.isShooterTowardGoal()){
-      shooterSubsystem.setFeederTargetSpeed(-100);
+      feederSubsystem.setFeederTargetSpeed(-100);
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shooterSubsystem.setFeederTargetSpeed(0);
+    feederSubsystem.setFeederTargetSpeed(0);
   }
 
   // Returns true when the command should end.

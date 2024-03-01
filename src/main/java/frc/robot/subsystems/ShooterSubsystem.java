@@ -28,24 +28,23 @@ import javax.swing.text.Position;
 
 public class ShooterSubsystem extends SubsystemBase {
   // Motors and Sensors
-  private final TalonFX feeder;
+
   private final TalonFX shooter1;
   private final TalonFX shooter2;
   //private final Canandcolor shooterIR;
-  private boolean feederVelocityControl = true;
+  
   
   
   
   // Configs
   
   private double shooterTargetSpeed = 0;
-  private double feederTargetSpeed = 0;
-  private double feederTargetPosition = 0;
+  
   
   // Constants
   
   private final double SHOOTER_DEAD_ZONE = 5;
-  private final double FEEDER_DEAD_ZONE = 2;
+
   private final double IR_RANGE = 10;
 
   private final CurrentLimitsConfigs currentLimitsConfig;
@@ -67,8 +66,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     // Instantiate motors and encoders
     
-    feeder = new TalonFX(Constants.feeder);
-    SmartDashboard.putNumber("Feeder Target Position", 0);
+    
     //SmartDashboard.putBoolean("Feeder Velocity Control", feederVelocityControl);
 
     shooter1 = new TalonFX(Constants.shooter1);
@@ -76,9 +74,6 @@ public class ShooterSubsystem extends SubsystemBase {
     
     //shooterIR = new Canandcolor(Constants.shooterIR);
 
-    // Inversion
-    
-    feeder.setInverted(false);
     // shooter1.setInverted(true);
     
     // Current
@@ -111,17 +106,7 @@ public class ShooterSubsystem extends SubsystemBase {
     shooterSlot0Configs.kV = 0.115; 
     shooterSlot0Configs.kS = 0.0;
 
-    // PID for feeder
-    Slot0Configs feederSlot0Configs = new Slot0Configs();
-    feederSlot0Configs.kP = 0.3; 
-    feederSlot0Configs.kD = 0.00001;
-    feederSlot0Configs.kV = 0.115;
-
-    Slot1Configs feederSlot1Configs = new Slot1Configs();
-    feederSlot1Configs.kP = 0.3;
-    feederSlot1Configs.kD = 0.00001;
-    feederSlot1Configs.kV = 0.115;
-
+    
    
 
     // Apply configs
@@ -129,15 +114,14 @@ public class ShooterSubsystem extends SubsystemBase {
     // shooter1Configs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
     shooter1.getConfigurator().apply(generalConfigs.withMotorOutput(new MotorOutputConfigs().withInverted(InvertedValue.Clockwise_Positive)));
     shooter2.getConfigurator().apply(generalConfigs);
-    feeder.getConfigurator().apply(generalConfigs.withMotorOutput(new MotorOutputConfigs().withInverted(InvertedValue.CounterClockwise_Positive)));
+   
     
 
     // Apply PID
     shooter1.getConfigurator().apply(shooterSlot0Configs);    
     shooter2.getConfigurator().apply(shooterSlot0Configs);
     
-    feeder.getConfigurator().apply(feederSlot0Configs);
-    feeder.getConfigurator().apply(feederSlot1Configs);
+    
 
     shooter2.setControl(new Follower(Constants.shooter1, true));
 
@@ -153,29 +137,14 @@ public class ShooterSubsystem extends SubsystemBase {
     shooter1.setControl(shooterSpeedRequest.withVelocity(shooterTargetSpeed));
 
 
-    //SmartDashboard.putBoolean("Feeder Velocity Control", feederVelocityControl);
-    if (feederVelocityControl) {
-      // set feeder speed
-      final VelocityVoltage feederSpeedRequest = new VelocityVoltage(0).withSlot(0);
-      feeder.setControl(feederSpeedRequest.withVelocity(feederTargetSpeed));
-
-      // If feeder is stopped, back off the feeder
-      
-      if (abs(feeder.getVelocity().getValueAsDouble()) < FEEDER_DEAD_ZONE) {
-        feeder.setPosition(0);
-        setFeederTargetPosition(-1);
-      }
-    } else {
-      final PositionVoltage feederPositionRequest = new PositionVoltage(0).withSlot(1);
-      feeder.setControl(feederPositionRequest.withPosition(feederTargetPosition));
-    }
+  
     
   
     SmartDashboard.putNumber("Shooter Speed", shooter1.getVelocity().getValueAsDouble());
-    SmartDashboard.putNumber("Feeder Speed", feeder.getVelocity().getValueAsDouble());
+    
     // SmartDashboard.putNumber("Shooter Setpoint", shooterTargetSpeed);
     // SmartDashboard.putNumber("Feeder Setpoint", feederTargetSpeed);
-    SmartDashboard.putNumber("Feeder Position", getFeederPosition());
+    
 
      // Velocity PID for shooters 
     //  Slot0Configs shooterSlot0Configs = new Slot0Configs();
@@ -209,27 +178,7 @@ public class ShooterSubsystem extends SubsystemBase {
       return Math.abs(shooter1.getVelocity().getValueAsDouble() - shooterTargetSpeed) < SHOOTER_DEAD_ZONE;
   }
 
-  /**
-   * Sets speed of the feeder wheels
-   * @param speed
-   * in rotations per second
-   */
-  public void setFeederTargetSpeed(double speed){
-    feederVelocityControl = true;
-
-    this.feederTargetSpeed = speed;
-  }
-
-  /**
-   * Sets position of the feeder wheels
-   * @param position
-   * in rotations
-   */
-  public void setFeederTargetPosition(double position){
-     feederVelocityControl = false;
-    this.feederTargetPosition = position;
-    SmartDashboard.putNumber("Feeder Target Position", position);
-  }
+  
   /**
    * Sets speed of the shooter wheels
    * @param speed
@@ -239,9 +188,6 @@ public class ShooterSubsystem extends SubsystemBase {
     this.shooterTargetSpeed = speed;
   }
 
-  public double getFeederPosition() {
-    return feeder.getPosition().getValueAsDouble();
-  }
 
   public boolean isShooterRunning(){
     return shooterTargetSpeed != 0;

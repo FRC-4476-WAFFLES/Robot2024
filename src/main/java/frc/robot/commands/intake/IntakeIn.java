@@ -13,7 +13,7 @@ public class IntakeIn extends Command {
   public IntakeIn() {
     // Use addRequirements() here to declare subsystem dependencies.
    // addRequirements(intakeSubsystem, anglerSubsystem, elevatorSubsystem);
-   addRequirements(intakeSubsystem, elevatorSubsystem, anglerSubsystem);
+   addRequirements(intakeSubsystem, elevatorSubsystem, anglerSubsystem, feederSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -53,7 +53,7 @@ public class IntakeIn extends Command {
     anglerSubsystem.setAnglerTargetPosition(86.7);
   
     intakeSubsystem.SetIntakeSpeed(1);
-    shooterSubsystem.setFeederTargetSpeed(100);
+    feederSubsystem.setFeederTargetSpeed(100);
     
   }
 
@@ -61,7 +61,7 @@ public class IntakeIn extends Command {
   @Override
   public void end(boolean interrupted) {
     intakeSubsystem.SetIntakeSpeed(0);
-    shooterSubsystem.setFeederTargetSpeed(0);
+    feederSubsystem.setFeederTargetSpeed(0);
   }
 
   // Returns true when the command should end.

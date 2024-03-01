@@ -12,6 +12,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.AnglerSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
+import frc.robot.subsystems.FeederSubsystem;
 import frc.robot.subsystems.LightSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.utils.Telemetry;
@@ -58,6 +59,7 @@ public class RobotContainer {
   public static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public static final ShooterSubsystem shooterSubsystem  = new ShooterSubsystem();
   public static final AnglerSubsystem anglerSubsystem  = new AnglerSubsystem();
+  public static final FeederSubsystem feederSubsystem  = new FeederSubsystem();
   public static final DriveSubsystem driveSubsystem = TunerConstants.DriveTrain;
 
   //The Robots Commands
