@@ -108,7 +108,9 @@ public class AnglerSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         manageProfileTimer();
-        executeAnglerMotionProfiling();
+        //executeAnglerMotionProfiling();
+        final PositionVoltage anglerPositionRequest = new PositionVoltage(0).withSlot(1);
+        angler.setControl(anglerPositionRequest.withPosition(anglerTargetPositionRotations));
         updateSmartDashboard();
         if(!elevatorSubsystem.getCoastSwitch()){
             angler.setNeutralMode(NeutralModeValue.Coast);
