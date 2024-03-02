@@ -53,7 +53,13 @@ public class IntakeIn extends Command {
     anglerSubsystem.setAnglerTargetPosition(86.7);
   
     intakeSubsystem.SetIntakeSpeed(1);
-    feederSubsystem.setFeederTargetSpeed(100);
+    if (shooterSubsystem.isNote()){
+      feederSubsystem.setFeederTargetPosition(0);
+      feederSubsystem.setFeederTargetPosition(0);
+    }
+    else{
+      feederSubsystem.setFeederTargetSpeed(100);
+    }
     
   }
 

@@ -10,22 +10,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
-import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
-import com.ctre.phoenix6.configs.Slot1Configs;
 //import com.reduxrobotics.sensors.canandcolor.Canandcolor;
 
 import java.lang.Math;
-import static java.lang.Math.abs;
 
-
-
-import javax.swing.text.Position;
 
 public class ShooterSubsystem extends SubsystemBase {
   // Motors and Sensors
@@ -47,7 +41,7 @@ public class ShooterSubsystem extends SubsystemBase {
   
   private final double SHOOTER_DEAD_ZONE = 5;
 
-  private final double IR_RANGE = 10;
+  private final double IR_RANGE = 2.05;
 
   private final CurrentLimitsConfigs currentLimitsConfig;
 
@@ -201,7 +195,9 @@ public class ShooterSubsystem extends SubsystemBase {
    * @return true: if note is in shooter
    * <li>false: if note is not in shooter</li>
    */
-  // public boolean isNote() {
-  //   return shooterIR.getProximity() > IR_RANGE;
-  // }
+  public boolean isNote() {
+    return shooterIR.getVoltage() > IR_RANGE;
+    // 2.1 Note  ready to shoot 
+    // 1.6 no note
+  }
 }

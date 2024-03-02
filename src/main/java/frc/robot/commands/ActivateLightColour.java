@@ -42,14 +42,14 @@ public class ActivateLightColour extends Command {
       // Intake running
       lightSubsystem.blinkBetweenColours(LightColours.YELLOW, LightColours.BLACK);
     }
-    else if(intakeSubsystem.isNoteCurrentDetection()){
-      // Note in Intake
-      lightSubsystem.setLightColour(LightColours.VIOLET);
-    }
-    // else if (shooterSubsystem.isNote()) {
-    //   // Note in Shooter
+    // else if(intakeSubsystem.isNoteCurrentDetection()){
+    //   // Note in Intake
     //   lightSubsystem.setLightColour(LightColours.VIOLET);
     // }
+    else if (shooterSubsystem.isNote()) {
+      // Note in Shooter
+      lightSubsystem.setLightColour(LightColours.VIOLET);
+    }
     else if(0 < matchTimer && matchTimer < 5){
       lightSubsystem.setLightColour(LightColours.WHITE);
     }
