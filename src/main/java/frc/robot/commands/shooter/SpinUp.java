@@ -111,15 +111,15 @@ final InterpolatingDoubleTreeMap feederSpeedMap = new InterpolatingDoubleTreeMap
     final InterpolatingDoubleTreeMap shooterAngleMap = new InterpolatingDoubleTreeMap();
 
     shooterAngleMap.put(1.1977, 68.0); 
-    shooterAngleMap.put(1.999, 56.0); 
-    shooterAngleMap.put(2.54, 45.0);
-    shooterAngleMap.put(2.773, 44.0);
-    shooterAngleMap.put(3.0988, 38.0);
-    shooterAngleMap.put(3.556, 37.0);
-    shooterAngleMap.put(3.8813, 35.0);
-    shooterAngleMap.put(4.3688, 33.0);
-    shooterAngleMap.put(4.5626, 30.0);
-    shooterAngleMap.put(5.8711, 28.0);
+    shooterAngleMap.put(1.999, 58.0); 
+    shooterAngleMap.put(2.54, 48.0);
+    shooterAngleMap.put(2.773, 47.0);
+    shooterAngleMap.put(3.0988, 41.0);
+    shooterAngleMap.put(3.556, 39.0);
+    shooterAngleMap.put(3.8813, 37.0);
+    shooterAngleMap.put(4.3688, 35.0);
+    shooterAngleMap.put(4.5626, 32.0);
+    shooterAngleMap.put(5.8711, 30.0);
 
     return shooterAngleMap.get(distance);
 

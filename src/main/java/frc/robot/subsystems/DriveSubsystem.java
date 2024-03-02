@@ -39,6 +39,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
     private static final double kSimLoopPeriod = 0.005; // 5 ms
     private Notifier m_simNotifier = null;
     private double m_lastSimTime;
+  
 
     private final SwerveRequest.ApplyChassisSpeeds autoRequest = new SwerveRequest.ApplyChassisSpeeds()
         .withDriveRequestType(DriveRequestType.Velocity);
@@ -180,6 +181,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
             poseOfGoal = Constants.DriveConstants.redGoalPose;
         } else {
             poseOfGoal = Constants.DriveConstants.blueGoalPose;
+           
         }
 
 
@@ -208,6 +210,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
     }
 
     public void periodic() {
+        SmartDashboard.putNumber("A Swerve Wheel Pos", getModule(1).getDriveMotor().getPosition().getValueAsDouble());
         for(int i = 0; i <=3; i++) {
             // Target position and speed
             SmartDashboard.putNumber("module" + String.valueOf(i) + "TargetPosition", getModule(i).getTargetState().angle.getDegrees());

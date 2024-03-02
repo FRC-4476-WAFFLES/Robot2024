@@ -4,8 +4,16 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.math.util.Units;
 import frc.robot.generated.TunerConstants;
 
 /**
@@ -83,7 +91,7 @@ public final class Constants {
     public static final double maxSpeed = TunerConstants.kSpeedAt12VoltsMps;
     public static final double maxAngularSpeed = 6; // Max Rad/s
 
-    public static final Pose2d redGoalPose = new Pose2d((16.4592 - 0.17), 5.56, new Rotation2d(180));
+    public static final Pose2d redGoalPose = new Pose2d((16.4592 - 0.17), 5.56, new Rotation2d(0));
     public static final Pose2d blueGoalPose = new Pose2d(0.17, 5.56, new Rotation2d(0));
     
     public static final Pose2d blueStash = new Pose2d(1.25, 7.00, new Rotation2d(0));
@@ -95,5 +103,24 @@ public final class Constants {
     public static final double elevatorMinHeight = 5;
     public static final double elevatorMaxHeight = 15;
     public static final double elevatorTriggerConstantMultiplier = 5;
+  }
+
+  public static class VisionConstants{
+    public static final String kCameraLeft = "LL3";
+      // Cam mounted facing forward, half a meter forward of center, half a meter up
+      // from center.
+      public static final Transform3d kRobotToLeftCamera = new Transform3d(
+              new Translation3d(0.2667, -0.336, 0.196),
+              new Rotation3d(Units.degreesToRadians(0), Units.degreesToRadians(58.64),
+                      Units.degreesToRadians(180)));
+
+      // Back camera mounted 11.0 inches behind centre, 8.5 left of centre, 8.625
+      // inches up from centre, 24 degrees for horizontal
+
+      // this camera is on both robots. So we need to change the position based on
+      // which robot.
+
+      public static final Matrix<N3, N1> kSingleTagStdDevs = VecBuilder.fill(4, 4, 1000);
+      public static final Matrix<N3, N1> kMultiTagStdDevs = VecBuilder.fill(0.5, 0.5, 1);
   }
 }

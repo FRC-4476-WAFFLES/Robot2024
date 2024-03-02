@@ -5,6 +5,8 @@
 package frc.robot.commands.drive;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.DriveConstants;
 
@@ -40,16 +42,27 @@ public class DriveAndPointAtTarget extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    request = new SwerveRequest.FieldCentricFacingAngle()
+    if(DriverStation.getAlliance().get() == Alliance.Red){
+      request = new SwerveRequest.FieldCentricFacingAngle()
         .withDeadband(DriveConstants.maxSpeed * 0.03) // Add a 3% deadband to translation
         .withDriveRequestType(DriveRequestType.Velocity)
         .withSteerRequestType(SteerRequestType.MotionMagic)
         .withVelocityX(xVelocitySupplier.getAsDouble())
         .withVelocityY(yVelocitySupplier.getAsDouble())
         .withTargetDirection(thetaSupplier.get());
+    }
+    else{
+      request = new SwerveRequest.FieldCentricFacingAngle()
+        .withDeadband(DriveConstants.maxSpeed * 0.03) // Add a 3% deadband to translation
+        .withDriveRequestType(DriveRequestType.Velocity)
+        .withSteerRequestType(SteerRequestType.MotionMagic)
+        .withVelocityX(-xVelocitySupplier.getAsDouble())
+        .withVelocityY(-yVelocitySupplier.getAsDouble())
+        .withTargetDirection(thetaSupplier.get());
+    }
     
-    request.HeadingController.setP(-3.0);
-    request.HeadingController.setD(-0.1); 
+    request.HeadingController.setP(8.0);
+    request.HeadingController.setD(0.1); 
     request.HeadingController.enableContinuousInput(-Math.PI, Math.PI);
     driveSubsystem.setControl(request);
     driveSubsystem.getDistanceToGoal();
@@ -64,7 +77,13 @@ public class DriveAndPointAtTarget extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    request.HeadingController.setTolerance(0.05);
-    return request.HeadingController.atSetpoint();
+    if(DriverStation.isTeleop()){
+      return false;
+    }
+    else{
+      request.HeadingController.setTolerance(0.05);
+      return request.HeadingController.atSetpoint();
+    }
+    
   }
 }

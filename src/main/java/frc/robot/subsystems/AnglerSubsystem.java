@@ -97,7 +97,7 @@ public class AnglerSubsystem extends SubsystemBase {
         Slot0Configs anglerSlot0Configs = new Slot0Configs();
         anglerSlot0Configs.kP = 0.9;
         anglerSlot0Configs.kD = 0;
-        anglerSlot0Configs.kV = 0;
+        anglerSlot0Configs.kV = 0.1;
 
         angler.setPosition(0);
         angler.getConfigurator().apply(anglerSlot0Configs);
@@ -108,9 +108,9 @@ public class AnglerSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         manageProfileTimer();
-        //executeAnglerMotionProfiling();
-        final PositionVoltage anglerPositionRequest = new PositionVoltage(0).withSlot(1);
-        angler.setControl(anglerPositionRequest.withPosition(anglerTargetPositionRotations));
+        executeAnglerMotionProfiling();
+        // final PositionVoltage anglerPositionRequest = new PositionVoltage(0).withSlot(1);
+        // angler.setControl(anglerPositionRequest.withPosition(anglerTargetPositionRotations));
         updateSmartDashboard();
         if(!elevatorSubsystem.getCoastSwitch()){
             angler.setNeutralMode(NeutralModeValue.Coast);

@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import static frc.robot.RobotContainer.*;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
 public class BasicFieldReset extends Command {
   /** Creates a new BasicFieldReset. */
@@ -25,7 +27,13 @@ public class BasicFieldReset extends Command {
   public void execute() {
     // Reset the robot's position to the starting position in front of red speaker against the subwoofer
     System.err.println("Basic Reset");
-    driveSubsystem.seedFieldRelative(new Pose2d(15.0792, 5.53, new Rotation2d(0)));
+    if (DriverStation.getAlliance().get() == Alliance.Red){
+      driveSubsystem.seedFieldRelative(new Pose2d(15.0792, 5.53, new Rotation2d(Math.PI))); //15.0792, 5.53
+    }
+    else{
+      driveSubsystem.seedFieldRelative(new Pose2d(1.4, 5.53, new Rotation2d(0))); //15.0792, 5.53
+    }
+    
   }
 
   // Called once the command ends or is interrupted.

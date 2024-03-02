@@ -27,6 +27,8 @@ import frc.robot.commands.drive.*;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -80,31 +82,43 @@ public class RobotContainer {
   private final SuperstructureClimb superstructureClimb = new SuperstructureClimb();
   private final SuperstructureStash superstructureStash = new SuperstructureStash();
   
-  
+
 
   //TODO Trap Command
-
-  private final DriveTeleop driveTeleop = new DriveTeleop(
-    () -> leftJoystick.getY() * DriveConstants.maxSpeed, 
-    () -> leftJoystick.getX() * DriveConstants.maxSpeed, 
-    () -> rightJoystick.getX() * DriveConstants.maxAngularSpeed
-  );
+  
+ 
 
   private final DriveAndPointAtTarget driveAndAimAtGoal = new DriveAndPointAtTarget(() -> leftJoystick.getY() * DriveConstants.maxSpeed, () -> leftJoystick.getX() * DriveConstants.maxSpeed, driveSubsystem::getAngleToGoal);
 
   private final SendableChooser<Command> autoChooser;
+  private static RobotContainer containerRobot;
 
   private final Telemetry logger = new Telemetry(DriveConstants.maxSpeed);
+  private DriveTeleop driveTeleopRed;
+  private DriveTeleop driveTeleopBlue;
   
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  public RobotContainer() {
+  public RobotContainer(){
+    containerRobot = this;
+    driveTeleopBlue = new DriveTeleop(
+    () -> -leftJoystick.getY() * DriveConstants.maxSpeed, 
+    () -> -leftJoystick.getX() * DriveConstants.maxSpeed, 
+    () -> -rightJoystick.getX() * DriveConstants.maxAngularSpeed
+    );
+    driveTeleopRed = new DriveTeleop(
+    () -> leftJoystick.getY() * DriveConstants.maxSpeed, 
+    () -> leftJoystick.getX() * DriveConstants.maxSpeed, 
+    () -> rightJoystick.getX() * DriveConstants.maxAngularSpeed
+  );
+  
     // Register named commands for auto
     registerNamedCommands();
     // Configure the trigger bindings
     configureBindings();
 
-    driveSubsystem.setDefaultCommand(driveTeleop);
+    //driveSubsystem.setDefaultCommand(driveTeleop);
+    setAllianceColor();
     lightSubsystem.setDefaultCommand(updateLights);
     elevatorSubsystem.setDefaultCommand(superstructureHome);
 
@@ -179,5 +193,15 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     return autoChooser.getSelected();
+  }
+
+  public static void setAllianceColor(){
+    Alliance alliance = DriverStation.getAlliance().get();
+    if (alliance == Alliance.Blue){
+      driveSubsystem.setDefaultCommand(containerRobot.driveTeleopBlue);
+    }
+    else if (alliance == Alliance.Red){
+      driveSubsystem.setDefaultCommand(containerRobot.driveTeleopRed);
+    }
   }
 }
