@@ -38,6 +38,10 @@ public class ActivateLightColour extends Command {
       // Endgame warning
       lightSubsystem.blinkBetweenColours(LightColours.RED, LightColours.WHITE);
     }
+    else if (shooterSubsystem.isNote()) {
+      // Note in Shooter
+      lightSubsystem.setLightColour(LightColours.VIOLET);
+    }
     else if (intakeSubsystem.isRunning() && anglerSubsystem.isGoodShooterAngle() && elevatorSubsystem.isGoodElevatorPosition()){
       // Intake running
       lightSubsystem.blinkBetweenColours(LightColours.YELLOW, LightColours.BLACK);
@@ -46,10 +50,7 @@ public class ActivateLightColour extends Command {
     //   // Note in Intake
     //   lightSubsystem.setLightColour(LightColours.VIOLET);
     // }
-    else if (shooterSubsystem.isNote()) {
-      // Note in Shooter
-      lightSubsystem.setLightColour(LightColours.VIOLET);
-    }
+   
     else if(0 < matchTimer && matchTimer < 5){
       lightSubsystem.setLightColour(LightColours.WHITE);
     }
