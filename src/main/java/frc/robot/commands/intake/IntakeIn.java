@@ -10,16 +10,18 @@ import frc.robot.commands.superstructure.*;
 import static frc.robot.RobotContainer.*;
 public class IntakeIn extends Command {
   /** Creates a new IntakeMove. */
+  private boolean noteSeen = false;
   public IntakeIn() {
     // Use addRequirements() here to declare subsystem dependencies.
    // addRequirements(intakeSubsystem, anglerSubsystem, elevatorSubsystem);
    addRequirements(intakeSubsystem, elevatorSubsystem, anglerSubsystem, feederSubsystem);
+   
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
+   
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -53,8 +55,13 @@ public class IntakeIn extends Command {
     anglerSubsystem.setAnglerTargetPosition(86.7);
   
     intakeSubsystem.SetIntakeSpeed(1);
-    if (shooterSubsystem.isNote()){
+    if(noteSeen){
       feederSubsystem.setFeederTargetPosition(0);
+    }
+
+    else if (shooterSubsystem.isNote()){
+      feederSubsystem.resetFeederPosition();
+      noteSeen = true;
       feederSubsystem.setFeederTargetPosition(0);
     }
     else{
@@ -68,6 +75,7 @@ public class IntakeIn extends Command {
   public void end(boolean interrupted) {
     intakeSubsystem.SetIntakeSpeed(0);
     feederSubsystem.setFeederTargetSpeed(0);
+    noteSeen = false;
   }
 
   // Returns true when the command should end.
