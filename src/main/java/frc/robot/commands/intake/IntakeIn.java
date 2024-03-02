@@ -4,6 +4,7 @@
 
 package frc.robot.commands.intake;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.superstructure.*;
 
@@ -51,23 +52,13 @@ public class IntakeIn extends Command {
     //   intakeSubsystem.SetIntakeSpeed(1);
     // }
     elevatorSubsystem.isClimbing = false;
-    elevatorSubsystem.setElevatorTargetPosition(32);
+    elevatorSubsystem.setElevatorTargetPosition(27);
     anglerSubsystem.setAnglerTargetPosition(86.7);
   
     intakeSubsystem.SetIntakeSpeed(1);
-    if(noteSeen){
-      feederSubsystem.setFeederTargetPosition(0);
-    }
-
-    else if (shooterSubsystem.isNote()){
-      feederSubsystem.resetFeederPosition();
-      noteSeen = true;
-      feederSubsystem.setFeederTargetPosition(0);
-    }
-    else{
-      feederSubsystem.setFeederTargetSpeed(100);
-    }
-    
+    feederSubsystem.setFeederTargetSpeed(100);
+   
+  
   }
 
   // Called once the command ends or is interrupted.

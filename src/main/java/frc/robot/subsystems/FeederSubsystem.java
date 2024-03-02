@@ -91,10 +91,10 @@ public class FeederSubsystem extends SubsystemBase {
 
       // If feeder is stopped, back off the feeder
       
-      // if (Math.abs(feeder.getVelocity().getValueAsDouble()) < FEEDER_DEAD_ZONE) {
-      //   feeder.setPosition(0);
-      //   setFeederTargetPosition(-.5);
-      // }
+      if (Math.abs(feeder.getVelocity().getValueAsDouble()) < FEEDER_DEAD_ZONE) {
+        feeder.setPosition(0);
+        setFeederTargetPosition(-.5);
+      }
     } else {
       final PositionVoltage feederPositionRequest = new PositionVoltage(0).withSlot(1);
       feeder.setControl(feederPositionRequest.withPosition(feederTargetPosition));
