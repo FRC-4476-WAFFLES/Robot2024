@@ -12,19 +12,50 @@
     "data": {
       "commands": [
         {
-          "type": "parallel",
+          "type": "deadline",
           "data": {
             "commands": [
               {
                 "type": "named",
                 "data": {
-                  "name": "aimAtGoal"
+                  "name": "intakeIn"
                 }
               },
               {
+                "type": "path",
+                "data": {
+                  "pathName": "Right Start to Score Middle Rightmost"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.4
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "completeShot"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
                 "type": "named",
                 "data": {
-                  "name": "spinUp"
+                  "name": "intakeIn"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Right Shooting to middle second rightmost"
                 }
               }
             ]
@@ -33,43 +64,7 @@
         {
           "type": "named",
           "data": {
-            "name": "scoreNote"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Right Start to Score Middle Rightmost"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "aimAtGoal"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "scoreNote"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Right Shooting to middle second rightmost"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "aimAtGoal"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "scoreNote"
+            "name": "completeShot"
           }
         }
       ]

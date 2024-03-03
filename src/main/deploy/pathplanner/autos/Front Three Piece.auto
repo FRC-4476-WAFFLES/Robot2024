@@ -12,28 +12,9 @@
     "data": {
       "commands": [
         {
-          "type": "deadline",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "scoreNote"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "spinUp"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "aimAtGoal"
-                }
-              }
-            ]
+            "name": "completeShot"
           }
         },
         {
@@ -58,32 +39,13 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.3
+            "waitTime": 0.4
           }
         },
         {
-          "type": "deadline",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "scoreNote"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "spinUp"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "aimAtGoal"
-                }
-              }
-            ]
+            "name": "completeShot"
           }
         },
         {
@@ -112,28 +74,9 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "scoreNote"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "aimAtGoal"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "spinUp"
-                }
-              }
-            ]
+            "name": "completeShot"
           }
         }
       ]

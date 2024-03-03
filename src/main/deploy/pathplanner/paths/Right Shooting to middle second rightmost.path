@@ -3,16 +3,32 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.145126653889672,
-        "y": 2.0429953587179908
+        "x": 3.0726646736767536,
+        "y": 3.13695836076835
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.4138361003994735,
-        "y": 1.4272981273235277
+        "x": 4.341374120186556,
+        "y": 2.521261129373887
       },
       "isLocked": false,
       "linkedName": "Shooting Right Far"
+    },
+    {
+      "anchor": {
+        "x": 5.8260914591793,
+        "y": 1.8600068080715177
+      },
+      "prevControl": {
+        "x": 5.047354124700574,
+        "y": 1.839642061782205
+      },
+      "nextControl": {
+        "x": 6.604828793658026,
+        "y": 1.8803715543608306
+      },
+      "isLocked": false,
+      "linkedName": "Dodge pole"
     },
     {
       "anchor": {
@@ -32,12 +48,28 @@
     },
     {
       "anchor": {
-        "x": 5.145126653889672,
-        "y": 2.0429953587179908
+        "x": 5.8260914591793,
+        "y": 1.8600068080715177
       },
       "prevControl": {
-        "x": 6.02202877133028,
-        "y": 1.3246819220911186
+        "x": 7.291012555121967,
+        "y": 1.8082330752207827
+      },
+      "nextControl": {
+        "x": 4.361170363236632,
+        "y": 1.9117805409222528
+      },
+      "isLocked": false,
+      "linkedName": "Dodge pole"
+    },
+    {
+      "anchor": {
+        "x": 3.0726646736767536,
+        "y": 3.13695836076835
+      },
+      "prevControl": {
+        "x": 3.949566791117362,
+        "y": 2.418644924141478
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,7 +78,7 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.7,
+      "waypointRelativePos": 1.4,
       "rotationDegrees": 12.518488885281585,
       "rotateFast": false
     }
@@ -72,7 +104,7 @@
     },
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 2.0,
+      "waypointRelativePos": 4.0,
       "command": {
         "type": "parallel",
         "data": {
