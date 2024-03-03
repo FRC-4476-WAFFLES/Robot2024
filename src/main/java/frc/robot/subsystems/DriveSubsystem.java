@@ -3,6 +3,8 @@ import java.lang.reflect.Field;
 import java.util.Optional;
 import java.util.function.Supplier;
 
+import org.photonvision.EstimatedRobotPose;
+
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrain;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrainConstants;
@@ -44,7 +46,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
     private Notifier m_simNotifier = null;
     private double m_lastSimTime;
     private Vision vision = new Vision(Constants.VisionConstants.kCameraLeft, Constants.VisionConstants.kRobotToLeftCamera);
-    private Pose2d field = new Pose2d();
+    private EstimatedRobotPose estimatedRobotPose;
   
 
     private final SwerveRequest.ApplyChassisSpeeds autoRequest = new SwerveRequest.ApplyChassisSpeeds()
@@ -222,7 +224,15 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
     }
 
     public void periodic() {
-      
+    //   vision.getEstimatedGlobalPose().ifPresentOrElse(
+    //     pose -> {
+    //       this.estimatedRobotPose = pose;
+    //       SmartDashboard.putData("VisionEstimation", (Sendable) pose);
+    //     },
+    //     () -> {
+    //       this.estimatedRobotPose = null;
+    //     }
+    //   );
         
     }
 }

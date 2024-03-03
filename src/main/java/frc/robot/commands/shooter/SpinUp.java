@@ -38,7 +38,10 @@ public class SpinUp extends Command {
 
     elevatorSubsystem.setElevatorTargetPosition(27);
     anglerSubsystem.setAnglerTargetPosition(angle);
-    shooterSubsystem.setShooterTargetSpeed(speed);
+    if (feederSubsystem.isFeederAtTargetPosition()){
+      shooterSubsystem.setShooterTargetSpeed(speed);
+    }
+    
   }
 
   // Called once the command ends or is interrupted.

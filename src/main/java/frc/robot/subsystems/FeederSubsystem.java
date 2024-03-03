@@ -28,6 +28,7 @@ public class FeederSubsystem extends SubsystemBase {
   private double feederTargetPosition = 0;
 
   private final double FEEDER_DEAD_ZONE = 2;
+  private final double POSITION_DEAD_ZONE = 0.5;
 
   private final CurrentLimitsConfigs currentLimitsConfig;
   /** Creates a new FeederSubsystem. */
@@ -93,7 +94,7 @@ public class FeederSubsystem extends SubsystemBase {
       
       if (Math.abs(feeder.getVelocity().getValueAsDouble()) < FEEDER_DEAD_ZONE) {
         feeder.setPosition(0);
-        setFeederTargetPosition(-.5);
+        setFeederTargetPosition(-0.7);
       }
     } else {
       final PositionVoltage feederPositionRequest = new PositionVoltage(0).withSlot(1);
@@ -134,6 +135,10 @@ public class FeederSubsystem extends SubsystemBase {
   public void resetFeederPosition() {
     feeder.setPosition(0);
   }
-
+  
+  public boolean isFeederAtTargetPosition() {
+    SmartDashboard.putNumber("AnglerPosError", Math.abs(feeder.getPosition().getValueAsDouble() - feederTargetPosition));
+    return Math.abs(feeder.getPosition().getValueAsDouble() - feederTargetPosition) < POSITION_DEAD_ZONE;
+  }
 
 }
