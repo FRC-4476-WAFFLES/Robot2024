@@ -28,6 +28,7 @@ public class FeederSubsystem extends SubsystemBase {
   private double feederTargetPosition = 0;
 
   private final double FEEDER_DEAD_ZONE = 2;
+  private final double POSITION_DEAD_ZONE = 0.2;
 
   private final CurrentLimitsConfigs currentLimitsConfig;
   /** Creates a new FeederSubsystem. */
@@ -134,6 +135,9 @@ public class FeederSubsystem extends SubsystemBase {
   public void resetFeederPosition() {
     feeder.setPosition(0);
   }
-
+  
+  public boolean isFeederAtTargetPosition() {
+    return Math.abs(feeder.getPosition().getValueAsDouble() - feederTargetPosition) < POSITION_DEAD_ZONE;
+  }
 
 }
