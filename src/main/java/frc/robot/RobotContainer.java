@@ -109,7 +109,7 @@ public class RobotContainer {
     driveTeleopRed = new DriveTeleop(
     () -> leftJoystick.getY() * DriveConstants.maxSpeed, 
     () -> leftJoystick.getX() * DriveConstants.maxSpeed, 
-    () -> rightJoystick.getX() * DriveConstants.maxAngularSpeed
+    () -> -rightJoystick.getX() * DriveConstants.maxAngularSpeed
   );
   
     // Register named commands for auto

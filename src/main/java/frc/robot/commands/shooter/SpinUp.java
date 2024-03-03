@@ -55,7 +55,7 @@ public class SpinUp extends Command {
       if(DriverStation.isTeleop()){
         return false;
       }
-      return true;
+      return false;
     }
     return false;
   }

@@ -1,4 +1,5 @@
 package frc.robot.subsystems;
+import java.lang.reflect.Field;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -19,17 +20,20 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
 import frc.robot.generated.TunerConstants;
 import frc.robot.utils.LimelightHelpers;
+import frc.robot.utils.Vision;
 
 /**
  * Class that extends the Phoenix SwerveDrivetrain class and implements subsystem
@@ -39,6 +43,8 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
     private static final double kSimLoopPeriod = 0.005; // 5 ms
     private Notifier m_simNotifier = null;
     private double m_lastSimTime;
+    private Vision vision = new Vision(Constants.VisionConstants.kCameraLeft, Constants.VisionConstants.kRobotToLeftCamera);
+    private Pose2d field = new Pose2d();
   
 
     private final SwerveRequest.ApplyChassisSpeeds autoRequest = new SwerveRequest.ApplyChassisSpeeds()
@@ -74,7 +80,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
             this::getCurrentRobotChassisSpeeds,
             (speeds)->this.setControl(autoRequest.withSpeeds(speeds)), // Consumer of ChassisSpeeds to drive the robot
             new HolonomicPathFollowerConfig(
-                new PIDConstants(0.0075, 0, 0.1), // TODO: Tune path following PID
+                new PIDConstants(0.1, 0, 0.1), // TODO: Tune path following PID
                 new PIDConstants(0.05, 0, 0),
                 TunerConstants.kSpeedAt12VoltsMps,
                 driveBaseRadius,
@@ -186,7 +192,10 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
 
 
         double angleToGoal = Math.atan((getRobotPose().getY()-poseOfGoal.getY())/(getRobotPose().getX()-poseOfGoal.getX()));
-        SmartDashboard.putNumber("AngleToGoal", angleToGoal);
+        if(DriverStation.getAlliance().get() == Alliance.Red) {
+            angleToGoal += Math.PI;
+        }
+        
         // return poseOfGoal.minus(getRobotPose()).getTranslation().getAngle();
         return new Rotation2d(angleToGoal);
         //return new Rotation2d(Math.PI);
@@ -210,16 +219,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
     }
 
     public void periodic() {
-        SmartDashboard.putNumber("A Swerve Wheel Pos", getModule(1).getDriveMotor().getPosition().getValueAsDouble());
-        for(int i = 0; i <=3; i++) {
-            // Target position and speed
-            SmartDashboard.putNumber("module" + String.valueOf(i) + "TargetPosition", getModule(i).getTargetState().angle.getDegrees());
-            SmartDashboard.putNumber("module" + String.valueOf(i) + "TargetSpeed", getModule(i).getTargetState().speedMetersPerSecond);
-
-            // Current position and speed
-            SmartDashboard.putNumber("module" + String.valueOf(i) + "CurrentPosition", getModule(i).getCurrentState().angle.getDegrees());
-            SmartDashboard.putNumber("module" + String.valueOf(i) + "CurrentSpeed", getModule(i).getCurrentState().speedMetersPerSecond);
-        }
+      
         
     }
 }

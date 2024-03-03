@@ -50,14 +50,6 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   public ElevatorSubsystem() {
 
-    SmartDashboard.putNumber("Elevator P", 0);
-    SmartDashboard.putNumber("Elevator D", 0);
-    SmartDashboard.putNumber("Elevator S", 0);
-    SmartDashboard.putNumber("Elevator V", 0);
-    SmartDashboard.putNumber("Elevator Setpoint", 5);
-    SmartDashboard.putNumber("Elevator Max A", 2);
-    SmartDashboard.putNumber("Elevator Max V", 90);
-
 
     Elevator1 = new TalonFX(Constants.elevator1);
     Elevator2 = new TalonFX(Constants.elevator2);
@@ -125,13 +117,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   
   }
 
-  private void updatePIDConstants(){
-    Slot0Configs slot0Configs = new Slot0Configs();
-    slot0Configs.kP = SmartDashboard.getNumber("Elevator kP", 0);
-    slot0Configs.kD = SmartDashboard.getNumber("Elevator kD", 0);
-    slot0Configs.kV = SmartDashboard.getNumber("Elevator kV", 0);
-    slot0Configs.kS = SmartDashboard.getNumber("Elevator kS", 0);
-  }
+ 
 
   private void manageProfileTimer() {
         boolean isEnabled = DriverStation.isEnabled();

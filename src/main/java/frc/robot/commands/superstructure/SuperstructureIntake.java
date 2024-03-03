@@ -13,7 +13,6 @@ public class SuperstructureIntake extends Command {
   public SuperstructureIntake() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(elevatorSubsystem, anglerSubsystem);
-    SmartDashboard.putNumber("Feeder Position", feederSubsystem.getFeederPosition());
   }
 
   // Called when the command is initially scheduled.

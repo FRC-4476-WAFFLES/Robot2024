@@ -25,9 +25,7 @@ public class SuperstructureTestShot extends Command {
   @Override
   public void execute() {
     elevatorSubsystem.isClimbing = false;
-    elevatorSubsystem.setElevatorTargetPosition(SmartDashboard.getNumber("Elevator Setpoint", 6));
-    anglerSubsystem.setAnglerTargetPosition(SmartDashboard.getNumber("Angler Setpoint", 0));
-    shooterSubsystem.setShooterTargetSpeed(SmartDashboard.getNumber("Shooter Setpoint", 0));
+
   }
 
   // Called once the command ends or is interrupted.

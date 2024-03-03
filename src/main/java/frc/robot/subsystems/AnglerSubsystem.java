@@ -51,15 +51,7 @@ public class AnglerSubsystem extends SubsystemBase {
     }
 
     private void initializeSmartDashboard() {
-        SmartDashboard.putNumber("Angler P", 0);
-        SmartDashboard.putNumber("Angler D", 0);
-        SmartDashboard.putNumber("Angler S", 0);
-        SmartDashboard.putNumber("Angler V", 0);
-        SmartDashboard.putNumber("Angler Setpoint", 0);
-        SmartDashboard.putNumber("Angler max accel", 2);
-        SmartDashboard.putNumber("Angler max vel", 90);
-        SmartDashboard.putNumber("Angler Bottom Limit",0);
-        SmartDashboard.putNumber("Angler Top Limit",0);
+
     }
 
     private void initializeSubsystem() {
@@ -155,12 +147,7 @@ public class AnglerSubsystem extends SubsystemBase {
     }
 
     private void updateSmartDashboard() {
-        SmartDashboard.putNumber("Angler Position Rotation", angler.getPosition().getValueAsDouble());
-        SmartDashboard.putNumber("Angler Degrees", (angler.getPosition().getValueAsDouble() * 360 / OVERALL_REDUCTION));
-        SmartDashboard.putNumber("Raw Abs enc", anglerAbsoluteEncoder.getAbsolutePosition());
-        SmartDashboard.putNumber("Angler Target Position", anglerTargetPositionRotations);   
-        SmartDashboard.putNumber("Angler Bottom Limit",getAnglerBottomLimit(elevatorSubsystem.getElevatorPosition()));
-        SmartDashboard.putNumber("Angler Top Limit",getAnglerTopLimit(elevatorSubsystem.getElevatorPosition()));
+
         //SmartDashboard.putNumber("Angler Setpoint", anglerTargetPositonDegrees);
     }
 

@@ -53,11 +53,7 @@ public class CameraSubsystem extends SubsystemBase {
     super.periodic();
     txFiltered = txFilter.calculate(getHorizontal());
     tyFiltered = tyFilter.calculate(getVertical());
-    SmartDashboard.putBoolean("Camera has target", getHasTarget());
-    SmartDashboard.putNumber("Camera tx", getHorizontal());
-    SmartDashboard.putNumber("Camera ty", getVertical());
-    SmartDashboard.putNumber("Camera filtered tx", txFiltered);
-    SmartDashboard.putString("Robot pose", getRobotPose2d().toString());
+
   }
 
   public void setLEDMode(CameraLEDMode mode) {

@@ -77,13 +77,15 @@ public class DriveAndPointAtTarget extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(DriverStation.isTeleop()){
-      return false;
-    }
-    else{
-      request.HeadingController.setTolerance(0.05);
-      return request.HeadingController.atSetpoint();
-    }
+    // if(DriverStation.isTeleop()){
+    //   return false;
+    // }
+    // else{
+    //   request.HeadingController.setTolerance(0.05);
+    //   return request.HeadingController.atSetpoint();
+    // }
+
+    return false;
     
   }
 }

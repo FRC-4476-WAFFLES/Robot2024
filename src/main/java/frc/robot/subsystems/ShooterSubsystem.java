@@ -41,7 +41,7 @@ public class ShooterSubsystem extends SubsystemBase {
   
   private final double SHOOTER_DEAD_ZONE = 5;
 
-  private final double IR_RANGE = 1.7;
+  private final double IR_RANGE = 1;
 
   private final CurrentLimitsConfigs currentLimitsConfig;
 
@@ -49,14 +49,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public ShooterSubsystem() {
     TalonFXConfiguration generalConfigs = new TalonFXConfiguration();
 
-    // SmartDashboard.putNumber("ShooterP", 0.09);
-    // SmartDashboard.putNumber("ShooterI", 0);
-    // SmartDashboard.putNumber("ShooterD", 0.0001);
-    // SmartDashboard.putNumber("ShooterV", 0.115);
-    // SmartDashboard.putNumber("ShooterS", 0);
-    // SmartDashboard.putNumber("FeederP", 0.3);
-    // SmartDashboard.putNumber("FeederD", 0.00001);
-    // SmartDashboard.putNumber("FeederV", 0.115);
+  
     SmartDashboard.putNumber("Shooter Setpoint", 0);
 
 
@@ -138,31 +131,7 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("IR Proximity", shooterIR.getVoltage()); 
   
     SmartDashboard.putNumber("Shooter Speed", shooter1.getVelocity().getValueAsDouble());
-    
-    // SmartDashboard.putNumber("Shooter Setpoint", shooterTargetSpeed);
-    // SmartDashboard.putNumber("Feeder Setpoint", feederTargetSpeed);
-    
-
-     // Velocity PID for shooters 
-    //  Slot0Configs shooterSlot0Configs = new Slot0Configs();
-    //  shooterSlot0Configs.kP = SmartDashboard.getNumber("ShooterP", 0);
-    //  shooterSlot0Configs.kI = SmartDashboard.getNumber("ShooterI", 0);
-    //  shooterSlot0Configs.kD = SmartDashboard.getNumber("ShooterD", 0);
-    //  shooterSlot0Configs.kV =  SmartDashboard.getNumber("ShooterV", 0); 
-    //  shooterSlot0Configs.kS = SmartDashboard.getNumber("ShooterS", 0);
- 
-    //  // PID for feeder
-    //  Slot0Configs feederSlot0Configs = new Slot0Configs();
-    //  feederSlot0Configs.kP = SmartDashboard.getNumber("FeederP", 0.3); 
-    //  feederSlot0Configs.kD = SmartDashboard.getNumber("FeederD", 0.00001);
-    //  feederSlot0Configs.kV = SmartDashboard.getNumber("FeederV", .115);
- 
-    // shooter1.getConfigurator().apply(shooterSlot0Configs);
-    // shooter2.getConfigurator().apply(shooterSlot0Configs);
-    // feeder.getConfigurator().apply(feederSlot0Configs);
-
-   // setShooterTargetSpeed(SmartDashboard.getNumber("Shooter Setpoint", 0));
-  //  setFeederTargetSpeed(SmartDashboard.getNumber("Feeder Setpoint", 0));
+   
   }
 
   
