@@ -66,13 +66,15 @@ public class IntakeIn extends Command {
   public void end(boolean interrupted) {
     intakeSubsystem.SetIntakeSpeed(0);
     feederSubsystem.setFeederTargetSpeed(0);
-    noteSeen = false;
+    
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     if (shooterSubsystem.isNote()){
+      intakeSubsystem.SetIntakeSpeed(0);
+      feederSubsystem.setFeederTargetSpeed(0);
       return true;
     }
     else{
