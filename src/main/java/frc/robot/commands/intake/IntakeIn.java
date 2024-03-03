@@ -4,14 +4,18 @@
 
 package frc.robot.commands.intake;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.superstructure.*;
 
 import static frc.robot.RobotContainer.*;
+
+import java.sql.Driver;
 public class IntakeIn extends Command {
   /** Creates a new IntakeMove. */
-  private boolean noteSeen = false;
+  Timer timer = new Timer();
   public IntakeIn() {
     // Use addRequirements() here to declare subsystem dependencies.
    // addRequirements(intakeSubsystem, anglerSubsystem, elevatorSubsystem);

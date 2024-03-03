@@ -80,8 +80,8 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
             this::getCurrentRobotChassisSpeeds,
             (speeds)->this.setControl(autoRequest.withSpeeds(speeds)), // Consumer of ChassisSpeeds to drive the robot
             new HolonomicPathFollowerConfig(
-                new PIDConstants(0.1, 0, 0.1), // TODO: Tune path following PID
-                new PIDConstants(0.05, 0, 0),
+                new PIDConstants(1.8, 0, 0.1), // TODO: Tune path following PID
+                new PIDConstants(4, 0, 0.1),
                 TunerConstants.kSpeedAt12VoltsMps,
                 driveBaseRadius,
                 new ReplanningConfig()
@@ -90,7 +90,6 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
                 // Boolean supplier that controls when the path will be mirrored for the red alliance
                 // This will flip the path being followed to the red side of the field.
                 // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
-  
                 var alliance = DriverStation.getAlliance();
                 if (alliance.isPresent()) {
                     return alliance.get() == DriverStation.Alliance.Red;
@@ -183,15 +182,14 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
         Pose2d poseOfGoal;
 
         // Set goal pose based on alliance
-        if(DriverStation.getAlliance().get() == Alliance.Red) {
-            poseOfGoal = Constants.DriveConstants.redGoalPose;
-        } else {
-            poseOfGoal = Constants.DriveConstants.blueGoalPose;
-           
-        }
-
-
-        double angleToGoal = Math.atan((getRobotPose().getY()-poseOfGoal.getY())/(getRobotPose().getX()-poseOfGoal.getX()));
+        var alliance = DriverStation.getAlliance();
+        if (alliance.isPresent()) {
+            if(alliance.get() == DriverStation.Alliance.Red) {
+                poseOfGoal = Constants.DriveConstants.redGoalPose;
+            } else {
+                poseOfGoal = Constants.DriveConstants.blueGoalPose;
+            }
+            double angleToGoal = Math.atan((getRobotPose().getY()-poseOfGoal.getY())/(getRobotPose().getX()-poseOfGoal.getX()));
         if(DriverStation.getAlliance().get() == Alliance.Red) {
             angleToGoal += Math.PI;
         }
@@ -199,6 +197,11 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
         // return poseOfGoal.minus(getRobotPose()).getTranslation().getAngle();
         return new Rotation2d(angleToGoal);
         //return new Rotation2d(Math.PI);
+        }    
+        return new Rotation2d();
+
+
+        
     }
 
     public double getDistanceToGoal() {
