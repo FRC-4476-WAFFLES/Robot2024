@@ -32,7 +32,6 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -66,18 +65,13 @@ public class RobotContainer {
   public static final DriveSubsystem driveSubsystem = TunerConstants.DriveTrain;
 
   //The Robots Commands
-  private final DriveAndPointAtTarget driveAndAimAtGoal = new DriveAndPointAtTarget(() -> leftJoystick.getY() * DriveConstants.maxSpeed, () -> leftJoystick.getX() * DriveConstants.maxSpeed, driveSubsystem::getAngleToGoal);
-  private final DriveAndPointAtTarget driveAndAimAtGoalAuto = new DriveAndPointAtTarget(() -> leftJoystick.getY() * DriveConstants.maxSpeed, () -> leftJoystick.getX() * DriveConstants.maxSpeed, driveSubsystem::getAngleToGoal);
   private final ActivateLightColour updateLights = new ActivateLightColour();
   private final ElevatorUp elevatorUp  = null; //= new ElevatorUp();
   private final ElevatorDown elevatorDown  = null; //= new ElevatorDown();
   private final IntakeIn intakeIn = new IntakeIn();
-  private final IntakeIn intakeInAuto = new IntakeIn();
   private final IntakeOut intakeOut = new IntakeOut();
   private final ScoreNote scoreNote  = new ScoreNote();
   private final SpinUp spinUp  = new SpinUp();
-  private final ScoreNote scoreNoteAuto  = new ScoreNote();
-  private final SpinUp spinUpAuto  = new SpinUp();
   private final SuperstructureHome superstructureHome = new SuperstructureHome();
   private final SuperstructureAmp superstructureAmp = new SuperstructureAmp();
   private final SuperstructureCloseSpeaker superstructureCloseSpeaker  = new SuperstructureCloseSpeaker();
@@ -87,7 +81,6 @@ public class RobotContainer {
   private final ResetGyro resetGyro = new ResetGyro();
   private final SuperstructureClimb superstructureClimb = new SuperstructureClimb();
   private final SuperstructureStash superstructureStash = new SuperstructureStash();
-
   
 
 
@@ -95,7 +88,8 @@ public class RobotContainer {
   
  
 
-  
+  private final DriveAndPointAtTarget driveAndAimAtGoal = new DriveAndPointAtTarget(() -> leftJoystick.getY() * DriveConstants.maxSpeed, () -> leftJoystick.getX() * DriveConstants.maxSpeed, driveSubsystem::getAngleToGoal);
+
   private final SendableChooser<Command> autoChooser;
   private static RobotContainer containerRobot;
 
@@ -183,12 +177,11 @@ public class RobotContainer {
   private void registerNamedCommands() {
     // Register Named Commands
     // Add other commands to be able to run them in autos
-    // NamedCommands.registerCommand("aimAtGoal", driveAndAimAtGoal);
-    // NamedCommands.registerCommand("spinUp", spinUp);
-    // NamedCommands.registerCommand("scoreNote", scoreNote);
-    NamedCommands.registerCommand("intakeIn", intakeInAuto);
+    NamedCommands.registerCommand("aimAtGoal", driveAndAimAtGoal);
+    NamedCommands.registerCommand("spinUp", spinUp);
+    NamedCommands.registerCommand("scoreNote", scoreNote);
+    NamedCommands.registerCommand("intakeIn", intakeIn);
     NamedCommands.registerCommand("intakeOff", new InstantCommand(() -> intakeIn.cancel()));
-    NamedCommands.registerCommand("completeShot", Commands.deadline(scoreNoteAuto, spinUpAuto, driveAndAimAtGoalAuto));
   
 
   }
@@ -203,14 +196,12 @@ public class RobotContainer {
   }
 
   public static void setAllianceColor(){
-    var alliance = DriverStation.getAlliance();
-    if (alliance.isPresent()) {
-      if (alliance.get() == Alliance.Blue){
-        driveSubsystem.setDefaultCommand(containerRobot.driveTeleopBlue);
-      }
-      else if (alliance.get() == Alliance.Red){
-        driveSubsystem.setDefaultCommand(containerRobot.driveTeleopRed);
-      }
+    Alliance alliance = DriverStation.getAlliance().get();
+    if (alliance == Alliance.Blue){
+      driveSubsystem.setDefaultCommand(containerRobot.driveTeleopBlue);
+    }
+    else if (alliance == Alliance.Red){
+      driveSubsystem.setDefaultCommand(containerRobot.driveTeleopRed);
     }
   }
 }
