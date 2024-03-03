@@ -28,7 +28,7 @@ public class FeederSubsystem extends SubsystemBase {
   private double feederTargetPosition = 0;
 
   private final double FEEDER_DEAD_ZONE = 2;
-  private final double POSITION_DEAD_ZONE = 0.2;
+  private final double POSITION_DEAD_ZONE = 0.5;
 
   private final CurrentLimitsConfigs currentLimitsConfig;
   /** Creates a new FeederSubsystem. */
@@ -137,6 +137,7 @@ public class FeederSubsystem extends SubsystemBase {
   }
   
   public boolean isFeederAtTargetPosition() {
+    SmartDashboard.putNumber("AnglerPosError", Math.abs(feeder.getPosition().getValueAsDouble() - feederTargetPosition));
     return Math.abs(feeder.getPosition().getValueAsDouble() - feederTargetPosition) < POSITION_DEAD_ZONE;
   }
 
