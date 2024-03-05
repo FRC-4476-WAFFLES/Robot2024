@@ -74,6 +74,7 @@ public class RobotContainer {
   private final ElevatorUp elevatorUp  = null; //= new ElevatorUp();
   private final ElevatorDown elevatorDown  = null; //= new ElevatorDown();
   private final IntakeIn intakeIn = new IntakeIn();
+  private final IntakeIn intakeInAuto = new IntakeIn();
   private final IntakeOut intakeOut = new IntakeOut();
   private final ScoreNote scoreNote  = new ScoreNote();
   private final SpinUp spinUp  = new SpinUp();
