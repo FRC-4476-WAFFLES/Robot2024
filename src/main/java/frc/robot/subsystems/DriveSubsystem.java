@@ -97,6 +97,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
                 // Boolean supplier that controls when the path will be mirrored for the red alliance
                 // This will flip the path being followed to the red side of the field.
                 // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+  
                 var alliance = DriverStation.getAlliance();
                 if (alliance.isPresent()) {
                     return alliance.get() == DriverStation.Alliance.Red;
@@ -182,21 +183,22 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
     // }
 
     public boolean isShooterTowardGoal(){
-        return Math.abs(getRobotPose().getRotation().getDegrees()) < 90;
+        return Math.abs(getRobotPose().getRotation().getDegrees()) > 90;
     }
 
     public Rotation2d getAngleToGoal() {
         Pose2d poseOfGoal;
 
         // Set goal pose based on alliance
-        var alliance = DriverStation.getAlliance();
-        if (alliance.isPresent()) {
-            if(alliance.get() == DriverStation.Alliance.Red) {
-                poseOfGoal = Constants.DriveConstants.redGoalPose;
-            } else {
-                poseOfGoal = Constants.DriveConstants.blueGoalPose;
-            }
-            double angleToGoal = Math.atan((getRobotPose().getY()-poseOfGoal.getY())/(getRobotPose().getX()-poseOfGoal.getX()));
+        if(DriverStation.getAlliance().get() == Alliance.Red) {
+            poseOfGoal = Constants.DriveConstants.redGoalPose;
+        } else {
+            poseOfGoal = Constants.DriveConstants.blueGoalPose;
+           
+        }
+
+
+        double angleToGoal = Math.atan((getRobotPose().getY()-poseOfGoal.getY())/(getRobotPose().getX()-poseOfGoal.getX()));
         if(DriverStation.getAlliance().get() == Alliance.Red) {
             angleToGoal += Math.PI;
         }
@@ -204,11 +206,6 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
         // return poseOfGoal.minus(getRobotPose()).getTranslation().getAngle();
         return new Rotation2d(angleToGoal);
         //return new Rotation2d(Math.PI);
-        }    
-        return new Rotation2d();
-
-
-        
     }
 
     public double getDistanceToGoal() {

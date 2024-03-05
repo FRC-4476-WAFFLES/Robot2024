@@ -94,7 +94,7 @@ public class FeederSubsystem extends SubsystemBase {
       
       if (Math.abs(feeder.getVelocity().getValueAsDouble()) < FEEDER_DEAD_ZONE) {
         feeder.setPosition(0);
-        setFeederTargetPosition(-0.7);
+        setFeederTargetPosition(-1);
       }
     } else {
       final PositionVoltage feederPositionRequest = new PositionVoltage(0).withSlot(1);

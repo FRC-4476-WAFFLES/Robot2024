@@ -12,9 +12,28 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "deadline",
           "data": {
-            "name": "completeShot"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "scoreNote"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "spinUp"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "aimAtGoal"
+                }
+              }
+            ]
           }
         },
         {
@@ -37,15 +56,28 @@
           }
         },
         {
-          "type": "wait",
+          "type": "deadline",
           "data": {
-            "waitTime": 0.4
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "completeShot"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "scoreNote"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "spinUp"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "aimAtGoal"
+                }
+              }
+            ]
           }
         },
         {
@@ -68,9 +100,28 @@
           }
         },
         {
-          "type": "named",
+          "type": "deadline",
           "data": {
-            "name": "completeShot"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "scoreNote"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "aimAtGoal"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "spinUp"
+                }
+              }
+            ]
           }
         },
         {
@@ -93,15 +144,28 @@
           }
         },
         {
-          "type": "wait",
+          "type": "deadline",
           "data": {
-            "waitTime": 0.4
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "completeShot"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "scoreNote"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "spinUp"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "aimAtGoal"
+                }
+              }
+            ]
           }
         }
       ]
