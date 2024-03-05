@@ -165,7 +165,6 @@ public class RobotContainer {
     operatorController.a().whileTrue(superstructureClimb);
     operatorController.rightStick().whileTrue(superstructureStash);
     rightJoystick.button(1).whileTrue(driveAndAimAtGoal.alongWith(spinUp));
-    // rightJoystick.button(1).whileTrue(spinUp);
     // operatorController.rightTrigger().whileTrue(elevatorUp);
     // operatorController.leftTrigger().whileTrue(elevatorDown);
 

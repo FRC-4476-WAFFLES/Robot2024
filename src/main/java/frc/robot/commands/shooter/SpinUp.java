@@ -16,6 +16,14 @@ import static frc.robot.RobotContainer.*;
 
 public class SpinUp extends Command {
   /** Creates a new SpinUp. */
+
+  enum ShooterMode {
+    TALL(45),
+    MIDDLE(27),
+    SHORT(10)
+  }
+
+  currentShooterMode = ShooterMode.MIDDLE;
   public SpinUp() {
     addRequirements(shooterSubsystem, anglerSubsystem, elevatorSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
@@ -36,7 +44,7 @@ public class SpinUp extends Command {
 
     System.out.println("running spinup");
 
-    elevatorSubsystem.setElevatorTargetPosition(27);
+    elevatorSubsystem.setElevatorTargetPosition(shooterMode);
     anglerSubsystem.setAnglerTargetPosition(angle);
     if (feederSubsystem.isFeederAtTargetPosition()){
       shooterSubsystem.setShooterTargetSpeed(speed);
@@ -128,5 +136,18 @@ final InterpolatingDoubleTreeMap feederSpeedMap = new InterpolatingDoubleTreeMap
 
   }
 
-  
+  private void setTallMode() {
+    // Set the shooter to tall mode
+    currentShooterMode = ShooterMode.TALL;
+  }
+
+  private void setMiddleMode() {
+    // Set the shooter to middle mode
+    currentShooterMode = ShooterMode.MIDDLE;
+  }
+
+  private void setShortMode() {
+    // Set the shooter to short mode
+    currentShooterMode = ShooterMode.SHORT;
+  }
 }
