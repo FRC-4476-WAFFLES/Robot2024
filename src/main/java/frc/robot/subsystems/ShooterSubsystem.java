@@ -131,6 +131,7 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("IR Proximity", shooterIR.getVoltage()); 
   
     SmartDashboard.putNumber("Shooter Speed", shooter1.getVelocity().getValueAsDouble());
+    SmartDashboard.putNumber("Shooter Target Speed", shooterTargetSpeed);
    
   }
 

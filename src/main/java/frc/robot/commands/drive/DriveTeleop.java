@@ -46,7 +46,7 @@ public class DriveTeleop extends Command {
   public void execute() {
     driveSubsystem.setControl(
       new SwerveRequest.FieldCentric()
-        .withDeadband(DriveConstants.maxSpeed * 0.03)
+        .withDeadband(DriveConstants.maxSpeed * 0.05)
         .withRotationalDeadband(DriveConstants.maxAngularSpeed * 0.01)
         .withDriveRequestType(DriveRequestType.Velocity)
         .withSteerRequestType(SteerRequestType.MotionMagic)
