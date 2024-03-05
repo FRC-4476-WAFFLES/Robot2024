@@ -5,35 +5,35 @@
       "x": 1.3949707899415797,
       "y": 3.3490197889486693
     },
-    "rotation": -179.81147277079174
+    "rotation": 0.0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "completeShot"
+          }
+        },
+        {
           "type": "deadline",
           "data": {
             "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "intakeIn"
-                }
-              },
               {
                 "type": "path",
                 "data": {
                   "pathName": "Right Start to Score Middle Rightmost"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "intakeIn"
+                }
               }
             ]
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.4
           }
         },
         {
@@ -47,15 +47,15 @@
           "data": {
             "commands": [
               {
-                "type": "named",
-                "data": {
-                  "name": "intakeIn"
-                }
-              },
-              {
                 "type": "path",
                 "data": {
                   "pathName": "Right Shooting to middle second rightmost"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "intakeIn"
                 }
               }
             ]

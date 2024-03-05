@@ -187,6 +187,7 @@ public class RobotContainer {
     // NamedCommands.registerCommand("spinUp", spinUp);
     // NamedCommands.registerCommand("scoreNote", scoreNote);
     NamedCommands.registerCommand("intakeIn", intakeInAuto);
+    NamedCommands.registerCommand("intakeInDeadline", intakeInAuto.withTimeout(1));
     NamedCommands.registerCommand("intakeOff", new InstantCommand(() -> intakeIn.cancel()));
     NamedCommands.registerCommand("completeShot", Commands.deadline(scoreNoteAuto, spinUpAuto, driveAndAimAtGoalAuto));
   

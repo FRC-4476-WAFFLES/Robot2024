@@ -22,24 +22,24 @@
           "data": {
             "commands": [
               {
-                "type": "named",
-                "data": {
-                  "name": "intakeIn"
-                }
-              },
-              {
                 "type": "path",
                 "data": {
                   "pathName": "Drive Middle Speaker to Middle Note"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "intakeIn"
                 }
               }
             ]
           }
         },
         {
-          "type": "wait",
+          "type": "named",
           "data": {
-            "waitTime": 0.4
+            "name": "intakeInDeadline"
           }
         },
         {
@@ -53,24 +53,55 @@
           "data": {
             "commands": [
               {
-                "type": "named",
-                "data": {
-                  "name": "intakeIn"
-                }
-              },
-              {
                 "type": "path",
                 "data": {
                   "pathName": "Middle Close to Right Close"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "intakeIn"
                 }
               }
             ]
           }
         },
         {
-          "type": "wait",
+          "type": "named",
           "data": {
-            "waitTime": 0.4
+            "name": "intakeInDeadline"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "completeShot"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Close Right to Close Left"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "intakeIn"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "intakeInDeadline"
           }
         },
         {

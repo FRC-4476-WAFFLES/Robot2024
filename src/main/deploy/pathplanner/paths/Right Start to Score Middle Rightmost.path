@@ -46,48 +46,7 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "Intake On",
-      "waypointRelativePos": 0.2,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "intakeIn"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "Ready to Shoot",
-      "waypointRelativePos": 2.0,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "intakeOff"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "spinUp"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.5,
     "maxAcceleration": 4.0,
@@ -96,13 +55,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 143.9726266143838,
+    "rotation": -37.99307528880709,
     "rotateFast": false
   },
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": 180.0,
+    "rotation": -0.8680514497455234,
     "velocity": 0
   },
   "useDefaultConstraints": false

@@ -8,56 +8,56 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.341374120186556,
-        "y": 2.521261129373887
+        "x": 4.007019650402937,
+        "y": 2.4161451959267564
       },
       "isLocked": false,
       "linkedName": "Shooting Right Far"
     },
     {
       "anchor": {
-        "x": 5.8260914591793,
-        "y": 1.8600068080715177
+        "x": 5.58357771260997,
+        "y": 1.9217216616251425
       },
       "prevControl": {
-        "x": 5.047354124700574,
-        "y": 1.839642061782205
+        "x": 4.83727803819244,
+        "y": 1.9776941372064571
       },
       "nextControl": {
-        "x": 6.604828793658026,
-        "y": 1.8803715543608306
+        "x": 6.743307763206816,
+        "y": 1.8347419078303793
       },
       "isLocked": false,
       "linkedName": "Dodge pole"
     },
     {
       "anchor": {
-        "x": 8.214284064931766,
-        "y": 2.4348026877871947
-      },
-      "prevControl": {
-        "x": 7.626573071327961,
+        "x": 8.120996605629575,
         "y": 2.453460179647632
       },
+      "prevControl": {
+        "x": 8.0843625974203,
+        "y": 2.6122075485544896
+      },
       "nextControl": {
-        "x": 9.314877329408656,
-        "y": 2.399863219073644
+        "x": 8.148982843420232,
+        "y": 2.3321864825547842
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.8260914591793,
-        "y": 1.8600068080715177
+        "x": 5.58357771260997,
+        "y": 1.9217216616251425
       },
       "prevControl": {
-        "x": 7.291012555121967,
-        "y": 1.8082330752207827
+        "x": 7.206779504468099,
+        "y": 1.2873669383702409
       },
       "nextControl": {
-        "x": 4.361170363236632,
-        "y": 1.9117805409222528
+        "x": 3.245093000799051,
+        "y": 2.835612238654698
       },
       "isLocked": false,
       "linkedName": "Dodge pole"
@@ -68,8 +68,8 @@
         "y": 3.13695836076835
       },
       "prevControl": {
-        "x": 3.949566791117362,
-        "y": 2.418644924141478
+        "x": 3.2793774678458445,
+        "y": 2.938554968019027
       },
       "nextControl": null,
       "isLocked": false,
@@ -79,58 +79,17 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 1.4,
-      "rotationDegrees": 12.518488885281585,
+      "rotationDegrees": 20.120659891995153,
       "rotateFast": false
     }
   ],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "New Event Marker",
-      "waypointRelativePos": 0,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "intakeIn"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "New Event Marker",
-      "waypointRelativePos": 4.0,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "intakeOff"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "spinUp"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.5,
     "maxAcceleration": 3.0,
-    "maxAngularVelocity": 500.0,
-    "maxAngularAcceleration": 600.0
+    "maxAngularVelocity": 9000.0,
+    "maxAngularAcceleration": 9000.0
   },
   "goalEndState": {
     "velocity": 0,
