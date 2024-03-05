@@ -176,7 +176,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
     // }
 
     public boolean isShooterTowardGoal(){
-        return Math.abs(getRobotPose().getRotation().getDegrees()) < 90;
+        return Math.abs(getRobotPose().getRotation().getDegrees()) > 90;
     }
 
     public Rotation2d getAngleToGoal() {
