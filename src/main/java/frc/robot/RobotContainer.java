@@ -10,6 +10,7 @@ import frc.robot.generated.TunerConstants;
 // Subsystems
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.AnglerSubsystem;
+import frc.robot.subsystems.DiagnosticLightSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.FeederSubsystem;
@@ -22,7 +23,10 @@ import frc.robot.commands.intake.*;
 import frc.robot.commands.shooter.*;
 import frc.robot.commands.superstructure.*;
 import frc.robot.commands.ActivateLightColour;
+import frc.robot.commands.SetDiagnosticLEDS;
 import frc.robot.commands.drive.*;
+
+import java.util.Set;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -64,6 +68,7 @@ public class RobotContainer {
   public static final AnglerSubsystem anglerSubsystem  = new AnglerSubsystem();
   public static final FeederSubsystem feederSubsystem  = new FeederSubsystem();
   public static final DriveSubsystem driveSubsystem = TunerConstants.DriveTrain;
+  public static final DiagnosticLightSubsystem diagnosticLightSubsystem = new DiagnosticLightSubsystem();
 
   //The Robots Commands
   private final DriveAndPointAtTarget driveAndAimAtGoal = new DriveAndPointAtTarget(() -> leftJoystick.getY() * DriveConstants.maxSpeed, () -> leftJoystick.getX() * DriveConstants.maxSpeed, driveSubsystem::getAngleToGoal);
@@ -87,6 +92,7 @@ public class RobotContainer {
   private final ResetGyro resetGyro = new ResetGyro();
   private final SuperstructureClimb superstructureClimb = new SuperstructureClimb();
   private final SuperstructureStash superstructureStash = new SuperstructureStash();
+  private final SetDiagnosticLEDS setDiagnosticLEDS = new SetDiagnosticLEDS();
 
   
 
@@ -127,6 +133,7 @@ public class RobotContainer {
     setAllianceColor();
     lightSubsystem.setDefaultCommand(updateLights);
     elevatorSubsystem.setDefaultCommand(superstructureHome);
+    diagnosticLightSubsystem.setDefaultCommand(setDiagnosticLEDS);
 
 
     driveSubsystem.registerTelemetry(logger::telemeterize);

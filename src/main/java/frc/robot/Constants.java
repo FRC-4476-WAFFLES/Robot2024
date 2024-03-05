@@ -48,7 +48,7 @@ public final class Constants {
   public static final int elevator2 = 15; // Kraken X60
 
   // Sensors
-  public static final int shooterIR = 3; // canandcolour
+  
   public static final int frontLeftAbsoluteEncoder = 23; // CANcoder
   public static final int frontRightAbsoluteEncoder = 24; // CANcoder
   public static final int backLeftAbsoluteEncoder = 25; // CANcoder
@@ -62,10 +62,12 @@ public final class Constants {
 
   // PWM outputs
   public static final int lightsBlinkin = 4; // REV Blinkin
+  public static final int addressableLEDS = 5; //Light Strip
 
   // Digital input
 
   public static final int elevatorZero = 1; // Hall Effect
+  public static final int shooterIR = 3; // Generic IR Sensor
   public static final int anglerAbsoluteEncoder = 4; // REV Through Bore
   public static final int coastModeSwitch = 5; // Limit Switch
 
