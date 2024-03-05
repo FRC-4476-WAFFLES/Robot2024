@@ -44,6 +44,16 @@ public class ScoreNote extends Command {
     else{
       hasTimerStarted = false;
     }
+
+    if(CommandScheduler.SuperstructureAmp.isRunning()){
+      // Reseed the robots position if scoring in amp
+      if (DriverStation.getAlliance().get() == Alliance.Red){
+        driveSubsystem.seedFieldRelative(new Pose2d(15.0792, 5.53, new Rotation2d(Math.PI/2))); //15.0792, 5.53
+      }
+      else{
+        driveSubsystem.seedFieldRelative(new Pose2d(1.4, 5.53, new Rotation2d(-Math.PI/2))); //15.0792, 5.53
+      }
+    }
     // else if(!driveSubsystem.isShooterTowardGoal()){
     //   feederSubsystem.setFeederTargetSpeed(-100);
     // }

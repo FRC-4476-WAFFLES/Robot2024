@@ -26,7 +26,6 @@ public class BasicFieldReset extends Command {
   @Override
   public void execute() {
     // Reset the robot's position to the starting position in front of red speaker against the subwoofer
-    System.err.println("Basic Reset");
     if (DriverStation.getAlliance().get() == Alliance.Red){
       driveSubsystem.seedFieldRelative(new Pose2d(15.0792, 5.53, new Rotation2d(Math.PI))); //15.0792, 5.53
     }

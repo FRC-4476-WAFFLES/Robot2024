@@ -25,7 +25,7 @@ public class SuperstructureStash extends Command {
     elevatorSubsystem.setElevatorTargetPosition(13);
     anglerSubsystem.setAnglerTargetPosition(0);
     if (driveSubsystem.isShooterTowardGoal()){
-      shooterSubsystem.setShooterTargetSpeed(40);
+      shooterSubsystem.setShooterTargetSpeed(50);
     }
     else{
       shooterSubsystem.setShooterTargetSpeed(0);
