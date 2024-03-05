@@ -125,6 +125,7 @@ public class ElevatorSubsystem extends SubsystemBase {
             profileTimer.restart();
         } else if (!isEnabled) {
             profileTimer.stop();
+            previousEnabled = false;
         }
         previousEnabled = isEnabled;
     }
