@@ -18,6 +18,7 @@ import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
@@ -47,13 +48,17 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
     private double m_lastSimTime;
     private Vision vision = new Vision(Constants.VisionConstants.kCameraLeft, Constants.VisionConstants.kRobotToLeftCamera);
     private EstimatedRobotPose estimatedRobotPose;
-  
+    private Field2d debugVisionEstimationPose = new Field2d();
+
+   
 
     private final SwerveRequest.ApplyChassisSpeeds autoRequest = new SwerveRequest.ApplyChassisSpeeds()
         .withDriveRequestType(DriveRequestType.Velocity);
 
     private boolean autoSWM = false;
     private Rotation2d autoSWMHeading = new Rotation2d();
+
+    
 
     public DriveSubsystem(SwerveDrivetrainConstants driveTrainConstants, double OdometryUpdateFrequency, SwerveModuleConstants... modules) {
         super(driveTrainConstants, OdometryUpdateFrequency, modules);
@@ -224,15 +229,15 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
     }
 
     public void periodic() {
-    //   vision.getEstimatedGlobalPose().ifPresentOrElse(
-    //     pose -> {
-    //       this.estimatedRobotPose = pose;
-    //       SmartDashboard.putData("VisionEstimation", (Sendable) pose);
-    //     },
-    //     () -> {
-    //       this.estimatedRobotPose = null;
-    //     }
-    //   );
+        var visionEstimation = vision.getEstimatedGlobalPose();
+        visionEstimation.ifPresent(est -> {
+            var estPose = est.estimatedPose.toPose2d();
+            var estStdDevs = vision.getEstimationStdDevs(estPose);
+            //poseEstimator.addVisionMeasurement(est.estimatedPose.toPose2d(), est.timestampSeconds, estStdDevs);
+            debugVisionEstimationPose.setRobotPose(estPose);
+            SmartDashboard.putData("Vision field", debugVisionEstimationPose);
+          });
+ 
         
     }
 }
