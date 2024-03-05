@@ -18,12 +18,22 @@ public class SpinUp extends Command {
   /** Creates a new SpinUp. */
 
   enum ShooterMode {
-    TALL(45),
-    MIDDLE(27),
-    SHORT(10)
+    TALL(45.0),
+    MIDDLE(27.0),
+    SHORT(10.0);
+
+    private double height;
+
+    ShooterMode(double height) {
+      this.height = height;
+    }
+
+    public double getHeight() {
+      return height;
+    }
   }
 
-  currentShooterMode = ShooterMode.MIDDLE;
+  ShooterMode currentShooterMode = ShooterMode.MIDDLE;
   public SpinUp() {
     addRequirements(shooterSubsystem, anglerSubsystem, elevatorSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
@@ -44,7 +54,7 @@ public class SpinUp extends Command {
 
     System.out.println("running spinup");
 
-    elevatorSubsystem.setElevatorTargetPosition(shooterMode);
+    elevatorSubsystem.setElevatorTargetPosition(currentShooterMode.getHeight());
     anglerSubsystem.setAnglerTargetPosition(angle);
     if (feederSubsystem.isFeederAtTargetPosition()){
       shooterSubsystem.setShooterTargetSpeed(speed);
@@ -136,17 +146,17 @@ final InterpolatingDoubleTreeMap feederSpeedMap = new InterpolatingDoubleTreeMap
 
   }
 
-  private void setTallMode() {
+  public void setTallMode() {
     // Set the shooter to tall mode
     currentShooterMode = ShooterMode.TALL;
   }
 
-  private void setMiddleMode() {
+  public void setMiddleMode() {
     // Set the shooter to middle mode
     currentShooterMode = ShooterMode.MIDDLE;
   }
 
-  private void setShortMode() {
+  public void setShortMode() {
     // Set the shooter to short mode
     currentShooterMode = ShooterMode.SHORT;
   }

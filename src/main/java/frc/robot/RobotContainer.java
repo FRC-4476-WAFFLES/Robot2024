@@ -158,6 +158,7 @@ public class RobotContainer {
 
     operatorController.povLeft().whileTrue(intakeIn);
     operatorController.povRight().whileTrue(intakeOut);
+    //operatorController.povUp().whileTrue(spinUp.setTallMode()));
     operatorController.rightBumper().whileTrue(scoreNote);
     operatorController.x().whileTrue(superstructureAmp);
     operatorController.b().whileTrue(superstructureCloseSpeaker);
