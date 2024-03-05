@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import org.photonvision.PhotonPoseEstimator.PoseStrategy;
+
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -15,6 +17,8 @@ import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
 import frc.robot.generated.TunerConstants;
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -106,19 +110,21 @@ public final class Constants {
   }
 
   public static class VisionConstants{
+
+    public static final AprilTagFieldLayout APRIL_TAG_FIELD_LAYOUT =
+            AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
+    public static final PoseStrategy POSE_STRATEGY = PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR;
+
     public static final String kCameraLeft = "LL3";
-      // Cam mounted facing forward, half a meter forward of center, half a meter up
-      // from center.
+    public static final String kCameraRight = "LL2";
+
       public static final Transform3d kRobotToLeftCamera = new Transform3d(
               new Translation3d(0.2667, -0.336, 0.196),
               new Rotation3d(Units.degreesToRadians(0), Units.degreesToRadians(58.64),
                       Units.degreesToRadians(180)));
-
+      public static final int POSE_ESTIMATION_PIPELINE = 0; // PE pipeline is 0
       // Back camera mounted 11.0 inches behind centre, 8.5 left of centre, 8.625
       // inches up from centre, 24 degrees for horizontal
-
-      // this camera is on both robots. So we need to change the position based on
-      // which robot.
 
       public static final Matrix<N3, N1> kSingleTagStdDevs = VecBuilder.fill(4, 4, 1000);
       public static final Matrix<N3, N1> kMultiTagStdDevs = VecBuilder.fill(0.5, 0.5, 1);
