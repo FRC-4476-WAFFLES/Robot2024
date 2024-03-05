@@ -4,9 +4,17 @@
 
 package frc.robot.commands.shooter;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.commands.superstructure.SuperstructureAmp;
+
 import static frc.robot.RobotContainer.*;
 
 public class ScoreNote extends Command {
@@ -41,21 +49,11 @@ public class ScoreNote extends Command {
       }
       
     }
-    else{
-      hasTimerStarted = false;
-    }
-
-    if(CommandScheduler.SuperstructureAmp.isRunning()){
-      // Reseed the robots position if scoring in amp
-      if (DriverStation.getAlliance().get() == Alliance.Red){
-        driveSubsystem.seedFieldRelative(new Pose2d(15.0792, 5.53, new Rotation2d(Math.PI/2))); //15.0792, 5.53
-      }
-      else{
-        driveSubsystem.seedFieldRelative(new Pose2d(1.4, 5.53, new Rotation2d(-Math.PI/2))); //15.0792, 5.53
-      }
-    }
     else if(!driveSubsystem.isShooterTowardGoal()){
       feederSubsystem.setFeederTargetSpeed(-100);
+    }
+    else{
+      hasTimerStarted = false;
     }
   }
 

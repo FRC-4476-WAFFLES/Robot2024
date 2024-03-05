@@ -141,4 +141,7 @@ public class FeederSubsystem extends SubsystemBase {
     return Math.abs(feeder.getPosition().getValueAsDouble() - feederTargetPosition) < POSITION_DEAD_ZONE;
   }
 
+  public boolean isFeederRunning(){
+    return feederTargetSpeed != 0;
+  }
 }

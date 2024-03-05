@@ -4,6 +4,10 @@
 
 package frc.robot.commands.superstructure;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import static frc.robot.RobotContainer.*;
 
@@ -26,6 +30,16 @@ public class SuperstructureAmp extends Command {
     shooterSubsystem.setShooterTargetSpeed(10);
     
     anglerSubsystem.setAnglerTargetPosition(-29);
+
+     if(feederSubsystem.isFeederRunning()){
+      // Reseed the robots position if scoring in amp
+      if (DriverStation.getAlliance().get() == Alliance.Red){
+        driveSubsystem.seedFieldRelative(new Pose2d(15.0792, 5.53, new Rotation2d(Math.PI/2))); //15.0792, 5.53
+      }
+      else{
+        driveSubsystem.seedFieldRelative(new Pose2d(1.4, 5.53, new Rotation2d(-Math.PI/2))); //15.0792, 5.53
+      }
+    }
     
     
   }
