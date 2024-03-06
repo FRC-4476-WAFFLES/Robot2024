@@ -4,7 +4,6 @@
 
 package frc.robot.commands.superstructure;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import static frc.robot.RobotContainer.*;
 

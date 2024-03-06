@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -154,7 +153,7 @@ public class ElevatorSubsystem extends SubsystemBase {
  * @param position in rotations
  */
   public void setElevatorTargetPosition(double position){
-    //TODO convert targets units to inches for easier tuning
+  
    
     this.elevatorTargetPosition = position;
     if(this.elevatorTargetPosition != this.previousTargetPosition){

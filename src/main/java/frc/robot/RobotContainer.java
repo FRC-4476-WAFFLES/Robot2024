@@ -24,7 +24,6 @@ import frc.robot.commands.superstructure.*;
 import frc.robot.commands.ActivateLightColour;
 import frc.robot.commands.drive.*;
 
-import java.util.Set;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -36,7 +35,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
-import edu.wpi.first.wpilibj2.command.WrapperCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -82,7 +80,6 @@ public class RobotContainer {
   private final SuperstructureHome superstructureHome = new SuperstructureHome();
   private final SuperstructureAmp superstructureAmp = new SuperstructureAmp();
   private final SuperstructureCloseSpeaker superstructureCloseSpeaker  = new SuperstructureCloseSpeaker();
-  private final SuperstructureIntake superstructureIntake  = new SuperstructureIntake();
   private final SuperstructureTestShot superstructureTestShot = new SuperstructureTestShot();
   private final BasicFieldReset basicFieldReset = new BasicFieldReset();
   private final ResetGyro resetGyro = new ResetGyro();

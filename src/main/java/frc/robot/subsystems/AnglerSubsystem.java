@@ -7,7 +7,6 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -23,7 +22,6 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import static frc.robot.RobotContainer.*;
 
 import frc.robot.Constants;
 
@@ -32,7 +30,6 @@ public class AnglerSubsystem extends SubsystemBase {
     private static final double ANGLER_DEAD_ZONE = 1;
 
     private TalonFX angler;
-    private DutyCycleEncoder anglerAbsoluteEncoder;
     private CurrentLimitsConfigs currentLimitsConfig;
     
 
@@ -56,7 +53,7 @@ public class AnglerSubsystem extends SubsystemBase {
 
     private void initializeSubsystem() {
         angler = new TalonFX(Constants.angler);
-        anglerAbsoluteEncoder = new DutyCycleEncoder(Constants.anglerAbsoluteEncoder);
+
 
         angler.setInverted(false);
      
@@ -187,10 +184,7 @@ public class AnglerSubsystem extends SubsystemBase {
 
     public double getAnglerTopLimit(double elevatorPosition) {
         final InterpolatingDoubleTreeMap anglerTopLimitMap = new InterpolatingDoubleTreeMap();
-        // Input is elevator position, output is highest possible angler position
-
-        //TODO TUNE
-        
+        // Input is elevator position, output is highest possible angler position        
 
         anglerTopLimitMap.put(0.0, 0.0);
         anglerTopLimitMap.put(10.0, 0.0);
@@ -209,8 +203,6 @@ public class AnglerSubsystem extends SubsystemBase {
     public double getAnglerBottomLimit(double elevatorPosition) {
         final InterpolatingDoubleTreeMap anglerBottomLimitMap = new InterpolatingDoubleTreeMap();
         // Input is elevator position, output is lowest possible angler position
-
-        //TODO TUNE
 
         anglerBottomLimitMap.put(0.0, 55.5);
         anglerBottomLimitMap.put(10.0, 68.5);
