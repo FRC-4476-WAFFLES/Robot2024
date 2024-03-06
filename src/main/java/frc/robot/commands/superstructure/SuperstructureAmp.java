@@ -34,10 +34,10 @@ public class SuperstructureAmp extends Command {
      if(feederSubsystem.isFeederRunning()){
       // Reseed the robots position if scoring in amp
       if (DriverStation.getAlliance().get() == Alliance.Red){
-        driveSubsystem.seedFieldRelative(new Pose2d(15.0792, 5.53, new Rotation2d(Math.PI/2))); //15.0792, 5.53
+        driveSubsystem.seedFieldRelative(new Pose2d(16.4592-1.82, 7.62, driveSubsystem.getRobotPose().getRotation())); //15.0792, 5.53
       }
       else{
-        driveSubsystem.seedFieldRelative(new Pose2d(1.4, 5.53, new Rotation2d(-Math.PI/2))); //15.0792, 5.53
+        driveSubsystem.seedFieldRelative(new Pose2d(1.82, 7.62, driveSubsystem.getRobotPose().getRotation())); //15.0792, 5.53
       }
     }
     
