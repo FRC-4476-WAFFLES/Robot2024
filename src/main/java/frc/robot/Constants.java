@@ -46,6 +46,7 @@ public final class Constants {
   public static final int angler = 13; //Falcon 500
   public static final int elevator1 = 14; // Kraken X60
   public static final int elevator2 = 15; // Kraken X60
+  public static final int Intake2 = 16; // Falcon 500
 
   // Sensors
   
