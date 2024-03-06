@@ -10,7 +10,6 @@ import frc.robot.generated.TunerConstants;
 // Subsystems
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.AnglerSubsystem;
-import frc.robot.subsystems.DiagnosticLightSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.FeederSubsystem;
@@ -23,7 +22,6 @@ import frc.robot.commands.intake.*;
 import frc.robot.commands.shooter.*;
 import frc.robot.commands.superstructure.*;
 import frc.robot.commands.ActivateLightColour;
-import frc.robot.commands.SetDiagnosticLEDS;
 import frc.robot.commands.drive.*;
 
 import java.util.Set;
@@ -37,6 +35,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.WrapperCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -67,7 +67,6 @@ public class RobotContainer {
   public static final AnglerSubsystem anglerSubsystem  = new AnglerSubsystem();
   public static final FeederSubsystem feederSubsystem  = new FeederSubsystem();
   public static final DriveSubsystem driveSubsystem = TunerConstants.DriveTrain;
-  public static final DiagnosticLightSubsystem diagnosticLightSubsystem = new DiagnosticLightSubsystem();
 
   //The Robots Commands
   private final ActivateLightColour updateLights = new ActivateLightColour();
@@ -77,7 +76,9 @@ public class RobotContainer {
   private final IntakeIn intakeInAuto = new IntakeIn();
   private final IntakeOut intakeOut = new IntakeOut();
   private final ScoreNote scoreNote  = new ScoreNote();
+  private final ScoreNote scoreNoteAuto  = new ScoreNote();
   private final SpinUp spinUp  = new SpinUp();
+  private final SpinUp spinUpAuto  = new SpinUp();
   private final SuperstructureHome superstructureHome = new SuperstructureHome();
   private final SuperstructureAmp superstructureAmp = new SuperstructureAmp();
   private final SuperstructureCloseSpeaker superstructureCloseSpeaker  = new SuperstructureCloseSpeaker();
@@ -87,7 +88,7 @@ public class RobotContainer {
   private final ResetGyro resetGyro = new ResetGyro();
   private final SuperstructureClimb superstructureClimb = new SuperstructureClimb();
   private final SuperstructureStash superstructureStash = new SuperstructureStash();
-  private final SetDiagnosticLEDS setDiagnosticLEDS = new SetDiagnosticLEDS();
+
 
   
 
@@ -97,6 +98,7 @@ public class RobotContainer {
  
 
   private final DriveAndPointAtTarget driveAndAimAtGoal = new DriveAndPointAtTarget(() -> leftJoystick.getY() * DriveConstants.maxSpeed, () -> leftJoystick.getX() * DriveConstants.maxSpeed, driveSubsystem::getAngleToGoal);
+  private final DriveAndPointAtTarget driveAndAimAtGoalAuto = new DriveAndPointAtTarget(() -> 0, () -> 0, driveSubsystem::getAngleToGoal);
 
   private final SendableChooser<Command> autoChooser;
   private static RobotContainer containerRobot;
@@ -129,7 +131,7 @@ public class RobotContainer {
     setAllianceColor();
     lightSubsystem.setDefaultCommand(updateLights);
     elevatorSubsystem.setDefaultCommand(superstructureHome);
-    diagnosticLightSubsystem.setDefaultCommand(setDiagnosticLEDS);
+    //diagnosticLightSubsystem.setDefaultCommand(setDiagnosticLEDS);
 
 
     driveSubsystem.registerTelemetry(logger::telemeterize);
@@ -186,9 +188,10 @@ public class RobotContainer {
   private void registerNamedCommands() {
     // Register Named Commands
     // Add other commands to be able to run them in autos
-    // NamedCommands.registerCommand("aimAtGoal", driveAndAimAtGoal);
-    // NamedCommands.registerCommand("spinUp", spinUp);
-    // NamedCommands.registerCommand("scoreNote", scoreNote);
+    // NamedCommands.registerCommand("aimAtGoal", driveAndAimAtGoalAuto);
+    // NamedCommands.registerCommand("spinUp", spinUpAuto);
+    // NamedCommands.registerCommand("scoreNote", scoreNoteAuto);
+    NamedCommands.registerCommand("completeShot", new ParallelDeadlineGroup(scoreNoteAuto, spinUpAuto, driveAndAimAtGoalAuto));
     NamedCommands.registerCommand("intakeIn", intakeInAuto);
     NamedCommands.registerCommand("intakeInDeadline", intakeInAuto.withTimeout(1));
     NamedCommands.registerCommand("intakeOff", new InstantCommand(() -> intakeIn.cancel()));

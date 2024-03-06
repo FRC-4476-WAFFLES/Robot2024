@@ -26,6 +26,7 @@ public class ActivateLightColour extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    System.err.println("Running normal lights");
 
     final double matchTimer = Timer.getMatchTime();
     

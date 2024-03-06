@@ -6,7 +6,7 @@ package frc.robot.commands.shooter;
 
 import edu.wpi.first.math.InterpolatingMatrixTreeMap;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
-import edu.wpi.first.math.interpolation.InterpolatingTreeMap;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N2;

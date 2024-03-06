@@ -11,8 +11,11 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import com.ctre.phoenix6.SignalLogger;
 
+import edu.wpi.first.wpilibj.AddressableLED;
+import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
+import static frc.robot.Constants.*;
 
 
 
@@ -26,6 +29,9 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+
+  AddressableLED m_led = new AddressableLED(Constants.addressableLEDS);
+  AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(14);
 
   Timer m_gcTimer = new Timer();
   
@@ -46,6 +52,19 @@ public class Robot extends TimedRobot {
 
     // CTRE Logger
     SignalLogger.stop();
+
+    m_led.setLength(m_ledBuffer.getLength());
+    
+    m_led.setData(m_ledBuffer);
+    
+    m_led.start();
+
+    for (var i = 0; i < m_ledBuffer.getLength(); i++) {
+      // Sets the specified LED to the RGB values for red
+      m_ledBuffer.setRGB(i, 0, 255, 0);
+   }
+   
+   m_led.setData(m_ledBuffer);
 
   }
 
@@ -74,7 +93,22 @@ public class Robot extends TimedRobot {
   public void disabledInit() {}
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+
+    
+    m_led.setLength(m_ledBuffer.getLength());
+    
+    m_led.setData(m_ledBuffer);
+    
+    m_led.start();
+
+    for (var i = 0; i < m_ledBuffer.getLength(); i++) {
+      // Sets the specified LED to the RGB values for red
+      m_ledBuffer.setRGB(i, 255, 0, 0);
+   }
+   
+   m_led.setData(m_ledBuffer);
+  }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
@@ -123,4 +157,39 @@ public class Robot extends TimedRobot {
   /** This function is called periodically whilst in simulation. */
   @Override
   public void simulationPeriodic() {}
+
+  public enum LightRGBColors{
+
+    RED(255, 0, 0),
+    GREEN(0, 255, 0),
+    BLUE(0, 0, 255),
+    YELLOW(255, 255, 0),
+    WHITE(255, 255, 255),
+    BLACK(0, 0, 0);
+
+    private int r;
+    private int g;
+    private int b;
+
+    LightRGBColors(int r, int g, int b){
+      this.r = r;
+      this.g = g;
+      this.b = b;
+    }
+
+    public int getR(){
+      return r;
+    }
+
+    public int getG(){
+      return g;
+    }
+
+    public int getB(){
+      return b;
+    }
+  }
+
+  
+
 }

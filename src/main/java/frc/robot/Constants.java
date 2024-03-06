@@ -61,8 +61,9 @@ public final class Constants {
   //public static final int intakeIR = 4; // Analog IR Sensor
 
   // PWM outputs
+  public static final int addressableLEDS = 3; //Light Strip
   public static final int lightsBlinkin = 4; // REV Blinkin
-  public static final int addressableLEDS = 5; //Light Strip
+ 
 
   // Digital input
 
@@ -112,9 +113,11 @@ public final class Constants {
       // Cam mounted facing forward, half a meter forward of center, half a meter up
       // from center.
       public static final Transform3d kRobotToLeftCamera = new Transform3d(
-              new Translation3d(0.2667, -0.336, 0.196),
-              new Rotation3d(Units.degreesToRadians(0), Units.degreesToRadians(58.64),
+              new Translation3d(-0.3, -0.25, 0.196),
+              new Rotation3d(Units.degreesToRadians(180), Units.degreesToRadians(58.64),
                       Units.degreesToRadians(180)));
+
+                      //.2667, -0.336
 
       // Back camera mounted 11.0 inches behind centre, 8.5 left of centre, 8.625
       // inches up from centre, 24 degrees for horizontal
