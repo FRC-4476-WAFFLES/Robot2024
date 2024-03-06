@@ -89,10 +89,11 @@ public class SpinUp extends Command {
    
     shooterSpeedMap.put(0.9, 40.0);
     shooterSpeedMap.put(1.8542, 60.0);
-    shooterSpeedMap.put(2.54, 60.0);
+    shooterSpeedMap.put(2.54, 65.0);
     shooterSpeedMap.put(3.0988, 70.0);
     shooterSpeedMap.put(3.556, 75.0);
     shooterSpeedMap.put(6.0, 100.0);
+    shooterSpeedMap.put(9.0, 100.0);
    
 
     return shooterSpeedMap.get(distance);
@@ -132,12 +133,14 @@ final InterpolatingDoubleTreeMap feederSpeedMap = new InterpolatingDoubleTreeMap
     final InterpolatingDoubleTreeMap shooterAngleMap = new InterpolatingDoubleTreeMap();
 
     shooterAngleMap.put(1.1977, 68.0); 
-    shooterAngleMap.put(1.999, 58.0); 
+    shooterAngleMap.put(1.5,53.0);
+    shooterAngleMap.put(1.999, 52.0); 
     shooterAngleMap.put(2.54, 48.0);
     shooterAngleMap.put(2.773, 47.0);
     shooterAngleMap.put(3.0988, 41.0);
     shooterAngleMap.put(3.556, 39.0);
     shooterAngleMap.put(3.8813, 37.0);
+    shooterAngleMap.put(4.1,36.0);
     shooterAngleMap.put(4.3688, 35.0);
     shooterAngleMap.put(4.5626, 32.0);
     shooterAngleMap.put(5.8711, 30.0);

@@ -206,12 +206,17 @@ public class RobotContainer {
   }
 
   public static void setAllianceColor(){
-    Alliance alliance = DriverStation.getAlliance().get();
-    if (alliance == Alliance.Blue){
-      driveSubsystem.setDefaultCommand(containerRobot.driveTeleopBlue);
-    }
-    else if (alliance == Alliance.Red){
-      driveSubsystem.setDefaultCommand(containerRobot.driveTeleopRed);
+    var alliance = DriverStation.getAlliance();
+    if (alliance.isPresent()) {
+      
+    
+      if (alliance.get() == DriverStation.Alliance.Blue){
+        driveSubsystem.setDefaultCommand(containerRobot.driveTeleopBlue);
+      }
+      else if (alliance.get() == DriverStation.Alliance.Red){
+        driveSubsystem.setDefaultCommand(containerRobot.driveTeleopRed);
+      }
+
     }
   }
 }

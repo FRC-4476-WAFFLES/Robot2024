@@ -71,7 +71,7 @@ public class FeederSubsystem extends SubsystemBase {
     feederSlot0Configs.kV = 0.115;
 
     Slot1Configs feederSlot1Configs = new Slot1Configs();
-    feederSlot1Configs.kP = 0.3;
+    feederSlot1Configs.kP = 0.5;
     feederSlot1Configs.kD = 0.00001;
     feederSlot1Configs.kV = 0.115;
 
@@ -94,7 +94,7 @@ public class FeederSubsystem extends SubsystemBase {
       
       if (Math.abs(feeder.getVelocity().getValueAsDouble()) < FEEDER_DEAD_ZONE) {
         feeder.setPosition(0);
-        setFeederTargetPosition(-1);
+        setFeederTargetPosition(-0.8);
       }
     } else {
       final PositionVoltage feederPositionRequest = new PositionVoltage(0).withSlot(1);

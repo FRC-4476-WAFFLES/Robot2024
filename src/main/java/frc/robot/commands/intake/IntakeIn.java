@@ -51,7 +51,7 @@ public class IntakeIn extends Command {
     // }
     elevatorSubsystem.isClimbing = false;
     elevatorSubsystem.setElevatorTargetPosition(25);
-    anglerSubsystem.setAnglerTargetPosition(86.7);
+    anglerSubsystem.setAnglerTargetPosition(88);
   
     intakeSubsystem.SetIntakeSpeed(1);
     feederSubsystem.setFeederTargetSpeed(100);
