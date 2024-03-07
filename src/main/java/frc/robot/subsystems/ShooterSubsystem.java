@@ -41,7 +41,7 @@ public class ShooterSubsystem extends SubsystemBase {
   
   private final double SHOOTER_DEAD_ZONE = 5;
 
-  private final double IR_RANGE = 1.1;
+  private final double IR_RANGE = 1.3;
 
   private final CurrentLimitsConfigs currentLimitsConfig;
 

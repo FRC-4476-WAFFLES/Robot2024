@@ -52,8 +52,6 @@ public class SpinUp extends Command {
     double speed = calculateSpeedOffDistanceShoot(distance);
     double angle = calculateAngleOffDistance(distance);
 
-    System.out.println("running spinup");
-
     elevatorSubsystem.setElevatorTargetPosition(currentShooterMode.getHeight());
     anglerSubsystem.setAnglerTargetPosition(angle);
     if (feederSubsystem.isFeederAtTargetPosition()){
@@ -66,7 +64,6 @@ public class SpinUp extends Command {
   @Override
   public void end(boolean interrupted) {
     shooterSubsystem.setShooterTargetSpeed(0);
-    System.out.println("ending spinup");
   }
 
   // Returns true when the command should end.
@@ -98,32 +95,7 @@ public class SpinUp extends Command {
 
     return shooterSpeedMap.get(distance);
   }
-private double calculateSpeedOffDistanceFeed(double distance) {
-final InterpolatingDoubleTreeMap feederSpeedMap = new InterpolatingDoubleTreeMap();
-   
-    feederSpeedMap.put(0.0, 0.0);
-    feederSpeedMap.put(1.0, 1.0);
-    feederSpeedMap.put(2.0, 2.0);
-    feederSpeedMap.put(3.0, 3.0);
-    feederSpeedMap.put(4.0, 4.0);
-    feederSpeedMap.put(5.0, 5.0);
-    feederSpeedMap.put(6.0, 6.0);
-    feederSpeedMap.put(7.0, 7.0);
-    feederSpeedMap.put(8.0, 8.0);
-    feederSpeedMap.put(9.0, 9.0);
-    feederSpeedMap.put(10.0, 10.0);
 
-    // Fancy interpolation with a matrix?
-
-    final InterpolatingMatrixTreeMap <Double, N1, N2> feederSpeedMap2 = new InterpolatingMatrixTreeMap<>();
-
-
-    feederSpeedMap2.put(null, null);
-
-    
-    // TODO: Replace nums with real ones
-    return feederSpeedMap.get(distance);
-  }
   private double calculateAngleOffDistance(double distance) {
 
     double height = elevatorSubsystem.getElevatorTargetPosition();
@@ -133,17 +105,18 @@ final InterpolatingDoubleTreeMap feederSpeedMap = new InterpolatingDoubleTreeMap
     final InterpolatingDoubleTreeMap shooterAngleMap = new InterpolatingDoubleTreeMap();
 
     shooterAngleMap.put(1.1977, 68.0); 
-    shooterAngleMap.put(1.5,53.0);
-    shooterAngleMap.put(1.999, 52.0); 
-    shooterAngleMap.put(2.54, 49.0);
-    shooterAngleMap.put(2.773, 47.0);
-    shooterAngleMap.put(3.0988, 41.0);
-    shooterAngleMap.put(3.556, 39.0);
-    shooterAngleMap.put(3.8813, 37.0);
-    shooterAngleMap.put(4.1,36.0);
-    shooterAngleMap.put(4.3688, 35.0);
-    shooterAngleMap.put(4.5626, 32.0);
-    shooterAngleMap.put(5.8711, 30.0);
+    shooterAngleMap.put(1.5,53.5);
+    shooterAngleMap.put(1.999, 52.5); 
+    shooterAngleMap.put(2.54, 47.0);
+    shooterAngleMap.put(2.773, 46.0);
+    shooterAngleMap.put(3.0988, 38.0);
+    shooterAngleMap.put(3.556, 37.0);
+    shooterAngleMap.put(3.8813, 35.0);
+    shooterAngleMap.put(4.1,34.0);
+    shooterAngleMap.put(4.3688, 33.0);
+    shooterAngleMap.put(4.5626, 30.0);
+    shooterAngleMap.put(5.8711, 27.0);
+    shooterAngleMap.put(6.0,26.0);
 
     return shooterAngleMap.get(distance);
 

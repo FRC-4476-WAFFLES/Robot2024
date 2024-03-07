@@ -182,6 +182,39 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
         return Math.abs(getRobotPose().getRotation().getDegrees()) > 90;
     }
 
+    public Rotation2d getAngleToStash() {
+        Pose2d poseOfStash;
+
+        // Set goal pose based on alliance
+        if(DriverStation.getAlliance().get() == Alliance.Red) {
+            poseOfStash = Constants.DriveConstants.redStash;
+        } else {
+            poseOfStash = Constants.DriveConstants.blueStash;
+        }
+
+        double angleToGoal = Math.atan((getRobotPose().getY()-poseOfStash.getY())/(getRobotPose().getX()-poseOfStash.getX()));
+        if(DriverStation.getAlliance().get() == Alliance.Red) {
+            angleToGoal += Math.PI;
+        }
+        return new Rotation2d(angleToGoal);
+    }
+
+    public double getDistanceToStash() {
+        Pose2d poseOfStash;
+
+        // Set goal pose based on alliance
+        if(DriverStation.getAlliance().get() == Alliance.Red) {
+            poseOfStash = Constants.DriveConstants.redStash;
+        } else {
+            poseOfStash = Constants.DriveConstants.blueStash;
+        }
+        double distance = poseOfStash.minus(getRobotPose()).getTranslation().getNorm();
+
+        SmartDashboard.putNumber("DistanceToStash", distance);
+        
+        return distance;
+    }
+
     public Rotation2d getAngleToGoal() {
         Pose2d poseOfGoal;
 

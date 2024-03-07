@@ -77,6 +77,7 @@ public class RobotContainer {
   private final ScoreNote scoreNoteAuto  = new ScoreNote();
   private final SpinUp spinUp  = new SpinUp();
   private final SpinUp spinUpAuto  = new SpinUp();
+  private final SpinUpStash spinUpStash = new SpinUpStash();
   private final SuperstructureHome superstructureHome = new SuperstructureHome();
   private final SuperstructureAmp superstructureAmp = new SuperstructureAmp();
   private final SuperstructureCloseSpeaker superstructureCloseSpeaker  = new SuperstructureCloseSpeaker();
@@ -96,7 +97,7 @@ public class RobotContainer {
 
   private final DriveAndPointAtTarget driveAndAimAtGoal = new DriveAndPointAtTarget(() -> leftJoystick.getY() * DriveConstants.maxSpeed, () -> leftJoystick.getX() * DriveConstants.maxSpeed, driveSubsystem::getAngleToGoal);
   private final DriveAndPointAtTarget driveAndAimAtGoalAuto = new DriveAndPointAtTarget(() -> 0, () -> 0, driveSubsystem::getAngleToGoal);
-
+  private final DriveAndPointAtTarget driveAndAimAtStash = new DriveAndPointAtTarget(() -> leftJoystick.getY() * DriveConstants.maxSpeed, () -> leftJoystick.getX() * DriveConstants.maxSpeed, driveSubsystem::getAngleToStash);
   private final SendableChooser<Command> autoChooser;
   private static RobotContainer containerRobot;
 
@@ -168,6 +169,7 @@ public class RobotContainer {
     operatorController.a().whileTrue(superstructureClimb);
     operatorController.rightStick().whileTrue(superstructureStash);
     rightJoystick.button(1).whileTrue(driveAndAimAtGoal.alongWith(spinUp));
+    rightJoystick.button(2).whileTrue(driveAndAimAtStash.alongWith(spinUpStash));
     // operatorController.rightTrigger().whileTrue(elevatorUp);
     // operatorController.leftTrigger().whileTrue(elevatorDown);
 

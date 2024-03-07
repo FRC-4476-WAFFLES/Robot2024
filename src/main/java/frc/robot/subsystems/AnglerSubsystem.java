@@ -108,6 +108,8 @@ public class AnglerSubsystem extends SubsystemBase {
             angler.setNeutralMode(NeutralModeValue.Brake);
     
         }
+
+        SmartDashboard.putNumber("Angler Setpoint", anglerTargetPositonDegrees);
         //updatePIDConstants();
 
     

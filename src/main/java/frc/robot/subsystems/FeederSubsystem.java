@@ -66,19 +66,15 @@ public class FeederSubsystem extends SubsystemBase {
 
     // PID for feeder
     Slot0Configs feederSlot0Configs = new Slot0Configs();
-    feederSlot0Configs.kP = 0.3; 
+    feederSlot0Configs.kP = 1; 
     feederSlot0Configs.kD = 0.00001;
-    feederSlot0Configs.kV = 0.115;
+    feederSlot0Configs.kV = 0.12;
 
-    Slot1Configs feederSlot1Configs = new Slot1Configs();
-    feederSlot1Configs.kP = 0.5;
-    feederSlot1Configs.kD = 0.00001;
-    feederSlot1Configs.kV = 0.115;
 
     feeder.getConfigurator().apply(generalConfigs.withMotorOutput(new MotorOutputConfigs().withInverted(InvertedValue.CounterClockwise_Positive)));
 
     feeder.getConfigurator().apply(feederSlot0Configs);
-    feeder.getConfigurator().apply(feederSlot1Configs);
+    
   }
 
   @Override
@@ -94,10 +90,10 @@ public class FeederSubsystem extends SubsystemBase {
       
       if (Math.abs(feeder.getVelocity().getValueAsDouble()) < FEEDER_DEAD_ZONE) {
         feeder.setPosition(0);
-        setFeederTargetPosition(-0.8);
+        setFeederTargetPosition(-0.6);
       }
     } else {
-      final PositionVoltage feederPositionRequest = new PositionVoltage(0).withSlot(1);
+      final PositionVoltage feederPositionRequest = new PositionVoltage(0).withSlot(0);
       feeder.setControl(feederPositionRequest.withPosition(feederTargetPosition));
     }
     SmartDashboard.putNumber("Feeder Speed", feeder.getVelocity().getValueAsDouble());

@@ -27,7 +27,7 @@ public class IntakeOut extends Command {
     intakeSubsystem.SetIntakeSpeed(-1.0);
     feederSubsystem.setFeederTargetSpeed(-100);
     elevatorSubsystem.isClimbing = false;
-    elevatorSubsystem.setElevatorTargetPosition(32);
+    elevatorSubsystem.setElevatorTargetPosition(25);
     anglerSubsystem.setAnglerTargetPosition(86.7);
   
     // TODO if elevator and angler is in intake position outtake the feeder as well.
