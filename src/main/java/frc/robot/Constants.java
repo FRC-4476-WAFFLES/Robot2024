@@ -95,8 +95,8 @@ public final class Constants {
     public static final double maxSpeed = TunerConstants.kSpeedAt12VoltsMps;
     public static final double maxAngularSpeed = 6; // Max Rad/s
 
-    public static final Pose2d redGoalPose = new Pose2d((16.4592 - 0.17), 5.6, new Rotation2d(0));
-    public static final Pose2d blueGoalPose = new Pose2d(0.17, 5.6, new Rotation2d(0));
+    public static final Pose2d redGoalPose = new Pose2d((16.4592 + 0.17), 5.6, new Rotation2d(0));
+    public static final Pose2d blueGoalPose = new Pose2d(-0.17, 5.6, new Rotation2d(0));
     
     public static final Pose2d blueStash = new Pose2d(1.25, 6.0, new Rotation2d(0));
     public static final Pose2d redStash = new Pose2d((16.4592 - 1.25), 6.0, new Rotation2d(0));
@@ -114,7 +114,7 @@ public final class Constants {
       // Cam mounted facing forward, half a meter forward of center, half a meter up
       // from center.
       public static final Transform3d kRobotToLeftCamera = new Transform3d(
-              new Translation3d(-0.5, -0.25, 0.196),
+              new Translation3d(-1.1, -0.2, 0.196),
               new Rotation3d(Units.degreesToRadians(180), Units.degreesToRadians(58.64),
                       Units.degreesToRadians(180)));
 

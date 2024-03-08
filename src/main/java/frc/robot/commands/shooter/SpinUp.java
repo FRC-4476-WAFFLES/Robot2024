@@ -86,9 +86,9 @@ public class SpinUp extends Command {
    
     shooterSpeedMap.put(0.9, 40.0);
     shooterSpeedMap.put(1.8542, 60.0);
-    shooterSpeedMap.put(2.54, 65.0);
-    shooterSpeedMap.put(3.0988, 70.0);
-    shooterSpeedMap.put(3.556, 75.0);
+    shooterSpeedMap.put(2.54, 63.0);
+    shooterSpeedMap.put(3.0988, 65.0);
+    shooterSpeedMap.put(3.556, 72.0);
     shooterSpeedMap.put(6.0, 100.0);
     shooterSpeedMap.put(9.0, 100.0);
    
@@ -109,14 +109,16 @@ public class SpinUp extends Command {
     shooterAngleMap.put(1.999, 52.5); 
     shooterAngleMap.put(2.54, 47.0);
     shooterAngleMap.put(2.773, 46.0);
-    shooterAngleMap.put(3.0988, 38.0);
-    shooterAngleMap.put(3.556, 37.0);
-    shooterAngleMap.put(3.8813, 35.0);
-    shooterAngleMap.put(4.1,34.0);
-    shooterAngleMap.put(4.3688, 33.0);
-    shooterAngleMap.put(4.5626, 30.0);
-    shooterAngleMap.put(5.8711, 27.0);
-    shooterAngleMap.put(6.0,26.0);
+    shooterAngleMap.put(3.0988, 41.0);
+    shooterAngleMap.put(3.556, 39.5);
+    shooterAngleMap.put(3.8813, 38.5);
+    shooterAngleMap.put(4.1,37.5);
+    shooterAngleMap.put(4.3688, 36.5);
+    shooterAngleMap.put(4.5626, 33.0);
+    shooterAngleMap.put(5.8711, 30.0);
+    shooterAngleMap.put(6.0,29.5);
+    shooterAngleMap.put(6.5,29.50);
+    shooterAngleMap.put(7.9, 28.5);
 
     return shooterAngleMap.get(distance);
 

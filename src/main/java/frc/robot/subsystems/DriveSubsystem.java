@@ -160,6 +160,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
         m_simNotifier.startPeriodic(kSimLoopPeriod);
     }
 
+
     // public void updateOdometryFromLimeLight() {
     //     LimelightHelpers.Results limeLightRightResult = LimelightHelpers.getLatestResults(Constants.limeLightRight).targetingResults;
     //     LimelightHelpers.Results limeLightLeftResult = LimelightHelpers.getLatestResults(Constants.limeLightLeft).targetingResults;
@@ -259,7 +260,9 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
         visionEstimation.ifPresent(est -> {
             var estPose = est.estimatedPose.toPose2d();
             var estStdDevs = vision.getEstimationStdDevs(estPose);
-            //poseEstimator.addVisionMeasurement(est.estimatedPose.toPose2d(), est.timestampSeconds, estStdDevs);
+            if(Math.abs(getCurrentRobotChassisSpeeds().vxMetersPerSecond) < 0.2){
+                //m_odometry.addVisionMeasurement(estPose, est.timestampSeconds, estStdDevs);
+            }
             debugVisionEstimationPose.setRobotPose(estPose);
             SmartDashboard.putData("Vision field", debugVisionEstimationPose);
           });

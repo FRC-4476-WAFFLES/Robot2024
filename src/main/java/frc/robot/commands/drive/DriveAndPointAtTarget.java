@@ -61,7 +61,7 @@ public class DriveAndPointAtTarget extends Command {
         .withTargetDirection(thetaSupplier.get());
     }
     
-    request.HeadingController.setP(10.0);
+    request.HeadingController.setP(12.0);
     request.HeadingController.setD(0.1); 
     request.HeadingController.enableContinuousInput(-Math.PI, Math.PI);
     driveSubsystem.setControl(request);

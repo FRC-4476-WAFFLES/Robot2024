@@ -96,8 +96,8 @@ public class Vision {
             // Create simulated camera properties. These can be set to mimic your actual
             // camera.
             var cameraProp = new SimCameraProperties();
-            cameraProp.setCalibration(960, 720, Rotation2d.fromDegrees(90));
-            cameraProp.setCalibError(0.35, 0.10);
+            cameraProp.setCalibration(640, 480, Rotation2d.fromDegrees(90));
+            cameraProp.setCalibError(0.62, 0.10);
             cameraProp.setFPS(15);
             cameraProp.setAvgLatencyMs(50);
             cameraProp.setLatencyStdDevMs(15);

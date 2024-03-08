@@ -187,19 +187,19 @@ public class AnglerSubsystem extends SubsystemBase {
     public double getAnglerTopLimit(double elevatorPosition) {
         final InterpolatingDoubleTreeMap anglerTopLimitMap = new InterpolatingDoubleTreeMap();
         // Input is elevator position, output is highest possible angler position        
+        return -29;
+        // anglerTopLimitMap.put(0.0, 0.0);
+        // anglerTopLimitMap.put(10.0, 0.0);
+        // anglerTopLimitMap.put(20.0, -12.0);
 
-        anglerTopLimitMap.put(0.0, 0.0);
-        anglerTopLimitMap.put(10.0, 0.0);
-        anglerTopLimitMap.put(20.0, -12.0);
-
-        if (elevatorPosition > 25) {
+        // if (elevatorPosition > 25) {
             
-            return -29;
-        }
-        else{
+        //     return -29;
+        // }
+        // else{
             
-            return anglerTopLimitMap.get(elevatorPosition);
-        }
+        //     return anglerTopLimitMap.get(elevatorPosition);
+        // }
     }
 
     public double getAnglerBottomLimit(double elevatorPosition) {
