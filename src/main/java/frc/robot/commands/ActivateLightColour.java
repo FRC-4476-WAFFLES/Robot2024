@@ -41,14 +41,14 @@ public class ActivateLightColour extends Command {
     }
     else if (shooterSubsystem.isNote()) {
       // Note in Shooter
-      lightSubsystem.setLightColour(LightColours.VIOLET);
+      lightSubsystem.setLightColour(LightColours.YELLOW);
     }
     else if (intakeSubsystem.isRunningIn() && anglerSubsystem.isGoodShooterAngle() && elevatorSubsystem.isGoodElevatorPosition()){
       // Intake running
       lightSubsystem.blinkBetweenColours(LightColours.YELLOW, LightColours.BLACK);
     }
     else if (intakeSubsystem.isRunningOut()){
-      lightSubsystem.blinkBetweenColours(LightColours.ORANGE, LightColours.BLACK);
+      lightSubsystem.blinkBetweenColours(LightColours.RED, LightColours.BLACK);
     }
     // else if(intakeSubsystem.isNoteCurrentDetection()){
     //   // Note in Intake
