@@ -4,6 +4,9 @@
 
 package frc.robot.commands.superstructure;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import static frc.robot.RobotContainer.*;
 
@@ -25,6 +28,16 @@ public class SuperstructureCloseSpeaker extends Command {
     elevatorSubsystem.setElevatorTargetPosition(25);
     anglerSubsystem.setAnglerTargetPosition(68);
     shooterSubsystem.setShooterTargetSpeed(50);
+
+    if(feederSubsystem.isFeederRunning()){
+      // Reseed the robots position if scoring in amp
+      if (DriverStation.getAlliance().get() == Alliance.Red){
+        driveSubsystem.seedFieldRelative(new Pose2d(15.0792, driveSubsystem.getRobotPose().getY(), driveSubsystem.getRobotPose().getRotation())); //15.0792, 5.53
+      }
+      else{
+        driveSubsystem.seedFieldRelative(new Pose2d(1.4, driveSubsystem.getRobotPose().getY(), driveSubsystem.getRobotPose().getRotation())); //15.0792, 5.53
+      }
+    }
   }
 
   // Called once the command ends or is interrupted.

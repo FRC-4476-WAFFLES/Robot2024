@@ -21,6 +21,7 @@ import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
@@ -84,7 +85,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
             (speeds)->this.setControl(autoRequest.withSpeeds(speeds)), // Consumer of ChassisSpeeds to drive the robot
             new HolonomicPathFollowerConfig(
                 new PIDConstants(2.1, 0, 0.1),
-                new PIDConstants(9, 0, 0.1),
+                new PIDConstants(8.0, 0, 0.1),
                 TunerConstants.kSpeedAt12VoltsMps,
                 driveBaseRadius,
                 new ReplanningConfig()
@@ -181,6 +182,16 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
 
     public boolean isShooterTowardGoal(){
         return Math.abs(getRobotPose().getRotation().getDegrees()) > 90;
+    }
+
+    public Rotation2d getStaticAngleToPodium(){
+        if(DriverStation.getAlliance().get() == Alliance.Red) {
+            return new Rotation2d(Units.degreesToRadians(-147));
+        }
+        else{
+            return new Rotation2d(Units.degreesToRadians(-32));
+        }
+       
     }
 
     public Rotation2d getAngleToStash() {

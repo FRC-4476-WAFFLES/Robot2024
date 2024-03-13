@@ -110,6 +110,8 @@ public class AnglerSubsystem extends SubsystemBase {
         }
 
         SmartDashboard.putNumber("Angler Setpoint", anglerTargetPositonDegrees);
+        SmartDashboard.putNumber("Angler Position", getAnglerDegrees());
+        SmartDashboard.putBoolean("GoodAngle", Math.abs(getAnglerDegrees() - this.anglerTargetPositonDegrees) < ANGLER_DEAD_ZONE);
         //updatePIDConstants();
 
     

@@ -39,9 +39,9 @@ public class ShooterSubsystem extends SubsystemBase {
   
   // Constants
   
-  private final double SHOOTER_DEAD_ZONE = 5;
+  private final double SHOOTER_DEAD_ZONE = 7;
 
-  private final double IR_RANGE = 1.3;
+  private final double IR_RANGE = 1.9;
 
   private final CurrentLimitsConfigs currentLimitsConfig;
 
@@ -93,7 +93,7 @@ public class ShooterSubsystem extends SubsystemBase {
     shooterSlot0Configs.kP = 0.09;
     shooterSlot0Configs.kI = 0.0;
     shooterSlot0Configs.kD = 0.0001;
-    shooterSlot0Configs.kV = 0.118; 
+    shooterSlot0Configs.kV = 0.11; 
     shooterSlot0Configs.kS = 0.0;
 
     
@@ -132,6 +132,7 @@ public class ShooterSubsystem extends SubsystemBase {
   
     SmartDashboard.putNumber("Shooter Speed", shooter1.getVelocity().getValueAsDouble());
     SmartDashboard.putNumber("Shooter Target Speed", shooterTargetSpeed);
+    SmartDashboard.putBoolean("GoodShooter", Math.abs(shooter1.getVelocity().getValueAsDouble() - shooterTargetSpeed) < SHOOTER_DEAD_ZONE);
    
   }
 
@@ -142,6 +143,7 @@ public class ShooterSubsystem extends SubsystemBase {
    * <li>false: if shooter is not at desired speed</li>
    */
   public boolean isGoodSpeed() {
+    
       return Math.abs(shooter1.getVelocity().getValueAsDouble() - shooterTargetSpeed) < SHOOTER_DEAD_ZONE;
   }
 

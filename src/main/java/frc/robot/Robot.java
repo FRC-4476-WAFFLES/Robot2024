@@ -30,6 +30,7 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
 
   AddressableLED m_led = new AddressableLED(Constants.addressableLEDS);
+ 
   AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(14);
 
   Timer m_gcTimer = new Timer();
@@ -54,9 +55,7 @@ public class Robot extends TimedRobot {
 
     m_led.setLength(m_ledBuffer.getLength());
     
-    m_led.setData(m_ledBuffer);
-    
-    m_led.start();
+   
 
     for (var i = 0; i < m_ledBuffer.getLength(); i++) {
       // Sets the specified LED to the RGB values for red
@@ -64,6 +63,7 @@ public class Robot extends TimedRobot {
    }
    
    m_led.setData(m_ledBuffer);
+    m_led.start();
 
   }
 
@@ -95,18 +95,18 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {
 
     
-    m_led.setLength(m_ledBuffer.getLength());
+    //m_led.setLength(m_ledBuffer.getLength());
     
-    m_led.setData(m_ledBuffer);
+    //m_led.setData(m_ledBuffer);
     
-    m_led.start();
+    //m_led.start();
 
     for (var i = 0; i < m_ledBuffer.getLength(); i++) {
       // Sets the specified LED to the RGB values for red
       m_ledBuffer.setRGB(i, 255, 0, 0);
    }
    
-   m_led.setData(m_ledBuffer);
+   //m_led.setData(m_ledBuffer);
   }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */

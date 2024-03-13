@@ -47,9 +47,9 @@ public class ScoreNote extends Command {
       }
       
     }
-    else if(!driveSubsystem.isShooterTowardGoal()){
-      feederSubsystem.setFeederTargetSpeed(-100);
-    }
+    // else if(!driveSubsystem.isShooterTowardGoal()){
+    //   feederSubsystem.setFeederTargetSpeed(-100);
+    // }
     else{
       hasTimerStarted = false;
     }

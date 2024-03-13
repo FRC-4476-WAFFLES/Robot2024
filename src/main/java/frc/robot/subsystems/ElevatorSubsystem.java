@@ -91,6 +91,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     //updatePIDConstants();
     updateSmartDashboard();
     SmartDashboard.putBoolean("COAST STUFF", coastSwitch.get());
+    SmartDashboard.putBoolean("GoodElevator", Math.abs(Elevator1.getPosition().getValueAsDouble() - elevatorTargetPosition) < ELEVATOR_DEAD_ZONE);
     if (!getCoastSwitch()){
       Elevator1.setNeutralMode(NeutralModeValue.Coast);
       Elevator2.setNeutralMode(NeutralModeValue.Coast);

@@ -11,7 +11,7 @@ public class SuperstructureIntake extends Command {
   /** Creates a new SuperstructureIntake. */
   public SuperstructureIntake() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(elevatorSubsystem, anglerSubsystem);
+    addRequirements(elevatorSubsystem, anglerSubsystem, shooterSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -21,6 +21,7 @@ public class SuperstructureIntake extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    shooterSubsystem.setShooterTargetSpeed(0);
     elevatorSubsystem.isClimbing = false;
     elevatorSubsystem.setElevatorTargetPosition(32);
     anglerSubsystem.setAnglerTargetPosition(86.7);

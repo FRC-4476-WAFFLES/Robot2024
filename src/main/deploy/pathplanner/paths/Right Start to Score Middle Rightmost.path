@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 8.214284064931766,
-        "y": 0.7556284203477498
+        "x": 7.98411519899963,
+        "y": 0.7893554248646963
       },
       "prevControl": {
-        "x": 7.757175514351029,
-        "y": 0.8489158796499418
+        "x": 7.527006648418893,
+        "y": 0.8826428841668883
       },
       "nextControl": {
-        "x": 8.671392615512502,
-        "y": 0.6623409610455578
+        "x": 8.441223749580367,
+        "y": 0.6960679655625044
       },
       "isLocked": false,
       "linkedName": null
@@ -36,8 +36,8 @@
         "y": 3.13695836076835
       },
       "prevControl": {
-        "x": 5.409515529196648,
-        "y": 2.0828100706535873
+        "x": 5.260838983216429,
+        "y": 1.864852191242845
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,7 +46,25 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 1.45,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "spinUp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 4.5,
     "maxAcceleration": 4.0,

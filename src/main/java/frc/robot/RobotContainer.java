@@ -28,6 +28,8 @@ import frc.robot.commands.drive.*;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -75,18 +77,23 @@ public class RobotContainer {
   private final IntakeOut intakeOut = new IntakeOut();
   private final ScoreNote scoreNote  = new ScoreNote();
   private final ScoreNote scoreNoteAuto  = new ScoreNote();
+   private final ScoreNote scoreNoteAuto2  = new ScoreNote();
   private final SpinUp spinUp  = new SpinUp();
   private final SpinUp spinUpAuto  = new SpinUp();
+    private final SpinUp spinUpAuto2  = new SpinUp();
   private final SpinUpStash spinUpStash = new SpinUpStash();
   private final SuperstructureHome superstructureHome = new SuperstructureHome();
   private final SuperstructureAmp superstructureAmp = new SuperstructureAmp();
   private final SuperstructureCloseSpeaker superstructureCloseSpeaker  = new SuperstructureCloseSpeaker();
+  private final SuperstructureCloseSpeaker superstructureCloseSpeakerAuto  = new SuperstructureCloseSpeaker();
   private final SuperstructureTestShot superstructureTestShot = new SuperstructureTestShot();
   private final BasicFieldReset basicFieldReset = new BasicFieldReset();
   private final ResetGyro resetGyro = new ResetGyro();
   private final SuperstructureClimb superstructureClimb = new SuperstructureClimb();
   private final SuperstructureStash superstructureStash = new SuperstructureStash();
-
+  private final ForcedFire forcedFire = new ForcedFire();
+  private final SuperstructureYeet superstructureYeet = new SuperstructureYeet();
+  private final SuperstructurePodium superstructurePodium = new SuperstructurePodium();
 
   
 
@@ -98,6 +105,7 @@ public class RobotContainer {
   private final DriveAndPointAtTarget driveAndAimAtGoal = new DriveAndPointAtTarget(() -> leftJoystick.getY() * DriveConstants.maxSpeed, () -> leftJoystick.getX() * DriveConstants.maxSpeed, driveSubsystem::getAngleToGoal);
   private final DriveAndPointAtTarget driveAndAimAtGoalAuto = new DriveAndPointAtTarget(() -> 0, () -> 0, driveSubsystem::getAngleToGoal);
   private final DriveAndPointAtTarget driveAndAimAtStash = new DriveAndPointAtTarget(() -> leftJoystick.getY() * DriveConstants.maxSpeed, () -> leftJoystick.getX() * DriveConstants.maxSpeed, driveSubsystem::getAngleToStash);
+  private final DriveAndPointAtTarget driveAndAimWhileAtPodium = new DriveAndPointAtTarget(() -> leftJoystick.getY() * DriveConstants.maxSpeed, () -> leftJoystick.getX() * DriveConstants.maxSpeed, driveSubsystem::getStaticAngleToPodium);
   private final SendableChooser<Command> autoChooser;
   private static RobotContainer containerRobot;
 
@@ -170,6 +178,7 @@ public class RobotContainer {
     operatorController.rightStick().whileTrue(superstructureStash);
     rightJoystick.button(1).whileTrue(driveAndAimAtGoal.alongWith(spinUp));
     rightJoystick.button(2).whileTrue(driveAndAimAtStash.alongWith(spinUpStash));
+    rightJoystick.button(4).whileTrue(driveAndAimWhileAtPodium.alongWith(superstructurePodium));
     // operatorController.rightTrigger().whileTrue(elevatorUp);
     // operatorController.leftTrigger().whileTrue(elevatorDown);
 
@@ -190,10 +199,13 @@ public class RobotContainer {
     // NamedCommands.registerCommand("aimAtGoal", driveAndAimAtGoalAuto);
     // NamedCommands.registerCommand("spinUp", spinUpAuto);
     // NamedCommands.registerCommand("scoreNote", scoreNoteAuto);
+    NamedCommands.registerCommand("fenderShot", new ParallelDeadlineGroup(scoreNoteAuto2, spinUpAuto2));
     NamedCommands.registerCommand("completeShot", new ParallelDeadlineGroup(scoreNoteAuto, spinUpAuto, driveAndAimAtGoalAuto));
     NamedCommands.registerCommand("intakeIn", intakeInAuto);
     NamedCommands.registerCommand("intakeInDeadline", intakeInAuto.withTimeout(1));
     NamedCommands.registerCommand("intakeOff", new InstantCommand(() -> intakeIn.cancel()));
+    NamedCommands.registerCommand("forcedFire", forcedFire);
+    NamedCommands.registerCommand("superstructureYeet", superstructureYeet);
   
 
   }

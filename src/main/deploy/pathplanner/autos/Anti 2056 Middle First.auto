@@ -1,0 +1,57 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.407706324685116,
+      "y": 7.272429494930317
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Anti 2056 alt 1"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "superstructureYeet"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "2056 alt 2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "intakeIn"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

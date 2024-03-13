@@ -30,7 +30,7 @@ public class SpinUpStash extends Command {
 
 
     if (distance > 6.2){
-      elevatorSubsystem.setElevatorTargetPosition(49);
+      elevatorSubsystem.setElevatorTargetPosition(51);
       anglerSubsystem.setAnglerTargetPosition(angle);
     }
     else{

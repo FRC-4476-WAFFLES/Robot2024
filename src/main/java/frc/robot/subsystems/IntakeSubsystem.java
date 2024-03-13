@@ -76,6 +76,14 @@ public class IntakeSubsystem extends SubsystemBase {
     return IntakeSpeed != 0;
   } 
 
+  public boolean isRunningIn(){
+    return IntakeSpeed > 0;
+  }
+
+  public boolean isRunningOut(){
+    return IntakeSpeed < 0;
+  }
+
   public boolean isNoteCurrentDetection() {
     return intake.getStatorCurrent().getValueAsDouble() > 34;
   }

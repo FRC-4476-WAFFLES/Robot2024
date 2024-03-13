@@ -3,48 +3,54 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.49426107411415826,
-        "y": 1.4872762413142506
+        "x": 2.523749047498095,
+        "y": 6.772669545339091
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.4942610741141578,
-        "y": 1.4872762413142506
+        "x": 3.534123991324907,
+        "y": 6.916726910376898
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Close Left Note"
     },
     {
       "anchor": {
-        "x": 6.619028587557887,
-        "y": 0.7846260485673593
+        "x": 7.993982141810438,
+        "y": 7.410074050917332
       },
       "prevControl": {
-        "x": 5.619028587557887,
-        "y": 0.7846260485673593
+        "x": 6.993982141810438,
+        "y": 7.410074050917332
       },
       "nextControl": {
-        "x": 7.619028587557887,
-        "y": 0.7846260485673593
+        "x": 8.993982141810438,
+        "y": 7.410074050917332
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 0.25829897813641944,
-        "y": 5.5452218596744896
+        "x": 3.879466989703212,
+        "y": 6.975928567241751
       },
       "prevControl": {
-        "x": 0.3249980259425048,
-        "y": 4.895270431383616
+        "x": 5.982845196459625,
+        "y": 7.350872394052481
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.95,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -55,13 +61,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -90.0,
+    "rotation": 23.198590513648107,
     "rotateFast": false
   },
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": 33.690067525979714,
     "velocity": 0
   },
   "useDefaultConstraints": true

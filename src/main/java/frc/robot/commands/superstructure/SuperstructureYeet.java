@@ -5,13 +5,14 @@
 package frc.robot.commands.superstructure;
 
 import edu.wpi.first.wpilibj2.command.Command;
+
 import static frc.robot.RobotContainer.*;
 
-public class SuperstructureHome extends Command {
-  /** Creates a new SuperstructureHome. */
-  public SuperstructureHome() {
+public class SuperstructureYeet extends Command {
+  /** Creates a new SuperstructureYeet. */
+  public SuperstructureYeet() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(elevatorSubsystem, anglerSubsystem);
+    addRequirements(shooterSubsystem, intakeSubsystem, elevatorSubsystem, feederSubsystem, intakeSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -21,27 +22,17 @@ public class SuperstructureHome extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (elevatorSubsystem.isClimbing) {
-      elevatorSubsystem.setElevatorTargetPosition(0);
-      anglerSubsystem.setAnglerTargetPosition(0);
-    } else {
-      elevatorSubsystem.setElevatorTargetPosition(25);
-      anglerSubsystem.setAnglerTargetPosition(94.5);
-      // if(shooterSubsystem.isNote() && feederSubsystem.isFeederAtTargetPosition()){
-      //   shooterSubsystem.setShooterTargetSpeed(60);
-      // }
-      // else if(!shooterSubsystem.isNote()){
-      //   shooterSubsystem.setShooterTargetSpeed(0);
-      // }
-    }
-  
-  
+    shooterSubsystem.setShooterTargetSpeed(14);
+    intakeSubsystem.SetIntakeSpeed(1);
+    feederSubsystem.setFeederTargetSpeed(100);
+    elevatorSubsystem.setElevatorTargetPosition(25);
+    anglerSubsystem.setAnglerTargetPosition(87);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    
+    shooterSubsystem.setShooterTargetSpeed(0);
   }
 
   // Returns true when the command should end.
