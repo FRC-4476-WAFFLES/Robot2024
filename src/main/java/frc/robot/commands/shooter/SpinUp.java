@@ -98,7 +98,7 @@ public class SpinUp extends Command {
 
   private double calculateAngleOffDistance(double distance) {
 
-    double height = elevatorSubsystem.getElevatorTargetPosition();
+    double height = elevatorSubsystem.getElevatorPositionMeters();
 
     // Key is distance from goal in meters, value is angle in degrees
 
@@ -120,8 +120,18 @@ public class SpinUp extends Command {
     shooterAngleMap.put(6.5,29.50);
     shooterAngleMap.put(7.9, 28.5);
 
-    return shooterAngleMap.get(distance);
+    double predictedAngle = shooterAngleMap.get(distance);
 
+    return solveForElevatorHeight(distance, height, predictedAngle);
+
+  }
+
+  private double solveForElevatorHeight(double distance, double currentHeight, double predictedAngle){
+    double result = 0;
+    // Solve for opposite side of right angle triangle, where predictedAngle is the angle in degrees and the distance is the adjacent side
+    double predictedHeight = distance * Math.tan(Math.toRadians(predictedAngle));
+    result = Math.atan(Math.tan(predictedAngle) + (predictedHeight - (elevatorSubsystem.rotationsToMeters(27.0) - currentHeight)) / distance);
+    return result;
   }
 
   public void setTallMode() {

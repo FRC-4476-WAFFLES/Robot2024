@@ -165,6 +165,14 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
   }
 
+  public double getElevatorPositionMeters(){
+    return rotationsToInches(Elevator1.getPosition().getValueAsDouble())*0.0254;
+  }
+
+  public double rotationsToMeters(double rotations){
+    return rotationsToInches(rotations)*0.0254;
+  }
+
   /**
    * Returns the current position of the elevator
    * @return the current position of the elevator in rotations
@@ -184,6 +192,8 @@ public class ElevatorSubsystem extends SubsystemBase {
   public double rotationsToInches(double rotations){
    return (rotations/19.0625)*(1.625*Math.PI);
   }
+
+
 
   public double inchesToRotations (double inches){
     return (inches*19.0625)/(1.625/Math.PI);
