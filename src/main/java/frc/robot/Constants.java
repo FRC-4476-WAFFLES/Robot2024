@@ -118,7 +118,8 @@ public final class Constants {
             new Translation3d(-0.12, 0.28, 0.51),
             new Rotation3d(Units.degreesToRadians(0), Units.degreesToRadians(-58.64),
                     Units.degreesToRadians(180)));
-
+                    //Q from CAD (-34.31, +- 26.67, 52.7)
+                    //Q from CAD (0,-58.64, 180)
                     //.2667, -0.336 //0.196
  public static final String kCameraRight = "Camera 1";
       // Cam mounted facing forward, half a meter forward of center, half a meter up
