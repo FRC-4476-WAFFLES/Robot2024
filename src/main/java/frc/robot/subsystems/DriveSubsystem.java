@@ -301,7 +301,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
             if (Math.abs(getCurrentRobotChassisSpeeds().vxMetersPerSecond) < 0.1) {
                 try {
                     Pose2d newEstimationPosition = new Pose2d(estPose.getTranslation(), getRobotPose().getRotation());
-                    //m_odometry.addVisionMeasurement(newEstimationPosition, est.timestampSeconds, estStdDevs);
+                    m_odometry.addVisionMeasurement(newEstimationPosition, est.timestampSeconds, estStdDevs);
                 } catch (Exception e) {
 
                 }

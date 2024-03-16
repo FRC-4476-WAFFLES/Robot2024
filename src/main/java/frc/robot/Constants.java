@@ -115,7 +115,7 @@ public final class Constants {
       // Cam mounted facing forward, half a meter forward of center, half a meter up
       // from center.
     public static final Transform3d kRobotToLeftCamera = new Transform3d(
-            new Translation3d(-0.12, 0.28, 0.51),
+            new Translation3d(-0.3431, 0.2667, 0.527),
             new Rotation3d(Units.degreesToRadians(0), Units.degreesToRadians(-58.64),
                     Units.degreesToRadians(180)));
                     //Q from CAD (-34.31, +- 26.67, 52.7)
@@ -125,7 +125,7 @@ public final class Constants {
       // Cam mounted facing forward, half a meter forward of center, half a meter up
       // from center.
     public static final Transform3d kRobotToRightCamera = new Transform3d(
-            new Translation3d(-0.12, -0.28, 0.51),
+            new Translation3d(-0.3431, -0.2667, 0.527),
             new Rotation3d(Units.degreesToRadians(0), Units.degreesToRadians(-58.64),
                     Units.degreesToRadians(180)));
 
