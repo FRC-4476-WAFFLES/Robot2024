@@ -45,12 +45,13 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
     private static final double kSimLoopPeriod = 0.005; // 5 ms
     private Notifier m_simNotifier = null;
     private double m_lastSimTime;
-    private Vision vision = new Vision(Constants.VisionConstants.kCameraLeft,
+    private Vision visionLeft = new Vision(Constants.VisionConstants.kCameraLeft,
             Constants.VisionConstants.kRobotToLeftCamera);
     private Vision visionRight = new Vision(Constants.VisionConstants.kCameraRight,
             Constants.VisionConstants.kRobotToRightCamera);
     private EstimatedRobotPose estimatedRobotPose;
-    private Field2d debugVisionEstimationPose = new Field2d();
+    private Field2d debugVisionEstimationPoseLeft = new Field2d();
+    private Field2d debugVisionEstimationPoseRight = new Field2d();
 
     private final SwerveRequest.ApplyChassisSpeeds autoRequest = new SwerveRequest.ApplyChassisSpeeds()
             .withDriveRequestType(DriveRequestType.Velocity);
@@ -277,38 +278,38 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
     }
 
     public void periodic() {
-        var visionEstimation = vision.getEstimatedGlobalPose();
-        visionEstimation.ifPresent(est -> {
-            var estPose = est.estimatedPose.toPose2d();
-            var estStdDevs = vision.getEstimationStdDevs(estPose);
+        var visionEstimationLeft = visionLeft.getEstimatedGlobalPose();
+        visionEstimationLeft.ifPresent(estLeft -> {
+            var estPoseLeft = estLeft.estimatedPose.toPose2d();
+            var estStdDevs = visionLeft.getEstimationStdDevs(estPoseLeft);
             if (Math.abs(getCurrentRobotChassisSpeeds().vxMetersPerSecond) < 0.1) {
                 try {
-                    Pose2d newEstimationPosition = new Pose2d(estPose.getTranslation(), getRobotPose().getRotation());
-                    m_odometry.addVisionMeasurement(newEstimationPosition, est.timestampSeconds, estStdDevs);
+                    Pose2d newEstimationPositionLeft = new Pose2d(estPoseLeft.getTranslation(), getRobotPose().getRotation());
+                    m_odometry.addVisionMeasurement(newEstimationPositionLeft, estLeft.timestampSeconds, estStdDevs);
                 } catch (Exception e) {
 
                 }
 
             }
-            debugVisionEstimationPose.setRobotPose(estPose);
-            SmartDashboard.putData("Vision field", debugVisionEstimationPose);
+            debugVisionEstimationPoseLeft.setRobotPose(estPoseLeft);
+            SmartDashboard.putData("Camera Left1", debugVisionEstimationPoseLeft);
 
         });
         var visionEstimationRight = visionRight.getEstimatedGlobalPose();
-        visionEstimationRight.ifPresent(est -> {
-            var estPose = est.estimatedPose.toPose2d();
-            var estStdDevs = visionRight.getEstimationStdDevs(estPose);
+        visionEstimationRight.ifPresent(estRight -> {
+            var estPoseRight = estRight.estimatedPose.toPose2d();
+            var estStdDevs = visionRight.getEstimationStdDevs(estPoseRight);
             if (Math.abs(getCurrentRobotChassisSpeeds().vxMetersPerSecond) < 0.1) {
                 try {
-                    Pose2d newEstimationPosition = new Pose2d(estPose.getTranslation(), getRobotPose().getRotation());
-                    m_odometry.addVisionMeasurement(newEstimationPosition, est.timestampSeconds, estStdDevs);
+                    Pose2d newEstimationPositionRight = new Pose2d(estPoseRight.getTranslation(), getRobotPose().getRotation());
+                    m_odometry.addVisionMeasurement(newEstimationPositionRight, estRight.timestampSeconds, estStdDevs);
                 } catch (Exception e) {
 
                 }
 
             }
-            debugVisionEstimationPose.setRobotPose(estPose);
-            SmartDashboard.putData("Vision field2", debugVisionEstimationPose);
+            debugVisionEstimationPoseRight.setRobotPose(estPoseRight);
+            SmartDashboard.putData("Camera Right1", debugVisionEstimationPoseRight);
         });
     }
 }
