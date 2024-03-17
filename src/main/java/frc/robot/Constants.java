@@ -74,11 +74,6 @@ public final class Constants {
   public static final int anglerAbsoluteEncoder = 4; // REV Through Bore
   public static final int coastModeSwitch = 5; // Limit Switch
 
-  // Limelights
-
-  public static final String limeLightRight = "limeLight1";
-  public static final String limeLightLeft = "limeLight2";
-
   public static class OperatorConstants {
     public static final int leftJoystick = 0;
     public static final int rightJoystick = 1;
@@ -96,8 +91,11 @@ public final class Constants {
     public static final double maxSpeed = TunerConstants.kSpeedAt12VoltsMps;
     public static final double maxAngularSpeed = 6; // Max Rad/s
 
-    public static final Pose2d redGoalPose = new Pose2d((16.4592 + 0.17), 5.55, new Rotation2d(0));
-    public static final Pose2d blueGoalPose = new Pose2d(-0.17, 5.55, new Rotation2d(0));
+    public static final Pose2d redGoalPoseAmp = new Pose2d((16.4592 + 0.17), 5.65, new Rotation2d(0));
+    public static final Pose2d blueGoalPoseAmp = new Pose2d(0 - 0.17, 5.65, new Rotation2d(0));
+
+    public static final Pose2d redGoalPoseSource = new Pose2d((16.4592 + 0.13), 5.85, new Rotation2d(0));
+    public static final Pose2d blueGoalPoseSource = new Pose2d(0 - 0.13, 5.85, new Rotation2d(0));
     
     public static final Pose2d blueStash = new Pose2d(1.25, 5.5+0.15, new Rotation2d(0));
     public static final Pose2d redStash = new Pose2d((16.4592 - 1.25), 5.5-0.15, new Rotation2d(0));

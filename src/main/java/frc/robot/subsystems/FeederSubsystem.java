@@ -66,7 +66,7 @@ public class FeederSubsystem extends SubsystemBase {
 
     // PID for feeder
     Slot0Configs feederSlot0Configs = new Slot0Configs();
-    feederSlot0Configs.kP = 1.7; 
+    feederSlot0Configs.kP = 2.0; 
     feederSlot0Configs.kD = 0.00001;
     feederSlot0Configs.kV = 0.12;
 
