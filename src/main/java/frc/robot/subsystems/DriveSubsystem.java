@@ -242,11 +242,17 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
         Pose2d poseOfGoal;
 
         // Set goal pose based on alliance
-        if (DriverStation.getAlliance().get() == Alliance.Red) {
-            poseOfGoal = Constants.DriveConstants.redGoalPose;
-        } else {
-            poseOfGoal = Constants.DriveConstants.blueGoalPose;
-
+        if (DriverStation.getAlliance().get() == Alliance.Red && getRobotPose().getX() < 4) {
+            poseOfGoal = Constants.DriveConstants.redGoalPoseSource;
+        } 
+        else if (DriverStation.getAlliance().get() == Alliance.Red){
+            poseOfGoal = Constants.DriveConstants.redGoalPoseAmp;
+        }
+        else if (getRobotPose().getX() < 4){
+            poseOfGoal = Constants.DriveConstants.blueGoalPoseSource;
+        }
+        else {
+            poseOfGoal = Constants.DriveConstants.blueGoalPoseAmp;
         }
 
         double angleToGoal = Math
@@ -264,10 +270,17 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
         Pose2d poseOfGoal;
 
         // Set goal pose based on alliance
-        if (DriverStation.getAlliance().get() == Alliance.Red) {
-            poseOfGoal = Constants.DriveConstants.redGoalPose;
-        } else {
-            poseOfGoal = Constants.DriveConstants.blueGoalPose;
+        if (DriverStation.getAlliance().get() == Alliance.Red && getRobotPose().getX() < 4) {
+            poseOfGoal = Constants.DriveConstants.redGoalPoseSource;
+        } 
+        else if (DriverStation.getAlliance().get() == Alliance.Red){
+            poseOfGoal = Constants.DriveConstants.redGoalPoseAmp;
+        }
+        else if (getRobotPose().getX() < 4){
+            poseOfGoal = Constants.DriveConstants.blueGoalPoseSource;
+        }
+        else {
+            poseOfGoal = Constants.DriveConstants.blueGoalPoseAmp;
         }
 
         double distance = poseOfGoal.minus(getRobotPose()).getTranslation().getNorm();

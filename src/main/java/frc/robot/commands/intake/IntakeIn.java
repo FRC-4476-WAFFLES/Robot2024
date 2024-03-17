@@ -4,6 +4,8 @@
 
 package frc.robot.commands.intake;
 
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.Command;
 
 
@@ -55,8 +57,13 @@ public class IntakeIn extends Command {
   
     intakeSubsystem.SetIntakeSpeed(1);
     feederSubsystem.setFeederTargetSpeed(100);
-   
-  
+
+    if (shooterSubsystem.isNote()){
+      operatorController.getHID().setRumble(RumbleType.kLeftRumble,1.0);
+    }
+    else {
+      operatorController.getHID().setRumble(RumbleType.kLeftRumble,0.0);
+    }
   }
 
   // Called once the command ends or is interrupted.
