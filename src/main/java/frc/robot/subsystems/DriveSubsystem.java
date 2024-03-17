@@ -300,8 +300,13 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
                 }
 
             }
+<<<<<<< Updated upstream
             debugVisionEstimationPoseLeft.setRobotPose(estPoseLeft);
             SmartDashboard.putData("Camera Left1", debugVisionEstimationPoseLeft);
+=======
+            debugVisionEstimationPose.setRobotPose(estPose);
+            SmartDashboard.putData("Left Cam 2D Pose", debugVisionEstimationPose);
+>>>>>>> Stashed changes
 
         });
         var visionEstimationRight = visionRight.getEstimatedGlobalPose();

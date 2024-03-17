@@ -109,29 +109,35 @@ public final class Constants {
   }
 
   public static class VisionConstants{
+<<<<<<< Updated upstream
     public static final String kCameraLeft = "Camera Left1";
       // Cam mounted facing forward, half a meter forward of center, half a meter up
       // from center.
     public static final Transform3d kRobotToLeftCamera = new Transform3d(
             new Translation3d(-0.3431, 0.2667, 0.527),
+=======
+    public static final String kCameraLeft = "Left Camera";
+      // Cam mounted facing forward, half a meter forward of center, half a meter up
+      // from center.
+    public static final Transform3d kRobotToLeftCamera = new Transform3d(
+            new Translation3d(0.3431, 0.2667, 0.527),
+>>>>>>> Stashed changes
             new Rotation3d(Units.degreesToRadians(0), Units.degreesToRadians(-58.64),
                     Units.degreesToRadians(180)));
                     //Q from CAD (-34.31, +- 26.67, 52.7)
                     //Q from CAD (0,-58.64, 180)
+<<<<<<< Updated upstream
                     //.2667, -0.336 //0.196
  public static final String kCameraRight = "Camera Right1";
+=======
+ public static final String kCameraRight = "Right Camera";
+>>>>>>> Stashed changes
       // Cam mounted facing forward, half a meter forward of center, half a meter up
       // from center.
     public static final Transform3d kRobotToRightCamera = new Transform3d(
             new Translation3d(-0.3431, -0.2667, 0.527),
             new Rotation3d(Units.degreesToRadians(0), Units.degreesToRadians(-58.64),
                     Units.degreesToRadians(180)));
-
-      // Back camera mounted 11.0 inches behind centre, 8.5 left of centre, 8.625
-      // inches up from centre, 24 degrees for horizontal
-
-      // this camera is on both robots. So we need to change the position based on
-      // which robot.
 
       public static final Matrix<N3, N1> kSingleTagStdDevs = VecBuilder.fill(4, 4, 1000);
       public static final Matrix<N3, N1> kMultiTagStdDevs = VecBuilder.fill(0.5, 0.5, 1);
