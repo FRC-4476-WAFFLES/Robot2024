@@ -10,6 +10,7 @@ import frc.robot.generated.TunerConstants;
 // Subsystems
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.AnglerSubsystem;
+import frc.robot.subsystems.CANdleLights;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.FeederSubsystem;
@@ -61,6 +62,7 @@ public class RobotContainer {
 
   // The robot's subsystems 
   public static final LightSubsystem lightSubsystem = new LightSubsystem();
+  public static final CANdleLights CANdleLights = new CANdleLights();
   public static final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
   public static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public static final ShooterSubsystem shooterSubsystem  = new ShooterSubsystem();

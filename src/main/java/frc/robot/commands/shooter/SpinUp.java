@@ -17,6 +17,7 @@ import static frc.robot.RobotContainer.*;
 public class SpinUp extends Command {
   /** Creates a new SpinUp. */
   double generalAnglerAdjustment = -2.0;
+  double generalSpeedAdjustment = -0.05;
 
   enum ShooterMode {
     TALL(45.0),
@@ -86,13 +87,13 @@ public class SpinUp extends Command {
     
     final InterpolatingDoubleTreeMap shooterSpeedMap = new InterpolatingDoubleTreeMap();
    
-    shooterSpeedMap.put(0.9, 50.0);
-    shooterSpeedMap.put(1.8542, 60.0);
-    shooterSpeedMap.put(2.54, 63.0);
-    shooterSpeedMap.put(3.0988, 65.0);
-    shooterSpeedMap.put(3.556, 72.0);
-    shooterSpeedMap.put(6.0, 100.0);
-    shooterSpeedMap.put(9.0, 100.0);
+    shooterSpeedMap.put(0.9, 45.0 + generalSpeedAdjustment);
+    shooterSpeedMap.put(1.8542, 60.0 + generalSpeedAdjustment);
+    shooterSpeedMap.put(2.54, 63.0 + generalSpeedAdjustment);
+    shooterSpeedMap.put(3.0988, 65.0 + generalSpeedAdjustment);
+    shooterSpeedMap.put(3.556, 72.0 + generalSpeedAdjustment);
+    shooterSpeedMap.put(6.0, 85.0 + generalSpeedAdjustment);
+    shooterSpeedMap.put(9.0, 100.0 + generalSpeedAdjustment);
    
 
     return shooterSpeedMap.get(distance);
@@ -114,16 +115,17 @@ public class SpinUp extends Command {
     shooterAngleMap.put(3.0988, 41.0 + generalAnglerAdjustment);
     shooterAngleMap.put(3.556, 39.5 + generalAnglerAdjustment);
     shooterAngleMap.put(3.8813, 38.5 + generalAnglerAdjustment);
-    shooterAngleMap.put(4.1, 37.5 + generalAnglerAdjustment);
+    shooterAngleMap.put(4.1, 37.5 + generalAnglerAdjustment - 0.5);
     shooterAngleMap.put(4.3688, 36.5 + generalAnglerAdjustment);
     shooterAngleMap.put(4.5626, 33.0 + generalAnglerAdjustment);
-    shooterAngleMap.put(5.8711, 30.0 + generalAnglerAdjustment);
-    shooterAngleMap.put(6.0, 29.5 + generalAnglerAdjustment + 0.25); //approx alliance line
+    shooterAngleMap.put(5.8711, 30.0 + generalAnglerAdjustment+0.25);
+    shooterAngleMap.put(6.0, 29.5 + generalAnglerAdjustment); //approx alliance line
     shooterAngleMap.put(6.5, 29.50 + generalAnglerAdjustment - 1);
-    shooterAngleMap.put(7.9, 28.5 + generalAnglerAdjustment - 0.5);
+    shooterAngleMap.put(7.9, 28.5 + generalAnglerAdjustment - 2);
 
     double predictedAngle = shooterAngleMap.get(distance);
     return predictedAngle;
+
 
  //   return solveForElevatorHeight(distance, height, predictedAngle);
 

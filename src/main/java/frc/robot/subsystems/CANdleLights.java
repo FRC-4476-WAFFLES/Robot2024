@@ -29,7 +29,7 @@ import frc.robot.Constants;
 public class CANdleLights extends SubsystemBase {
 
   private final CANdle candle = new CANdle(Constants.CANdle); 
-  private final int LED_COUNT = 60;
+  private final int LED_COUNT = 50;
   /** Creates a new CandleLights. */
 
   private Animation m_toAnimate = null;

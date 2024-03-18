@@ -80,7 +80,6 @@ public class SpinUpStash extends Command {
 
     final InterpolatingDoubleTreeMap shooterAngleMap = new InterpolatingDoubleTreeMap();
 
-    
     shooterAngleMap.put(6.3,30.0);
     shooterAngleMap.put(9.0, 54.0);
     shooterAngleMap.put(9.2, 47.0);

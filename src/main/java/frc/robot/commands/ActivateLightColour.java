@@ -5,6 +5,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.LightSubsystem;
+import frc.robot.subsystems.CANdleLights.AnimationTypes;
 import frc.robot.subsystems.LightSubsystem.LightColours;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
@@ -15,7 +17,7 @@ public class ActivateLightColour extends Command {
   /** Creates a new ActivateLightColour. */
   public ActivateLightColour() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(lightSubsystem);
+    addRequirements(lightSubsystem,CANdleLights);
   }
 
   // Called when the command is initially scheduled.
@@ -27,6 +29,8 @@ public class ActivateLightColour extends Command {
   @Override
   public void execute() {
     System.err.println("Running normal lights");
+    CANdleLights.changeAnimation(AnimationTypes.Twinkle);
+    CANdleLights.setColors();
 
     final double matchTimer = Timer.getMatchTime();
     
