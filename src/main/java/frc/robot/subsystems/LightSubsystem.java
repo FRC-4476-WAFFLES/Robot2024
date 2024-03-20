@@ -9,8 +9,15 @@ import com.ctre.phoenix.led.CANdle;
 import com.ctre.phoenix.led.CANdle.LEDStripType;
 import com.ctre.phoenix.led.CANdle.VBatOutputMode;
 import com.ctre.phoenix.led.CANdleConfiguration;
+import com.ctre.phoenix.led.ColorFlowAnimation;
+import com.ctre.phoenix.led.ColorFlowAnimation.Direction;
 import com.ctre.phoenix.led.LarsonAnimation;
 import com.ctre.phoenix.led.LarsonAnimation.BounceMode;
+import com.ctre.phoenix.led.StrobeAnimation;
+import com.ctre.phoenix.led.TwinkleAnimation;
+import com.ctre.phoenix.led.TwinkleAnimation.TwinklePercent;
+import com.ctre.phoenix.led.TwinkleOffAnimation;
+import com.ctre.phoenix.led.TwinkleOffAnimation.TwinkleOffPercent;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
@@ -76,7 +83,11 @@ public LightSubsystem() {
     // This method will be called once per scheduler run
 
     if(DriverStation.isDisabled()){
-        m_currentAnimation = new LarsonAnimation(255, 255, 0, 0, 0.2, LED_COUNT, BounceMode.Front, 2);
+        //m_currentAnimation = new LarsonAnimation(255, 255, 0, 0, 0.2, LED_COUNT, BounceMode.Front, 2);
+        //m_currentAnimation = new StrobeAnimation(240, 10, 180, 0, 98.0 / 256.0, LED_COUNT);
+        m_currentAnimation = new ColorFlowAnimation(255, 255, 0, 0, 0.05, LED_COUNT, Direction.Forward);
+        //m_currentAnimation = new TwinkleOffAnimation(255, 255, 0, 0, 0.8, LED_COUNT, TwinkleOffPercent.Percent100);
+
         candle.animate(m_currentAnimation);
       }
     else{
