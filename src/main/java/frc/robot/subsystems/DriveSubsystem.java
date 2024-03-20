@@ -18,10 +18,13 @@ import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
-import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Notifier;
@@ -33,7 +36,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
 import frc.robot.generated.TunerConstants;
-import frc.robot.utils.LimelightHelpers;
 import frc.robot.utils.Vision;
 
 /**
@@ -287,22 +289,22 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
     }
 
     public void periodic() {
-        if(odometryIsValid()){
-            var visionEstimationLeft = visionLeft.getEstimatedGlobalPose();
-            visionEstimationLeft.ifPresent(estLeft -> {
-            var estPoseLeft = estLeft.estimatedPose.toPose2d();
-            var estStdDevs = visionLeft.getEstimationStdDevs(estPoseLeft);
-            if (Math.abs(getCurrentRobotChassisSpeeds().vxMetersPerSecond) < 0.1) {
+        if(odometryIsValid() && Math.abs(getCurrentRobotChassisSpeeds().vxMetersPerSecond) < 0.1){
+        //     var visionEstimationLeft = visionLeft.getEstimatedGlobalPose();
+        //     visionEstimationLeft.ifPresent(estLeft -> {
+        //     var estPoseLeft = estLeft.estimatedPose.toPose2d();
+        //     var estStdDevs = visionLeft.getEstimationStdDevs(estPoseLeft);
+        //     if (Math.abs(getCurrentRobotChassisSpeeds().vxMetersPerSecond) < 0.1) {
                 
-                    Pose2d newEstimationPositionLeft = new Pose2d(estPoseLeft.getTranslation(), getRobotPose().getRotation());
-                    m_odometry.addVisionMeasurement(newEstimationPositionLeft, estLeft.timestampSeconds, estStdDevs);
+        //             Pose2d newEstimationPositionLeft = new Pose2d(estPoseLeft.getTranslation(), getRobotPose().getRotation());
+        //             m_odometry.addVisionMeasurement(newEstimationPositionLeft, estLeft.timestampSeconds, estStdDevs);
                 
 
-            }
-            debugVisionEstimationPoseLeft.setRobotPose(estPoseLeft);
-            SmartDashboard.putData("Camera Left1", debugVisionEstimationPoseLeft);
+        //     }
+        //     debugVisionEstimationPoseLeft.setRobotPose(estPoseLeft);
+        //     SmartDashboard.putData("Camera Left1", debugVisionEstimationPoseLeft);
 
-        });
+        // });
         // var visionEstimationRight = visionRight.getEstimatedGlobalPose();
         // visionEstimationRight.ifPresent(estRight -> {
         //     var estPoseRight = estRight.estimatedPose.toPose2d();
@@ -318,7 +320,46 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
         //     SmartDashboard.putData("Camera Right1", debugVisionEstimationPoseRight);
         // });
 
+            var visionEstimationLeft = visionLeft.getEstimatedGlobalPose();
+            var visionEstimationRight = visionRight.getEstimatedGlobalPose();
+
+            if (visionEstimationLeft.isPresent() && visionEstimationRight.isPresent()) {
+                var estLeft = visionEstimationLeft.get();
+                var estPoseLeft = estLeft.estimatedPose.toPose2d();
+                Matrix<N3, N1> estStdDevsLeft = visionLeft.getEstimationStdDevs(estPoseLeft);
+                var estRight = visionEstimationRight.get();
+                var estPoseRight = estRight.estimatedPose.toPose2d();
+                Matrix<N3, N1> estStdDevsRight = visionRight.getEstimationStdDevs(estPoseRight);
+                Matrix<N3, N1> estStdDevs = estStdDevsLeft.plus(estStdDevsRight).elementPower(-1).times(0.5); // Take the average of the std devs
+                Matrix<N3, N1> interpolateValues = estStdDevsLeft.elementTimes(estStdDevsLeft.plus(estStdDevsRight).elementPower(-1)); // is left*(left+right)^-1 which equals left/(left+right)
+                                                                                                                                       // Maps left and right standard devs to [0,1] for interpolation
+                
+                Pose2d estPose = new Pose2d(
+                    MathUtil.interpolate(estPoseLeft.getX(), estPoseRight.getX(), interpolateValues.get(0, 0)), 
+                    MathUtil.interpolate(estPoseLeft.getY(), estPoseRight.getY(), interpolateValues.get(0, 1)), 
+                    getRobotPose().getRotation()
+                );
+
+                m_odometry.addVisionMeasurement(estPose, (estLeft.timestampSeconds + estRight.timestampSeconds) / 2.0, estStdDevs);
+
+            } else if (visionEstimationLeft.isPresent()) {
+                var estLeft = visionEstimationLeft.get();
+                Pose2d estPoseLeft = estLeft.estimatedPose.toPose2d();
+                Matrix<N3, N1> estStdDevs = visionLeft.getEstimationStdDevs(estPoseLeft);
+
+                Pose2d estPose = new Pose2d(estPoseLeft.getTranslation(), getRobotPose().getRotation());
+
+                m_odometry.addVisionMeasurement(estPose, estLeft.timestampSeconds, estStdDevs);
+
+            } else if (visionEstimationRight.isPresent()) {
+                var estRight = visionEstimationRight.get();
+                Pose2d estPoseRight = estRight.estimatedPose.toPose2d();
+                Matrix<N3, N1> estStdDevs = visionRight.getEstimationStdDevs(estPoseRight);
+
+                Pose2d estPose = new Pose2d(estPoseRight.getTranslation(), getRobotPose().getRotation());
+
+                m_odometry.addVisionMeasurement(estPose, estRight.timestampSeconds, estStdDevs);
+            }
         }
-        
     }
 }
