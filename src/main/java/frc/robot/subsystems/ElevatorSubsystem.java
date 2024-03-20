@@ -44,6 +44,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     private double profileStartPosition = 0;
     private double profileStartVelocity = 0;
 
+    private boolean previousSwitchState;
+
 
   
 
@@ -92,14 +94,16 @@ public class ElevatorSubsystem extends SubsystemBase {
     updateSmartDashboard();
     SmartDashboard.putBoolean("COAST STUFF", coastSwitch.get());
     SmartDashboard.putBoolean("GoodElevator", Math.abs(Elevator1.getPosition().getValueAsDouble() - elevatorTargetPosition) < ELEVATOR_DEAD_ZONE);
-    if (!getCoastSwitch()){
+    if (!getCoastSwitch() && previousSwitchState){
       Elevator1.setNeutralMode(NeutralModeValue.Coast);
       Elevator2.setNeutralMode(NeutralModeValue.Coast);
+      
     }
-    else{
+    else if(getCoastSwitch() && !previousSwitchState){
       Elevator1.setNeutralMode(NeutralModeValue.Brake);
       Elevator2.setNeutralMode(NeutralModeValue.Brake);
     }
+    previousSwitchState = getCoastSwitch();
 
 
 

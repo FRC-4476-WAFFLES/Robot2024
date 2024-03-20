@@ -41,6 +41,7 @@ public class AnglerSubsystem extends SubsystemBase {
 
     private Timer profileTimer = new Timer();
     private boolean previousEnabled = false;
+    private boolean previousSwitchState;
 
     public AnglerSubsystem() {
         initializeSmartDashboard();
@@ -101,13 +102,16 @@ public class AnglerSubsystem extends SubsystemBase {
         // final PositionVoltage anglerPositionRequest = new PositionVoltage(0).withSlot(1);
         // angler.setControl(anglerPositionRequest.withPosition(anglerTargetPositionRotations));
         updateSmartDashboard();
-        if(!elevatorSubsystem.getCoastSwitch()){
+        if (!elevatorSubsystem.getCoastSwitch() && previousSwitchState){
             angler.setNeutralMode(NeutralModeValue.Coast);
-        }
-        else{
+            
+            
+          }
+          else if(elevatorSubsystem.getCoastSwitch() && !previousSwitchState){
             angler.setNeutralMode(NeutralModeValue.Brake);
-    
-        }
+           
+          }
+          previousSwitchState = elevatorSubsystem.getCoastSwitch();
 
         SmartDashboard.putNumber("Angler Setpoint", anglerTargetPositonDegrees);
         SmartDashboard.putNumber("Angler Position", getAnglerDegrees());

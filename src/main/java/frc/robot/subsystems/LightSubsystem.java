@@ -4,11 +4,15 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.led.Animation;
 import com.ctre.phoenix.led.CANdle;
 import com.ctre.phoenix.led.CANdle.LEDStripType;
 import com.ctre.phoenix.led.CANdle.VBatOutputMode;
 import com.ctre.phoenix.led.CANdleConfiguration;
+import com.ctre.phoenix.led.LarsonAnimation;
+import com.ctre.phoenix.led.LarsonAnimation.BounceMode;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -18,14 +22,15 @@ import frc.robot.subsystems.CANdleLights.AnimationTypes;
 public class LightSubsystem extends SubsystemBase {
   // private final PWMSparkMax blinkin = new PWMSparkMax(Constants.lightsBlinkin);
   private final CANdle candle = new CANdle(Constants.CANdle); 
-  private final int LED_COUNT = 50;
+  private final int LED_COUNT = 64;
 
   private final Timer blinkTimer = new Timer();
   private int[] colour1 = {255, 255, 255};
   private int[] colour2 = {255, 255, 255};
   private boolean isBlinkColour1 = true;
-
-  private double blinkRate = 0.1;
+  
+  private Animation m_currentAnimation;
+  private double blinkRate = 0.01;
 
   public enum LightColours {
     RED(255, 0, 0),
@@ -69,21 +74,29 @@ public LightSubsystem() {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    if (blinkTimer.get() > blinkRate) {
-      //blinkin.set(isBlinkColour1 ? colour1 : colour2);
-      if(isBlinkColour1) {
-       // candle.setLEDs(colour1[0], colour1[1], colour1[2]);
-        
-      } else {
-      //  candle.setLEDs(colour2[0], colour2[1], colour2[2]);
-        candle.setLEDs(255, 255, 0);
+
+    if(DriverStation.isDisabled()){
+        m_currentAnimation = new LarsonAnimation(255, 255, 0, 0, 0.2, LED_COUNT, BounceMode.Front, 2);
+        candle.animate(m_currentAnimation);
       }
+    else{
+      if (blinkTimer.get() > blinkRate) {
+      //blinkin.set(isBlinkColour1 ? colour1 : colour2);
+        if(isBlinkColour1) {
+        candle.setLEDs(colour1[0], colour1[1], colour1[2]);
+          
+        } else {
+          candle.setLEDs(colour2[0], colour2[1], colour2[2]);
+          ///candle.setLEDs(255, 255, 0);
+        }
       
       isBlinkColour1 = !isBlinkColour1;
       blinkTimer.reset();
     }
 
-    candle.setLEDs(255, 255, 0);
+    }
+    
+    //candle.setLEDs(255, 255, 0);
   }
 
   public void setRawLightColour(int red, int green, int blue) {
