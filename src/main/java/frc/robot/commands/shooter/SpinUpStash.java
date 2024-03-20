@@ -13,7 +13,7 @@ public class SpinUpStash extends Command {
   /** Creates a new SpinUpStash. */
   public SpinUpStash() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(shooterSubsystem, anglerSubsystem, elevatorSubsystem);
+    addRequirements(shooterSubsystem, anglerSubsystem, elevatorSubsystem, intakeSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -28,9 +28,10 @@ public class SpinUpStash extends Command {
     double speed = calculateSpeedOffDistanceShoot(distance);
     double angle = calculateAngleOffDistance(distance);
 
+    intakeSubsystem.SetIntakeSpeed(0);
 
     if (distance > 6.2){
-      elevatorSubsystem.setElevatorTargetPosition(51);
+      elevatorSubsystem.setElevatorTargetPosition(27);
       anglerSubsystem.setAnglerTargetPosition(angle);
     }
     else{

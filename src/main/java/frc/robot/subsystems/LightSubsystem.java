@@ -4,62 +4,50 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.led.CANdle;
+import com.ctre.phoenix.led.CANdle.LEDStripType;
+import com.ctre.phoenix.led.CANdle.VBatOutputMode;
+import com.ctre.phoenix.led.CANdleConfiguration;
+
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.subsystems.CANdleLights.AnimationTypes;
 
 public class LightSubsystem extends SubsystemBase {
-  private final PWMSparkMax blinkin = new PWMSparkMax(Constants.lightsBlinkin);
+  // private final PWMSparkMax blinkin = new PWMSparkMax(Constants.lightsBlinkin);
+  private final CANdle candle = new CANdle(Constants.CANdle); 
+  private final int LED_COUNT = 50;
 
   private final Timer blinkTimer = new Timer();
-  private double colour1 = LightColours.YELLOW.getPWMSignal();
-  private double colour2 = LightColours.YELLOW.getPWMSignal();
+  private int[] colour1 = {255, 255, 255};
+  private int[] colour2 = {255, 255, 255};
   private boolean isBlinkColour1 = true;
 
   private double blinkRate = 0.1;
 
   public enum LightColours {
-    RAINBOW_RAINBOW(-0.99),
-    RAINBOW_PARTY(-0.97),
-    CONFETTI(-0.87),
-    SHOT_RED(-0.85),
-    SHOT_BLUE(-0.83),
-    SINELON_RAINBOW(-0.79),
-    BPM_RAINBOW(-0.69),
-    TWINKLES_LAVA(-0.49),
-    COLORWAVE_LAVA(-0.39),
-    LARSON_GREY(-0.33),
-    LIGHTCHASE_RED(-0.31),
-    LIGHTCHASE_BLUE(-0.29),
-    HEARTBEAT_RED(-0.25),
-    HEARTBEAT_BLUE(-0.23),
-    BREATH_RED(-0.17),
-    BREATH_BLUE(-0.15),
-    PINK(0.57),
-    DARKRED(0.59),
-    RED(0.61),
-    REDORANGE(0.63),
-    ORANGE(0.65),
-    YELLOW(0.69),
-    LAWNGREEN(0.71),
-    GREEN(0.77),
-    DARKGREEN(0.75),
-    BLUE(0.87),
-    VIOLET(0.91),
-    WHITE(0.93),
-    GRAY(0.95),
-    DARKGRAY(0.97),
-    BLACK(0.99);
+    RED(255, 0, 0),
+    GREEN(0, 255, 0),
+    BLUE(0, 0, 255),
+    WHITE(255, 255, 255),
+    BLACK(0, 0, 0),
+    YELLOW(255, 255, 0);
 
-    private final double pwmSignal;
+    private final int red;
+    private final int green;
+    private final int blue;
 
-    LightColours(double pwmSignal) {
-      this.pwmSignal = pwmSignal;
+    LightColours(int red, int green, int blue) {
+      this.red = red;
+      this.green = green;
+      this.blue = blue;
     }
 
-    public double getPWMSignal() {
-      return pwmSignal;
+
+    public int[] getRGBValues() {
+      return new int[]{red, green, blue};
     }
   }
 
@@ -67,31 +55,50 @@ public class LightSubsystem extends SubsystemBase {
 public LightSubsystem() {
     blinkTimer.reset();
     blinkTimer.start();
+
+        CANdleConfiguration configAll = new CANdleConfiguration();
+        // configAll.statusLedOffWhenActive = true;
+        // configAll.disableWhenLOS = false;
+        configAll.stripType = LEDStripType.GRB;
+        // configAll.brightnessScalar = 1;
+        // configAll.vBatOutputMode = VBatOutputMode.Modulated;
+        configAll.v5Enabled = true;
+        candle.configAllSettings(configAll, 100);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     if (blinkTimer.get() > blinkRate) {
-      blinkin.set(isBlinkColour1 ? colour1 : colour2);
+      //blinkin.set(isBlinkColour1 ? colour1 : colour2);
+      if(isBlinkColour1) {
+       // candle.setLEDs(colour1[0], colour1[1], colour1[2]);
+        
+      } else {
+      //  candle.setLEDs(colour2[0], colour2[1], colour2[2]);
+        candle.setLEDs(255, 255, 0);
+      }
+      
       isBlinkColour1 = !isBlinkColour1;
       blinkTimer.reset();
     }
+
+    candle.setLEDs(255, 255, 0);
   }
 
-  public void setRawLightColour(double pwmSignal) {
-    this.colour1 = pwmSignal;
-    this.colour2 = pwmSignal;
+  public void setRawLightColour(int red, int green, int blue) {
+    this.colour1 = new int[]{red, green, blue};
+    this.colour2 = new int[]{red, green, blue};
   }
 
   public void setLightColour(LightColours colour) {
-    this.colour1 = colour.getPWMSignal();
-    this.colour2 = colour.getPWMSignal();
+    this.colour1 = colour.getRGBValues();
+    this.colour2 = colour.getRGBValues();
   }
 
   public void blinkBetweenColours(LightColours colour1, LightColours colour2) {
-    this.colour1 = colour1.getPWMSignal();
-    this.colour2 = colour2.getPWMSignal();
+    this.colour1 = colour1.getRGBValues();
+    this.colour2 = colour2.getRGBValues();
   }
 
   public void setBlinkTime(double seconds) {

@@ -25,20 +25,25 @@ public class IntakeOut extends Command {
   @Override
   public void execute() {
     intakeSubsystem.SetIntakeSpeed(-1.0);
-    feederSubsystem.setFeederTargetSpeed(-100);
+    if(shooterSubsystem.isNote()){
+      feederSubsystem.setFeederTargetSpeed(0);
+    }
+    else{
+      feederSubsystem.setFeederTargetSpeed(-100);
+    }
+    
     elevatorSubsystem.isClimbing = false;
     elevatorSubsystem.setElevatorTargetPosition(25);
-    anglerSubsystem.setAnglerTargetPosition(86.7);
-  
-    // TODO if elevator and angler is in intake position outtake the feeder as well.
+    anglerSubsystem.setAnglerTargetPosition(87);
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-     intakeSubsystem.SetIntakeSpeed(0);
-     feederSubsystem.setFeederTargetSpeed(0);
- 
+    intakeSubsystem.SetIntakeSpeed(0);
+    feederSubsystem.setFeederTargetSpeed(0);
+    
      //shooterSubsystem.setFeederTargetSpeed(-1);
   }
   

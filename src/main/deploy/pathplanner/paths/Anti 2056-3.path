@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.328810723241988,
-        "y": 1.4989870778600332
+        "x": 8.082883155780575,
+        "y": 1.1710836545781504
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.305389050150422,
-        "y": 0.1873733847325053
+        "x": 8.05946148268901,
+        "y": -0.1405300385493774
       },
       "isLocked": false,
       "linkedName": "Anti 2056 Link 2"
@@ -71,7 +71,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.5,
-    "maxAcceleration": 3.0,
+    "maxAcceleration": 3.1,
     "maxAngularVelocity": 9000.0,
     "maxAngularAcceleration": 1000.0
   },

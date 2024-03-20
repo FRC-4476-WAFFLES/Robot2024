@@ -17,7 +17,7 @@ import static frc.robot.RobotContainer.*;
 public class SpinUp extends Command {
   /** Creates a new SpinUp. */
   double generalAnglerAdjustment = -2.0;
-  double generalSpeedAdjustment = -0.05;
+  double generalSpeedAdjustment = -1;
 
   enum ShooterMode {
     TALL(45.0),
@@ -37,7 +37,7 @@ public class SpinUp extends Command {
 
   ShooterMode currentShooterMode = ShooterMode.MIDDLE;
   public SpinUp() {
-    addRequirements(shooterSubsystem, anglerSubsystem, elevatorSubsystem);
+    addRequirements(shooterSubsystem, anglerSubsystem, elevatorSubsystem, intakeSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -55,6 +55,7 @@ public class SpinUp extends Command {
     double angle = calculateAngleOffDistance(distance);
    // double height = solveForElevatorHeight(distance, speed, angle);
 
+   intakeSubsystem.SetIntakeSpeed(0);
     elevatorSubsystem.setElevatorTargetPosition(currentShooterMode.getHeight());
     anglerSubsystem.setAnglerTargetPosition(angle);
     if (feederSubsystem.isFeederAtTargetPosition()){
@@ -93,7 +94,7 @@ public class SpinUp extends Command {
     shooterSpeedMap.put(3.0988, 65.0 + generalSpeedAdjustment);
     shooterSpeedMap.put(3.556, 72.0 + generalSpeedAdjustment);
     shooterSpeedMap.put(6.0, 85.0 + generalSpeedAdjustment);
-    shooterSpeedMap.put(9.0, 100.0 + generalSpeedAdjustment);
+    shooterSpeedMap.put(9.0, 100.0);
    
 
     return shooterSpeedMap.get(distance);

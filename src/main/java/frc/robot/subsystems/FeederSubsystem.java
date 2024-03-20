@@ -66,9 +66,9 @@ public class FeederSubsystem extends SubsystemBase {
 
     // PID for feeder
     Slot0Configs feederSlot0Configs = new Slot0Configs();
-    feederSlot0Configs.kP = 2.0; 
+    feederSlot0Configs.kP = 2.5; 
     feederSlot0Configs.kD = 0.00001;
-    feederSlot0Configs.kV = 0.12;
+    feederSlot0Configs.kV = 0.13;
 
 
     feeder.getConfigurator().apply(generalConfigs.withMotorOutput(new MotorOutputConfigs().withInverted(InvertedValue.CounterClockwise_Positive)));

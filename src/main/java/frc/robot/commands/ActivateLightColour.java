@@ -17,7 +17,7 @@ public class ActivateLightColour extends Command {
   /** Creates a new ActivateLightColour. */
   public ActivateLightColour() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(lightSubsystem,CANdleLights);
+    addRequirements(lightSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -29,8 +29,8 @@ public class ActivateLightColour extends Command {
   @Override
   public void execute() {
     System.err.println("Running normal lights");
-    CANdleLights.changeAnimation(AnimationTypes.Twinkle);
-    CANdleLights.setColors();
+   // CANdleLights.changeAnimation(AnimationTypes.Twinkle);
+    // CANdleLights.setColors();
 
     final double matchTimer = Timer.getMatchTime();
     
@@ -65,10 +65,10 @@ public class ActivateLightColour extends Command {
     else {
       var alliance = DriverStation.getAlliance();
       if (alliance.get() == DriverStation.Alliance.Blue) {
-          lightSubsystem.setLightColour(LightColours.HEARTBEAT_BLUE);
+          lightSubsystem.setLightColour(LightColours.BLUE);
       }
       else {
-          lightSubsystem.setLightColour(LightColours.HEARTBEAT_RED);
+          lightSubsystem.setLightColour(LightColours.RED);
       }
 
     }

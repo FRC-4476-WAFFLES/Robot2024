@@ -69,7 +69,7 @@ public class IntakeIn extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intakeSubsystem.SetIntakeSpeed(0);
+    intakeSubsystem.SetIntakeSpeed(-0.75);
     feederSubsystem.setFeederTargetSpeed(0);
     operatorController.getHID().setRumble(RumbleType.kLeftRumble,0);
   }
@@ -78,8 +78,6 @@ public class IntakeIn extends Command {
   @Override
   public boolean isFinished() {
     if (shooterSubsystem.isNote()){
-      intakeSubsystem.SetIntakeSpeed(0);
-      feederSubsystem.setFeederTargetSpeed(0);
       return true;
     }
     else{

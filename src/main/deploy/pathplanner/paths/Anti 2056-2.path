@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 8.328810723241988,
-        "y": 1.4989870778600332
+        "x": 8.082883155780575,
+        "y": 1.1710836545781504
       },
       "prevControl": {
-        "x": 8.153148175055266,
-        "y": 3.2204800500899164
+        "x": 7.907220607593853,
+        "y": 2.892576626808033
       },
       "nextControl": {
-        "x": 8.50447327142871,
-        "y": -0.2225058943698488
+        "x": 8.258545703967293,
+        "y": -0.5504093176517315
       },
       "isLocked": false,
       "linkedName": "Anti 2056 Link 2"
@@ -47,22 +47,22 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.2,
-      "rotationDegrees": -75.8903276365015,
+      "rotationDegrees": -68.98651595873763,
       "rotateFast": true
     },
     {
       "waypointRelativePos": 0.4,
-      "rotationDegrees": -79.12085474298866,
+      "rotationDegrees": -48.122871208944225,
       "rotateFast": false
     },
     {
       "waypointRelativePos": 0.65,
-      "rotationDegrees": -78.57729401520116,
+      "rotationDegrees": -50.88371108326397,
       "rotateFast": false
     },
     {
       "waypointRelativePos": 1.1,
-      "rotationDegrees": -83.26300437830952,
+      "rotationDegrees": -50.9820709818377,
       "rotateFast": true
     }
   ],

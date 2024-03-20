@@ -287,38 +287,38 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
     }
 
     public void periodic() {
-        var visionEstimationLeft = visionLeft.getEstimatedGlobalPose();
-        visionEstimationLeft.ifPresent(estLeft -> {
+        if(odometryIsValid()){
+            var visionEstimationLeft = visionLeft.getEstimatedGlobalPose();
+            visionEstimationLeft.ifPresent(estLeft -> {
             var estPoseLeft = estLeft.estimatedPose.toPose2d();
             var estStdDevs = visionLeft.getEstimationStdDevs(estPoseLeft);
             if (Math.abs(getCurrentRobotChassisSpeeds().vxMetersPerSecond) < 0.1) {
-                try {
+                
                     Pose2d newEstimationPositionLeft = new Pose2d(estPoseLeft.getTranslation(), getRobotPose().getRotation());
                     m_odometry.addVisionMeasurement(newEstimationPositionLeft, estLeft.timestampSeconds, estStdDevs);
-                } catch (Exception e) {
-
-                }
+                
 
             }
             debugVisionEstimationPoseLeft.setRobotPose(estPoseLeft);
             SmartDashboard.putData("Camera Left1", debugVisionEstimationPoseLeft);
 
         });
-        var visionEstimationRight = visionRight.getEstimatedGlobalPose();
-        visionEstimationRight.ifPresent(estRight -> {
-            var estPoseRight = estRight.estimatedPose.toPose2d();
-            var estStdDevs = visionRight.getEstimationStdDevs(estPoseRight);
-            if (Math.abs(getCurrentRobotChassisSpeeds().vxMetersPerSecond) < 0.1) {
-                try {
-                    Pose2d newEstimationPositionRight = new Pose2d(estPoseRight.getTranslation(), getRobotPose().getRotation());
-                    m_odometry.addVisionMeasurement(newEstimationPositionRight, estRight.timestampSeconds, estStdDevs);
-                } catch (Exception e) {
+        // var visionEstimationRight = visionRight.getEstimatedGlobalPose();
+        // visionEstimationRight.ifPresent(estRight -> {
+        //     var estPoseRight = estRight.estimatedPose.toPose2d();
+        //     var estStdDevs = visionRight.getEstimationStdDevs(estPoseRight);
+        //     if (Math.abs(getCurrentRobotChassisSpeeds().vxMetersPerSecond) < 0.1) {
+                
+        //             Pose2d newEstimationPositionRight = new Pose2d(estPoseRight.getTranslation(), getRobotPose().getRotation());
+        //             m_odometry.addVisionMeasurement(newEstimationPositionRight, estRight.timestampSeconds, estStdDevs);
+               
 
-                }
+        //     }
+        //     debugVisionEstimationPoseRight.setRobotPose(estPoseRight);
+        //     SmartDashboard.putData("Camera Right1", debugVisionEstimationPoseRight);
+        // });
 
-            }
-            debugVisionEstimationPoseRight.setRobotPose(estPoseRight);
-            SmartDashboard.putData("Camera Right1", debugVisionEstimationPoseRight);
-        });
+        }
+        
     }
 }

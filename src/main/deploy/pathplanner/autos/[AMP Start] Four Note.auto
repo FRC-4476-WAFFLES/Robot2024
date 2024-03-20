@@ -61,7 +61,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "intakeIn"
+                  "name": "intakeInThenSpinup"
                 }
               }
             ]
@@ -86,7 +86,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "intakeIn"
+                  "name": "intakeInThenSpinup"
                 }
               }
             ]

@@ -27,12 +27,12 @@ public class SuperstructureHome extends Command {
     } else {
       elevatorSubsystem.setElevatorTargetPosition(25);
       anglerSubsystem.setAnglerTargetPosition(94.5);
-      // if(shooterSubsystem.isNote() && feederSubsystem.isFeederAtTargetPosition()){
-      //   shooterSubsystem.setShooterTargetSpeed(60);
-      // }
-      // else if(!shooterSubsystem.isNote()){
-      //   shooterSubsystem.setShooterTargetSpeed(0);
-      // }
+      if(shooterSubsystem.isNote() && feederSubsystem.isFeederAtTargetPosition()){
+        shooterSubsystem.setShooterTargetSpeed(30);
+      }
+      else if(!shooterSubsystem.isNote()){
+        shooterSubsystem.setShooterTargetSpeed(0);
+      }
     }
   
   
