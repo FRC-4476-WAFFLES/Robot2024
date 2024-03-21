@@ -37,7 +37,7 @@ public class LightSubsystem extends SubsystemBase {
   private boolean isBlinkColour1 = true;
   
   private Animation m_currentAnimation;
-  private double blinkRate = 0.01;
+  private double blinkRate = 0.1;
 
   public enum LightColours {
     RED(255, 0, 0),
@@ -91,6 +91,7 @@ public LightSubsystem() {
         candle.animate(m_currentAnimation);
       }
     else{
+      candle.animate(null);
       if (blinkTimer.get() > blinkRate) {
       //blinkin.set(isBlinkColour1 ? colour1 : colour2);
         if(isBlinkColour1) {

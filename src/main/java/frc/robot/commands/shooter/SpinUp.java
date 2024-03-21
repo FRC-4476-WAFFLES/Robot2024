@@ -17,7 +17,7 @@ import static frc.robot.RobotContainer.*;
 public class SpinUp extends Command {
   /** Creates a new SpinUp. */
   double generalAnglerAdjustment = -2.0;
-  double generalSpeedAdjustment = -1;
+  double generalSpeedAdjustment = -6;
 
   enum ShooterMode {
     TALL(45.0),

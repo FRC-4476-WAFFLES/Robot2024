@@ -20,6 +20,7 @@ import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -54,6 +55,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
     private EstimatedRobotPose estimatedRobotPose;
     private Field2d debugVisionEstimationPoseLeft = new Field2d();
     private Field2d debugVisionEstimationPoseRight = new Field2d();
+    private LinearFilter filter = LinearFilter.singlePoleIIR(0.3, 0.02);
 
     private final SwerveRequest.ApplyChassisSpeeds autoRequest = new SwerveRequest.ApplyChassisSpeeds()
             .withDriveRequestType(DriveRequestType.Velocity);
@@ -199,9 +201,9 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
 
     public Rotation2d getStaticAngleToPodium() {
         if (DriverStation.getAlliance().get() == Alliance.Red) {
-            return new Rotation2d(Units.degreesToRadians(-147));
+            return new Rotation2d(Units.degreesToRadians(-157));
         } else {
-            return new Rotation2d(Units.degreesToRadians(-32));
+            return new Rotation2d(Units.degreesToRadians(-33));
         }
 
     }
@@ -233,7 +235,9 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
         } else {
             poseOfStash = Constants.DriveConstants.blueStash;
         }
+
         double distance = poseOfStash.minus(getRobotPose()).getTranslation().getNorm();
+        distance = filter.calculate(distance);
 
         SmartDashboard.putNumber("DistanceToStash", distance);
 
@@ -284,6 +288,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
         double distance = poseOfGoal.minus(getRobotPose()).getTranslation().getNorm();
 
         SmartDashboard.putNumber("DistanceToGoal", distance);
+        distance = filter.calculate(distance);
 
         return distance;
     }
@@ -330,17 +335,17 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
                 var estRight = visionEstimationRight.get();
                 var estPoseRight = estRight.estimatedPose.toPose2d();
                 Matrix<N3, N1> estStdDevsRight = visionRight.getEstimationStdDevs(estPoseRight);
-                Matrix<N3, N1> estStdDevs = estStdDevsLeft.plus(estStdDevsRight).elementPower(-1).times(0.5); // Take the average of the std devs
+                Matrix<N3, N1> estStdDevs = estStdDevsLeft.plus(estStdDevsRight).times(0.5); // Take the average of the std devs
                 Matrix<N3, N1> interpolateValues = estStdDevsLeft.elementTimes(estStdDevsLeft.plus(estStdDevsRight).elementPower(-1)); // is left*(left+right)^-1 which equals left/(left+right)
                                                                                                                                        // Maps left and right standard devs to [0,1] for interpolation
                 
                 Pose2d estPose = new Pose2d(
                     MathUtil.interpolate(estPoseLeft.getX(), estPoseRight.getX(), interpolateValues.get(0, 0)), 
-                    MathUtil.interpolate(estPoseLeft.getY(), estPoseRight.getY(), interpolateValues.get(0, 1)), 
+                    MathUtil.interpolate(estPoseLeft.getY(), estPoseRight.getY(), interpolateValues.get(1, 0)), 
                     getRobotPose().getRotation()
                 );
 
-                m_odometry.addVisionMeasurement(estPose, (estLeft.timestampSeconds + estRight.timestampSeconds) / 2.0, estStdDevs);
+                addVisionMeasurement(estPose, (estLeft.timestampSeconds + estRight.timestampSeconds) / 2.0, estStdDevs);
 
             } else if (visionEstimationLeft.isPresent()) {
                 var estLeft = visionEstimationLeft.get();
@@ -349,7 +354,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
 
                 Pose2d estPose = new Pose2d(estPoseLeft.getTranslation(), getRobotPose().getRotation());
 
-                m_odometry.addVisionMeasurement(estPose, estLeft.timestampSeconds, estStdDevs);
+                addVisionMeasurement(estPose, estLeft.timestampSeconds, estStdDevs);
 
             } else if (visionEstimationRight.isPresent()) {
                 var estRight = visionEstimationRight.get();
@@ -358,7 +363,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
 
                 Pose2d estPose = new Pose2d(estPoseRight.getTranslation(), getRobotPose().getRotation());
 
-                m_odometry.addVisionMeasurement(estPose, estRight.timestampSeconds, estStdDevs);
+                addVisionMeasurement(estPose, estRight.timestampSeconds, estStdDevs);
             }
         }
     }
