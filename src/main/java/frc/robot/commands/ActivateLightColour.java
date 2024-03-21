@@ -34,7 +34,7 @@ public class ActivateLightColour extends Command {
     final double matchTimer = Timer.getMatchTime();
     
     // If certain conditions are fufilled, the robot's lights change colours
-    if(shooterSubsystem.isGoodSpeed() && anglerSubsystem.isGoodShooterAngle() && elevatorSubsystem.isGoodElevatorPosition() && shooterSubsystem.isShooterRunning()){
+    if(shooterSubsystem.isGoodSpeed() && anglerSubsystem.isGoodShooterAngle() && elevatorSubsystem.isGoodElevatorPosition() && shooterSubsystem.isShooterRunning() && shooterSubsystem.isTryingToShoot()){
       // Ready to shoot  
       lightSubsystem.setLightColour(LightColours.GREEN);
     } 

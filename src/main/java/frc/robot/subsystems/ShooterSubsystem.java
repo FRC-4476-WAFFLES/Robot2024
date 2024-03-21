@@ -42,6 +42,7 @@ public class ShooterSubsystem extends SubsystemBase {
   private final double SHOOTER_DEAD_ZONE = 7;
 
   private final double IR_RANGE = 1.9;
+  private boolean tryingToShoot = false;
 
   private final CurrentLimitsConfigs currentLimitsConfig;
 
@@ -171,5 +172,13 @@ public class ShooterSubsystem extends SubsystemBase {
     return shooterIR.getVoltage() > IR_RANGE;
     // 2.1 Note  ready to shoot 
     // 1.6 no note
+  }
+
+  public boolean isTryingToShoot(){
+    return tryingToShoot;
+  }
+
+  public void setTryingToShoot(boolean tryingToShoot){
+    this.tryingToShoot = tryingToShoot;
   }
 }

@@ -4,6 +4,9 @@
 
 package frc.robot.subsystems;
 
+import static frc.robot.RobotContainer.anglerSubsystem;
+import static frc.robot.RobotContainer.elevatorSubsystem;
+
 import com.ctre.phoenix.led.Animation;
 import com.ctre.phoenix.led.CANdle;
 import com.ctre.phoenix.led.CANdle.LEDStripType;
@@ -83,13 +86,23 @@ public LightSubsystem() {
     // This method will be called once per scheduler run
 
     if(DriverStation.isDisabled()){
-        //m_currentAnimation = new LarsonAnimation(255, 255, 0, 0, 0.2, LED_COUNT, BounceMode.Front, 2);
-        //m_currentAnimation = new StrobeAnimation(240, 10, 180, 0, 98.0 / 256.0, LED_COUNT);
-        m_currentAnimation = new ColorFlowAnimation(255, 255, 0, 0, 0.05, LED_COUNT, Direction.Forward);
-        //m_currentAnimation = new TwinkleOffAnimation(255, 255, 0, 0, 0.8, LED_COUNT, TwinkleOffPercent.Percent100);
-
-        candle.animate(m_currentAnimation);
+      if (elevatorSubsystem.getElevatorPosition() < -0.5 || anglerSubsystem.getAnglerDegrees() < -30.0){
+        m_currentAnimation = new StrobeAnimation(255, 0, 0, 0, 98.0 / 256.0, LED_COUNT);
       }
+      else if(Math.abs(elevatorSubsystem.getElevatorPosition()) < 0.5 
+      || Math.abs(anglerSubsystem.getAnglerDegrees()) < 1){
+        m_currentAnimation = new LarsonAnimation(255, 255, 0, 0, 0.2, LED_COUNT, BounceMode.Front, 2);
+      }
+      else{
+        m_currentAnimation = new ColorFlowAnimation(255, 255, 0, 0, 0.05, LED_COUNT, Direction.Forward);
+      }
+      //m_currentAnimation = new LarsonAnimation(255, 255, 0, 0, 0.2, LED_COUNT, BounceMode.Front, 2);
+      //m_currentAnimation = new StrobeAnimation(240, 10, 180, 0, 98.0 / 256.0, LED_COUNT);
+      
+      //m_currentAnimation = new TwinkleOffAnimation(255, 255, 0, 0, 0.8, LED_COUNT, TwinkleOffPercent.Percent100);
+
+      candle.animate(m_currentAnimation);
+    }
     else{
       candle.animate(null);
       if (blinkTimer.get() > blinkRate) {

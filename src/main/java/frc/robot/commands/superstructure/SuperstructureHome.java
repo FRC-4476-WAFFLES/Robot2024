@@ -21,12 +21,13 @@ public class SuperstructureHome extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    shooterSubsystem.setTryingToShoot(false);
     if (elevatorSubsystem.isClimbing) {
       elevatorSubsystem.setElevatorTargetPosition(0);
       anglerSubsystem.setAnglerTargetPosition(0);
     } else {
       elevatorSubsystem.setElevatorTargetPosition(25);
-      anglerSubsystem.setAnglerTargetPosition(94.5);
+      anglerSubsystem.setAnglerTargetPosition(87);
       if(shooterSubsystem.isNote() && feederSubsystem.isFeederAtTargetPosition()){
         shooterSubsystem.setShooterTargetSpeed(30);
       }
@@ -41,6 +42,7 @@ public class SuperstructureHome extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    shooterSubsystem.setTryingToShoot(true);
     
   }
 

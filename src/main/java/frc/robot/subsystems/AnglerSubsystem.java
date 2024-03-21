@@ -87,7 +87,7 @@ public class AnglerSubsystem extends SubsystemBase {
         Slot0Configs anglerSlot0Configs = new Slot0Configs();
         anglerSlot0Configs.kP = 1.3;
         anglerSlot0Configs.kD = 0;
-        anglerSlot0Configs.kV = 0.12;
+        anglerSlot0Configs.kV = 0.1;
 
         angler.setPosition(0);
         angler.getConfigurator().apply(anglerSlot0Configs);
