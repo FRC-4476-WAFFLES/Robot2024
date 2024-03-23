@@ -52,16 +52,10 @@ public class IntakeIn extends Command {
     // }
     elevatorSubsystem.isClimbing = false;
     elevatorSubsystem.setElevatorTargetPosition(25);
-    anglerSubsystem.setAnglerTargetPosition(87);
+    anglerSubsystem.setAnglerTargetPosition(85);
   
     intakeSubsystem.SetIntakeSpeed(1);
     feederSubsystem.setFeederTargetSpeed(100);
-    if(shooterSubsystem.isNote()){
-      operatorController.getHID().setRumble(RumbleType.kLeftRumble,1.0);
-    }
-    else {
-     operatorController.getHID().setRumble(RumbleType.kLeftRumble,0.0); 
-    }
    
   
   }
@@ -69,9 +63,8 @@ public class IntakeIn extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intakeSubsystem.SetIntakeSpeed(-0.75);
+    intakeSubsystem.SetIntakeSpeed(0);
     feederSubsystem.setFeederTargetSpeed(0);
-    operatorController.getHID().setRumble(RumbleType.kLeftRumble,0);
   }
 
   // Returns true when the command should end.

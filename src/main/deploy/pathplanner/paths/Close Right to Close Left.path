@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 2.523749047498095,
-        "y": 6.772669545339091
+        "x": 2.7427416909042077,
+        "y": 6.979658581285779
       },
       "prevControl": {
-        "x": 1.8800655783129747,
-        "y": 5.858452444177616
+        "x": 2.099058221719088,
+        "y": 6.065441480124305
       },
       "nextControl": null,
       "isLocked": false,
@@ -31,7 +31,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.5,
-      "rotationDegrees": 35.264879257820006,
+      "rotationDegrees": 39.41935563969925,
       "rotateFast": false
     }
   ],

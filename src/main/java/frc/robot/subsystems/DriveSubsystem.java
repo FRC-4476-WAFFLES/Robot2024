@@ -248,15 +248,23 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
         Pose2d poseOfGoal;
 
         // Set goal pose based on alliance
-        if (DriverStation.getAlliance().get() == Alliance.Red && getRobotPose().getX() < 4) {
+        if (DriverStation.getAlliance().get() == Alliance.Red && getRobotPose().getX() < 4.5) {
             poseOfGoal = Constants.DriveConstants.redGoalPoseSource;
-        } else if (DriverStation.getAlliance().get() == Alliance.Red){
+        } 
+        else if(DriverStation.getAlliance().get() == Alliance.Red && getRobotPose().getX() > 6.5){
             poseOfGoal = Constants.DriveConstants.redGoalPoseAmp;
-        } else if (getRobotPose().getX() < 4){
+        }
+        
+        else if (DriverStation.getAlliance().get() == Alliance.Red){
+            poseOfGoal = Constants.DriveConstants.redGoalPoseCenter;
+        } else if (getRobotPose().getX() < 4.5){
             poseOfGoal = Constants.DriveConstants.blueGoalPoseSource;
         }
-        else {
+        else if(getRobotPose().getX() > 6.5){
             poseOfGoal = Constants.DriveConstants.blueGoalPoseAmp;
+        }
+        else {
+            poseOfGoal = Constants.DriveConstants.blueGoalPoseCenter;
         }
 
         double angleToGoal = Math

@@ -89,8 +89,8 @@ public LightSubsystem() {
       if (elevatorSubsystem.getElevatorPosition() < -0.5 || anglerSubsystem.getAnglerDegrees() < -30.0){
         m_currentAnimation = new StrobeAnimation(255, 0, 0, 0, 98.0 / 256.0, LED_COUNT);
       }
-      else if(Math.abs(elevatorSubsystem.getElevatorPosition()) < 0.5 
-      || Math.abs(anglerSubsystem.getAnglerDegrees()) < 1){
+      else if(Math.abs(elevatorSubsystem.getElevatorPosition()) > 0.5 
+      || Math.abs(anglerSubsystem.getAnglerDegrees()) > 1){
         m_currentAnimation = new LarsonAnimation(255, 255, 0, 0, 0.2, LED_COUNT, BounceMode.Front, 2);
       }
       else{

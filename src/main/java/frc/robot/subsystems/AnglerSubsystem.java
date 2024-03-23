@@ -85,9 +85,9 @@ public class AnglerSubsystem extends SubsystemBase {
 
     private void configurePositionPID() {
         Slot0Configs anglerSlot0Configs = new Slot0Configs();
-        anglerSlot0Configs.kP = 1.3;
+        anglerSlot0Configs.kP = 0.6;
         anglerSlot0Configs.kD = 0;
-        anglerSlot0Configs.kV = 0.1;
+        anglerSlot0Configs.kV = 0.105;
 
         angler.setPosition(0);
         angler.getConfigurator().apply(anglerSlot0Configs);
@@ -178,16 +178,19 @@ public class AnglerSubsystem extends SubsystemBase {
      * @param angle in degrees
      */
     public void setAnglerTargetPosition(double angle) {
-        this.anglerTargetPositonDegrees = MathUtil.clamp(angle, 
-        getAnglerTopLimit(elevatorSubsystem.getElevatorPosition()), 
-        getAnglerBottomLimit(elevatorSubsystem.getElevatorPosition()));
-        this.anglerTargetPositionRotations = anglerTargetPositonDegrees * (OVERALL_REDUCTION / 360);
-        if (this.anglerTargetPositionRotations != this.previousTargetPosition) {
-            profileTimer.restart();
-            this.previousTargetPosition = this.anglerTargetPositionRotations;
-            this.profileStartPosition = this.angler.getPosition().getValueAsDouble();
-            this.profileStartVelocity = this.angler.getVelocity().getValueAsDouble();
+        if (Math.abs(angle - this.anglerTargetPositonDegrees) > 0.05){
+            this.anglerTargetPositonDegrees = MathUtil.clamp(angle, 
+            getAnglerTopLimit(elevatorSubsystem.getElevatorPosition()), 
+            getAnglerBottomLimit(elevatorSubsystem.getElevatorPosition()));
+            this.anglerTargetPositionRotations = anglerTargetPositonDegrees * (OVERALL_REDUCTION / 360);
+            if (this.anglerTargetPositionRotations != this.previousTargetPosition) {
+                profileTimer.restart();
+                this.previousTargetPosition = this.anglerTargetPositionRotations;
+                this.profileStartPosition = this.angler.getPosition().getValueAsDouble();
+                this.profileStartVelocity = this.angler.getVelocity().getValueAsDouble();
+            }
         }
+        
     }
 
     public double getAnglerTopLimit(double elevatorPosition) {
