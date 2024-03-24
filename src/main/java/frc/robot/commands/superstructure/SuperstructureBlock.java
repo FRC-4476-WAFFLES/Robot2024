@@ -7,9 +7,9 @@ package frc.robot.commands.superstructure;
 import edu.wpi.first.wpilibj2.command.Command;
 import static frc.robot.RobotContainer.*;
 
-public class SuperstructureClimb extends Command {
-  /** Creates a new SuperstructureClimb. */
-  public SuperstructureClimb() {
+public class SuperstructureBlock extends Command {
+  /** Creates a new SuperstructureBlock. */
+  public SuperstructureBlock() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(elevatorSubsystem, anglerSubsystem);
   }
@@ -21,9 +21,9 @@ public class SuperstructureClimb extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    elevatorSubsystem.isClimbing = true;
-    elevatorSubsystem.setElevatorTargetPosition(55.5);
-    anglerSubsystem.setAnglerTargetPosition(0);
+    elevatorSubsystem.isClimbing = false;
+    elevatorSubsystem.setElevatorTargetPosition(57.25);
+    anglerSubsystem.setAnglerTargetPosition(-11);
   }
 
   // Called once the command ends or is interrupted.

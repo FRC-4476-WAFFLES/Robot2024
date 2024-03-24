@@ -97,6 +97,7 @@ public class RobotContainer {
   private final ForcedFire forcedFire = new ForcedFire();
   private final SuperstructureYeet superstructureYeet = new SuperstructureYeet();
   private final SuperstructurePodium superstructurePodium = new SuperstructurePodium();
+  private final SuperstructureBlock superstructureBlock = new SuperstructureBlock();
 
   
  
@@ -172,7 +173,7 @@ public class RobotContainer {
     operatorController.rightBumper().whileTrue(scoreNote);
     operatorController.x().whileTrue(superstructureAmp);
     operatorController.b().whileTrue(superstructureCloseSpeaker);
-    operatorController.y().whileTrue(superstructureTestShot);
+    operatorController.y().whileTrue(superstructureBlock);
     operatorController.a().whileTrue(superstructureClimb);
     operatorController.rightStick().whileTrue(superstructureStash);
     rightJoystick.button(1).whileTrue(driveAndAimAtGoal.alongWith(spinUp));

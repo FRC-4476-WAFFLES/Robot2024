@@ -16,28 +16,28 @@
     },
     {
       "anchor": {
-        "x": 8.082883155780575,
-        "y": 1.1710836545781504
+        "x": 8.398526797053595,
+        "y": 1.4109728219456439
       },
       "prevControl": {
-        "x": 7.907220607593853,
-        "y": 2.892576626808033
+        "x": 8.222864248866873,
+        "y": 3.132465794175529
       },
       "nextControl": {
-        "x": 8.258545703967293,
-        "y": -0.5504093176517315
+        "x": 8.574189345240313,
+        "y": -0.3105201502842381
       },
       "isLocked": false,
       "linkedName": "Anti 2056 Link 2"
     },
     {
       "anchor": {
-        "x": 7.02890786666024,
-        "y": 2.1899264340611406
+        "x": 6.178464664621639,
+        "y": 1.5787108497293916
       },
       "prevControl": {
-        "x": 7.181148741755401,
-        "y": 2.2719022898816124
+        "x": 6.3307055397168,
+        "y": 1.6606867055498635
       },
       "nextControl": null,
       "isLocked": false,
@@ -52,25 +52,25 @@
     },
     {
       "waypointRelativePos": 0.4,
-      "rotationDegrees": -48.122871208944225,
+      "rotationDegrees": -48.0,
       "rotateFast": false
     },
     {
       "waypointRelativePos": 0.65,
-      "rotationDegrees": -50.88371108326397,
+      "rotationDegrees": -61.25629162566916,
       "rotateFast": false
     },
     {
       "waypointRelativePos": 1.1,
-      "rotationDegrees": -50.9820709818377,
+      "rotationDegrees": -90.0,
       "rotateFast": true
     }
   ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 4.5,
-    "maxAcceleration": 3.1,
+    "maxVelocity": 5.0,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 9000.0,
     "maxAngularAcceleration": 1000.0
   },
@@ -82,7 +82,7 @@
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": -6.713652037475534,
     "velocity": 0
   },
   "useDefaultConstraints": false

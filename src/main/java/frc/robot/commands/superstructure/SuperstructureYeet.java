@@ -17,16 +17,22 @@ public class SuperstructureYeet extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    shooterSubsystem.setShooterTargetSpeed(18);
+    intakeSubsystem.SetIntakeSpeed(1);
+    feederSubsystem.setFeederTargetSpeed(100);
+    elevatorSubsystem.setElevatorTargetPosition(25);
+    anglerSubsystem.setAnglerTargetPosition(85);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooterSubsystem.setShooterTargetSpeed(14);
+    shooterSubsystem.setShooterTargetSpeed(18);
     intakeSubsystem.SetIntakeSpeed(1);
     feederSubsystem.setFeederTargetSpeed(100);
     elevatorSubsystem.setElevatorTargetPosition(25);
-    anglerSubsystem.setAnglerTargetPosition(87);
+    anglerSubsystem.setAnglerTargetPosition(85);
   }
 
   // Called once the command ends or is interrupted.

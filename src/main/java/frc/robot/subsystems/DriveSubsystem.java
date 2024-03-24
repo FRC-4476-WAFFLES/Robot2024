@@ -252,7 +252,13 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
             poseOfGoal = Constants.DriveConstants.redGoalPoseSource;
         } 
         else if(DriverStation.getAlliance().get() == Alliance.Red && getRobotPose().getX() > 6.5){
-            poseOfGoal = Constants.DriveConstants.redGoalPoseAmp;
+            if(getRobotPose().getY() > (16.4595-1.75)){
+                poseOfGoal = Constants.DriveConstants.redGoalPoseCloseAmp;
+            }
+            else{
+                poseOfGoal = Constants.DriveConstants.redGoalPoseAmp;
+            }
+            
         }
         
         else if (DriverStation.getAlliance().get() == Alliance.Red){
@@ -261,7 +267,12 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
             poseOfGoal = Constants.DriveConstants.blueGoalPoseSource;
         }
         else if(getRobotPose().getX() > 6.5){
-            poseOfGoal = Constants.DriveConstants.blueGoalPoseAmp;
+            if(getRobotPose().getY() < 1.75){
+                poseOfGoal = Constants.DriveConstants.blueGoalPoseCloseAmp;
+            }
+            else{
+                poseOfGoal = Constants.DriveConstants.blueGoalPoseAmp;
+            }
         }
         else {
             poseOfGoal = Constants.DriveConstants.blueGoalPoseCenter;

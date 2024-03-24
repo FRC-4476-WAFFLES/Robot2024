@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.5890502690096286,
-        "y": 4.281894381970583
+        "x": 2.695898344721082,
+        "y": 4.17371680897208
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.9861162090369815,
-        "y": 1.8737338473250418
+        "x": 1.0929642847484349,
+        "y": 1.7655562743265394
       },
       "isLocked": false,
       "linkedName": "Right Note Close"
@@ -61,7 +61,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -36.15387746052639,
+    "rotation": -48.98435749141573,
     "rotateFast": false
   },
   "reversed": false,

@@ -91,17 +91,20 @@ public final class Constants {
     public static final double maxSpeed = TunerConstants.kSpeedAt12VoltsMps;
     public static final double maxAngularSpeed = 6; // Max Rad/s
 
-    public static final Pose2d redGoalPoseAmp = new Pose2d((16.4592 + 0.17), 5.15, new Rotation2d(0));
-    public static final Pose2d blueGoalPoseAmp = new Pose2d(0 - 0.17, 5.15, new Rotation2d(0));
+    public static final Pose2d redGoalPoseAmp = new Pose2d((16.4592 + 0.17), 5.00, new Rotation2d(0));
+    public static final Pose2d blueGoalPoseAmp = new Pose2d(0 - 0.17, 5.00, new Rotation2d(0));
 
-    public static final Pose2d redGoalPoseCenter = new Pose2d((16.4592 + 0.17), 5.35, new Rotation2d(0));
-    public static final Pose2d blueGoalPoseCenter = new Pose2d(0 - 0.17, 5.35, new Rotation2d(0));
+    public static final Pose2d redGoalPoseCloseAmp = new Pose2d((16.4592 + 0.17), 4.8, new Rotation2d(0));
+    public static final Pose2d blueGoalPoseCloseAmp = new Pose2d(0 - 0.17, 4.8, new Rotation2d(0));
 
-    public static final Pose2d redGoalPoseSource = new Pose2d((16.4592-0), 5.9, new Rotation2d(0));
-    public static final Pose2d blueGoalPoseSource = new Pose2d(0 + 0, 5.9, new Rotation2d(0));
+    public static final Pose2d redGoalPoseCenter = new Pose2d((16.4592 + 0.17), 5.30, new Rotation2d(0));
+    public static final Pose2d blueGoalPoseCenter = new Pose2d(0 - 0.17, 5.30, new Rotation2d(0));
+
+    public static final Pose2d redGoalPoseSource = new Pose2d((16.4592-0), 5.95, new Rotation2d(0));
+    public static final Pose2d blueGoalPoseSource = new Pose2d(0 + 0, 5.95, new Rotation2d(0));
     
-    public static final Pose2d blueStash = new Pose2d(2, 6, new Rotation2d(0));
-    public static final Pose2d redStash = new Pose2d((16.4592 - 2), 6, new Rotation2d(0));
+    public static final Pose2d blueStash = new Pose2d(2, 5.5, new Rotation2d(0));
+    public static final Pose2d redStash = new Pose2d((16.4592 - 2), 5.5, new Rotation2d(0));
 
   }
 

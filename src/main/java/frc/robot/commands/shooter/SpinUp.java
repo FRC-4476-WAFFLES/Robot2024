@@ -93,6 +93,7 @@ public class SpinUp extends Command {
     shooterSpeedMap.put(2.54, 63.0 + generalSpeedAdjustment);
     shooterSpeedMap.put(3.0988, 65.0 + generalSpeedAdjustment);
     shooterSpeedMap.put(3.556, 72.0 + generalSpeedAdjustment);
+    shooterSpeedMap.put(4.0, 75 + generalAnglerAdjustment);
     shooterSpeedMap.put(6.0, 85.0 + generalSpeedAdjustment);
     shooterSpeedMap.put(9.0, 100.0);
    
@@ -110,7 +111,7 @@ public class SpinUp extends Command {
 
     shooterAngleMap.put(1.1977, 70.5 + generalAnglerAdjustment); 
     shooterAngleMap.put(1.5, 69.5 + generalAnglerAdjustment);
-    shooterAngleMap.put(1.999, 555 + generalAnglerAdjustment); 
+    shooterAngleMap.put(1.999, 55.5 + generalAnglerAdjustment); 
     shooterAngleMap.put(2.54, 50.5 + generalAnglerAdjustment);
     shooterAngleMap.put(2.773, 48.5 + generalAnglerAdjustment);
     shooterAngleMap.put(3.0988, 41.75 + generalAnglerAdjustment);
