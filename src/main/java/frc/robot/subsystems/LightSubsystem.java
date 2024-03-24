@@ -27,7 +27,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.CANdleLights.AnimationTypes;
+
 
 public class LightSubsystem extends SubsystemBase {
   // private final PWMSparkMax blinkin = new PWMSparkMax(Constants.lightsBlinkin);
