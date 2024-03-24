@@ -48,7 +48,16 @@ public class LightSubsystem extends SubsystemBase {
     BLUE(0, 0, 255),
     WHITE(255, 255, 255),
     BLACK(0, 0, 0),
-    YELLOW(255, 255, 0);
+    YELLOW(255, 255, 0),
+    PURPLE(255, 0, 255),
+    ORANGE(247, 137, 2),
+    CYAN(0, 255, 179),
+    PINK(250, 150, 230),
+    LIGHTBLUE(103, 120, 214),
+    MAGENTA(150, 15, 92),
+    NAVY(9, 15, 79),
+    DARKGREEN(21, 102, 13),
+    LIGHTGREEN(130, 247, 119),
 
     private final int red;
     private final int green;
@@ -85,6 +94,7 @@ public LightSubsystem() {
   public void periodic() {
     // This method will be called once per scheduler run
 
+    setLEDRange(10,20, LightColours.WHITE);
     if(DriverStation.isDisabled()){
       if (elevatorSubsystem.getElevatorPosition() < -0.5 || anglerSubsystem.getAnglerDegrees() < -30.0){
         m_currentAnimation = new StrobeAnimation(255, 0, 0, 0, 98.0 / 256.0, LED_COUNT);
@@ -141,5 +151,9 @@ public LightSubsystem() {
 
   public void setBlinkTime(double seconds) {
     blinkRate = seconds;
+  }
+
+  public void setLEDRange(int start, int end, LightColours colour) {
+    candle.setLEDs(colour.red, colour.green, colour.blue, 0, start, end-start);
   }
 }
