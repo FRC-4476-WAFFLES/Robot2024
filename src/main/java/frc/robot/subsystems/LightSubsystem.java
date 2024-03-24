@@ -42,6 +42,25 @@ public class LightSubsystem extends SubsystemBase {
   private Animation m_currentAnimation;
   private double blinkRate = 0.1;
 
+  public enum LedRange {
+    CANDLE(0,8),
+    RIGHT_SIDE_FULL(8,26),
+    MIDDLE_FULL(26,44),
+    LEFT_SIDE_FULL(44,64),
+    RIGHT_SIDE_TOP(17,26),
+    RIGHT_SIDE_BOTTOM(8,17),
+    LEFT_SIDE_TOP(44,54),
+    LEFT_SIDE_BOTTOM(54,64);
+
+    private final int start;
+    private final int end;
+
+    LedRange(int start, int end) {
+      this.start = start;
+      this.end = end;
+    }
+  }
+
   public enum LightColours {
     RED(255, 0, 0),
     GREEN(0, 255, 0),
@@ -49,15 +68,15 @@ public class LightSubsystem extends SubsystemBase {
     WHITE(255, 255, 255),
     BLACK(0, 0, 0),
     YELLOW(255, 255, 0),
-    PURPLE(255, 0, 255),
-    ORANGE(247, 137, 2),
+    PURPLE(150, 0, 255),
+    ORANGE(255, 18, 0),
     CYAN(0, 255, 179),
-    PINK(250, 150, 230),
+    PINK(255, 0, 255),
     LIGHTBLUE(103, 120, 214),
     MAGENTA(150, 15, 92),
     NAVY(9, 15, 79),
     DARKGREEN(21, 102, 13),
-    LIGHTGREEN(130, 247, 119),
+    LIGHTGREEN(130, 247, 119);
 
     private final int red;
     private final int green;
@@ -94,7 +113,13 @@ public LightSubsystem() {
   public void periodic() {
     // This method will be called once per scheduler run
 
-    setLEDRange(10,20, LightColours.WHITE);
+
+    // setLEDRangeGroup(LedRange.CANDLE, LightColours.PINK);
+    // setLEDRangeGroup(LedRange.RIGHT_SIDE_FULL, LightColours.BLUE);
+    // setLEDRangeGroup(LedRange.MIDDLE_FULL, LightColours.RED);
+    // setLEDRangeGroup(LedRange.LEFT_SIDE_FULL, LightColours.GREEN);
+
+
     if(DriverStation.isDisabled()){
       if (elevatorSubsystem.getElevatorPosition() < -0.5 || anglerSubsystem.getAnglerDegrees() < -30.0){
         m_currentAnimation = new StrobeAnimation(255, 0, 0, 0, 98.0 / 256.0, LED_COUNT);
@@ -155,5 +180,9 @@ public LightSubsystem() {
 
   public void setLEDRange(int start, int end, LightColours colour) {
     candle.setLEDs(colour.red, colour.green, colour.blue, 0, start, end-start);
+  }
+
+  public void setLEDRangeGroup(LedRange range, LightColours colour) {
+    candle.setLEDs(colour.red, colour.green, colour.blue, 0, range.start, range.end-range.start);
   }
 }
