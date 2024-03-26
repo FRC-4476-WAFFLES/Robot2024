@@ -19,23 +19,9 @@ public class SpinUp extends Command {
   double generalAnglerAdjustment = -2.0;
   double generalSpeedAdjustment = -6;
 
-  enum ShooterMode {
-    TALL(45.0),
-    MIDDLE(27.0),
-    SHORT(10.0);
+  
 
-    private double height;
-
-    ShooterMode(double height) {
-      this.height = height;
-    }
-
-    public double getHeight() {
-      return height;
-    }
-  }
-
-  ShooterMode currentShooterMode = ShooterMode.MIDDLE;
+  
   public SpinUp() {
     addRequirements(shooterSubsystem, anglerSubsystem, elevatorSubsystem, intakeSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
@@ -56,7 +42,7 @@ public class SpinUp extends Command {
    // double height = solveForElevatorHeight(distance, speed, angle);
 
    intakeSubsystem.SetIntakeSpeed(0);
-    elevatorSubsystem.setElevatorTargetPosition(currentShooterMode.getHeight());
+    elevatorSubsystem.setElevatorTargetPosition(elevatorSubsystem.getElevatorMode().getHeight());
     anglerSubsystem.setAnglerTargetPosition(angle);
     if (feederSubsystem.isFeederAtTargetPosition()){
       shooterSubsystem.setShooterTargetSpeed(speed);
@@ -126,10 +112,11 @@ public class SpinUp extends Command {
     shooterAngleMap.put(7.9, 29.25 + generalAnglerAdjustment - 2);
 
     double predictedAngle = shooterAngleMap.get(distance);
-    return predictedAngle;
+    return solveForElevatorHeight(distance, height, predictedAngle);
+    //return predictedAngle;
 
 
- //   return solveForElevatorHeight(distance, height, predictedAngle);
+ 
 
   }
 
@@ -137,22 +124,9 @@ public class SpinUp extends Command {
     double result = 0;
     // Solve for opposite side of right angle triangle, where predictedAngle is the angle in degrees and the distance is the adjacent side
     double predictedHeight = distance * Math.tan(Math.toRadians(predictedAngle));
-    result = Math.atan(Math.tan(predictedAngle) + (predictedHeight - (elevatorSubsystem.rotationsToMeters(27.0) - currentHeight)) / distance);
-    return result;
+    result = Math.atan(Math.tan(Math.toRadians(predictedAngle)) + ((elevatorSubsystem.rotationsToMeters(27.0) - currentHeight)) / distance);
+    return Math.toDegrees(result);
   }
 
-  public void setTallMode() {
-    // Set the shooter to tall mode
-    currentShooterMode = ShooterMode.TALL;
-  }
-
-  public void setMiddleMode() {
-    // Set the shooter to middle mode
-    currentShooterMode = ShooterMode.MIDDLE;
-  }
-
-  public void setShortMode() {
-    // Set the shooter to short mode
-    currentShooterMode = ShooterMode.SHORT;
-  }
+ 
 }

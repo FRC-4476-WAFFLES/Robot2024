@@ -45,6 +45,24 @@ public class ElevatorSubsystem extends SubsystemBase {
     private double profileStartVelocity = 0;
 
     private boolean previousSwitchState;
+    
+    public enum ShooterMode {
+      TALL(50.0),
+      MIDDLE(27.0),
+      SHORT(10.0);
+  
+      private double height;
+  
+      ShooterMode(double height) {
+        this.height = height;
+      }
+  
+      public double getHeight() {
+        return height;
+      }
+    }
+    
+    ShooterMode currentShooterMode = ShooterMode.MIDDLE;
 
 
   
@@ -68,6 +86,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     elevatorCurrentLimits.StatorCurrentLimitEnable = true;
 
     elevatorConfig.CurrentLimits = elevatorCurrentLimits;
+
+    
     
     // Set PIDF values
     var slot0Configs = new Slot0Configs();
@@ -81,10 +101,12 @@ public class ElevatorSubsystem extends SubsystemBase {
     Elevator2.getConfigurator().apply(elevatorConfig);
 
     profileTimer.start();
+    
+    
   }
 
 
-
+  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -221,4 +243,24 @@ public class ElevatorSubsystem extends SubsystemBase {
   public boolean getCoastSwitch(){
     return coastSwitch.get();
   }
+
+  public void setTallMode() {
+    // Set the shooter to tall mode
+    currentShooterMode = ShooterMode.TALL;
+  }
+
+  public void setMiddleMode() {
+    // Set the shooter to middle mode
+    currentShooterMode = ShooterMode.MIDDLE;
+  }
+
+  public void setShortMode() {
+    // Set the shooter to short mode
+    currentShooterMode = ShooterMode.SHORT;
+  }
+
+  public ShooterMode getElevatorMode(){
+    return currentShooterMode;
+  }
+    
 }

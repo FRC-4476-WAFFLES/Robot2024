@@ -237,7 +237,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
         }
 
         double distance = poseOfStash.minus(getRobotPose()).getTranslation().getNorm();
-        distance = filter.calculate(distance);
+        //distance = filter.calculate(distance);
 
         SmartDashboard.putNumber("DistanceToStash", distance);
 
@@ -313,7 +313,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
     }
 
     public void periodic() {
-        if(odometryIsValid() && Math.abs(getCurrentRobotChassisSpeeds().vxMetersPerSecond) < 0.1){
+        if(odometryIsValid() && Math.abs(getCurrentRobotChassisSpeeds().vxMetersPerSecond) < 0.5){
         //     var visionEstimationLeft = visionLeft.getEstimatedGlobalPose();
         //     visionEstimationLeft.ifPresent(estLeft -> {
         //     var estPoseLeft = estLeft.estimatedPose.toPose2d();
