@@ -26,7 +26,7 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import frc.robot.Constants;
 
 public class AnglerSubsystem extends SubsystemBase {
-    private static final double OVERALL_REDUCTION = (62 / 18) * 25 * (48 / 16); // Ratio from the motor to the shooter pivot shaft
+    private static final double OVERALL_REDUCTION = (62 / 18) * 9 * (48 / 16); // Ratio from the motor to the shooter pivot shaft
     private static final double ANGLER_DEAD_ZONE = 1;
 
     private TalonFX angler;

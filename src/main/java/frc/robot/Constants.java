@@ -73,6 +73,7 @@ public final class Constants {
   public static final int shooterIR = 3; // Generic IR Sensor
   public static final int anglerAbsoluteEncoder = 4; // REV Through Bore
   public static final int coastModeSwitch = 5; // Limit Switch
+  public static final int shooterIR2 = 6; // Generic IR Sensor
 
   public static class OperatorConstants {
     public static final int leftJoystick = 0;

@@ -35,6 +35,7 @@ public class ShooterSubsystem extends SubsystemBase {
   // Configs
   
   private double shooterTargetSpeed = 0;
+  private double shooterPercentDifferent = 10;
   
   
   // Constants
@@ -103,7 +104,8 @@ public class ShooterSubsystem extends SubsystemBase {
     // Apply configs
     // TalonFXConfiguration shooter1Configs = generalConfigs;
     // shooter1Configs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
-    shooter1.getConfigurator().apply(generalConfigs.withMotorOutput(new MotorOutputConfigs().withInverted(InvertedValue.Clockwise_Positive)));
+    shooter1.getConfigurator().apply(generalConfigs);
+    shooter2.setInverted(true);
     shooter2.getConfigurator().apply(generalConfigs);
    
     
@@ -126,13 +128,15 @@ public class ShooterSubsystem extends SubsystemBase {
     // set shooter speed
     final VelocityVoltage shooterSpeedRequest = new VelocityVoltage(0).withSlot(0);
     shooter1.setControl(shooterSpeedRequest.withVelocity(shooterTargetSpeed));
+    shooter2.setControl(shooterSpeedRequest.withVelocity(shooterTargetSpeed-shooterPercentDifferent));
 
 
   
     SmartDashboard.putNumber("IR Proximity", shooterIR.getVoltage()); 
   
     SmartDashboard.putNumber("Shooter Speed", shooter1.getVelocity().getValueAsDouble());
-    SmartDashboard.putNumber("Shooter Target Speed", shooterTargetSpeed);
+    SmartDashboard.putNumber("Shooter Target Speed 1", shooterTargetSpeed);
+    SmartDashboard.putNumber("Shooter Target Speed 2", shooterTargetSpeed - shooterPercentDifferent);
     SmartDashboard.putBoolean("GoodShooter", Math.abs(shooter1.getVelocity().getValueAsDouble() - shooterTargetSpeed) < SHOOTER_DEAD_ZONE);
    
   }
@@ -145,7 +149,8 @@ public class ShooterSubsystem extends SubsystemBase {
    */
   public boolean isGoodSpeed() {
     
-      return Math.abs(shooter1.getVelocity().getValueAsDouble() - shooterTargetSpeed) < SHOOTER_DEAD_ZONE;
+      return Math.abs(shooter1.getVelocity().getValueAsDouble() - shooterTargetSpeed) < SHOOTER_DEAD_ZONE &&
+       Math.abs(shooter2.getVelocity().getValueAsDouble() - (shooterTargetSpeed - shooterPercentDifferent)) < SHOOTER_DEAD_ZONE;
   }
 
   
