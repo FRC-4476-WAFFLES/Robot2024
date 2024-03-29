@@ -27,6 +27,7 @@ public class ShooterSubsystem extends SubsystemBase {
   private final TalonFX shooter1;
   private final TalonFX shooter2;
   private final AnalogInput shooterIR;
+  private final AnalogInput shooterIR2;
   //private final Canandcolor shooterIR;
   
   
@@ -35,14 +36,14 @@ public class ShooterSubsystem extends SubsystemBase {
   // Configs
   
   private double shooterTargetSpeed = 0;
-  private double shooterPercentDifferent = 10;
+  private double shooterPercentDifferent = 30;
   
   
   // Constants
   
   private final double SHOOTER_DEAD_ZONE = 7;
 
-  private final double IR_RANGE = 1.9;
+  private final double IR_RANGE = 2.0;
   private boolean tryingToShoot = false;
 
   private final CurrentLimitsConfigs currentLimitsConfig;
@@ -50,9 +51,10 @@ public class ShooterSubsystem extends SubsystemBase {
   /** Creates a new Shooter. */
   public ShooterSubsystem() {
     TalonFXConfiguration generalConfigs = new TalonFXConfiguration();
+    TalonFXConfiguration generalConfigs2 = new TalonFXConfiguration();
 
   
-    SmartDashboard.putNumber("Shooter Setpoint", 0);
+    
 
 
     // Instantiate motors and encoders
@@ -63,6 +65,7 @@ public class ShooterSubsystem extends SubsystemBase {
     shooter1 = new TalonFX(Constants.shooter1);
     shooter2 = new TalonFX(Constants.shooter2);  
     shooterIR = new AnalogInput(Constants.shooterIR);
+    shooterIR2 =  new AnalogInput(Constants.shooterIR2);
     
     //shooterIR = new Canandcolor(Constants.shooterIR);
 
@@ -92,21 +95,30 @@ public class ShooterSubsystem extends SubsystemBase {
 
     // Velocity PID for shooters 
     Slot0Configs shooterSlot0Configs = new Slot0Configs();
-    shooterSlot0Configs.kP = 0.09;
+    shooterSlot0Configs.kP = 0.2;
     shooterSlot0Configs.kI = 0.0;
     shooterSlot0Configs.kD = 0.0001;
-    shooterSlot0Configs.kV = 0.11; 
+    shooterSlot0Configs.kV = 0.123; 
     shooterSlot0Configs.kS = 0.0;
 
     
-   
+    generalConfigs2 = new TalonFXConfiguration();
+    generalConfigs2.CurrentLimits = currentLimitsConfig;
+    generalConfigs2.Voltage.PeakForwardVoltage = 12;
+    generalConfigs2.Voltage.PeakReverseVoltage = -12;
+
+    generalConfigs2.TorqueCurrent.PeakForwardTorqueCurrent = 40;
+    generalConfigs2.TorqueCurrent.PeakReverseTorqueCurrent = -40;
+
+    generalConfigs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+
 
     // Apply configs
     // TalonFXConfiguration shooter1Configs = generalConfigs;
     // shooter1Configs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
     shooter1.getConfigurator().apply(generalConfigs);
-    shooter2.setInverted(true);
-    shooter2.getConfigurator().apply(generalConfigs);
+    
+    shooter2.getConfigurator().apply(generalConfigs2);
    
     
 
@@ -128,13 +140,20 @@ public class ShooterSubsystem extends SubsystemBase {
     // set shooter speed
     final VelocityVoltage shooterSpeedRequest = new VelocityVoltage(0).withSlot(0);
     shooter1.setControl(shooterSpeedRequest.withVelocity(shooterTargetSpeed));
-    shooter2.setControl(shooterSpeedRequest.withVelocity(shooterTargetSpeed-shooterPercentDifferent));
-
-
+    if(Math.abs(shooterTargetSpeed) < shooterPercentDifferent){
+      shooter2.setControl(shooterSpeedRequest.withVelocity(shooterTargetSpeed));
+     
+    }
+    else{
+      shooter2.setControl(shooterSpeedRequest.withVelocity(shooterTargetSpeed-shooterPercentDifferent));
+    }
   
-    SmartDashboard.putNumber("IR Proximity", shooterIR.getVoltage()); 
+    SmartDashboard.putNumber("IR Proximity", shooterIR.getVoltage());
+    SmartDashboard.putNumber("IR Proximity 2", shooterIR2.getVoltage());
+
   
     SmartDashboard.putNumber("Shooter Speed", shooter1.getVelocity().getValueAsDouble());
+    SmartDashboard.putNumber("Shooter Speed2", shooter2.getVelocity().getValueAsDouble());
     SmartDashboard.putNumber("Shooter Target Speed 1", shooterTargetSpeed);
     SmartDashboard.putNumber("Shooter Target Speed 2", shooterTargetSpeed - shooterPercentDifferent);
     SmartDashboard.putBoolean("GoodShooter", Math.abs(shooter1.getVelocity().getValueAsDouble() - shooterTargetSpeed) < SHOOTER_DEAD_ZONE);
@@ -148,9 +167,15 @@ public class ShooterSubsystem extends SubsystemBase {
    * <li>false: if shooter is not at desired speed</li>
    */
   public boolean isGoodSpeed() {
-    
+    if(Math.abs(shooterTargetSpeed) > shooterPercentDifferent){
       return Math.abs(shooter1.getVelocity().getValueAsDouble() - shooterTargetSpeed) < SHOOTER_DEAD_ZONE &&
        Math.abs(shooter2.getVelocity().getValueAsDouble() - (shooterTargetSpeed - shooterPercentDifferent)) < SHOOTER_DEAD_ZONE;
+  
+     
+    }
+    else{
+      return Math.abs(shooter1.getVelocity().getValueAsDouble() - shooterTargetSpeed) < SHOOTER_DEAD_ZONE;
+    }
   }
 
   
@@ -177,6 +202,10 @@ public class ShooterSubsystem extends SubsystemBase {
     return shooterIR.getVoltage() > IR_RANGE;
     // 2.1 Note  ready to shoot 
     // 1.6 no note
+  }
+
+  public boolean isFullyInNote() {
+    return shooterIR2.getVoltage() > 2.74;
   }
 
   public boolean isTryingToShoot(){

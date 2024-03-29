@@ -26,7 +26,7 @@ public class ElevatorHigh extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    elevatorSubsystem.setMiddleMode();
+    elevatorSubsystem.setShortMode();
   }
 
   // Returns true when the command should end.

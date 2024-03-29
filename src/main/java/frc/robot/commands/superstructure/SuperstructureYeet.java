@@ -21,8 +21,8 @@ public class SuperstructureYeet extends Command {
     shooterSubsystem.setShooterTargetSpeed(18);
     intakeSubsystem.SetIntakeSpeed(1);
     feederSubsystem.setFeederTargetSpeed(100);
-    elevatorSubsystem.setElevatorTargetPosition(25);
-    anglerSubsystem.setAnglerTargetPosition(85);
+    elevatorSubsystem.setElevatorTargetPosition(12);
+    anglerSubsystem.setAnglerTargetPosition(64);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

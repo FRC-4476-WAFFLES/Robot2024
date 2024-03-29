@@ -27,8 +27,6 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public boolean isClimbing = false;
 
-    private final DigitalInput elevatorZero;
-
     private final DigitalInput coastSwitch;
    
     private double elevatorTargetPosition = 0;
@@ -62,7 +60,7 @@ public class ElevatorSubsystem extends SubsystemBase {
       }
     }
     
-    ShooterMode currentShooterMode = ShooterMode.MIDDLE;
+    ShooterMode currentShooterMode = ShooterMode.SHORT;
 
 
   
@@ -72,8 +70,6 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     Elevator1 = new TalonFX(Constants.elevator1);
     Elevator2 = new TalonFX(Constants.elevator2);
-
-    elevatorZero = new DigitalInput(Constants.elevatorZero);
     coastSwitch = new DigitalInput(Constants.coastModeSwitch);
    
     Elevator2.setControl(new Follower(Constants.elevator1, true));
@@ -127,12 +123,6 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
     previousSwitchState = getCoastSwitch();
 
-
-
-    // Set elevator to zero if hall effect is triggered
-    if (!elevatorZero.get()){
-      Elevator1.setPosition(0);
-    }
 
 
   }

@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import static frc.robot.RobotContainer.shooterSubsystem;
+
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
@@ -23,6 +25,7 @@ public class FeederSubsystem extends SubsystemBase {
   private final TalonFX feeder;
 
   private boolean feederVelocityControl = true;
+  public boolean adjusting = true;
 
   private double feederTargetSpeed = 0;
   private double feederTargetPosition = 0;
@@ -66,7 +69,7 @@ public class FeederSubsystem extends SubsystemBase {
 
     // PID for feeder
     Slot0Configs feederSlot0Configs = new Slot0Configs();
-    feederSlot0Configs.kP = 2.5; 
+    feederSlot0Configs.kP = 0.3; 
     feederSlot0Configs.kD = 0.00001;
     feederSlot0Configs.kV = 0.13;
 
@@ -83,21 +86,33 @@ public class FeederSubsystem extends SubsystemBase {
       //SmartDashboard.putBoolean("Feeder Velocity Control", feederVelocityControl);
     if (feederVelocityControl) {
       // set feeder speed
+
+      
       final VelocityVoltage feederSpeedRequest = new VelocityVoltage(0).withSlot(0);
       feeder.setControl(feederSpeedRequest.withVelocity(feederTargetSpeed));
 
       // If feeder is stopped, back off the feeder
-      
-      if (Math.abs(feeder.getVelocity().getValueAsDouble()) < FEEDER_DEAD_ZONE) {
-        feeder.setPosition(0);
-        setFeederTargetPosition(-0.2);
+
+      if (shooterSubsystem.isFullyInNote()){
+        adjusting = true;
+        setFeederTargetSpeed(-7);
       }
+      else if(adjusting){
+        adjusting = false;
+        setFeederTargetSpeed(0);
+      }
+      
+      // if (Math.abs(feeder.getVelocity().getValueAsDouble()) < FEEDER_DEAD_ZONE) {
+      //   feeder.setPosition(0);
+      //   setFeederTargetPosition(-0.8);
+      // }
     } else {
       final PositionVoltage feederPositionRequest = new PositionVoltage(0).withSlot(0);
       feeder.setControl(feederPositionRequest.withPosition(feederTargetPosition));
     }
     SmartDashboard.putNumber("Feeder Speed", feeder.getVelocity().getValueAsDouble());
     SmartDashboard.putNumber("Feeder Position", getFeederPosition());
+    SmartDashboard.putNumber("Feeder Target speed", feederTargetSpeed);
   }
   
 

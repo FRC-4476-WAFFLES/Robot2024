@@ -22,7 +22,7 @@ public class SuperstructureClimb extends Command {
   @Override
   public void execute() {
     elevatorSubsystem.isClimbing = true;
-    elevatorSubsystem.setElevatorTargetPosition(55.5);
+    elevatorSubsystem.setElevatorTargetPosition(60);
     anglerSubsystem.setAnglerTargetPosition(0);
   }
 

@@ -26,7 +26,7 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import frc.robot.Constants;
 
 public class AnglerSubsystem extends SubsystemBase {
-    private static final double OVERALL_REDUCTION = (62 / 18) * 9 * (48 / 16); // Ratio from the motor to the shooter pivot shaft
+    private static final double OVERALL_REDUCTION = (62 / 18) * 15 * (48 / 16); // Ratio from the motor to the shooter pivot shaft
     private static final double ANGLER_DEAD_ZONE = 1;
 
     private TalonFX angler;
@@ -87,7 +87,7 @@ public class AnglerSubsystem extends SubsystemBase {
         Slot0Configs anglerSlot0Configs = new Slot0Configs();
         anglerSlot0Configs.kP = 0.6;
         anglerSlot0Configs.kD = 0;
-        anglerSlot0Configs.kV = 0.105;
+        anglerSlot0Configs.kV = 0.09;
 
         angler.setPosition(0);
         angler.getConfigurator().apply(anglerSlot0Configs);
@@ -196,28 +196,29 @@ public class AnglerSubsystem extends SubsystemBase {
     public double getAnglerTopLimit(double elevatorPosition) {
         final InterpolatingDoubleTreeMap anglerTopLimitMap = new InterpolatingDoubleTreeMap();
         // Input is elevator position, output is highest possible angler position        
-        return -29;
-        // anglerTopLimitMap.put(0.0, 0.0);
-        // anglerTopLimitMap.put(10.0, 0.0);
-        // anglerTopLimitMap.put(20.0, -12.0);
+    
+        anglerTopLimitMap.put(0.0, 0.0);
+        anglerTopLimitMap.put(10.0, 0.0);
+        anglerTopLimitMap.put(22.0, 0.0);
+        anglerTopLimitMap.put(23.0, -12.0);
 
-        // if (elevatorPosition > 25) {
+        if (elevatorPosition > 25) {
             
-        //     return -29;
-        // }
-        // else{
+            return -29;
+        }
+        else{
             
-        //     return anglerTopLimitMap.get(elevatorPosition);
-        // }
+            return anglerTopLimitMap.get(elevatorPosition);
+        }
     }
 
     public double getAnglerBottomLimit(double elevatorPosition) {
         final InterpolatingDoubleTreeMap anglerBottomLimitMap = new InterpolatingDoubleTreeMap();
         // Input is elevator position, output is lowest possible angler position
 
-        anglerBottomLimitMap.put(0.0, 55.5);
-        anglerBottomLimitMap.put(10.0, 68.5);
-        anglerBottomLimitMap.put(20.0, 90.0);
+        anglerBottomLimitMap.put(0.0, 52.5);
+        anglerBottomLimitMap.put(10.0, 61.5);
+        anglerBottomLimitMap.put(20.0,70.0);
 
         
 

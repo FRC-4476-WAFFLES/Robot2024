@@ -35,7 +35,7 @@ public class SpinUpStash extends Command {
       anglerSubsystem.setAnglerTargetPosition(angle);
     }
     else{
-      elevatorSubsystem.setElevatorTargetPosition(10);
+      elevatorSubsystem.setElevatorTargetPosition(17);
       anglerSubsystem.setAnglerTargetPosition(0);
     }
     if (feederSubsystem.isFeederAtTargetPosition()){

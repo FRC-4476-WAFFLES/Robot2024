@@ -37,6 +37,7 @@ public class ScoreNote extends Command {
   @Override
   public void execute() {
     SmartDashboard.putBoolean("timer started", hasTimerStarted);
+    System.out.println("Starting Fire");
 
     if(shooterSubsystem.isGoodSpeed() && anglerSubsystem.isGoodShooterAngle() && elevatorSubsystem.isGoodElevatorPosition() && shooterSubsystem.isShooterRunning()){
       feederSubsystem.setFeederTargetSpeed(100);
@@ -51,7 +52,25 @@ public class ScoreNote extends Command {
     //   feederSubsystem.setFeederTargetSpeed(-100);
     // }
     else{
+      System.out.println("Failed checks");
       hasTimerStarted = false;
+    }
+
+
+    if(!shooterSubsystem.isGoodSpeed()){
+      System.out.println("Bad speed");
+    }
+
+    if(!anglerSubsystem.isGoodShooterAngle()){
+      System.out.println("Bad angle");
+    }
+
+    if(!elevatorSubsystem.isGoodElevatorPosition()){
+      System.out.println("Bad elevator");
+    }
+
+    if(!shooterSubsystem.isShooterRunning()){
+      System.out.println("No shooter running");
     }
 
     
@@ -61,6 +80,7 @@ public class ScoreNote extends Command {
   @Override
   public void end(boolean interrupted) {
     feederSubsystem.setFeederTargetSpeed(0);
+    System.out.println("Stopping Fire");
   }
 
   // Returns true when the command should end.

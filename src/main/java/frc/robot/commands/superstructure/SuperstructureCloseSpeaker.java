@@ -28,7 +28,7 @@ public class SuperstructureCloseSpeaker extends Command {
     intakeSubsystem.SetIntakeSpeed(0);
     elevatorSubsystem.setElevatorTargetPosition(25);
     anglerSubsystem.setAnglerTargetPosition(68);
-    shooterSubsystem.setShooterTargetSpeed(50);
+    shooterSubsystem.setShooterTargetSpeed(60);
 
     if(feederSubsystem.isFeederRunning()){
       // Reseed the robots position if scoring in amp

@@ -22,7 +22,7 @@ public class SuperstructureStash extends Command {
   @Override
   public void execute() {
     elevatorSubsystem.isClimbing = false;
-    elevatorSubsystem.setElevatorTargetPosition(13);
+    elevatorSubsystem.setElevatorTargetPosition(17);
     anglerSubsystem.setAnglerTargetPosition(0);
     if (driveSubsystem.isShooterTowardGoal()){
       shooterSubsystem.setShooterTargetSpeed(50);

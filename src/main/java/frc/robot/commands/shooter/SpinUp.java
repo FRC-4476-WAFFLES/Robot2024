@@ -16,8 +16,8 @@ import static frc.robot.RobotContainer.*;
 
 public class SpinUp extends Command {
   /** Creates a new SpinUp. */
-  double generalAnglerAdjustment = -2.0;
-  double generalSpeedAdjustment = -6;
+  double generalAnglerAdjustment = 6;
+  double generalSpeedAdjustment = 2;
 
   
 
@@ -44,7 +44,7 @@ public class SpinUp extends Command {
    intakeSubsystem.SetIntakeSpeed(0);
     elevatorSubsystem.setElevatorTargetPosition(elevatorSubsystem.getElevatorMode().getHeight());
     anglerSubsystem.setAnglerTargetPosition(angle);
-    if (feederSubsystem.isFeederAtTargetPosition()){
+    if (!feederSubsystem.adjusting){
       shooterSubsystem.setShooterTargetSpeed(speed);
     }
     
@@ -74,14 +74,14 @@ public class SpinUp extends Command {
     
     final InterpolatingDoubleTreeMap shooterSpeedMap = new InterpolatingDoubleTreeMap();
    
-    shooterSpeedMap.put(0.9, 43.0 + generalSpeedAdjustment);
-    shooterSpeedMap.put(1.8542, 60.0 + generalSpeedAdjustment);
-    shooterSpeedMap.put(2.54, 63.0 + generalSpeedAdjustment);
-    shooterSpeedMap.put(3.0988, 65.0 + generalSpeedAdjustment);
+    shooterSpeedMap.put(0.9, 50.0 + generalSpeedAdjustment);
+    shooterSpeedMap.put(1.8542, 64.0 + generalSpeedAdjustment);
+    shooterSpeedMap.put(2.54, 67.0 + generalSpeedAdjustment);
+    shooterSpeedMap.put(3.0988, 70.0 + generalSpeedAdjustment);
     shooterSpeedMap.put(3.556, 72.0 + generalSpeedAdjustment);
     shooterSpeedMap.put(4.0, 75 + generalAnglerAdjustment);
     shooterSpeedMap.put(6.0, 85.0 + generalSpeedAdjustment);
-    shooterSpeedMap.put(9.0, 100.0);
+    shooterSpeedMap.put(9.0, 98.0);
    
 
     return shooterSpeedMap.get(distance);
@@ -97,19 +97,19 @@ public class SpinUp extends Command {
 
     shooterAngleMap.put(1.1977, 70.5 + generalAnglerAdjustment); 
     shooterAngleMap.put(1.5, 69.5 + generalAnglerAdjustment);
-    shooterAngleMap.put(1.999, 55.5 + generalAnglerAdjustment); 
-    shooterAngleMap.put(2.54, 50.5 + generalAnglerAdjustment);
-    shooterAngleMap.put(2.773, 48.5 + generalAnglerAdjustment);
-    shooterAngleMap.put(3.0988, 41.75 + generalAnglerAdjustment);
-    shooterAngleMap.put(3.556, 40.25 + generalAnglerAdjustment);
+    shooterAngleMap.put(1.999, 61.5 + generalAnglerAdjustment); 
+    shooterAngleMap.put(2.54, 52.5 + generalAnglerAdjustment);
+    shooterAngleMap.put(2.773, 53.5 + generalAnglerAdjustment);
+    shooterAngleMap.put(3.0988, 44.75 + generalAnglerAdjustment);
+    shooterAngleMap.put(3.556, 41.25 + generalAnglerAdjustment);
     shooterAngleMap.put(3.8813, 38.5 + generalAnglerAdjustment);
     shooterAngleMap.put(4.1, 37.5 + generalAnglerAdjustment - 0.5);
     shooterAngleMap.put(4.3688, 36.5 + generalAnglerAdjustment);
     shooterAngleMap.put(4.5626, 33.75 + generalAnglerAdjustment);
-    shooterAngleMap.put(5.8711, 30.75 + generalAnglerAdjustment+0.25);
-    shooterAngleMap.put(6.0, 30.25 + generalAnglerAdjustment); //approx alliance line
-    shooterAngleMap.put(6.5, 30.25 + generalAnglerAdjustment - 1);
-    shooterAngleMap.put(7.9, 29.25 + generalAnglerAdjustment - 2);
+    shooterAngleMap.put(5.8711, 30.5 + generalAnglerAdjustment+0.25);
+    shooterAngleMap.put(6.0, 27.75 + generalAnglerAdjustment); //approx alliance line
+    shooterAngleMap.put(6.5, 27.55 + generalAnglerAdjustment - 1);
+    shooterAngleMap.put(7.9, 25.25 + generalAnglerAdjustment - 2);
 
     double predictedAngle = shooterAngleMap.get(distance);
     return solveForElevatorHeight(distance, height, predictedAngle);
@@ -124,7 +124,7 @@ public class SpinUp extends Command {
     double result = 0;
     // Solve for opposite side of right angle triangle, where predictedAngle is the angle in degrees and the distance is the adjacent side
     double predictedHeight = distance * Math.tan(Math.toRadians(predictedAngle));
-    result = Math.atan(Math.tan(Math.toRadians(predictedAngle)) + ((elevatorSubsystem.rotationsToMeters(27.0) - currentHeight)) / distance);
+    result = Math.atan(Math.tan(Math.toRadians(predictedAngle)) + ((elevatorSubsystem.rotationsToMeters(10.0) - currentHeight)) / distance);
     return Math.toDegrees(result);
   }
 

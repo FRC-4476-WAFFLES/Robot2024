@@ -33,8 +33,8 @@ public class IntakeOut extends Command {
     }
     
     elevatorSubsystem.isClimbing = false;
-    elevatorSubsystem.setElevatorTargetPosition(25);
-    anglerSubsystem.setAnglerTargetPosition(87);
+    elevatorSubsystem.setElevatorTargetPosition(0);
+    anglerSubsystem.setAnglerTargetPosition(47);
 
   }
 
