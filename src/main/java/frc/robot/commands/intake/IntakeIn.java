@@ -56,8 +56,13 @@ public class IntakeIn extends Command {
   
     intakeSubsystem.SetIntakeSpeed(1);
     feederSubsystem.setFeederTargetSpeed(100);
-   
-  
+
+    if (shooterSubsystem.isNote()){
+      operatorController.getHID().setRumble(RumbleType.kLeftRumble,1.0);
+    }
+    else {
+      operatorController.getHID().setRumble(RumbleType.kLeftRumble,0.0);
+    }
   }
 
   // Called once the command ends or is interrupted.
