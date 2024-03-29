@@ -14,7 +14,7 @@ public class SuperstructureAmp extends Command {
   /** Creates a new SuperstructureAmp. */
   public SuperstructureAmp() {
     // Use addRequirements() here to declare subsystem dependencies.\
-    addRequirements(elevatorSubsystem, anglerSubsystem, shooterSubsystem);
+    addRequirements(elevatorSubsystem, anglerSubsystem, shooterSubsystem, intakeSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -25,10 +25,11 @@ public class SuperstructureAmp extends Command {
   @Override
   public void execute() {
     elevatorSubsystem.isClimbing = false;
+    intakeSubsystem.SetIntakeSpeed(0);
     elevatorSubsystem.setElevatorTargetPosition(26);
-    shooterSubsystem.setShooterTargetSpeed(10);
+    shooterSubsystem.setShooterTargetSpeed(16);
     
-    anglerSubsystem.setAnglerTargetPosition(-29);
+    anglerSubsystem.setAnglerTargetPosition(-34);
 
      if(feederSubsystem.isFeederRunning()){
       // Reseed the robots position if scoring in amp

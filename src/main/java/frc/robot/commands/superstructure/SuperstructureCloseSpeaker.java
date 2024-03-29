@@ -14,7 +14,7 @@ public class SuperstructureCloseSpeaker extends Command {
   /** Creates a new SuperstructureCloseSpeaker. */
   public SuperstructureCloseSpeaker() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(elevatorSubsystem, anglerSubsystem, shooterSubsystem);
+    addRequirements(elevatorSubsystem, anglerSubsystem, shooterSubsystem, intakeSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -25,6 +25,7 @@ public class SuperstructureCloseSpeaker extends Command {
   @Override
   public void execute() {
     elevatorSubsystem.isClimbing = false;
+    intakeSubsystem.SetIntakeSpeed(0);
     elevatorSubsystem.setElevatorTargetPosition(25);
     anglerSubsystem.setAnglerTargetPosition(68);
     shooterSubsystem.setShooterTargetSpeed(50);

@@ -26,7 +26,7 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import frc.robot.Constants;
 
 public class AnglerSubsystem extends SubsystemBase {
-    private static final double OVERALL_REDUCTION = (62 / 18) * 25 * (48 / 16); // Ratio from the motor to the shooter pivot shaft
+    private static final double OVERALL_REDUCTION = (62 / 18) * 9 * (48 / 16); // Ratio from the motor to the shooter pivot shaft
     private static final double ANGLER_DEAD_ZONE = 1;
 
     private TalonFX angler;
@@ -41,6 +41,7 @@ public class AnglerSubsystem extends SubsystemBase {
 
     private Timer profileTimer = new Timer();
     private boolean previousEnabled = false;
+    private boolean previousSwitchState;
 
     public AnglerSubsystem() {
         initializeSmartDashboard();
@@ -84,9 +85,9 @@ public class AnglerSubsystem extends SubsystemBase {
 
     private void configurePositionPID() {
         Slot0Configs anglerSlot0Configs = new Slot0Configs();
-        anglerSlot0Configs.kP = 1.1;
+        anglerSlot0Configs.kP = 0.6;
         anglerSlot0Configs.kD = 0;
-        anglerSlot0Configs.kV = 0.1;
+        anglerSlot0Configs.kV = 0.105;
 
         angler.setPosition(0);
         angler.getConfigurator().apply(anglerSlot0Configs);
@@ -101,13 +102,16 @@ public class AnglerSubsystem extends SubsystemBase {
         // final PositionVoltage anglerPositionRequest = new PositionVoltage(0).withSlot(1);
         // angler.setControl(anglerPositionRequest.withPosition(anglerTargetPositionRotations));
         updateSmartDashboard();
-        if(!elevatorSubsystem.getCoastSwitch()){
+        if (!elevatorSubsystem.getCoastSwitch() && previousSwitchState){
             angler.setNeutralMode(NeutralModeValue.Coast);
-        }
-        else{
+            
+            
+          }
+          else if(elevatorSubsystem.getCoastSwitch() && !previousSwitchState){
             angler.setNeutralMode(NeutralModeValue.Brake);
-    
-        }
+           
+          }
+          previousSwitchState = elevatorSubsystem.getCoastSwitch();
 
         SmartDashboard.putNumber("Angler Setpoint", anglerTargetPositonDegrees);
         SmartDashboard.putNumber("Angler Position", getAnglerDegrees());
@@ -174,16 +178,19 @@ public class AnglerSubsystem extends SubsystemBase {
      * @param angle in degrees
      */
     public void setAnglerTargetPosition(double angle) {
-        this.anglerTargetPositonDegrees = MathUtil.clamp(angle, 
-        getAnglerTopLimit(elevatorSubsystem.getElevatorPosition()), 
-        getAnglerBottomLimit(elevatorSubsystem.getElevatorPosition()));
-        this.anglerTargetPositionRotations = anglerTargetPositonDegrees * (OVERALL_REDUCTION / 360);
-        if (this.anglerTargetPositionRotations != this.previousTargetPosition) {
-            profileTimer.restart();
-            this.previousTargetPosition = this.anglerTargetPositionRotations;
-            this.profileStartPosition = this.angler.getPosition().getValueAsDouble();
-            this.profileStartVelocity = this.angler.getVelocity().getValueAsDouble();
+        if (Math.abs(angle - this.anglerTargetPositonDegrees) > 0.05){
+            this.anglerTargetPositonDegrees = MathUtil.clamp(angle, 
+            getAnglerTopLimit(elevatorSubsystem.getElevatorPosition()), 
+            getAnglerBottomLimit(elevatorSubsystem.getElevatorPosition()));
+            this.anglerTargetPositionRotations = anglerTargetPositonDegrees * (OVERALL_REDUCTION / 360);
+            if (this.anglerTargetPositionRotations != this.previousTargetPosition) {
+                profileTimer.restart();
+                this.previousTargetPosition = this.anglerTargetPositionRotations;
+                this.profileStartPosition = this.angler.getPosition().getValueAsDouble();
+                this.profileStartVelocity = this.angler.getVelocity().getValueAsDouble();
+            }
         }
+        
     }
 
     public double getAnglerTopLimit(double elevatorPosition) {

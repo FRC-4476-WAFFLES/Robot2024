@@ -61,6 +61,7 @@ public class RobotContainer {
 
   // The robot's subsystems 
   public static final LightSubsystem lightSubsystem = new LightSubsystem();
+  //public static final CANdleLights CANdleLights = new CANdleLights();
   public static final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
   public static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public static final ShooterSubsystem shooterSubsystem  = new ShooterSubsystem();
@@ -74,6 +75,7 @@ public class RobotContainer {
   private final ElevatorDown elevatorDown  = null; //= new ElevatorDown();
   private final IntakeIn intakeIn = new IntakeIn();
   private final IntakeIn intakeInAuto = new IntakeIn();
+  private final IntakeIn intakeInAuto2 = new IntakeIn();
   private final IntakeOut intakeOut = new IntakeOut();
   private final ScoreNote scoreNote  = new ScoreNote();
   private final ScoreNote scoreNoteAuto  = new ScoreNote();
@@ -94,11 +96,9 @@ public class RobotContainer {
   private final ForcedFire forcedFire = new ForcedFire();
   private final SuperstructureYeet superstructureYeet = new SuperstructureYeet();
   private final SuperstructurePodium superstructurePodium = new SuperstructurePodium();
+  private final SuperstructureBlock superstructureBlock = new SuperstructureBlock();
+  private final ElevatorHigh elevatorHigh = new ElevatorHigh();
 
-  
-
-
-  //TODO Trap Command
   
  
 
@@ -173,9 +173,9 @@ public class RobotContainer {
     operatorController.rightBumper().whileTrue(scoreNote);
     operatorController.x().whileTrue(superstructureAmp);
     operatorController.b().whileTrue(superstructureCloseSpeaker);
-    operatorController.y().whileTrue(superstructureTestShot);
+    operatorController.y().whileTrue(superstructureBlock);
     operatorController.a().whileTrue(superstructureClimb);
-    operatorController.rightStick().whileTrue(superstructureStash);
+    operatorController.rightStick().whileTrue(elevatorHigh);
     rightJoystick.button(1).whileTrue(driveAndAimAtGoal.alongWith(spinUp));
     rightJoystick.button(2).whileTrue(driveAndAimAtStash.alongWith(spinUpStash));
     rightJoystick.button(4).whileTrue(driveAndAimWhileAtPodium.alongWith(superstructurePodium));
@@ -199,9 +199,10 @@ public class RobotContainer {
     // NamedCommands.registerCommand("aimAtGoal", driveAndAimAtGoalAuto);
     // NamedCommands.registerCommand("spinUp", spinUpAuto);
     // NamedCommands.registerCommand("scoreNote", scoreNoteAuto);
-    NamedCommands.registerCommand("fenderShot", new ParallelDeadlineGroup(scoreNoteAuto2, spinUpAuto2));
+    // NamedCommands.registerCommand("fenderShot", new ParallelDeadlineGroup(scoreNoteAuto2, spinUpAuto2));
     NamedCommands.registerCommand("completeShot", new ParallelDeadlineGroup(scoreNoteAuto, spinUpAuto, driveAndAimAtGoalAuto));
     NamedCommands.registerCommand("intakeIn", intakeInAuto);
+    NamedCommands.registerCommand("intakeInThenSpinUp", intakeInAuto2.andThen(spinUpAuto2));
     NamedCommands.registerCommand("intakeInDeadline", intakeInAuto.withTimeout(1));
     NamedCommands.registerCommand("intakeOff", new InstantCommand(() -> intakeIn.cancel()));
     NamedCommands.registerCommand("forcedFire", forcedFire);

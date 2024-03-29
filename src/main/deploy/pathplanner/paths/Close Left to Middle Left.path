@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.523749047498095,
-        "y": 6.772669545339091
+        "x": 2.8730388230007247,
+        "y": 7.025263281295794
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.534123991324907,
-        "y": 6.916726910376898
+        "x": 3.883413766827537,
+        "y": 7.169320646333601
       },
       "isLocked": false,
       "linkedName": "Close Left Note"
@@ -55,7 +55,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.5,
-    "maxAcceleration": 3.0,
+    "maxAcceleration": 3.1,
     "maxAngularVelocity": 9000.0,
     "maxAngularAcceleration": 1000.0
   },

@@ -4,7 +4,6 @@
 
 package frc.robot.commands.intake;
 
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -53,7 +52,7 @@ public class IntakeIn extends Command {
     // }
     elevatorSubsystem.isClimbing = false;
     elevatorSubsystem.setElevatorTargetPosition(25);
-    anglerSubsystem.setAnglerTargetPosition(87);
+    anglerSubsystem.setAnglerTargetPosition(85);
   
     intakeSubsystem.SetIntakeSpeed(1);
     feederSubsystem.setFeederTargetSpeed(100);
@@ -71,15 +70,12 @@ public class IntakeIn extends Command {
   public void end(boolean interrupted) {
     intakeSubsystem.SetIntakeSpeed(0);
     feederSubsystem.setFeederTargetSpeed(0);
-    
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     if (shooterSubsystem.isNote()){
-      intakeSubsystem.SetIntakeSpeed(0);
-      feederSubsystem.setFeederTargetSpeed(0);
       return true;
     }
     else{

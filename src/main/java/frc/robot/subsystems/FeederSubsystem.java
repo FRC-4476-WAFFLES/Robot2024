@@ -66,9 +66,9 @@ public class FeederSubsystem extends SubsystemBase {
 
     // PID for feeder
     Slot0Configs feederSlot0Configs = new Slot0Configs();
-    feederSlot0Configs.kP = 1.7; 
+    feederSlot0Configs.kP = 2.5; 
     feederSlot0Configs.kD = 0.00001;
-    feederSlot0Configs.kV = 0.12;
+    feederSlot0Configs.kV = 0.13;
 
 
     feeder.getConfigurator().apply(generalConfigs.withMotorOutput(new MotorOutputConfigs().withInverted(InvertedValue.CounterClockwise_Positive)));
@@ -90,7 +90,7 @@ public class FeederSubsystem extends SubsystemBase {
       
       if (Math.abs(feeder.getVelocity().getValueAsDouble()) < FEEDER_DEAD_ZONE) {
         feeder.setPosition(0);
-        setFeederTargetPosition(-0.4);
+        setFeederTargetPosition(-0.2);
       }
     } else {
       final PositionVoltage feederPositionRequest = new PositionVoltage(0).withSlot(0);

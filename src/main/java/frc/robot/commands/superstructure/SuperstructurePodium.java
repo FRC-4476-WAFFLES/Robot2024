@@ -12,7 +12,7 @@ public class SuperstructurePodium extends Command {
   /** Creates a new SuperstructurePodium. */
   public SuperstructurePodium() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(shooterSubsystem, anglerSubsystem, elevatorSubsystem);
+    addRequirements(shooterSubsystem, anglerSubsystem, elevatorSubsystem, intakeSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -22,9 +22,10 @@ public class SuperstructurePodium extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooterSubsystem.setShooterTargetSpeed(70);
-    anglerSubsystem.setAnglerTargetPosition(40);
-    elevatorSubsystem.setElevatorTargetPosition(27);
+    shooterSubsystem.setShooterTargetSpeed(60);
+    anglerSubsystem.setAnglerTargetPosition(34);
+    elevatorSubsystem.setElevatorTargetPosition(58);
+    intakeSubsystem.SetIntakeSpeed(0);
   }
 
   // Called once the command ends or is interrupted.

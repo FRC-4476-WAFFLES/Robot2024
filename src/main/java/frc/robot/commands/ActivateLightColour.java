@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.LightSubsystem;
 import frc.robot.subsystems.LightSubsystem.LightColours;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
@@ -26,19 +27,16 @@ public class ActivateLightColour extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.err.println("Running normal lights");
+   // CANdleLights.changeAnimation(AnimationTypes.Twinkle);
+    // CANdleLights.setColors();
 
     final double matchTimer = Timer.getMatchTime();
     
     // If certain conditions are fufilled, the robot's lights change colours
-    if(shooterSubsystem.isGoodSpeed() && anglerSubsystem.isGoodShooterAngle() && elevatorSubsystem.isGoodElevatorPosition() && shooterSubsystem.isShooterRunning()){
+    if(shooterSubsystem.isGoodSpeed() && anglerSubsystem.isGoodShooterAngle() && elevatorSubsystem.isGoodElevatorPosition() && shooterSubsystem.isShooterRunning() && shooterSubsystem.isTryingToShoot()){
       // Ready to shoot  
       lightSubsystem.setLightColour(LightColours.GREEN);
     } 
-    else if (20 < matchTimer && matchTimer < 25){
-      // Endgame warning
-      lightSubsystem.blinkBetweenColours(LightColours.RED, LightColours.WHITE);
-    }
     else if (shooterSubsystem.isNote()) {
       // Note in Shooter
       lightSubsystem.setLightColour(LightColours.YELLOW);
@@ -50,6 +48,11 @@ public class ActivateLightColour extends Command {
     else if (intakeSubsystem.isRunningOut()){
       lightSubsystem.blinkBetweenColours(LightColours.RED, LightColours.BLACK);
     }
+    else if (20 < matchTimer && matchTimer < 25){
+      // Endgame warning
+      lightSubsystem.blinkBetweenColours(LightColours.RED, LightColours.WHITE);
+    }
+    
     // else if(intakeSubsystem.isNoteCurrentDetection()){
     //   // Note in Intake
     //   lightSubsystem.setLightColour(LightColours.VIOLET);
@@ -61,10 +64,10 @@ public class ActivateLightColour extends Command {
     else {
       var alliance = DriverStation.getAlliance();
       if (alliance.get() == DriverStation.Alliance.Blue) {
-          lightSubsystem.setLightColour(LightColours.HEARTBEAT_BLUE);
+          lightSubsystem.setLightColour(LightColours.BLUE);
       }
       else {
-          lightSubsystem.setLightColour(LightColours.HEARTBEAT_RED);
+          lightSubsystem.setLightColour(LightColours.RED);
       }
 
     }

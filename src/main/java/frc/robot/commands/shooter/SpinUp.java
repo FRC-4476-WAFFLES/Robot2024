@@ -17,26 +17,13 @@ import static frc.robot.RobotContainer.*;
 public class SpinUp extends Command {
   /** Creates a new SpinUp. */
   double generalAnglerAdjustment = -2.0;
+  double generalSpeedAdjustment = -6;
 
-  enum ShooterMode {
-    TALL(45.0),
-    MIDDLE(27.0),
-    SHORT(10.0);
+  
 
-    private double height;
-
-    ShooterMode(double height) {
-      this.height = height;
-    }
-
-    public double getHeight() {
-      return height;
-    }
-  }
-
-  ShooterMode currentShooterMode = ShooterMode.MIDDLE;
+  
   public SpinUp() {
-    addRequirements(shooterSubsystem, anglerSubsystem, elevatorSubsystem);
+    addRequirements(shooterSubsystem, anglerSubsystem, elevatorSubsystem, intakeSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -54,7 +41,8 @@ public class SpinUp extends Command {
     double angle = calculateAngleOffDistance(distance);
    // double height = solveForElevatorHeight(distance, speed, angle);
 
-    elevatorSubsystem.setElevatorTargetPosition(currentShooterMode.getHeight());
+   intakeSubsystem.SetIntakeSpeed(0);
+    elevatorSubsystem.setElevatorTargetPosition(elevatorSubsystem.getElevatorMode().getHeight());
     anglerSubsystem.setAnglerTargetPosition(angle);
     if (feederSubsystem.isFeederAtTargetPosition()){
       shooterSubsystem.setShooterTargetSpeed(speed);
@@ -86,12 +74,13 @@ public class SpinUp extends Command {
     
     final InterpolatingDoubleTreeMap shooterSpeedMap = new InterpolatingDoubleTreeMap();
    
-    shooterSpeedMap.put(0.9, 50.0);
-    shooterSpeedMap.put(1.8542, 60.0);
-    shooterSpeedMap.put(2.54, 63.0);
-    shooterSpeedMap.put(3.0988, 65.0);
-    shooterSpeedMap.put(3.556, 72.0);
-    shooterSpeedMap.put(6.0, 100.0);
+    shooterSpeedMap.put(0.9, 43.0 + generalSpeedAdjustment);
+    shooterSpeedMap.put(1.8542, 60.0 + generalSpeedAdjustment);
+    shooterSpeedMap.put(2.54, 63.0 + generalSpeedAdjustment);
+    shooterSpeedMap.put(3.0988, 65.0 + generalSpeedAdjustment);
+    shooterSpeedMap.put(3.556, 72.0 + generalSpeedAdjustment);
+    shooterSpeedMap.put(4.0, 75 + generalAnglerAdjustment);
+    shooterSpeedMap.put(6.0, 85.0 + generalSpeedAdjustment);
     shooterSpeedMap.put(9.0, 100.0);
    
 
@@ -106,26 +95,28 @@ public class SpinUp extends Command {
 
     final InterpolatingDoubleTreeMap shooterAngleMap = new InterpolatingDoubleTreeMap();
 
-    shooterAngleMap.put(1.1977, 68.0 + generalAnglerAdjustment); 
-    shooterAngleMap.put(1.5, 67.0 + generalAnglerAdjustment);
-    shooterAngleMap.put(1.999, 53.5 + generalAnglerAdjustment); 
-    shooterAngleMap.put(2.54, 49.0 + generalAnglerAdjustment);
-    shooterAngleMap.put(2.773, 47.0 + generalAnglerAdjustment);
-    shooterAngleMap.put(3.0988, 41.0 + generalAnglerAdjustment);
-    shooterAngleMap.put(3.556, 39.5 + generalAnglerAdjustment);
+    shooterAngleMap.put(1.1977, 70.5 + generalAnglerAdjustment); 
+    shooterAngleMap.put(1.5, 69.5 + generalAnglerAdjustment);
+    shooterAngleMap.put(1.999, 55.5 + generalAnglerAdjustment); 
+    shooterAngleMap.put(2.54, 50.5 + generalAnglerAdjustment);
+    shooterAngleMap.put(2.773, 48.5 + generalAnglerAdjustment);
+    shooterAngleMap.put(3.0988, 41.75 + generalAnglerAdjustment);
+    shooterAngleMap.put(3.556, 40.25 + generalAnglerAdjustment);
     shooterAngleMap.put(3.8813, 38.5 + generalAnglerAdjustment);
-    shooterAngleMap.put(4.1, 37.5 + generalAnglerAdjustment);
+    shooterAngleMap.put(4.1, 37.5 + generalAnglerAdjustment - 0.5);
     shooterAngleMap.put(4.3688, 36.5 + generalAnglerAdjustment);
-    shooterAngleMap.put(4.5626, 33.0 + generalAnglerAdjustment);
-    shooterAngleMap.put(5.8711, 30.0 + generalAnglerAdjustment);
-    shooterAngleMap.put(6.0, 29.5 + generalAnglerAdjustment + 0.375);
-    shooterAngleMap.put(6.5, 29.50 + generalAnglerAdjustment - 1);
-    shooterAngleMap.put(7.9, 28.5 + generalAnglerAdjustment - 0.5);
+    shooterAngleMap.put(4.5626, 33.75 + generalAnglerAdjustment);
+    shooterAngleMap.put(5.8711, 30.75 + generalAnglerAdjustment+0.25);
+    shooterAngleMap.put(6.0, 30.25 + generalAnglerAdjustment); //approx alliance line
+    shooterAngleMap.put(6.5, 30.25 + generalAnglerAdjustment - 1);
+    shooterAngleMap.put(7.9, 29.25 + generalAnglerAdjustment - 2);
 
     double predictedAngle = shooterAngleMap.get(distance);
-    return predictedAngle;
+    return solveForElevatorHeight(distance, height, predictedAngle);
+    //return predictedAngle;
 
- //   return solveForElevatorHeight(distance, height, predictedAngle);
+
+ 
 
   }
 
@@ -133,22 +124,9 @@ public class SpinUp extends Command {
     double result = 0;
     // Solve for opposite side of right angle triangle, where predictedAngle is the angle in degrees and the distance is the adjacent side
     double predictedHeight = distance * Math.tan(Math.toRadians(predictedAngle));
-    result = Math.atan(Math.tan(predictedAngle) + (predictedHeight - (elevatorSubsystem.rotationsToMeters(27.0) - currentHeight)) / distance);
-    return result;
+    result = Math.atan(Math.tan(Math.toRadians(predictedAngle)) + ((elevatorSubsystem.rotationsToMeters(27.0) - currentHeight)) / distance);
+    return Math.toDegrees(result);
   }
 
-  public void setTallMode() {
-    // Set the shooter to tall mode
-    currentShooterMode = ShooterMode.TALL;
-  }
-
-  public void setMiddleMode() {
-    // Set the shooter to middle mode
-    currentShooterMode = ShooterMode.MIDDLE;
-  }
-
-  public void setShortMode() {
-    // Set the shooter to short mode
-    currentShooterMode = ShooterMode.SHORT;
-  }
+ 
 }

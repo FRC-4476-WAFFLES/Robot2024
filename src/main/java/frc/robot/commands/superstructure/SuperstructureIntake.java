@@ -24,7 +24,7 @@ public class SuperstructureIntake extends Command {
     shooterSubsystem.setShooterTargetSpeed(0);
     elevatorSubsystem.isClimbing = false;
     elevatorSubsystem.setElevatorTargetPosition(32);
-    anglerSubsystem.setAnglerTargetPosition(86.7);
+    anglerSubsystem.setAnglerTargetPosition(87);
   
     
   }
