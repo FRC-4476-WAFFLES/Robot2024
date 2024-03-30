@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import java.util.Optional;
 import java.util.function.Supplier;
 
+import org.opencv.core.Mat;
 import org.photonvision.EstimatedRobotPose;
 
 import com.ctre.phoenix6.Utils;
@@ -32,6 +33,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -288,24 +290,34 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
         return distance;
     }
 
-    public Rotation2d angleToGoalOffsetCalculation(double angleToGoal){
+    public Rotation2d angleToGoalOffsetCalculation(double inputtedAngle){
         final InterpolatingDoubleTreeMap angleToGoalOffsetMap = new InterpolatingDoubleTreeMap();
-        angleToGoalOffsetMap.put(2.3, -1.9);
-        angleToGoalOffsetMap.put(2.6,-0.35);
+        angleToGoalOffsetMap.put(2.3, -2.0);
+        angleToGoalOffsetMap.put(2.6, -0.38);
         angleToGoalOffsetMap.put(Math.PI,0.0);
-        angleToGoalOffsetMap.put(3.6,0.7);
+        angleToGoalOffsetMap.put(3.6,0.57);
         angleToGoalOffsetMap.put(4.0, 0.9);
+        
+        if (DriverStation.getAlliance().get() == Alliance.Blue) {
+            inputtedAngle += Math.PI;
+            
+            inputtedAngle = Math.PI - (inputtedAngle - Math.PI);
+        
+        }
+        SmartDashboard.putNumber("inputted Angle", inputtedAngle);
+        
 
         Pose2d poseOfGoal;
 
         // Set goal pose based on alliance
         if (DriverStation.getAlliance().get() == Alliance.Red) {
-            System.out.println(angleToGoalOffsetMap.get(angleToGoal));
+            System.out.println(angleToGoalOffsetMap.get(inputtedAngle));
             poseOfGoal = new Pose2d(Constants.DriveConstants.redGoalPoseCenter.getX(),
-                    Constants.DriveConstants.redGoalPoseCenter.getY() + angleToGoalOffsetMap.get(angleToGoal), new Rotation2d(0));
+                    Constants.DriveConstants.redGoalPoseCenter.getY() + angleToGoalOffsetMap.get(inputtedAngle), new Rotation2d(0));
         }
         else {
-            poseOfGoal = Constants.DriveConstants.blueGoalPoseCenter;
+            poseOfGoal = new Pose2d(Constants.DriveConstants.blueGoalPoseCenter.getX(),
+                    Constants.DriveConstants.blueGoalPoseCenter.getY() + angleToGoalOffsetMap.get(inputtedAngle), new Rotation2d(0));
         }
 
         double angleToGoalAdjusted = Math

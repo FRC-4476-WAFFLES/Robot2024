@@ -39,7 +39,7 @@ public class ActivateLightColour extends Command {
     } 
     else if (shooterSubsystem.isNote()) {
       // Note in Shooter
-      lightSubsystem.setLightColour(LightColours.YELLOW);
+      lightSubsystem.setLightColour(LightColours.PINK);
     }
     else if (intakeSubsystem.isRunningIn() && anglerSubsystem.isGoodShooterAngle() && elevatorSubsystem.isGoodElevatorPosition()){
       // Intake running

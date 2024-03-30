@@ -44,7 +44,7 @@ public class SpinUp extends Command {
    intakeSubsystem.SetIntakeSpeed(0);
     elevatorSubsystem.setElevatorTargetPosition(elevatorSubsystem.getElevatorMode().getHeight());
     anglerSubsystem.setAnglerTargetPosition(angle);
-    if (!feederSubsystem.adjusting){
+    if (!feederSubsystem.adjusting && !shooterSubsystem.isFullyInNote()){
       shooterSubsystem.setShooterTargetSpeed(speed);
     }
     
@@ -77,10 +77,10 @@ public class SpinUp extends Command {
     shooterSpeedMap.put(0.9, 50.0 + generalSpeedAdjustment);
     shooterSpeedMap.put(1.8542, 64.0 + generalSpeedAdjustment);
     shooterSpeedMap.put(2.54, 67.0 + generalSpeedAdjustment);
-    shooterSpeedMap.put(3.0988, 70.0 + generalSpeedAdjustment);
-    shooterSpeedMap.put(3.556, 72.0 + generalSpeedAdjustment);
-    shooterSpeedMap.put(4.0, 75 + generalAnglerAdjustment);
-    shooterSpeedMap.put(6.0, 85.0 + generalSpeedAdjustment);
+    shooterSpeedMap.put(3.0988, 73.0 + generalSpeedAdjustment);
+    shooterSpeedMap.put(3.556, 75.0 + generalSpeedAdjustment);
+    shooterSpeedMap.put(4.0, 76 + generalAnglerAdjustment);
+    shooterSpeedMap.put(6.0, 86.0 + generalSpeedAdjustment);
     shooterSpeedMap.put(9.0, 95.0);
    
 
@@ -95,23 +95,23 @@ public class SpinUp extends Command {
 
     final InterpolatingDoubleTreeMap shooterAngleMap = new InterpolatingDoubleTreeMap();
 
-    shooterAngleMap.put(1.1977, 70.5 + generalAnglerAdjustment); 
-    shooterAngleMap.put(1.5, 69.5 + generalAnglerAdjustment);
-    shooterAngleMap.put(1.999, 65.5 + generalAnglerAdjustment); 
-    shooterAngleMap.put(2.54, 52.5 + generalAnglerAdjustment);
-    shooterAngleMap.put(2.773, 53.5 + generalAnglerAdjustment);
-    shooterAngleMap.put(3.0988, 44.75 + generalAnglerAdjustment);
-    shooterAngleMap.put(3.556, 41.25 + generalAnglerAdjustment);
-    shooterAngleMap.put(3.8813, 38.5 + generalAnglerAdjustment);
-    shooterAngleMap.put(4.1, 37.5 + generalAnglerAdjustment - 0.5);
-    shooterAngleMap.put(4.3688, 36.5 + generalAnglerAdjustment);
-    shooterAngleMap.put(4.5626, 33.75 + generalAnglerAdjustment);
-    shooterAngleMap.put(5.8711, 28.9 + generalAnglerAdjustment+0.25);
-    shooterAngleMap.put(6.0, 29.6 + generalAnglerAdjustment); //approx alliance line
-    shooterAngleMap.put(6.5, 28.4 + generalAnglerAdjustment - 1);
-    shooterAngleMap.put(7.9, 28 + generalAnglerAdjustment - 2);
-    shooterAngleMap.put(8.3, 27.5 + generalAnglerAdjustment - 2);
-    shooterAngleMap.put(8.7, 27.3 + generalAnglerAdjustment - 2);
+    shooterAngleMap.put(1.1977, 75.5 + generalAnglerAdjustment); 
+    shooterAngleMap.put(1.5, 74.5 + generalAnglerAdjustment);
+    shooterAngleMap.put(1.999, 70.25 + generalAnglerAdjustment); 
+    shooterAngleMap.put(2.54, 55.75 + generalAnglerAdjustment);
+    shooterAngleMap.put(2.773, 54.5 + generalAnglerAdjustment);
+    shooterAngleMap.put(3.0988, 45.75 + generalAnglerAdjustment);
+    shooterAngleMap.put(3.556, 42.25 + generalAnglerAdjustment);
+    shooterAngleMap.put(3.8813, 39.5 + generalAnglerAdjustment);
+    shooterAngleMap.put(4.1, 38.5 + generalAnglerAdjustment - 0.5);
+    shooterAngleMap.put(4.3688, 37.5 + generalAnglerAdjustment);
+    shooterAngleMap.put(4.5626, 34.9 + generalAnglerAdjustment);
+    shooterAngleMap.put(5.8711, 29.4 + generalAnglerAdjustment+0.25);
+    shooterAngleMap.put(6.0, 28.5 + generalAnglerAdjustment); //approx alliance line
+    shooterAngleMap.put(6.5, 28.3 + generalAnglerAdjustment - 1);
+    shooterAngleMap.put(7.9, 28.1 + generalAnglerAdjustment - 2);
+    shooterAngleMap.put(8.3, 27.6 + generalAnglerAdjustment - 2);
+    shooterAngleMap.put(8.7, 27.2 + generalAnglerAdjustment - 2);
     double predictedAngle = shooterAngleMap.get(distance);
     return solveForElevatorHeight(distance, height, predictedAngle);
     //return predictedAngle;

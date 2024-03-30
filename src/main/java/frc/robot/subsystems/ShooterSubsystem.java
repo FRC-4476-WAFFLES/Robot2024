@@ -41,7 +41,7 @@ public class ShooterSubsystem extends SubsystemBase {
   
   // Constants
   
-  private final double SHOOTER_DEAD_ZONE = 6.5;
+  private final double SHOOTER_DEAD_ZONE = 3.5;
 
   private final double IR_RANGE = 2.0;
   private boolean tryingToShoot = false;
@@ -205,7 +205,7 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public boolean isFullyInNote() {
-    return shooterIR2.getVoltage() > 2.70;
+    return shooterIR2.getVoltage() > 2.55;
   }
 
   public boolean isTryingToShoot(){

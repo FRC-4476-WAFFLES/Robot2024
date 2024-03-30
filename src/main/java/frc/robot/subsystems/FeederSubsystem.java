@@ -95,7 +95,7 @@ public class FeederSubsystem extends SubsystemBase {
 
       if (shooterSubsystem.isFullyInNote()){
         adjusting = true;
-        setFeederTargetSpeed(-7);
+        setFeederTargetSpeed(-4);
       }
       else if(adjusting){
         adjusting = false;

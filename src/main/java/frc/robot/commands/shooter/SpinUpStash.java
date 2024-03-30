@@ -38,7 +38,9 @@ public class SpinUpStash extends Command {
       elevatorSubsystem.setElevatorTargetPosition(17);
       anglerSubsystem.setAnglerTargetPosition(0);
     }
+    if(!shooterSubsystem.isFullyInNote()){
       shooterSubsystem.setShooterTargetSpeed(speed);
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -58,14 +60,14 @@ public class SpinUpStash extends Command {
     
     final InterpolatingDoubleTreeMap shooterSpeedMap = new InterpolatingDoubleTreeMap();
    
-    shooterSpeedMap.put(0.9, 20.0);
-    shooterSpeedMap.put(1.8542, 20.0);
-    shooterSpeedMap.put(2.54, 20.0);
-    shooterSpeedMap.put(3.0988, 25.0);
-    shooterSpeedMap.put(3.556, 30.0);
-    shooterSpeedMap.put(6.0, 35.0);
-    shooterSpeedMap.put(9.0, 45.0);
-    shooterSpeedMap.put(12.0,55.0);
+    shooterSpeedMap.put(0.9, 50.0);
+    shooterSpeedMap.put(1.8542, 50.0);
+    shooterSpeedMap.put(2.54, 50.0);
+    shooterSpeedMap.put(3.0988, 45.0);
+    shooterSpeedMap.put(3.556, 50.0);
+    shooterSpeedMap.put(6.0, 55.0);
+    shooterSpeedMap.put(9.0, 65.0);
+    shooterSpeedMap.put(12.0,71.0);
    
 
     return shooterSpeedMap.get(distance);
@@ -81,8 +83,8 @@ public class SpinUpStash extends Command {
 
     shooterAngleMap.put(6.3,60.0);
     shooterAngleMap.put(9.0, 54.0);
-    shooterAngleMap.put(9.2, 47.0);
-    shooterAngleMap.put(9.6, 43.0);
+    shooterAngleMap.put(9.2, 50.0);
+    shooterAngleMap.put(9.6, 46.0);
 
     return shooterAngleMap.get(distance);
 
