@@ -23,6 +23,7 @@ import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
@@ -262,7 +263,9 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
         }
 
         // return poseOfGoal.minus(getRobotPose()).getTranslation().getAngle();
-        return new Rotation2d(angleToGoal);
+        SmartDashboard.putNumber("Angle to Goal", angleToGoal);
+        return angleToGoalOffsetCalculation(angleToGoal);
+        //return new Rotation2d(angleToGoal);
         // return new Rotation2d(Math.PI);
     }
 
@@ -280,11 +283,44 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
         double distance = poseOfGoal.minus(getRobotPose()).getTranslation().getNorm();
 
         SmartDashboard.putNumber("DistanceToGoal", distance);
-        distance = filter.calculate(distance);
+        //distance = filter.calculate(distance);
 
         return distance;
     }
 
+    public Rotation2d angleToGoalOffsetCalculation(double angleToGoal){
+        final InterpolatingDoubleTreeMap angleToGoalOffsetMap = new InterpolatingDoubleTreeMap();
+        angleToGoalOffsetMap.put(2.3, -1.9);
+        angleToGoalOffsetMap.put(2.6,-0.35);
+        angleToGoalOffsetMap.put(Math.PI,0.0);
+        angleToGoalOffsetMap.put(3.6,0.7);
+        angleToGoalOffsetMap.put(4.0, 0.9);
+
+        Pose2d poseOfGoal;
+
+        // Set goal pose based on alliance
+        if (DriverStation.getAlliance().get() == Alliance.Red) {
+            System.out.println(angleToGoalOffsetMap.get(angleToGoal));
+            poseOfGoal = new Pose2d(Constants.DriveConstants.redGoalPoseCenter.getX(),
+                    Constants.DriveConstants.redGoalPoseCenter.getY() + angleToGoalOffsetMap.get(angleToGoal), new Rotation2d(0));
+        }
+        else {
+            poseOfGoal = Constants.DriveConstants.blueGoalPoseCenter;
+        }
+
+        double angleToGoalAdjusted = Math
+                .atan((getRobotPose().getY() - poseOfGoal.getY()) / (getRobotPose().getX() - poseOfGoal.getX()));
+        if (DriverStation.getAlliance().get() == Alliance.Red) {
+            angleToGoalAdjusted += Math.PI;
+        }
+
+        // return poseOfGoal.minus(getRobotPose()).getTranslation().getAngle();
+        SmartDashboard.putNumber("Angle to Goal Adjusted", angleToGoalAdjusted);
+        return new Rotation2d(angleToGoalAdjusted);
+        // return new Rotation2d(Math.PI);
+
+
+    }
     public void periodic() {
         if(odometryIsValid() && Math.abs(getCurrentRobotChassisSpeeds().vxMetersPerSecond) < 0.5){
         //     var visionEstimationLeft = visionLeft.getEstimatedGlobalPose();

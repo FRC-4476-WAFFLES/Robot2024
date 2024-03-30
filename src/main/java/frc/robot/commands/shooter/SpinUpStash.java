@@ -31,16 +31,14 @@ public class SpinUpStash extends Command {
     intakeSubsystem.SetIntakeSpeed(0);
 
     if (distance > 6.2){
-      elevatorSubsystem.setElevatorTargetPosition(27);
+      elevatorSubsystem.setElevatorTargetPosition(0);
       anglerSubsystem.setAnglerTargetPosition(angle);
     }
     else{
       elevatorSubsystem.setElevatorTargetPosition(17);
       anglerSubsystem.setAnglerTargetPosition(0);
     }
-    if (feederSubsystem.isFeederAtTargetPosition()){
       shooterSubsystem.setShooterTargetSpeed(speed);
-    }
   }
 
   // Called once the command ends or is interrupted.

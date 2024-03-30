@@ -27,7 +27,7 @@ public class SuperstructureHome extends Command {
       anglerSubsystem.setAnglerTargetPosition(0);
     } else {
       elevatorSubsystem.setElevatorTargetPosition(0);
-      anglerSubsystem.setAnglerTargetPosition(47);
+      anglerSubsystem.setAnglerTargetPosition(48);
       if(shooterSubsystem.isNote() && feederSubsystem.isFeederAtTargetPosition()){
         shooterSubsystem.setShooterTargetSpeed(30);
       }

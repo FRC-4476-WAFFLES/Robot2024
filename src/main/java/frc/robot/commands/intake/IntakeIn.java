@@ -52,16 +52,16 @@ public class IntakeIn extends Command {
     // }
     elevatorSubsystem.isClimbing = false;
     elevatorSubsystem.setElevatorTargetPosition(0);
-    anglerSubsystem.setAnglerTargetPosition(47);
+    anglerSubsystem.setAnglerTargetPosition(48);
   
     intakeSubsystem.SetIntakeSpeed(1);
     feederSubsystem.setFeederTargetSpeed(100);
 
     if (shooterSubsystem.isNote()){
-      operatorController.getHID().setRumble(RumbleType.kLeftRumble,1.0);
+      //operatorController.getHID().setRumble(RumbleType.kLeftRumble,1.0);
     }
     else {
-      operatorController.getHID().setRumble(RumbleType.kLeftRumble,0.0);
+      //operatorController.getHID().setRumble(RumbleType.kLeftRumble,0.0);
     }
   }
 
