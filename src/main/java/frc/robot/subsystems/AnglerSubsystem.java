@@ -97,6 +97,9 @@ public class AnglerSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
+        if(DriverStation.isDisabled()){
+            this.profileStartPosition = this.angler.getPosition().getValueAsDouble();
+        }
         manageProfileTimer();
         executeAnglerMotionProfiling();
         // final PositionVoltage anglerPositionRequest = new PositionVoltage(0).withSlot(1);

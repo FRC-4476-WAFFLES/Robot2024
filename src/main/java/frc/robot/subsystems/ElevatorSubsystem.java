@@ -107,6 +107,9 @@ public class ElevatorSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    if(DriverStation.isDisabled()){
+      this.profileStartPosition = this.Elevator1.getPosition().getValueAsDouble();
+    }
     manageProfileTimer();
     executeElevatorMotionProfiling();
     //updatePIDConstants();
