@@ -66,6 +66,8 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
     private boolean autoSWM = false;
     private Rotation2d autoSWMHeading = new Rotation2d();
 
+    public double randomYStashAdjustment = 0; // This value is changed everytime spinUpStash is initialized
+
     public DriveSubsystem(SwerveDrivetrainConstants driveTrainConstants, double OdometryUpdateFrequency,
             SwerveModuleConstants... modules) {
         super(driveTrainConstants, OdometryUpdateFrequency, modules);
@@ -219,6 +221,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
 
     public Rotation2d getAngleToStash() {
         Pose2d poseOfStash;
+        
 
         // Set goal pose based on alliance
         if (DriverStation.getAlliance().get() == Alliance.Red) {
@@ -226,12 +229,15 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
         } else {
             poseOfStash = Constants.DriveConstants.blueStash;
         }
+        
+        poseOfStash = new Pose2d(poseOfStash.getX(), poseOfStash.getY() + randomYStashAdjustment, poseOfStash.getRotation());
 
         double angleToGoal = Math
                 .atan((getRobotPose().getY() - poseOfStash.getY()) / (getRobotPose().getX() - poseOfStash.getX()));
         if (DriverStation.getAlliance().get() == Alliance.Red) {
             angleToGoal += Math.PI;
         }
+        SmartDashboard.putNumber("AngleToStash", angleToGoal);
         return new Rotation2d(angleToGoal);
     }
 

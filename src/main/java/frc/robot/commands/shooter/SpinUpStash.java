@@ -5,11 +5,13 @@
 package frc.robot.commands.shooter;
 
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import static frc.robot.RobotContainer.*;
 
 public class SpinUpStash extends Command {
+  private double randomYAdjustment = 0;
   /** Creates a new SpinUpStash. */
   public SpinUpStash() {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -18,19 +20,36 @@ public class SpinUpStash extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    double upperRandomYAdjustment = 0.2;
+    double lowerRandomYAdjustment = -0.2;
+    double randomYAdjustment = (Math.random() * (upperRandomYAdjustment - lowerRandomYAdjustment) + lowerRandomYAdjustment);
+    driveSubsystem.randomYStashAdjustment = randomYAdjustment;
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
     double distance = driveSubsystem.getDistanceToStash();
+    double angleToStash = driveSubsystem.getAngleToStash().getRadians();
     double speed = calculateSpeedOffDistanceShoot(distance);
     double angle = calculateAngleOffDistance(distance);
 
     intakeSubsystem.SetIntakeSpeed(0);
+    
+    double angleToLeftStagePole = -0.3;
+    double angleToRightStagePole = -0.85;
+    double minDistanceFromStage = 7.9;
+    double maxDistanceFromStage = 11.25;
 
-    if (distance > 6.2){
+    boolean isCloseToStage = (angleToStash > angleToRightStagePole && angleToStash < angleToLeftStagePole) && (distance > minDistanceFromStage && distance < maxDistanceFromStage);
+    SmartDashboard.putBoolean("IsCloseToStage", isCloseToStage);
+
+    if(isCloseToStage) {
+      anglerSubsystem.setAnglerTargetPosition(73);
+      elevatorSubsystem.setElevatorTargetPosition(28.75);
+    }  
+    else if (distance > 6.2){
       elevatorSubsystem.setElevatorTargetPosition(0);
       anglerSubsystem.setAnglerTargetPosition(angle);
     }
@@ -38,6 +57,7 @@ public class SpinUpStash extends Command {
       elevatorSubsystem.setElevatorTargetPosition(17);
       anglerSubsystem.setAnglerTargetPosition(0);
     }
+
     if(!shooterSubsystem.isFullyInNote()){
       shooterSubsystem.setShooterTargetSpeed(speed);
     }

@@ -97,8 +97,8 @@ public final class Constants {
     public static final Pose2d blueGoalPoseCenter = new Pose2d(0 - 0.7, 5.58, new Rotation2d(0));
 
    
-    public static final Pose2d blueStash = new Pose2d(-1, 8.5, new Rotation2d(0));
-    public static final Pose2d redStash = new Pose2d((16.4592 + 1), 8.5, new Rotation2d(0));
+    public static final Pose2d blueStash = new Pose2d(-1, 8.7, new Rotation2d(0));
+    public static final Pose2d redStash = new Pose2d((16.4592 + 1), 8.7, new Rotation2d(0));
 
   }
 

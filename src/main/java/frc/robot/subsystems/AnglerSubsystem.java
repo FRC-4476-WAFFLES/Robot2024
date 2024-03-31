@@ -85,9 +85,9 @@ public class AnglerSubsystem extends SubsystemBase {
 
     private void configurePositionPID() {
         Slot0Configs anglerSlot0Configs = new Slot0Configs();
-        anglerSlot0Configs.kP = 0.6;
+        anglerSlot0Configs.kP = 0.825;
         anglerSlot0Configs.kD = 0;
-        anglerSlot0Configs.kV = 0.09;
+        anglerSlot0Configs.kV = 0.15;
 
         angler.setPosition(0);
         angler.getConfigurator().apply(anglerSlot0Configs);
