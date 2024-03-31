@@ -11,7 +11,7 @@ public class SuperstructureCloseRangeShot extends Command {
   /** Creates a new SuperstructureCloseRangeShot. */
   public SuperstructureCloseRangeShot() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(shooterSubsystem, anglerSubsystem, elevatorSubsystem, intakeSubsystem);
+    addRequirements(shooterSubsystem, anglerSubsystem, elevatorSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -24,14 +24,13 @@ public class SuperstructureCloseRangeShot extends Command {
     anglerSubsystem.setAnglerTargetPosition(72);
     elevatorSubsystem.setElevatorTargetPosition(0);
     shooterSubsystem.setShooterTargetSpeed(65);
-    intakeSubsystem.SetIntakeSpeed(1);
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     shooterSubsystem.setShooterTargetSpeed(0);
-    intakeSubsystem.SetIntakeSpeed(0);
   }
 
   // Returns true when the command should end.

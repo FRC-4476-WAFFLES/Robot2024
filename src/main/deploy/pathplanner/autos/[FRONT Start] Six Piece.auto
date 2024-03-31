@@ -68,7 +68,7 @@
           }
         },
         {
-          "type": "race",
+          "type": "deadline",
           "data": {
             "commands": [
               {
@@ -80,7 +80,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "intakeIn"
+                  "name": "forceLaunch"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "spinUp"
                 }
               }
             ]
@@ -161,6 +167,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "elevatorShort"
+          }
+        },
+        {
           "type": "race",
           "data": {
             "commands": [
@@ -193,6 +205,56 @@
                 "type": "path",
                 "data": {
                   "pathName": "Left Middle to Shoot"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "spinUpReal"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "completeShot"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Shoot to Left Center 2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "intakeIn"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "intakeInDeadline"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Left Center 2 to Shoot"
                 }
               },
               {

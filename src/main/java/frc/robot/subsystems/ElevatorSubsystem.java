@@ -48,7 +48,7 @@ public class ElevatorSubsystem extends SubsystemBase {
       TALL(50.0),
       MIDDLE(27.0),
       SHORT(10.0),
-      BOTTOM(0);
+      BOTTOM(2);
 
       private double height;
   
@@ -89,7 +89,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     // Set PIDF values
     var slot0Configs = new Slot0Configs();
     slot0Configs.kS = 0;
-    slot0Configs.kP = 1.4;
+    slot0Configs.kP = 1.5;
     slot0Configs.kD = 0.01;
 
     elevatorConfig.Slot0 = slot0Configs;
@@ -154,7 +154,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   private void executeElevatorMotionProfiling() {
         TrapezoidProfile anglerTrapezoidProfile = new TrapezoidProfile(new TrapezoidProfile.Constraints(
                 110,
-                170)
+                190)
         );
 
         TrapezoidProfile.State elevatorGoal = new TrapezoidProfile.State(elevatorTargetPosition, 0);

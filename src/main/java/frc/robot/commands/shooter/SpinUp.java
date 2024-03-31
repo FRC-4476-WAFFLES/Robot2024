@@ -41,10 +41,10 @@ public class SpinUp extends Command {
     double angle = calculateAngleOffDistance(distance);
    // double height = solveForElevatorHeight(distance, speed, angle);
 
-    intakeSubsystem.SetIntakeSpeed(0);
+    //intakeSubsystem.SetIntakeSpeed(0);
     elevatorSubsystem.setElevatorTargetPosition(elevatorSubsystem.getElevatorMode().getHeight());
     anglerSubsystem.setAnglerTargetPosition(angle);
-    if (!feederSubsystem.adjusting && !shooterSubsystem.isFullyInNote()){
+    if (!shooterSubsystem.isFullyInNote()){
       shooterSubsystem.setShooterTargetSpeed(speed);
     }
     
@@ -77,8 +77,8 @@ public class SpinUp extends Command {
     
     final InterpolatingDoubleTreeMap shooterSpeedMap = new InterpolatingDoubleTreeMap();
    
-    shooterSpeedMap.put(0.9, 50.0 + generalSpeedAdjustment);
-    shooterSpeedMap.put(1.8542, 64.0 + generalSpeedAdjustment);
+    shooterSpeedMap.put(0.9, 55.0 + generalSpeedAdjustment);
+    shooterSpeedMap.put(1.8542, 67.0 + generalSpeedAdjustment);
     shooterSpeedMap.put(2.54, 67.0 + generalSpeedAdjustment);
     shooterSpeedMap.put(3.0988, 73.0 + generalSpeedAdjustment);
     shooterSpeedMap.put(3.556, 75.0 + generalSpeedAdjustment);
@@ -98,11 +98,11 @@ public class SpinUp extends Command {
 
     final InterpolatingDoubleTreeMap shooterAngleMap = new InterpolatingDoubleTreeMap();
 
-    shooterAngleMap.put(1.1977, 75.5 + generalAnglerAdjustment); 
-    shooterAngleMap.put(1.5, 74.5 + generalAnglerAdjustment);
-    shooterAngleMap.put(1.999, 72.9 + generalAnglerAdjustment); 
-    shooterAngleMap.put(2.54, 56.75 + generalAnglerAdjustment);
-    shooterAngleMap.put(2.773, 55.25 + generalAnglerAdjustment);
+    shooterAngleMap.put(1.1977, 76.5 + generalAnglerAdjustment); 
+    shooterAngleMap.put(1.5, 75.5 + generalAnglerAdjustment);
+    shooterAngleMap.put(1.999, 73.9 + generalAnglerAdjustment); 
+    shooterAngleMap.put(2.54, 58.75 + generalAnglerAdjustment);
+    shooterAngleMap.put(2.773, 57.25 + generalAnglerAdjustment);
     shooterAngleMap.put(3.0988, 46.0 + generalAnglerAdjustment);
     shooterAngleMap.put(3.556, 42.25 + generalAnglerAdjustment);
     shooterAngleMap.put(3.8813, 39.5 + generalAnglerAdjustment);

@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.8730388230007247,
-        "y": 7.025263281295794
+        "x": 8.151853226783379,
+        "y": 5.782028487133897
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.8893339325140204,
-        "y": 7.114065766593072
+        "x": 5.783786952189291,
+        "y": 6.226040913620289
       },
       "isLocked": false,
-      "linkedName": "Close Left Note"
+      "linkedName": "Amp Center 2"
     },
     {
       "anchor": {
-        "x": 8.220921826459039,
-        "y": 7.429807936538951
+        "x": 5.221371211973195,
+        "y": 6.314843398917567
       },
       "prevControl": {
-        "x": 7.2835622594322125,
-        "y": 7.380473222484906
+        "x": 6.602743205486412,
+        "y": 6.1471053711338195
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Left Middle"
+      "linkedName": "Shoot Wing"
     }
   ],
   "rotationTargets": [],
@@ -39,13 +39,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0,
+    "rotation": 11.592175410291224,
     "rotateFast": false
   },
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": 33.690067525979714,
+    "rotation": -11.560130794217699,
     "velocity": 0
   },
   "useDefaultConstraints": true

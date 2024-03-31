@@ -11,7 +11,7 @@ public class ForceLaunch extends Command {
   /** Creates a new ForceLaunch. */
   public ForceLaunch() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(feederSubsystem);
+    addRequirements(feederSubsystem, intakeSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -22,22 +22,25 @@ public class ForceLaunch extends Command {
   @Override
   public void execute() {
     feederSubsystem.setFeederTargetSpeed(100);
+    intakeSubsystem.SetIntakeSpeed(1);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     feederSubsystem.setFeederTargetSpeed(0);
+    intakeSubsystem.SetIntakeSpeed(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(shooterSubsystem.isFullyInNote() || shooterSubsystem.isNote()){
-      return false;
-    }
-    else{
-      return true;
-    }
+    return false;
+    // if(shooterSubsystem.isFullyInNote() || shooterSubsystem.isNote()){
+    //   return false;
+    // }
+    // else{
+    //   return true;
+    // }
   }
 }
