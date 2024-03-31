@@ -96,8 +96,8 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
                 (speeds) -> this.setControl(autoRequest.withSpeeds(speeds)), // Consumer of ChassisSpeeds to drive the
                                                                              // robot
                 new HolonomicPathFollowerConfig(
-                        new PIDConstants(2.1, 0, 0.1),
-                        new PIDConstants(7.8, 0, 0.1),
+                        new PIDConstants(3.7, 0, 0.1),
+                        new PIDConstants(6.9, 0, 0.1),
                         TunerConstants.kSpeedAt12VoltsMps,
                         driveBaseRadius,
                         new ReplanningConfig()),
@@ -125,6 +125,12 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
 
     public Command getAutoPath(String pathName) {
         return new PathPlannerAuto(pathName);
+    }
+
+    public boolean notMoving() {
+        return Math.abs(getCurrentRobotChassisSpeeds().vxMetersPerSecond) < 0.1
+                && Math.abs(getCurrentRobotChassisSpeeds().vyMetersPerSecond) < 0.1
+                && Math.abs(getCurrentRobotChassisSpeeds().omegaRadiansPerSecond) < 0.1;
     }
 
     public Optional<Rotation2d> getRotationTargetOverride() {
@@ -293,8 +299,9 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
     public Rotation2d angleToGoalOffsetCalculation(double inputtedAngle){
         final InterpolatingDoubleTreeMap angleToGoalOffsetMap = new InterpolatingDoubleTreeMap();
         angleToGoalOffsetMap.put(2.3, -2.0);
-        angleToGoalOffsetMap.put(2.6, -0.38);
+        angleToGoalOffsetMap.put(2.6, -0.58);
         angleToGoalOffsetMap.put(Math.PI,0.0);
+        angleToGoalOffsetMap.put(3.2,0.05);
         angleToGoalOffsetMap.put(3.6,0.57);
         angleToGoalOffsetMap.put(4.0, 0.9);
         

@@ -39,7 +39,8 @@ public class ScoreNote extends Command {
     SmartDashboard.putBoolean("timer started", hasTimerStarted);
     System.out.println("Starting Fire");
 
-    if(shooterSubsystem.isGoodSpeed() && anglerSubsystem.isGoodShooterAngle() && elevatorSubsystem.isGoodElevatorPosition() && shooterSubsystem.isShooterRunning()){
+    if(shooterSubsystem.isGoodSpeed() && anglerSubsystem.isGoodShooterAngle() && elevatorSubsystem.isGoodElevatorPosition() && 
+    shooterSubsystem.isShooterRunning() && driveSubsystem.notMoving()){
       feederSubsystem.setFeederTargetSpeed(100);
 
       if(!hasTimerStarted) {

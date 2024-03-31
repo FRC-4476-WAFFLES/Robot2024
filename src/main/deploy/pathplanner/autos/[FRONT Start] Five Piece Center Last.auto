@@ -161,7 +161,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Close Left to Middle Left"
+                  "pathName": "Left Close to Center Midline"
                 }
               },
               {
@@ -192,7 +192,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Left Middle to Shoot"
+                  "pathName": "Center Midline to Score"
                 }
               },
               {

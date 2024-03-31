@@ -69,9 +69,9 @@ public class FeederSubsystem extends SubsystemBase {
 
     // PID for feeder
     Slot0Configs feederSlot0Configs = new Slot0Configs();
-    feederSlot0Configs.kP = 0.3; 
+    feederSlot0Configs.kP = 0.2; 
     feederSlot0Configs.kD = 0.00001;
-    feederSlot0Configs.kV = 0.13;
+    feederSlot0Configs.kV = 0.15;
 
 
     feeder.getConfigurator().apply(generalConfigs.withMotorOutput(new MotorOutputConfigs().withInverted(InvertedValue.CounterClockwise_Positive)));
@@ -95,7 +95,7 @@ public class FeederSubsystem extends SubsystemBase {
 
       if (shooterSubsystem.isFullyInNote()){
         adjusting = true;
-        setFeederTargetSpeed(-4);
+        setFeederTargetSpeed(-3);
       }
       else if(adjusting){
         adjusting = false;

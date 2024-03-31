@@ -3,54 +3,48 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.153148175055266,
-        "y": 2.5061190207972417
+        "x": 8.299857368945508,
+        "y": 4.1046482092964185
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.281967377058862,
-        "y": 1.5809629336805036
+        "x": 6.888884546999863,
+        "y": 4.1638498661612715
       },
       "isLocked": false,
-      "linkedName": "Alt End 2"
+      "linkedName": "Center Midline"
     },
     {
       "anchor": {
-        "x": 8.153148175055266,
-        "y": 0.9251560871167382
+        "x": 5.1720364979191515,
+        "y": 4.420390379242297
       },
       "prevControl": {
-        "x": 8.141437338509483,
-        "y": 1.780047154958788
+        "x": 6.0501944080811265,
+        "y": 3.976377952755906
       },
       "nextControl": {
-        "x": 8.161829459788603,
-        "y": 0.29142230158319815
+        "x": 4.495338157279732,
+        "y": 4.762541225633015
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.3282835181932833,
-        "y": 3.126793357723663
+        "x": 4.432015787108499,
+        "y": 4.7953342060530275
       },
       "prevControl": {
-        "x": 5.08490900006051,
-        "y": 1.3584570393106543
+        "x": 4.935229870459742,
+        "y": 4.528926750161193
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.5,
-      "rotationDegrees": -61.172159015782604,
-      "rotateFast": true
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -61,13 +55,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -41.05481377096251,
+    "rotation": -16.82140989004072,
     "rotateFast": false
   },
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": -45.000000000000036,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": true

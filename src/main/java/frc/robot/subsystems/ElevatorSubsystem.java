@@ -47,8 +47,9 @@ public class ElevatorSubsystem extends SubsystemBase {
     public enum ShooterMode {
       TALL(50.0),
       MIDDLE(27.0),
-      SHORT(10.0);
-  
+      SHORT(10.0),
+      BOTTOM(0);
+
       private double height;
   
       ShooterMode(double height) {
@@ -112,6 +113,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     updateSmartDashboard();
     SmartDashboard.putBoolean("COAST STUFF", coastSwitch.get());
     SmartDashboard.putBoolean("GoodElevator", Math.abs(Elevator1.getPosition().getValueAsDouble() - elevatorTargetPosition) < ELEVATOR_DEAD_ZONE);
+    SmartDashboard.putNumber("Elevator Target", elevatorTargetPosition);
     if (!getCoastSwitch() && previousSwitchState){
       Elevator1.setNeutralMode(NeutralModeValue.Coast);
       Elevator2.setNeutralMode(NeutralModeValue.Coast);
@@ -232,6 +234,10 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   public boolean getCoastSwitch(){
     return coastSwitch.get();
+  }
+
+  public void setBottomMode(){
+    currentShooterMode = ShooterMode.BOTTOM;
   }
 
   public void setTallMode() {

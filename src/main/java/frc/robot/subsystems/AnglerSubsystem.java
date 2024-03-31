@@ -216,8 +216,8 @@ public class AnglerSubsystem extends SubsystemBase {
         final InterpolatingDoubleTreeMap anglerBottomLimitMap = new InterpolatingDoubleTreeMap();
         // Input is elevator position, output is lowest possible angler position
 
-        anglerBottomLimitMap.put(0.0, 52.5);
-        anglerBottomLimitMap.put(10.0, 63.5);
+        anglerBottomLimitMap.put(0.0, 53.5);
+        anglerBottomLimitMap.put(10.0, 59.5);
         anglerBottomLimitMap.put(20.0,70.0);
 
         

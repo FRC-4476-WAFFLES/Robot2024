@@ -79,10 +79,10 @@ public class RobotContainer {
   private final IntakeOut intakeOut = new IntakeOut();
   private final ScoreNote scoreNote  = new ScoreNote();
   private final ScoreNote scoreNoteAuto  = new ScoreNote();
-   private final ScoreNote scoreNoteAuto2  = new ScoreNote();
+  private final ScoreNote scoreNoteAuto2  = new ScoreNote();
   private final SpinUp spinUp  = new SpinUp();
   private final SpinUp spinUpAuto  = new SpinUp();
-    private final SpinUp spinUpAuto2  = new SpinUp();
+  private final SpinUp spinUpAuto2  = new SpinUp();
   private final SpinUpStash spinUpStash = new SpinUpStash();
   private final SuperstructureHome superstructureHome = new SuperstructureHome();
   private final SuperstructureAmp superstructureAmp = new SuperstructureAmp();
@@ -98,7 +98,10 @@ public class RobotContainer {
   private final SuperstructurePodium superstructurePodium = new SuperstructurePodium();
   private final SuperstructureBlock superstructureBlock = new SuperstructureBlock();
   private final ElevatorHigh elevatorHigh = new ElevatorHigh();
-
+  private final SuperstructureCloseRangeShot superstructureCloseRangeShot = new SuperstructureCloseRangeShot();
+  private final ForceLaunch forceLaunch = new ForceLaunch();
+  private final ElevatorBottom elevatorBottom = new ElevatorBottom();
+  private final ElevatorShort elevatorShort = new ElevatorShort();
   
  
 
@@ -197,8 +200,8 @@ public class RobotContainer {
     // Register Named Commands
     // Add other commands to be able to run them in autos
     // NamedCommands.registerCommand("aimAtGoal", driveAndAimAtGoalAuto);
-    // NamedCommands.registerCommand("spinUp", spinUpAuto);
-    // NamedCommands.registerCommand("scoreNote", scoreNoteAuto);
+    NamedCommands.registerCommand("spinUpReal", spinUpAuto2);
+    NamedCommands.registerCommand("scoreNote", scoreNoteAuto2);
     // NamedCommands.registerCommand("fenderShot", new ParallelDeadlineGroup(scoreNoteAuto2, spinUpAuto2));
     NamedCommands.registerCommand("completeShot", new ParallelDeadlineGroup(scoreNoteAuto, spinUpAuto, driveAndAimAtGoalAuto));
     NamedCommands.registerCommand("intakeIn", intakeInAuto);
@@ -207,6 +210,10 @@ public class RobotContainer {
     NamedCommands.registerCommand("intakeOff", new InstantCommand(() -> intakeIn.cancel()));
     NamedCommands.registerCommand("forcedFire", forcedFire);
     NamedCommands.registerCommand("superstructureYeet", superstructureYeet);
+    NamedCommands.registerCommand("superstructureCloseShot", superstructureCloseRangeShot);
+    NamedCommands.registerCommand("forceLaunch", forceLaunch);
+    NamedCommands.registerCommand("elevatorBottom", elevatorBottom);
+    NamedCommands.registerCommand("elevatorShort", elevatorShort);
   
 
   }
