@@ -13,6 +13,7 @@ import static frc.robot.RobotContainer.*;
 
 public class SpinUpStash extends Command {
   private double randomYAdjustment = 0;
+  private boolean isCloseToStage;
   /** Creates a new SpinUpStash. */
   public SpinUpStash() {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -44,14 +45,24 @@ public class SpinUpStash extends Command {
     double maxDistanceFromStage = 11.25;
 
     if(DriverStation.getAlliance().get() == DriverStation.Alliance.Red){
-      angleToLeftStagePole += Math.PI;
-      angleToRightStagePole += Math.PI;
+      angleToLeftStagePole = 3.8;
+      angleToRightStagePole = 3.25;
+      System.out.println("angleToLeftStagePole: " + angleToLeftStagePole);
+      System.out.println("angleToRightStagePole: " + angleToRightStagePole);
+      System.out.println("angleToStash: " + angleToStash);
+      isCloseToStage = (angleToStash > angleToRightStagePole && 
+      angleToStash < angleToLeftStagePole) && 
+      (distance > minDistanceFromStage && 
+      distance < maxDistanceFromStage);
+    }
+    else{
+      isCloseToStage = (angleToStash > angleToRightStagePole && 
+      angleToStash < angleToLeftStagePole) && 
+      (distance > minDistanceFromStage && 
+      distance < maxDistanceFromStage);
     }
 
-    boolean isCloseToStage = (angleToStash > angleToRightStagePole && 
-    angleToStash < angleToLeftStagePole) && 
-    (distance > minDistanceFromStage && 
-    distance < maxDistanceFromStage);
+    
     SmartDashboard.putBoolean("IsCloseToStage", isCloseToStage);
 
     if(isCloseToStage) {

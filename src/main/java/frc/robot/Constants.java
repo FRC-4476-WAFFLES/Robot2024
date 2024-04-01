@@ -98,7 +98,8 @@ public final class Constants {
 
    
     public static final Pose2d blueStash = new Pose2d(-1, 8.7, new Rotation2d(0));
-    public static final Pose2d redStash = new Pose2d((16.4592 + 1), 8.7, new Rotation2d(0));
+    // RED IS INTENTIONALLY DIFFERENT FROM BLUE
+    public static final Pose2d redStash = new Pose2d((16.4592 + 1), 7.1, new Rotation2d(0));
 
   }
 

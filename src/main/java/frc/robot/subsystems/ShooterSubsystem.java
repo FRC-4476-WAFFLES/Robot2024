@@ -41,7 +41,7 @@ public class ShooterSubsystem extends SubsystemBase {
   
   // Constants
   
-  private final double SHOOTER_DEAD_ZONE = 2.2;
+  private final double SHOOTER_DEAD_ZONE = 1.5;
 
   private final double IR_RANGE = 1.9;
   private boolean tryingToShoot = false;
@@ -95,10 +95,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
     // Velocity PID for shooters 
     Slot0Configs shooterSlot0Configs = new Slot0Configs();
-    shooterSlot0Configs.kP = 0.2;
+    shooterSlot0Configs.kP = 0.45; //0.2
     shooterSlot0Configs.kI = 0.0;
-    shooterSlot0Configs.kD = 0.0001;
-    shooterSlot0Configs.kV = 0.123; 
+    shooterSlot0Configs.kD = 0.0001; //0.0001
+    shooterSlot0Configs.kV = 0.117; 
     shooterSlot0Configs.kS = 0.0;
 
     

@@ -8,6 +8,7 @@ import edu.wpi.first.math.InterpolatingMatrixTreeMap;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.ElevatorSubsystem.ShooterMode;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N2;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -54,6 +55,9 @@ public class SpinUp extends Command {
   @Override
   public void end(boolean interrupted) {
     if(DriverStation.isAutonomous() && !shooterSubsystem.isNote()){
+      shooterSubsystem.setShooterTargetSpeed(0);
+    }
+    else if(DriverStation.isTeleop()){
       shooterSubsystem.setShooterTargetSpeed(0);
     }
     
@@ -104,17 +108,17 @@ public class SpinUp extends Command {
     shooterAngleMap.put(2.54, 58.75 + generalAnglerAdjustment);
     shooterAngleMap.put(2.773, 57.25 + generalAnglerAdjustment);
     shooterAngleMap.put(3.0988, 46.0 + generalAnglerAdjustment);
-    shooterAngleMap.put(3.556, 42.25 + generalAnglerAdjustment);
-    shooterAngleMap.put(3.8813, 39.5 + generalAnglerAdjustment);
-    shooterAngleMap.put(4.1, 38.5 + generalAnglerAdjustment - 0.5);
+    shooterAngleMap.put(3.556, 42.5 + generalAnglerAdjustment);
+    shooterAngleMap.put(3.8813, 39.75 + generalAnglerAdjustment);
+    shooterAngleMap.put(4.1, 38.75 + generalAnglerAdjustment - 0.5);
     shooterAngleMap.put(4.3688, 37.7 + generalAnglerAdjustment);
     shooterAngleMap.put(4.5626, 34.9 + generalAnglerAdjustment);
-    shooterAngleMap.put(5.8711, 29.75 + generalAnglerAdjustment+0.25);
-    shooterAngleMap.put(6.0, 28.9 + generalAnglerAdjustment); //approx alliance line
-    shooterAngleMap.put(6.5, 28.2 + generalAnglerAdjustment - 1);
-    shooterAngleMap.put(7.9, 27.8 + generalAnglerAdjustment - 2);
-    shooterAngleMap.put(8.3, 27.6 + generalAnglerAdjustment - 2);
-    shooterAngleMap.put(8.7, 27.2 + generalAnglerAdjustment - 2);
+    shooterAngleMap.put(5.8711, 30.5 + generalAnglerAdjustment+0.25);
+    shooterAngleMap.put(6.0, 29.9 + generalAnglerAdjustment); //approx alliance line
+    shooterAngleMap.put(6.5, 29.5 + generalAnglerAdjustment - 1);
+    shooterAngleMap.put(7.9, 28.9 + generalAnglerAdjustment - 2);
+    shooterAngleMap.put(8.3, 28.7 + generalAnglerAdjustment - 2);
+    shooterAngleMap.put(8.7, 28.2 + generalAnglerAdjustment - 2);
     double predictedAngle = shooterAngleMap.get(distance);
     return solveForElevatorHeight(distance, height, predictedAngle);
     //return predictedAngle;
@@ -129,7 +133,13 @@ public class SpinUp extends Command {
     // Solve for opposite side of right angle triangle, where predictedAngle is the angle in degrees and the distance is the adjacent side
     double predictedHeight = distance * Math.tan(Math.toRadians(predictedAngle));
     result = Math.atan(Math.tan(Math.toRadians(predictedAngle)) + ((elevatorSubsystem.rotationsToMeters(10.0) - currentHeight)) / distance);
-    return Math.toDegrees(result);
+    if(elevatorSubsystem.getElevatorMode() == ShooterMode.TALL){
+      return Math.toDegrees(result)-4.3;
+    }
+    else{
+      return Math.toDegrees(result);
+    }
+    
   }
 
  

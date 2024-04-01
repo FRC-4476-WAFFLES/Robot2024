@@ -22,8 +22,8 @@ public class SuperstructurePodium extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooterSubsystem.setShooterTargetSpeed(60);
-    anglerSubsystem.setAnglerTargetPosition(34);
+    shooterSubsystem.setShooterTargetSpeed(75);
+    anglerSubsystem.setAnglerTargetPosition(40);
     elevatorSubsystem.setElevatorTargetPosition(58);
     intakeSubsystem.SetIntakeSpeed(0);
   }

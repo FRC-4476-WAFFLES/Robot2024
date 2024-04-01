@@ -221,9 +221,9 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
 
     public Rotation2d getStaticAngleToPodium() {
         if (DriverStation.getAlliance().get() == Alliance.Red) {
-            return new Rotation2d(Units.degreesToRadians(-157));
+            return new Rotation2d(Units.degreesToRadians(-159));
         } else {
-            return new Rotation2d(Units.degreesToRadians(-33));
+            return new Rotation2d(Units.degreesToRadians(-31));
         }
 
     }
