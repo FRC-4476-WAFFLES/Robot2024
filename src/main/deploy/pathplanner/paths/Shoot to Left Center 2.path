@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.221371211973195,
-        "y": 6.314843398917567
+        "x": 5.026354817331602,
+        "y": 6.534646792546081
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.533674605810751,
-        "y": 6.44311365545808
+        "x": 6.338658211169158,
+        "y": 6.662917049086594
       },
       "isLocked": false,
       "linkedName": "Shoot Wing"
@@ -33,7 +33,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 5.0,
-    "maxAcceleration": 4.6,
+    "maxAcceleration": 4.65,
     "maxAngularVelocity": 9000.0,
     "maxAngularAcceleration": 1000.0
   },

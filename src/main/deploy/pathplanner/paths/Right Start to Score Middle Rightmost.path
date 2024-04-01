@@ -3,77 +3,61 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3949707899415797,
-        "y": 3.3490197889486693
+        "x": 1.4521990582442719,
+        "y": 3.394228326918193
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.898723070173413,
-        "y": 3.1624448703442867
+        "x": 5.1424356694867255,
+        "y": 1.1149645376213833
       },
       "isLocked": false,
       "linkedName": "Right Start"
     },
     {
       "anchor": {
-        "x": 8.059461482689013,
-        "y": 0.8197585582047061
+        "x": 8.220921826459039,
+        "y": 0.6808190539458011
       },
       "prevControl": {
-        "x": 7.602352932108276,
-        "y": 0.9130460175068981
-      },
-      "nextControl": {
-        "x": 8.51657003326975,
-        "y": 0.7264710989025142
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 3.0726646736767536,
-        "y": 3.13695836076835
-      },
-      "prevControl": {
-        "x": 5.260838983216429,
-        "y": 1.864852191242845
+        "x": 7.75717551435103,
+        "y": 0.7498876536214618
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Shooting Right Far"
+      "linkedName": "Right 1 Center"
     }
   ],
-  "rotationTargets": [],
-  "constraintZones": [],
-  "eventMarkers": [
+  "rotationTargets": [
     {
-      "name": "New Event Marker",
-      "waypointRelativePos": 1.45,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "spinUp"
-              }
-            }
-          ]
-        }
+      "waypointRelativePos": 0.85,
+      "rotationDegrees": -8.409900864295913,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "New Constraints Zone",
+      "minWaypointRelativePos": 0.8,
+      "maxWaypointRelativePos": 1,
+      "constraints": {
+        "maxVelocity": 4.5,
+        "maxAcceleration": 2.0,
+        "maxAngularVelocity": 500.0,
+        "maxAngularAcceleration": 600.0
       }
     }
   ],
+  "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 4.5,
-    "maxAcceleration": 4.0,
-    "maxAngularVelocity": 500.0,
-    "maxAngularAcceleration": 600.0
+    "maxVelocity": 5.0,
+    "maxAcceleration": 4.6,
+    "maxAngularVelocity": 9000.0,
+    "maxAngularAcceleration": 1000.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -47.79450089277291,
+    "rotation": -3.2704879231836306,
     "rotateFast": false
   },
   "reversed": false,

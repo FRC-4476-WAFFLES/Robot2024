@@ -85,9 +85,9 @@ public class AnglerSubsystem extends SubsystemBase {
 
     private void configurePositionPID() {
         Slot0Configs anglerSlot0Configs = new Slot0Configs();
-        anglerSlot0Configs.kP = 0.825;
+        anglerSlot0Configs.kP = 1.0;
         anglerSlot0Configs.kD = 0;
-        anglerSlot0Configs.kV = 0.15;
+        anglerSlot0Configs.kV = 0.12;
 
         angler.setPosition(0);
         angler.getConfigurator().apply(anglerSlot0Configs);
@@ -220,10 +220,10 @@ public class AnglerSubsystem extends SubsystemBase {
         // Input is elevator position, output is lowest possible angler position
 
         anglerBottomLimitMap.put(0.0, 53.5);
-        anglerBottomLimitMap.put(10.0, 59.5);
+        anglerBottomLimitMap.put(10.0, 62.5);
         anglerBottomLimitMap.put(20.0,70.0);
 
-        
+      
 
         if (elevatorPosition > 25) {
             

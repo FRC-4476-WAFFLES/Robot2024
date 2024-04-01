@@ -5,11 +5,8 @@
 package frc.robot.commands.shooter;
 
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -39,23 +36,32 @@ public class ScoreNote extends Command {
     SmartDashboard.putBoolean("timer started", hasTimerStarted);
     System.out.println("Starting Fire");
 
-    if(shooterSubsystem.isGoodSpeed() && anglerSubsystem.isGoodShooterAngle() && elevatorSubsystem.isGoodElevatorPosition() && 
-    shooterSubsystem.isShooterRunning() && driveSubsystem.notMoving()){
-      feederSubsystem.setFeederTargetSpeed(100);
+    if (anglerSubsystem.getAnglerDegrees() < -5){
 
-      if(!hasTimerStarted) {
-        timer.restart();
-        hasTimerStarted = true;
+      if(shooterSubsystem.isGoodSpeed() && anglerSubsystem.isGoodShooterAngle() && elevatorSubsystem.isGoodElevatorPosition() && 
+      shooterSubsystem.isShooterRunning()){
+        feederSubsystem.setFeederTargetSpeed(100);
       }
-      
     }
+    else{
+      if(shooterSubsystem.isGoodSpeed() && anglerSubsystem.isGoodShooterAngle() && elevatorSubsystem.isGoodElevatorPosition() && 
+      shooterSubsystem.isShooterRunning() && driveSubsystem.notMoving()){
+        feederSubsystem.setFeederTargetSpeed(100);
+      }
+    }
+  
+    
+      
+  
+    
+
+
+      
+  
     // else if(!driveSubsystem.isShooterTowardGoal()){
     //   feederSubsystem.setFeederTargetSpeed(-100);
     // }
-    else{
-      System.out.println("Failed checks");
-      hasTimerStarted = false;
-    }
+  
 
 
     if(!shooterSubsystem.isGoodSpeed()){

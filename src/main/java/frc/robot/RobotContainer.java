@@ -22,6 +22,7 @@ import frc.robot.commands.intake.*;
 import frc.robot.commands.shooter.*;
 import frc.robot.commands.superstructure.*;
 import frc.robot.commands.ActivateLightColour;
+import frc.robot.commands.StopAll;
 import frc.robot.commands.drive.*;
 
 
@@ -102,6 +103,9 @@ public class RobotContainer {
   private final ForceLaunch forceLaunch = new ForceLaunch();
   private final ElevatorBottom elevatorBottom = new ElevatorBottom();
   private final ElevatorShort elevatorShort = new ElevatorShort();
+  private final NoMatterWhatShoot noMatterWhatShoot = new NoMatterWhatShoot();
+  private final StopAll stopAll = new StopAll();
+  private final QuickSubShot quickSubShot = new QuickSubShot();
   
  
 
@@ -214,6 +218,9 @@ public class RobotContainer {
     NamedCommands.registerCommand("forceLaunch", forceLaunch);
     NamedCommands.registerCommand("elevatorBottom", elevatorBottom);
     NamedCommands.registerCommand("elevatorShort", elevatorShort);
+    NamedCommands.registerCommand("noMatterWhatShoot", noMatterWhatShoot);
+    NamedCommands.registerCommand("stopAll", stopAll);
+    NamedCommands.registerCommand("quickSubShot", quickSubShot);
   
 
   }

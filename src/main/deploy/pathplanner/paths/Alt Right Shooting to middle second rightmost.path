@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.658955471757099,
-        "y": 2.0917918758914444
+        "x": 4.915495984838127,
+        "y": 1.6576463922158604
       },
       "isLocked": false,
       "linkedName": "Shooting Right Far"
@@ -20,28 +20,60 @@
         "y": 1.7760497059455664
       },
       "prevControl": {
-        "x": 5.7719405897979215,
-        "y": 1.6784181098414594
+        "x": 5.767641045771604,
+        "y": 1.8320221815268811
       },
       "nextControl": {
-        "x": 7.638772200621327,
-        "y": 1.9240538481076974
+        "x": 7.6736707707859795,
+        "y": 1.6890699521508032
       },
       "isLocked": false,
       "linkedName": "Dodge pole"
     },
     {
       "anchor": {
-        "x": 8.092651569918525,
-        "y": 2.387800160215706
+        "x": 8.161720169594187,
+        "y": 2.397667103026514
       },
       "prevControl": {
-        "x": 7.638772200621325,
-        "y": 2.1608604755671057
+        "x": 8.125086161384912,
+        "y": 2.5564144719333717
+      },
+      "nextControl": {
+        "x": 8.189706407384843,
+        "y": 2.2763934059336663
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.513940720189134,
+        "y": 1.7760497059455664
+      },
+      "prevControl": {
+        "x": 8.29286080949313,
+        "y": 1.3912389363270545
+      },
+      "nextControl": {
+        "x": 4.428957743905999,
+        "y": 2.227067100469971
+      },
+      "isLocked": false,
+      "linkedName": "Dodge pole"
+    },
+    {
+      "anchor": {
+        "x": 1.9060784275367557,
+        "y": 4.637463121083117
+      },
+      "prevControl": {
+        "x": 1.1660577167261035,
+        "y": 3.187022527894239
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Right 2 Center"
+      "linkedName": "Close Right Score"
     }
   ],
   "rotationTargets": [
@@ -61,13 +93,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 15.376251248826309,
+    "rotation": -37.190084111414734,
     "rotateFast": false
   },
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": -44.99999999999992,
+    "rotation": -36.172229076360495,
     "velocity": 0
   },
   "useDefaultConstraints": true

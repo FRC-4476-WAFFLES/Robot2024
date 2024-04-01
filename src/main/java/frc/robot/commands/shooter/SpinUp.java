@@ -23,7 +23,7 @@ public class SpinUp extends Command {
 
   
   public SpinUp() {
-    addRequirements(shooterSubsystem, anglerSubsystem, elevatorSubsystem, intakeSubsystem);
+    addRequirements(shooterSubsystem, anglerSubsystem, elevatorSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -107,11 +107,11 @@ public class SpinUp extends Command {
     shooterAngleMap.put(3.556, 42.25 + generalAnglerAdjustment);
     shooterAngleMap.put(3.8813, 39.5 + generalAnglerAdjustment);
     shooterAngleMap.put(4.1, 38.5 + generalAnglerAdjustment - 0.5);
-    shooterAngleMap.put(4.3688, 37.5 + generalAnglerAdjustment);
+    shooterAngleMap.put(4.3688, 37.7 + generalAnglerAdjustment);
     shooterAngleMap.put(4.5626, 34.9 + generalAnglerAdjustment);
-    shooterAngleMap.put(5.8711, 29.5 + generalAnglerAdjustment+0.25);
-    shooterAngleMap.put(6.0, 28.8 + generalAnglerAdjustment); //approx alliance line
-    shooterAngleMap.put(6.5, 28.0 + generalAnglerAdjustment - 1);
+    shooterAngleMap.put(5.8711, 29.75 + generalAnglerAdjustment+0.25);
+    shooterAngleMap.put(6.0, 28.9 + generalAnglerAdjustment); //approx alliance line
+    shooterAngleMap.put(6.5, 28.2 + generalAnglerAdjustment - 1);
     shooterAngleMap.put(7.9, 27.8 + generalAnglerAdjustment - 2);
     shooterAngleMap.put(8.3, 27.6 + generalAnglerAdjustment - 2);
     shooterAngleMap.put(8.7, 27.2 + generalAnglerAdjustment - 2);

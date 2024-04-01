@@ -89,7 +89,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     // Set PIDF values
     var slot0Configs = new Slot0Configs();
     slot0Configs.kS = 0;
-    slot0Configs.kP = 1.5;
+    slot0Configs.kP = 2;
     slot0Configs.kD = 0.01;
 
     elevatorConfig.Slot0 = slot0Configs;

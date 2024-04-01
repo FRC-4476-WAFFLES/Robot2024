@@ -12,34 +12,9 @@
     "data": {
       "commands": [
         {
-          "type": "deadline",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "scoreNote"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Front to Gap"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "spinUpReal"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "elevatorShort"
-                }
-              }
-            ]
+            "name": "elevatorBottom"
           }
         },
         {
@@ -49,13 +24,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "scoreNote"
+                  "name": "quickSubShot"
                 }
               },
               {
-                "type": "named",
+                "type": "path",
                 "data": {
-                  "name": "spinUpReal"
+                  "pathName": "[SPEED] Front to Gap"
                 }
               }
             ]
@@ -64,7 +39,13 @@
         {
           "type": "named",
           "data": {
-            "name": "elevatorBottom"
+            "name": "disableTargetGoal"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "noMatterWhatShoot"
           }
         },
         {
@@ -76,18 +57,6 @@
                 "data": {
                   "pathName": "Drive Middle Speaker to Middle Note"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "forceLaunch"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "spinUp"
-                }
               }
             ]
           }
@@ -95,17 +64,11 @@
         {
           "type": "named",
           "data": {
-            "name": "intakeInDeadline"
+            "name": "stopAll"
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "completeShot"
-          }
-        },
-        {
-          "type": "race",
+          "type": "deadline",
           "data": {
             "commands": [
               {
@@ -173,6 +136,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "disableTargetGoal"
+          }
+        },
+        {
           "type": "race",
           "data": {
             "commands": [
@@ -198,7 +167,7 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "race",
           "data": {
             "commands": [
               {

@@ -5,6 +5,7 @@
 package frc.robot.commands.shooter;
 
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -42,7 +43,15 @@ public class SpinUpStash extends Command {
     double minDistanceFromStage = 7.9;
     double maxDistanceFromStage = 11.25;
 
-    boolean isCloseToStage = (angleToStash > angleToRightStagePole && angleToStash < angleToLeftStagePole) && (distance > minDistanceFromStage && distance < maxDistanceFromStage);
+    if(DriverStation.getAlliance().get() == DriverStation.Alliance.Red){
+      angleToLeftStagePole += Math.PI;
+      angleToRightStagePole += Math.PI;
+    }
+
+    boolean isCloseToStage = (angleToStash > angleToRightStagePole && 
+    angleToStash < angleToLeftStagePole) && 
+    (distance > minDistanceFromStage && 
+    distance < maxDistanceFromStage);
     SmartDashboard.putBoolean("IsCloseToStage", isCloseToStage);
 
     if(isCloseToStage) {

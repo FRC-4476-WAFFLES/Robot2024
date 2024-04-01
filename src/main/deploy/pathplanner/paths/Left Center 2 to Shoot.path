@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.783786952189291,
-        "y": 6.226040913620289
+        "x": 6.607317751012106,
+        "y": 6.440960100179829
       },
       "isLocked": false,
       "linkedName": "Amp Center 2"
     },
     {
       "anchor": {
-        "x": 5.221371211973195,
-        "y": 6.314843398917567
+        "x": 5.026354817331602,
+        "y": 6.534646792546081
       },
       "prevControl": {
-        "x": 6.602743205486412,
-        "y": 6.1471053711338195
+        "x": 6.330325500550042,
+        "y": 6.5787876379878725
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,7 +33,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 5.0,
-    "maxAcceleration": 4.6,
+    "maxAcceleration": 4.65,
     "maxAngularVelocity": 9000.0,
     "maxAngularAcceleration": 1000.0
   },

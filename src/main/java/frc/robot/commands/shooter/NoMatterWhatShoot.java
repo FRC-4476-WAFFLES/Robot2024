@@ -7,11 +7,11 @@ package frc.robot.commands.shooter;
 import edu.wpi.first.wpilibj2.command.Command;
 import static frc.robot.RobotContainer.*;
 
-public class ForceLaunch extends Command {
-  /** Creates a new ForceLaunch. */
-  public ForceLaunch() {
+public class NoMatterWhatShoot extends Command {
+  /** Creates a new NoMatterWhatShoot. */
+  public NoMatterWhatShoot() {
     // Use addRequirements() here to declare subsystem dependencies.
-    
+    addRequirements(shooterSubsystem, intakeSubsystem, feederSubsystem, anglerSubsystem, elevatorSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -21,29 +21,31 @@ public class ForceLaunch extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //feederSubsystem.setFeederTargetSpeed(100);
-    //intakeSubsystem.SetIntakeSpeed(1);
-    shooterSubsystem.setShooterTargetSpeed(60);
+    elevatorSubsystem.setElevatorTargetPosition(6);
+    anglerSubsystem.setAnglerTargetPosition(53);
+    intakeSubsystem.SetIntakeSpeed(1);
+    
+    shooterSubsystem.setShooterTargetSpeed(65);
+    
+    feederSubsystem.setFeederTargetSpeed(100);
+    
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    //feederSubsystem.setFeederTargetSpeed(0);
-    //intakeSubsystem.SetIntakeSpeed(0);
-    shooterSubsystem.setShooterTargetSpeed(0);
+    
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
-    // if(shooterSubsystem.isFullyInNote() || shooterSubsystem.isNote()){
-    //   return false;
-    // }
-    // else{
-    //   return true;
-    // }
-
+    if(shooterSubsystem.isGoodSpeed() && anglerSubsystem.isGoodShooterAngle() && elevatorSubsystem.isGoodElevatorPosition()){
+      return true;
+    }
+    else{
+      return false;
+    }
+    
   }
 }

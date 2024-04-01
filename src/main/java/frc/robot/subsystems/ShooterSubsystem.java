@@ -41,7 +41,7 @@ public class ShooterSubsystem extends SubsystemBase {
   
   // Constants
   
-  private final double SHOOTER_DEAD_ZONE = 3.5;
+  private final double SHOOTER_DEAD_ZONE = 2.2;
 
   private final double IR_RANGE = 1.9;
   private boolean tryingToShoot = false;

@@ -64,6 +64,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
             .withDriveRequestType(DriveRequestType.Velocity);
 
     private boolean autoSWM = false;
+    private boolean targetGoal = false;
     private Rotation2d autoSWMHeading = new Rotation2d();
 
     public double randomYStashAdjustment = 0; // This value is changed everytime spinUpStash is initialized
@@ -99,7 +100,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
                                                                              // robot
                 new HolonomicPathFollowerConfig(
                         new PIDConstants(4.7, 0, 0.1),
-                        new PIDConstants(6.4, 0, 0.1),
+                        new PIDConstants(6.2, 0, 0.1),
                         TunerConstants.kSpeedAt12VoltsMps,
                         driveBaseRadius,
                         new ReplanningConfig()),
@@ -141,7 +142,11 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
             // Return an optional containing the rotation override (this should be a field
             // relative rotation)
             return Optional.of(autoSWMHeading);
-        } else {
+        } 
+        else if (targetGoal) {
+            return Optional.of(getAngleToGoal());
+        }
+        else {
             // return an empty optional when we don't want to override the path's rotation
             return Optional.empty();
         }
@@ -149,6 +154,10 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
 
     public boolean isAutoSWM() {
         return autoSWM;
+    }
+
+    public void setTargetGoal(boolean targetGoal) {
+        this.targetGoal = targetGoal;
     }
 
     public void setAutoSWM(boolean autoSWM) {

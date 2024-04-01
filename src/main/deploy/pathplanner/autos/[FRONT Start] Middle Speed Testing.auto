@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3949707899415797,
-      "y": 3.3490197889486693
+      "x": 1.37,
+      "y": 5.541275082550166
     },
-    "rotation": 0.0
+    "rotation": -0.10108420694185559
   },
   "command": {
     "type": "sequential",
@@ -14,32 +14,7 @@
         {
           "type": "named",
           "data": {
-            "name": "completeShot"
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Right Start to Score Middle Rightmost"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "intakeIn"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "intakeInDeadline"
+            "name": "elevatorShort"
           }
         },
         {
@@ -47,9 +22,9 @@
           "data": {
             "commands": [
               {
-                "type": "path",
+                "type": "named",
                 "data": {
-                  "pathName": "Right 1 Center to Score"
+                  "name": "scoreNote"
                 }
               },
               {
@@ -57,6 +32,12 @@
                 "data": {
                   "name": "spinUpReal"
                 }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "[SPEED] Front to Gap"
+                }
               }
             ]
           }
@@ -64,7 +45,32 @@
         {
           "type": "named",
           "data": {
-            "name": "completeShot"
+            "name": "disableTargetGoal"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "noMatterWhatShoot"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "[SPEED] Drive Middle Speaker to Middle Note"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "stopAll"
           }
         },
         {
@@ -74,7 +80,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Right Shooting to middle second rightmost"
+                  "pathName": "Close Middle to Left 1"
                 }
               },
               {
@@ -93,53 +99,9 @@
           }
         },
         {
-          "type": "deadline",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Center Right 2 To Shoot"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "spinUpReal"
-                }
-              }
-            ]
-          }
-        },
-        {
           "type": "named",
           "data": {
-            "name": "completeShot"
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Under Stage Shoot To Center Middle"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "intakeIn"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "intakeInDeadline"
+            "name": "elevatorShort"
           }
         },
         {
@@ -149,7 +111,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Center middle to under stage shot"
+                  "pathName": "Left Middle to Shoot"
                 }
               },
               {
