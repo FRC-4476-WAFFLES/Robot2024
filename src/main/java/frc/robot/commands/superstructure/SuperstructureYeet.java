@@ -12,27 +12,24 @@ public class SuperstructureYeet extends Command {
   /** Creates a new SuperstructureYeet. */
   public SuperstructureYeet() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(shooterSubsystem, intakeSubsystem, elevatorSubsystem, feederSubsystem, intakeSubsystem);
+    addRequirements(shooterSubsystem, intakeSubsystem, elevatorSubsystem, feederSubsystem, anglerSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    shooterSubsystem.setShooterTargetSpeed(18);
-    intakeSubsystem.SetIntakeSpeed(1);
-    feederSubsystem.setFeederTargetSpeed(100);
-    elevatorSubsystem.setElevatorTargetPosition(12);
-    anglerSubsystem.setAnglerTargetPosition(64);
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooterSubsystem.setShooterTargetSpeed(18);
+    shooterSubsystem.setShooterTargetSpeed(40);
     intakeSubsystem.SetIntakeSpeed(1);
-    feederSubsystem.setFeederTargetSpeed(100);
-    elevatorSubsystem.setElevatorTargetPosition(25);
-    anglerSubsystem.setAnglerTargetPosition(85);
+    
+    elevatorSubsystem.setElevatorTargetPosition(0);
+    anglerSubsystem.setAnglerTargetPosition(48.5);
+    if(anglerSubsystem.isGoodShooterAngle()){
+      feederSubsystem.setFeederTargetSpeed(100);
+    }
   }
 
   // Called once the command ends or is interrupted.

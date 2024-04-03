@@ -287,6 +287,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
 
         // return poseOfGoal.minus(getRobotPose()).getTranslation().getAngle();
         SmartDashboard.putNumber("Angle to Goal", angleToGoal);
+        SmartDashboard.putNumber("Robot Rotation", getRobotPose().getRotation().getRadians());
         return angleToGoalOffsetCalculation(angleToGoal);
         //return new Rotation2d(angleToGoal);
         // return new Rotation2d(Math.PI);
@@ -318,7 +319,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
         angleToGoalOffsetMap.put(Math.PI,0.0);
         angleToGoalOffsetMap.put(3.2,0.05);
         angleToGoalOffsetMap.put(3.6,0.57);
-        angleToGoalOffsetMap.put(4.0, 0.9);
+        angleToGoalOffsetMap.put(4.0, 1.1);
         
         if (DriverStation.getAlliance().get() == Alliance.Blue) {
             inputtedAngle += Math.PI;

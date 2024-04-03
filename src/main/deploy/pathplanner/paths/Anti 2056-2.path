@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.082883155780575,
-        "y": 7.483224552754384
+        "x": 7.480901115648386,
+        "y": 7.449541822160567
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.164859011601047,
-        "y": 6.499514282908736
+        "x": 7.562876971468859,
+        "y": 6.465831552314919
       },
       "isLocked": false,
       "linkedName": "Anti 2056 Link 1"
     },
     {
       "anchor": {
-        "x": 8.398526797053595,
-        "y": 1.4109728219456439
+        "x": 8.201187940837421,
+        "y": 1.5787108497293916
       },
       "prevControl": {
-        "x": 8.222864248866873,
-        "y": 3.132465794175529
+        "x": 8.0255253926507,
+        "y": 3.3002038219592773
       },
       "nextControl": {
-        "x": 8.574189345240313,
-        "y": -0.3105201502842381
+        "x": 8.37685048902414,
+        "y": -0.14278212250049038
       },
       "isLocked": false,
       "linkedName": "Anti 2056 Link 2"
@@ -47,22 +47,22 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.2,
-      "rotationDegrees": -68.98651595873763,
+      "rotationDegrees": -57.72163943131296,
       "rotateFast": true
     },
     {
       "waypointRelativePos": 0.4,
-      "rotationDegrees": -48.0,
+      "rotationDegrees": -40.49416634157677,
       "rotateFast": false
     },
     {
       "waypointRelativePos": 0.65,
-      "rotationDegrees": -61.25629162566916,
+      "rotationDegrees": -47.841527950284764,
       "rotateFast": false
     },
     {
       "waypointRelativePos": 1.1,
-      "rotationDegrees": -90.0,
+      "rotationDegrees": -64.59220392548188,
       "rotateFast": true
     }
   ],

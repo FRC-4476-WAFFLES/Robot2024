@@ -27,7 +27,7 @@ import frc.robot.Constants;
 
 public class AnglerSubsystem extends SubsystemBase {
     private static final double OVERALL_REDUCTION = (62 / 18) * 15 * (48 / 16); // Ratio from the motor to the shooter pivot shaft
-    private static final double ANGLER_DEAD_ZONE = 1;
+    private static final double ANGLER_DEAD_ZONE = 0.1;
 
     private TalonFX angler;
     private CurrentLimitsConfigs currentLimitsConfig;
@@ -85,9 +85,9 @@ public class AnglerSubsystem extends SubsystemBase {
 
     private void configurePositionPID() {
         Slot0Configs anglerSlot0Configs = new Slot0Configs();
-        anglerSlot0Configs.kP = 1.0;
-        anglerSlot0Configs.kD = 0;
-        anglerSlot0Configs.kV = 0.12;
+        anglerSlot0Configs.kP = 30.0; //1.0
+        anglerSlot0Configs.kD = 1.2;
+        anglerSlot0Configs.kV = 0.02;
 
         angler.setPosition(0);
         angler.getConfigurator().apply(anglerSlot0Configs);
@@ -138,7 +138,7 @@ public class AnglerSubsystem extends SubsystemBase {
     private void executeAnglerMotionProfiling() {
         TrapezoidProfile anglerTrapezoidProfile = new TrapezoidProfile(new TrapezoidProfile.Constraints(
                 100,800
-        ));
+        )); //100 800
 
 
 
@@ -186,12 +186,17 @@ public class AnglerSubsystem extends SubsystemBase {
             getAnglerTopLimit(elevatorSubsystem.getElevatorPosition()), 
             getAnglerBottomLimit(elevatorSubsystem.getElevatorPosition()));
             this.anglerTargetPositionRotations = anglerTargetPositonDegrees * (OVERALL_REDUCTION / 360);
-            if (this.anglerTargetPositionRotations != this.previousTargetPosition) {
-                profileTimer.restart();
-                this.previousTargetPosition = this.anglerTargetPositionRotations;
-                this.profileStartPosition = this.angler.getPosition().getValueAsDouble();
-                this.profileStartVelocity = this.angler.getVelocity().getValueAsDouble();
+            
+            if (this.anglerTargetPositionRotations != this.previousTargetPosition){
+                if(Math.abs(this.anglerTargetPositionRotations) < Math.abs(this.previousTargetPosition) || 
+                isGoodShooterAngle()){
+                    profileTimer.restart();
+                    this.previousTargetPosition = this.anglerTargetPositionRotations;
+                    this.profileStartPosition = this.angler.getPosition().getValueAsDouble();
+                    this.profileStartVelocity = this.angler.getVelocity().getValueAsDouble();
+                }
             }
+           
         }
         
     }

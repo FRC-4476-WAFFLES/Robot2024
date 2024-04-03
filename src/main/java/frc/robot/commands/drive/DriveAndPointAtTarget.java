@@ -7,6 +7,7 @@ package frc.robot.commands.drive;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.DriveConstants;
 
@@ -61,8 +62,8 @@ public class DriveAndPointAtTarget extends Command {
         .withTargetDirection(thetaSupplier.get());
     }
     
-    request.HeadingController.setP(10.0);
-    request.HeadingController.setD(0.1); 
+    request.HeadingController.setP(17.0);
+    request.HeadingController.setD(2.0); 
     request.HeadingController.enableContinuousInput(-Math.PI, Math.PI);
     driveSubsystem.setControl(request);
     driveSubsystem.getDistanceToGoal();
