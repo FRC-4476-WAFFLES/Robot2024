@@ -5,7 +5,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
+
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -160,14 +160,14 @@ public class AnglerSubsystem extends SubsystemBase {
         //SmartDashboard.putNumber("Angler Setpoint", anglerTargetPositonDegrees);
     }
 
-    private void updatePIDConstants() {
-        Slot0Configs anglerSlot0Configs = new Slot0Configs();
-        anglerSlot0Configs.kP = SmartDashboard.getNumber("Angler P", 0);
-        anglerSlot0Configs.kD = SmartDashboard.getNumber("Angler D", 0);
-        anglerSlot0Configs.kS = SmartDashboard.getNumber("Angler S", 0);
-        anglerSlot0Configs.kV = SmartDashboard.getNumber("Angler V", 0);
-        angler.getConfigurator().apply(anglerSlot0Configs);
-    }
+    // private void updatePIDConstants() {
+    //     Slot0Configs anglerSlot0Configs = new Slot0Configs();
+    //     anglerSlot0Configs.kP = SmartDashboard.getNumber("Angler P", 0);
+    //     anglerSlot0Configs.kD = SmartDashboard.getNumber("Angler D", 0);
+    //     anglerSlot0Configs.kS = SmartDashboard.getNumber("Angler S", 0);
+    //     anglerSlot0Configs.kV = SmartDashboard.getNumber("Angler V", 0);
+    //     angler.getConfigurator().apply(anglerSlot0Configs);
+    // }
 
     public double getAnglerDegrees() {
         return angler.getPosition().getValueAsDouble() * 360 / OVERALL_REDUCTION;

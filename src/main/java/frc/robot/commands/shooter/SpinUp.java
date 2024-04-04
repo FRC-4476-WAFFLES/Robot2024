@@ -122,7 +122,7 @@ public class SpinUp extends Command {
   private double solveForElevatorHeight(double distance, double currentHeight, double predictedAngle){
     double result = 0;
     // Solve for opposite side of right angle triangle, where predictedAngle is the angle in degrees and the distance is the adjacent side
-    double predictedHeight = distance * Math.tan(Math.toRadians(predictedAngle));
+    //double predictedHeight = distance * Math.tan(Math.toRadians(predictedAngle));
     result = Math.atan(Math.tan(Math.toRadians(predictedAngle)) + ((elevatorSubsystem.rotationsToMeters(10.0) - currentHeight)) / distance);
     if(elevatorSubsystem.getElevatorMode() == ShooterMode.TALL){
       return Math.toDegrees(result)-4.3;

@@ -3,9 +3,6 @@ package frc.robot.subsystems;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-import org.opencv.core.Mat;
-import org.photonvision.EstimatedRobotPose;
-
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrain;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrainConstants;
@@ -21,7 +18,6 @@ import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.Matrix;
-import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
@@ -33,8 +29,6 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
@@ -55,10 +49,6 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
             Constants.VisionConstants.kRobotToLeftCamera);
     private Vision visionRight = new Vision(Constants.VisionConstants.kCameraRight,
             Constants.VisionConstants.kRobotToRightCamera);
-    private EstimatedRobotPose estimatedRobotPose;
-    private Field2d debugVisionEstimationPoseLeft = new Field2d();
-    private Field2d debugVisionEstimationPoseRight = new Field2d();
-    private LinearFilter filter = LinearFilter.singlePoleIIR(0.3, 0.02);
 
     private final SwerveRequest.ApplyChassisSpeeds autoRequest = new SwerveRequest.ApplyChassisSpeeds()
             .withDriveRequestType(DriveRequestType.Velocity);

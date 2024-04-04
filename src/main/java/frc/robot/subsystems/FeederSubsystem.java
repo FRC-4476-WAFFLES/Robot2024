@@ -9,7 +9,6 @@ import static frc.robot.RobotContainer.shooterSubsystem;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
-import com.ctre.phoenix6.configs.Slot1Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VelocityVoltage;
@@ -30,7 +29,6 @@ public class FeederSubsystem extends SubsystemBase {
   private double feederTargetSpeed = 0;
   private double feederTargetPosition = 0;
 
-  private final double FEEDER_DEAD_ZONE = 2;
   private final double POSITION_DEAD_ZONE = 0.2;
 
   private final CurrentLimitsConfigs currentLimitsConfig;
