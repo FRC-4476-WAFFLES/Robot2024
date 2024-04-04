@@ -27,7 +27,7 @@ public class Telemetry {
      */
     public Telemetry(double maxSpeed) {
         MaxSpeed = maxSpeed;
-        SignalLogger.start();
+        //SignalLogger.start();
     }
 
     /* What to publish over networktables for telemetry */
@@ -109,7 +109,7 @@ public class Telemetry {
             SmartDashboard.putData("Module " + i, m_moduleMechanisms[i]);
         }
 
-        SignalLogger.writeDoubleArray("odometry", new double[] {pose.getX(), pose.getY(), pose.getRotation().getDegrees()});
-        SignalLogger.writeDouble("odom period", state.OdometryPeriod, "seconds");
+        //SignalLogger.writeDoubleArray("odometry", new double[] {pose.getX(), pose.getY(), pose.getRotation().getDegrees()});
+        //SignalLogger.writeDouble("odom period", state.OdometryPeriod, "seconds");
     }
 }

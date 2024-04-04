@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import static frc.robot.RobotContainer.*;
 
 public class SpinUpStash extends Command {
-  private double randomYAdjustment = 0;
+  //private double randomYAdjustment = 0;
   private boolean isCloseToStage;
   /** Creates a new SpinUpStash. */
   public SpinUpStash() {
@@ -47,9 +47,9 @@ public class SpinUpStash extends Command {
     if(DriverStation.getAlliance().get() == DriverStation.Alliance.Red){
       angleToLeftStagePole = 3.8;
       angleToRightStagePole = 3.25;
-      System.out.println("angleToLeftStagePole: " + angleToLeftStagePole);
-      System.out.println("angleToRightStagePole: " + angleToRightStagePole);
-      System.out.println("angleToStash: " + angleToStash);
+      // System.out.println("angleToLeftStagePole: " + angleToLeftStagePole);
+      // System.out.println("angleToRightStagePole: " + angleToRightStagePole);
+      // System.out.println("angleToStash: " + angleToStash);
       isCloseToStage = (angleToStash > angleToRightStagePole && 
       angleToStash < angleToLeftStagePole) && 
       (distance > minDistanceFromStage && 
@@ -114,8 +114,6 @@ public class SpinUpStash extends Command {
   }
 
   private double calculateAngleOffDistance(double distance) {
-
-    double height = elevatorSubsystem.getElevatorTargetPosition();
 
     // Key is distance from goal in meters, value is angle in degrees
 

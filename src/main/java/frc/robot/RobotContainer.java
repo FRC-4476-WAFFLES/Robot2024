@@ -29,10 +29,7 @@ import frc.robot.commands.drive.*;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -62,7 +59,6 @@ public class RobotContainer {
 
   // The robot's subsystems 
   public static final LightSubsystem lightSubsystem = new LightSubsystem();
-  //public static final CANdleLights CANdleLights = new CANdleLights();
   public static final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
   public static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public static final ShooterSubsystem shooterSubsystem  = new ShooterSubsystem();
@@ -72,8 +68,6 @@ public class RobotContainer {
 
   //The Robots Commands
   private final ActivateLightColour updateLights = new ActivateLightColour();
-  private final ElevatorUp elevatorUp  = null; //= new ElevatorUp();
-  private final ElevatorDown elevatorDown  = null; //= new ElevatorDown();
   private final IntakeIn intakeIn = new IntakeIn();
   private final IntakeIn intakeInAuto = new IntakeIn();
   private final IntakeIn intakeInAuto2 = new IntakeIn();
@@ -88,12 +82,9 @@ public class RobotContainer {
   private final SuperstructureHome superstructureHome = new SuperstructureHome();
   private final SuperstructureAmp superstructureAmp = new SuperstructureAmp();
   private final SuperstructureCloseSpeaker superstructureCloseSpeaker  = new SuperstructureCloseSpeaker();
-  private final SuperstructureCloseSpeaker superstructureCloseSpeakerAuto  = new SuperstructureCloseSpeaker();
-  private final SuperstructureTestShot superstructureTestShot = new SuperstructureTestShot();
   private final BasicFieldReset basicFieldReset = new BasicFieldReset();
   private final ResetGyro resetGyro = new ResetGyro();
   private final SuperstructureClimb superstructureClimb = new SuperstructureClimb();
-  private final SuperstructureStash superstructureStash = new SuperstructureStash();
   private final ForcedFire forcedFire = new ForcedFire();
   private final SuperstructureYeet superstructureYeet = new SuperstructureYeet();
   private final SuperstructurePodium superstructurePodium = new SuperstructurePodium();

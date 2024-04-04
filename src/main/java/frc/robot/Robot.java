@@ -9,11 +9,8 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
-import com.ctre.phoenix6.SignalLogger;
-
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
-import edu.wpi.first.wpilibj.DataLogManager;
 
 
 
@@ -47,11 +44,11 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
 
     //WPI Logger
-    DataLogManager.stop();
+    //DataLogManager.stop();
     //DriverStation.startDataLog(DataLogManager.getLog());
 
     // CTRE Logger
-    SignalLogger.stop();
+    //SignalLogger.stop();
 
     m_led.setLength(m_ledBuffer.getLength());
     
@@ -62,7 +59,7 @@ public class Robot extends TimedRobot {
       m_ledBuffer.setRGB(i, 0, 255, 0);
    }
    
-   m_led.setData(m_ledBuffer);
+    m_led.setData(m_ledBuffer);
     m_led.start();
 
   }

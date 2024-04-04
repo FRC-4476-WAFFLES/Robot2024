@@ -2,29 +2,48 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3669845521509223,
-      "y": 5.54
+      "x": 1.407706324685116,
+      "y": 7.272429494930317
     },
-    "rotation": -0.10108420694185559
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "completeShot"
-          }
-        },
-        {
           "type": "deadline",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Drive Middle Speaker to Middle Note"
+                  "pathName": "Fast Amp Preload"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "spinUpReal"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "completeShot"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Amp Preload to Left 1 Center"
                 }
               },
               {
@@ -43,19 +62,38 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "completeShot"
-          }
-        },
-        {
           "type": "deadline",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Middle Close to Right Close"
+                  "pathName": "Left Middle to Shoot"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "spinUpReal"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "completeShot"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Shoot to Left Center 2"
                 }
               },
               {
@@ -74,19 +112,38 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "completeShot"
-          }
-        },
-        {
           "type": "deadline",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Close Right to Close Left"
+                  "pathName": "Left Center 2 to Shoot"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "spinUpReal"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "completeShot"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Amp Shoot to Center Middle"
                 }
               },
               {
@@ -102,6 +159,25 @@
           "type": "named",
           "data": {
             "name": "intakeInDeadline"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Center Midline to Score"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "spinUpReal"
+                }
+              }
+            ]
           }
         },
         {

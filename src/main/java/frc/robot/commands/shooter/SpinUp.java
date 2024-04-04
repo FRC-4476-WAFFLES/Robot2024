@@ -4,23 +4,18 @@
 
 package frc.robot.commands.shooter;
 
-import edu.wpi.first.math.InterpolatingMatrixTreeMap;
+
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ElevatorSubsystem.ShooterMode;
-import edu.wpi.first.math.numbers.N1;
-import edu.wpi.first.math.numbers.N2;
 import edu.wpi.first.wpilibj.DriverStation;
 
 import static frc.robot.RobotContainer.*;
 
 public class SpinUp extends Command {
   /** Creates a new SpinUp. */
-  double generalAnglerAdjustment = 6;
-  double generalSpeedAdjustment = 2;
-
-  
+  double generalAnglerAdjustment = 6; 
 
   
   public SpinUp() {
@@ -37,16 +32,13 @@ public class SpinUp extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double distance = driveSubsystem.getDistanceToGoal();
-    double speed = calculateSpeedOffDistanceShoot(distance);
-    double angle = calculateAngleOffDistance(distance);
    // double height = solveForElevatorHeight(distance, speed, angle);
 
     //intakeSubsystem.SetIntakeSpeed(0);
     elevatorSubsystem.setElevatorTargetPosition(elevatorSubsystem.getElevatorMode().getHeight());
-    anglerSubsystem.setAnglerTargetPosition(angle);
+    anglerSubsystem.setAnglerTargetPosition(calculateAngleOffDistance(driveSubsystem.getDistanceToGoal()));
     if (!shooterSubsystem.isFullyInNote()){
-      shooterSubsystem.setShooterTargetSpeed(speed);
+      shooterSubsystem.setShooterTargetSpeed(calculateSpeedOffDistanceShoot(driveSubsystem.getDistanceToGoal()));
     }
     
   }
@@ -81,13 +73,13 @@ public class SpinUp extends Command {
     
     final InterpolatingDoubleTreeMap shooterSpeedMap = new InterpolatingDoubleTreeMap();
    
-    shooterSpeedMap.put(0.9, 55.0 + generalSpeedAdjustment);
-    shooterSpeedMap.put(1.8542, 67.0 + generalSpeedAdjustment);
-    shooterSpeedMap.put(2.54, 67.0 + generalSpeedAdjustment);
-    shooterSpeedMap.put(3.0988, 73.0 + generalSpeedAdjustment);
-    shooterSpeedMap.put(3.556, 75.0 + generalSpeedAdjustment);
-    shooterSpeedMap.put(4.0, 76 + generalAnglerAdjustment);
-    shooterSpeedMap.put(6.0, 86.0 + generalSpeedAdjustment);
+    shooterSpeedMap.put(0.9, 57.0);
+    shooterSpeedMap.put(1.8542, 69.0);
+    shooterSpeedMap.put(2.54, 69.0);
+    shooterSpeedMap.put(3.0988, 75.0);
+    shooterSpeedMap.put(3.556, 77.0);
+    shooterSpeedMap.put(4.0, 78.0);
+    shooterSpeedMap.put(6.0, 88.0);
     shooterSpeedMap.put(9.0, 95.0);
    
 
@@ -121,7 +113,6 @@ public class SpinUp extends Command {
     shooterAngleMap.put(8.7, 28.6 + generalAnglerAdjustment - 2);
     double predictedAngle = shooterAngleMap.get(distance);
     return solveForElevatorHeight(distance, height, predictedAngle);
-    //return predictedAngle;
 
 
  

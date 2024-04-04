@@ -6,35 +6,29 @@ package frc.robot.commands.shooter;
 
 
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Timer;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import static frc.robot.RobotContainer.*;
 
 public class ScoreNote extends Command {
-  Timer timer;
+ 
   boolean hasTimerStarted;
 
   /** Creates a new ScoreNote. */
   public ScoreNote() {
-    timer = new Timer();
-
     addRequirements(feederSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    hasTimerStarted = false;
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    SmartDashboard.putBoolean("timer started", hasTimerStarted);
-    System.out.println("Starting Fire");
 
     if (anglerSubsystem.getAnglerDegrees() < -5){
 
@@ -65,19 +59,19 @@ public class ScoreNote extends Command {
 
 
     if(!shooterSubsystem.isGoodSpeed()){
-      System.out.println("Bad speed");
+      //System.out.println("Bad speed");
     }
 
     if(!anglerSubsystem.isGoodShooterAngle()){
-      System.out.println("Bad angle");
+      //System.out.println("Bad angle");
     }
 
     if(!elevatorSubsystem.isGoodElevatorPosition()){
-      System.out.println("Bad elevator");
+      //System.out.println("Bad elevator");
     }
 
     if(!shooterSubsystem.isShooterRunning()){
-      System.out.println("No shooter running");
+      //System.out.println("No shooter running");
     }
 
     
@@ -87,7 +81,7 @@ public class ScoreNote extends Command {
   @Override
   public void end(boolean interrupted) {
     feederSubsystem.setFeederTargetSpeed(0);
-    System.out.println("Stopping Fire");
+    //System.out.println("Stopping Fire");
   }
 
   // Returns true when the command should end.

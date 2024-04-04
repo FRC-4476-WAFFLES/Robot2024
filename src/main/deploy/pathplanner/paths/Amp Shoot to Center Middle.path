@@ -3,45 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.6658330239737413,
-        "y": 6.9956624528633675
+        "x": 5.026354817331602,
+        "y": 6.534646792546081
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.6658330239737364,
-        "y": 6.9956624528633675
+        "x": 6.977687032297143,
+        "y": 6.482581426701315
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Shoot Wing"
     },
     {
       "anchor": {
-        "x": 6.619028587557887,
-        "y": 0.7846260485673593
+        "x": 8.082784627107717,
+        "y": 4.065180438053184
       },
       "prevControl": {
-        "x": 5.619028587557887,
-        "y": 0.7846260485673593
-      },
-      "nextControl": {
-        "x": 7.619028587557887,
-        "y": 0.7846260485673593
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 0.26004434319852804,
-        "y": 6.031080821077477
-      },
-      "prevControl": {
-        "x": 0.32674339100461336,
-        "y": 5.381129392786604
+        "x": 7.816377171215882,
+        "y": 4.430257322053106
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Center Midline"
     }
   ],
   "rotationTargets": [],
@@ -55,13 +39,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -90.0,
+    "rotation": -35.272421448598415,
     "rotateFast": false
   },
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": 14.076710075203925,
     "velocity": 0
   },
   "useDefaultConstraints": true

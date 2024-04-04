@@ -14,7 +14,7 @@
         {
           "type": "named",
           "data": {
-            "name": "elevatorBottom"
+            "name": "elevatorShort"
           }
         },
         {
@@ -22,15 +22,15 @@
           "data": {
             "commands": [
               {
-                "type": "named",
+                "type": "path",
                 "data": {
-                  "name": "quickSubShot"
+                  "pathName": "Front to Gap"
                 }
               },
               {
-                "type": "path",
+                "type": "named",
                 "data": {
-                  "pathName": "[SPEED] Front to Gap"
+                  "name": "spinUpReal"
                 }
               }
             ]
@@ -39,13 +39,13 @@
         {
           "type": "named",
           "data": {
-            "name": "disableTargetGoal"
+            "name": "completeShot"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "noMatterWhatShoot"
+            "name": "elevatorBottom"
           }
         },
         {
@@ -57,6 +57,12 @@
                 "data": {
                   "pathName": "Drive Middle Speaker to Middle Note"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "intakeIn"
+                }
               }
             ]
           }
@@ -64,7 +70,13 @@
         {
           "type": "named",
           "data": {
-            "name": "stopAll"
+            "name": "intakeInDeadline"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "completeShot"
           }
         },
         {
