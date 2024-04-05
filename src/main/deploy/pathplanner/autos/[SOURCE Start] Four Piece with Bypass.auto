@@ -2,35 +2,16 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.407706324685116,
-      "y": 7.272429494930317
+      "x": 1.4521990582442719,
+      "y": 3.394228326918193
     },
-    "rotation": 0
+    "rotation": 0.0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "deadline",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Fast Amp Preload"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "spinUpReal"
-                }
-              }
-            ]
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "completeShot"
@@ -43,107 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Amp Preload to Left 1 Center"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "intakeIn"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "intakeInDeadline"
-          }
-        },
-        {
-          "type": "deadline",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Left Middle to Shoot"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "spinUpReal"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "completeShot"
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Shoot to Left Center 2"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "intakeIn"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "intakeInDeadline"
-          }
-        },
-        {
-          "type": "deadline",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Left Center 2 to Shoot"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "spinUpReal"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "completeShot"
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Amp Shoot to Center Middle"
+                  "pathName": "Right Start to Score Middle Rightmost"
                 }
               },
               {
@@ -164,7 +45,131 @@
         {
           "type": "named",
           "data": {
-            "name": "enableTargetGoal"
+            "name": "enableLeftFaceOverride"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Right 1 Center to Score"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "spinUpReal"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "note Bypass"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "completeShot"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Right Shooting to middle second rightmost"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "intakeIn"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "intakeInDeadline"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "enableLeftFaceOverride"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Center Right 2 To Shoot"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "spinUpReal"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "note Bypass"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "completeShot"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Under Stage Shoot To Center Middle"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "intakeIn"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "intakeInDeadline"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "enableLeftFaceOverride"
           }
         },
         {
@@ -174,7 +179,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Center Midline to Score"
+                  "pathName": "Center middle to under stage shot"
                 }
               },
               {
@@ -190,12 +195,6 @@
           "type": "named",
           "data": {
             "name": "completeShot"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "disableTargetGoal"
           }
         }
       ]

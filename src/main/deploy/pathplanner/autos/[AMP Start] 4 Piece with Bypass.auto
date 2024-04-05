@@ -62,7 +62,7 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "race",
           "data": {
             "commands": [
               {
@@ -76,8 +76,20 @@
                 "data": {
                   "name": "spinUpReal"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "note Bypass"
+                }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "enableRightFaceOverride"
           }
         },
         {
@@ -112,7 +124,7 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "race",
           "data": {
             "commands": [
               {
@@ -125,6 +137,12 @@
                 "type": "named",
                 "data": {
                   "name": "spinUpReal"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "note Bypass"
                 }
               }
             ]
@@ -162,13 +180,7 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "enableTargetGoal"
-          }
-        },
-        {
-          "type": "deadline",
+          "type": "race",
           "data": {
             "commands": [
               {
@@ -182,6 +194,12 @@
                 "data": {
                   "name": "spinUpReal"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "note Bypass"
+                }
               }
             ]
           }
@@ -190,12 +208,6 @@
           "type": "named",
           "data": {
             "name": "completeShot"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "disableTargetGoal"
           }
         }
       ]

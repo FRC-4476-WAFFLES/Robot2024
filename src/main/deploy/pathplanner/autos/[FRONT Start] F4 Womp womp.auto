@@ -3,9 +3,9 @@
   "startingPose": {
     "position": {
       "x": 1.407706324685116,
-      "y": 7.272429494930317
+      "y": 5.541275082550166
     },
-    "rotation": 0
+    "rotation": -0.10108420694185559
   },
   "command": {
     "type": "sequential",
@@ -18,7 +18,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Fast Amp Preload"
+                  "pathName": "Front to Gap"
                 }
               },
               {
@@ -37,13 +37,13 @@
           }
         },
         {
-          "type": "race",
+          "type": "deadline",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Amp Preload to Left 1 Center"
+                  "pathName": "Drive Middle Speaker to Middle Note"
                 }
               },
               {
@@ -62,22 +62,34 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "completeShot"
+          }
+        },
+        {
           "type": "deadline",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Left Middle to Shoot"
+                  "pathName": "Middle Close to Right Close"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "spinUpReal"
+                  "name": "intakeIn"
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "intakeInDeadline"
           }
         },
         {
@@ -93,7 +105,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Shoot to Left Center 2"
+                  "pathName": "Close Right to Left 2"
                 }
               },
               {
@@ -134,68 +146,6 @@
           "type": "named",
           "data": {
             "name": "completeShot"
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Amp Shoot to Center Middle"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "intakeIn"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "intakeInDeadline"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "enableTargetGoal"
-          }
-        },
-        {
-          "type": "deadline",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Center Midline to Score"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "spinUpReal"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "completeShot"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "disableTargetGoal"
           }
         }
       ]

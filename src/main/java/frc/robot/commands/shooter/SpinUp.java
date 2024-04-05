@@ -96,12 +96,12 @@ public class SpinUp extends Command {
 
     shooterAngleMap.put(1.1977, 76.5 + generalAnglerAdjustment); 
     shooterAngleMap.put(1.5, 75.5 + generalAnglerAdjustment);
-    shooterAngleMap.put(1.999, 73.9 + generalAnglerAdjustment); 
-    shooterAngleMap.put(2.54, 58.75 + generalAnglerAdjustment);
-    shooterAngleMap.put(2.773, 57.25 + generalAnglerAdjustment);
-    shooterAngleMap.put(3.0988, 46.0 + generalAnglerAdjustment);
-    shooterAngleMap.put(3.556, 42.75 + generalAnglerAdjustment);
-    shooterAngleMap.put(3.8813, 39.95 + generalAnglerAdjustment);
+    shooterAngleMap.put(1.999, 74.15 + generalAnglerAdjustment); 
+    shooterAngleMap.put(2.54, 59.0 + generalAnglerAdjustment + 0.25);//0.25-0.5-0.25 addded mtch 32 ONCMP
+    shooterAngleMap.put(2.773, 57.5 + generalAnglerAdjustment +0.5);
+    shooterAngleMap.put(3.0988, 46.25 + generalAnglerAdjustment + 0.5);
+    shooterAngleMap.put(3.556, 42.75 + generalAnglerAdjustment + 0.5);
+    shooterAngleMap.put(3.8813, 39.95 + generalAnglerAdjustment + 0.25);
     shooterAngleMap.put(4.1, 38.95 + generalAnglerAdjustment - 0.5);
     shooterAngleMap.put(4.3688, 37.9 + generalAnglerAdjustment);
     shooterAngleMap.put(4.5626, 34.9 + generalAnglerAdjustment);

@@ -81,7 +81,7 @@ public class IntakeIn extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (shooterSubsystem.isFullyInNote()){
+    if (shooterSubsystem.isFullyInNote() || shooterSubsystem.isNote()){
       return true;
     }
     else{

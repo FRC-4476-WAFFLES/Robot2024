@@ -55,6 +55,8 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
 
     private boolean autoSWM = false;
     private boolean targetGoal = false;
+    private boolean overrideFaceRight = false;
+    private boolean overrideFaceLeft = false;
     private Rotation2d autoSWMHeading = new Rotation2d();
 
     public double randomYStashAdjustment = 0; // This value is changed everytime spinUpStash is initialized
@@ -136,6 +138,12 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
         else if (targetGoal) {
             return Optional.of(getAngleToGoal());
         }
+        else if (overrideFaceLeft){
+            return Optional.of(new Rotation2d(Math.PI/2)); //ccw +ve
+        }
+        else if (overrideFaceRight){
+            return Optional.of(new Rotation2d(-Math.PI/2));
+        }
         else {
             // return an empty optional when we don't want to override the path's rotation
             return Optional.empty();
@@ -144,6 +152,14 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
 
     public boolean isAutoSWM() {
         return autoSWM;
+    }
+
+    public void setOverrideLeft(boolean overrideFaceLeft) {
+        this.overrideFaceLeft = overrideFaceLeft;
+    }
+
+    public void setOverrideRight(boolean overrideFaceRight) {
+        this.overrideFaceRight = overrideFaceRight;
     }
 
     public void setTargetGoal(boolean targetGoal) {
@@ -347,7 +363,8 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
 
     }
     public void periodic() {
-        if(odometryIsValid() && Math.abs(getCurrentRobotChassisSpeeds().vxMetersPerSecond) < 0.5){
+        SmartDashboard.putNumber("Robot Angle", getRobotPose().getRotation().getRadians());
+        if(odometryIsValid() && Math.abs(getCurrentRobotChassisSpeeds().vxMetersPerSecond) < 0.6){
         //     var visionEstimationLeft = visionLeft.getEstimatedGlobalPose();
         //     visionEstimationLeft.ifPresent(estLeft -> {
         //     var estPoseLeft = estLeft.estimatedPose.toPose2d();

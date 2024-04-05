@@ -97,6 +97,13 @@ public class RobotContainer {
   private final NoMatterWhatShoot noMatterWhatShoot = new NoMatterWhatShoot();
   private final StopAll stopAll = new StopAll();
   private final QuickSubShot quickSubShot = new QuickSubShot();
+  private final ClearOverrides clearOverrides = new ClearOverrides();
+  private final EnableLeftFaceOverride enableLeftFaceOverride = new EnableLeftFaceOverride();
+  private final EnableRightFaceOverride enableRightFaceOverride = new EnableRightFaceOverride();
+  private final NoteBypass noteBypass = new NoteBypass();
+  private final EnableTargetGoal enableTargetGoal = new EnableTargetGoal();
+  private final DisableTargetGoal disableTargetGoal = new DisableTargetGoal();
+  private final FireNoteForced fireNoteForced = new FireNoteForced();
   
  
 
@@ -212,6 +219,13 @@ public class RobotContainer {
     NamedCommands.registerCommand("noMatterWhatShoot", noMatterWhatShoot);
     NamedCommands.registerCommand("stopAll", stopAll);
     NamedCommands.registerCommand("quickSubShot", quickSubShot);
+    NamedCommands.registerCommand("clearOverrides", clearOverrides);
+    NamedCommands.registerCommand("enableLeftFaceOverride", enableLeftFaceOverride);
+    NamedCommands.registerCommand("enableRightFaceOverride", enableRightFaceOverride);
+    NamedCommands.registerCommand("note Bypass", noteBypass);
+    NamedCommands.registerCommand("enableTargetGoal", enableTargetGoal);
+    NamedCommands.registerCommand("disableTargetGoal", disableTargetGoal);
+    NamedCommands.registerCommand("fireNoteForced", fireNoteForced);
   
 
   }
@@ -223,9 +237,12 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     return autoChooser.getSelected();
+    
   }
 
+  private static boolean gotAlliance = false;
   public static void setAllianceColor(){
+    if(gotAlliance) return;
     var alliance = DriverStation.getAlliance();
     if (alliance.isPresent()) {
       
@@ -236,7 +253,12 @@ public class RobotContainer {
       else if (alliance.get() == DriverStation.Alliance.Red){
         driveSubsystem.setDefaultCommand(containerRobot.driveTeleopRed);
       }
+      gotAlliance = true;
 
     }
+    
+  }
+  public static void resetAlliance() {
+    gotAlliance = false;
   }
 }

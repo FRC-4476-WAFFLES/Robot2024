@@ -33,6 +33,9 @@ deploy {
                     jvmArgs.add("-Dcom.sun.management.jmxremote.ssl=false");
                     jvmArgs.add("-Dcom.sun.management.jmxremote.authenticate=false");
                     jvmArgs.add("-Djava.rmi.server.hostname=10.44.76.2");
+
+                    jvmArgs.add("-XX:+HeapDumpOnOutOfMemoryError")
+                    jvmArgs.add("-XX:HeapDumpPath=/media/sda1/frc-usercode.hprof")
                 }
 
                 // Static files artifact

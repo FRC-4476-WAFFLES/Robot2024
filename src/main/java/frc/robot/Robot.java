@@ -80,13 +80,16 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
     RobotContainer.setAllianceColor();
     if (m_gcTimer.advanceIfElapsed(5)) {
-      System.gc();
+      // System.gc();
     }
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    System.gc();
+    RobotContainer.resetAlliance();
+  }
 
   @Override
   public void disabledPeriodic() {
