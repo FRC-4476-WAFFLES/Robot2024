@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.915495984838125,
-        "y": 7.272429494930317
+        "x": 8.230788769269848,
+        "y": 7.35087239405248
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.94165803716223,
-        "y": 7.390340165295715
+        "x": 7.234227545378168,
+        "y": 7.58767902151189
       },
       "isLocked": false,
-      "linkedName": "Fast Amp Side Shot"
+      "linkedName": "2056 end"
     },
     {
       "anchor": {
-        "x": 8.21105488364823,
-        "y": 7.5284773646470375
+        "x": 4.017604189054533,
+        "y": 5.9892342861608805
       },
       "prevControl": {
-        "x": 7.211054883648231,
-        "y": 7.5284773646470375
+        "x": 4.873898517027807,
+        "y": 6.067271057619039
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Left Middle"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -39,13 +39,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
-    "rotateFast": false
+    "rotation": 14.322719978203603,
+    "rotateFast": true
   },
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": 24.48624382651017,
+    "rotation": 87.13759477388838,
     "velocity": 0
   },
   "useDefaultConstraints": true

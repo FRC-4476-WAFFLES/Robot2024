@@ -3,50 +3,50 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.915495984838125,
-        "y": 7.272429494930317
+        "x": 5.026354817331602,
+        "y": 6.534646792546081
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.94165803716223,
-        "y": 7.390340165295715
+        "x": 4.838981432599097,
+        "y": 6.569779302183426
       },
       "isLocked": false,
-      "linkedName": "Fast Amp Side Shot"
+      "linkedName": "Shoot Wing"
     },
     {
       "anchor": {
-        "x": 8.21105488364823,
-        "y": 7.5284773646470375
+        "x": 2.8730388230007247,
+        "y": 7.025263281295794
       },
       "prevControl": {
-        "x": 7.211054883648231,
-        "y": 7.5284773646470375
+        "x": 3.105777623823435,
+        "y": 6.979658581285779
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Left Middle"
+      "linkedName": "Close Left Note"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 5.0,
+    "maxVelocity": 1.2,
     "maxAcceleration": 4.65,
     "maxAngularVelocity": 9000.0,
     "maxAngularAcceleration": 1000.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
-    "rotateFast": false
+    "rotation": -178.91292956083257,
+    "rotateFast": true
   },
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": 24.48624382651017,
+    "rotation": 9.865806943084472,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.407706324685116,
-        "y": 7.272429494930317
+        "x": 1.4225982298118458,
+        "y": 7.321271565620054
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.2743082290729473,
-        "y": 7.752573793307358
+        "x": 1.4028643441902284,
+        "y": 8.140227818917177
       },
       "isLocked": false,
       "linkedName": "Start Anti"
     },
     {
       "anchor": {
-        "x": 4.628186374775031,
-        "y": 7.694019610578451
+        "x": 4.461616615540925,
+        "y": 7.775150934917256
       },
       "prevControl": {
-        "x": 3.6282572289218598,
-        "y": 7.705923528981464
+        "x": 3.4628755827634956,
+        "y": 7.825314162950064
       },
       "nextControl": {
-        "x": 5.6118966446206775,
-        "y": 7.68230877403267
+        "x": 5.400144451117393,
+        "y": 7.728012002715547
       },
       "isLocked": false,
       "linkedName": null
@@ -48,12 +48,12 @@
     },
     {
       "anchor": {
-        "x": 8.153148175055266,
-        "y": 2.5061190207972417
+        "x": 8.230788769269848,
+        "y": 1.262968679783513
       },
       "prevControl": {
-        "x": 8.317099886696207,
-        "y": 3.4546967810055427
+        "x": 8.309724311756318,
+        "y": 2.229929075242767
       },
       "nextControl": null,
       "isLocked": false,
@@ -62,14 +62,24 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.0999999999999999,
+      "waypointRelativePos": 0.8999999999999999,
       "rotationDegrees": 0,
       "rotateFast": false
     },
     {
-      "waypointRelativePos": 0.5,
+      "waypointRelativePos": 0.44999999999999996,
       "rotationDegrees": 0,
       "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 1.85,
+      "rotationDegrees": -82.4357743783011,
+      "rotateFast": true
+    },
+    {
+      "waypointRelativePos": 2.55,
+      "rotationDegrees": -89.96827667919212,
+      "rotateFast": true
     }
   ],
   "constraintZones": [],
@@ -91,5 +101,5 @@
     "rotation": 0,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

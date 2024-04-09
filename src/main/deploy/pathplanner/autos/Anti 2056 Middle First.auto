@@ -20,6 +20,12 @@
                 "data": {
                   "pathName": "Anti 2056 alt 1"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "superstructureYeet"
+                }
               }
             ]
           }
@@ -31,7 +37,7 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "race",
           "data": {
             "commands": [
               {
@@ -47,6 +53,43 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "intakeInDeadline"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "2056 alt 3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "spinUpReal"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "completeShot"
           }
         }
       ]

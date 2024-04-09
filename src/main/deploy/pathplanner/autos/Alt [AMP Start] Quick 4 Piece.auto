@@ -2,16 +2,47 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.4521990582442719,
-      "y": 3.394228326918193
+      "x": 1.407706324685116,
+      "y": 7.272429494930317
     },
-    "rotation": 0.0
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Fast Amp Preload"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "spinUpReal"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "completeShot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "intakeInDeadline"
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "completeShot"
@@ -24,7 +55,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Right Start to Score Middle Rightmost"
+                  "pathName": "Shoot to Left Center 2"
                 }
               },
               {
@@ -49,7 +80,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Right 1 Center to Score"
+                  "pathName": "Left Center 2 to Shoot"
                 }
               },
               {
@@ -74,7 +105,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Right Shooting to middle second rightmost"
+                  "pathName": "Amp Shoot to Center Middle"
                 }
               },
               {
@@ -93,13 +124,19 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "enableTargetGoal"
+          }
+        },
+        {
           "type": "deadline",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Center Right 2 To Shoot"
+                  "pathName": "Center Midline to Score"
                 }
               },
               {
@@ -118,53 +155,9 @@
           }
         },
         {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Under Stage Shoot To Center Middle"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "intakeIn"
-                }
-              }
-            ]
-          }
-        },
-        {
           "type": "named",
           "data": {
-            "name": "intakeInDeadline"
-          }
-        },
-        {
-          "type": "deadline",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Center middle to under stage shot"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "spinUpReal"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "completeShot"
+            "name": "disableTargetGoal"
           }
         }
       ]

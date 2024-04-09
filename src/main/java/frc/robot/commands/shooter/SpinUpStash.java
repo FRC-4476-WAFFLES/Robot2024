@@ -32,6 +32,7 @@ public class SpinUpStash extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    //shooterSubsystem.setTryingToStash(true);
     double distance = driveSubsystem.getDistanceToStash();
     double angleToStash = driveSubsystem.getAngleToStash().getRadians();
     double speed = calculateSpeedOffDistanceShoot(distance);
@@ -87,6 +88,7 @@ public class SpinUpStash extends Command {
   @Override
   public void end(boolean interrupted) {
     shooterSubsystem.setShooterTargetSpeed(0);
+    //
   }
 
   // Returns true when the command should end.

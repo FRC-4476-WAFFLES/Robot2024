@@ -127,6 +127,12 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
                 && Math.abs(getCurrentRobotChassisSpeeds().vyMetersPerSecond) < 0.1
                 && Math.abs(getCurrentRobotChassisSpeeds().omegaRadiansPerSecond) < 0.1;
     }
+    
+    public boolean slowMoving() {
+        return Math.abs(getCurrentRobotChassisSpeeds().vxMetersPerSecond) < 1
+                && Math.abs(getCurrentRobotChassisSpeeds().vyMetersPerSecond) < 1
+                && Math.abs(getCurrentRobotChassisSpeeds().omegaRadiansPerSecond) < 1;
+    }
 
     public Optional<Rotation2d> getRotationTargetOverride() {
         // If SWM in auto
@@ -320,7 +326,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
 
     public Rotation2d angleToGoalOffsetCalculation(double inputtedAngle){
         final InterpolatingDoubleTreeMap angleToGoalOffsetMap = new InterpolatingDoubleTreeMap();
-        angleToGoalOffsetMap.put(2.3, -2.0);
+        angleToGoalOffsetMap.put(2.3, -2.3);
         angleToGoalOffsetMap.put(2.6, -0.58);
         angleToGoalOffsetMap.put(Math.PI,0.0);
         angleToGoalOffsetMap.put(3.2,0.05);

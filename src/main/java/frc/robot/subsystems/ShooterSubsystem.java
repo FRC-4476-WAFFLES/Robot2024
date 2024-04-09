@@ -44,6 +44,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   private final double IR_RANGE = 1.9;
   private boolean tryingToShoot = false;
+  public boolean tryingToStash = false;
 
   private final CurrentLimitsConfigs currentLimitsConfig;
 
@@ -204,7 +205,7 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public boolean isFullyInNote() {
-    return shooterIR2.getVoltage() > 2.45;  ///DEPLOY DURING ONCMP LNCH DAY 2
+    return shooterIR2.getVoltage() > 2.41;  ///DEPLOY DURING ONCMP LNCH DAY 2
   }
 
   public boolean isTryingToShoot(){
@@ -214,4 +215,13 @@ public class ShooterSubsystem extends SubsystemBase {
   public void setTryingToShoot(boolean tryingToShoot){
     this.tryingToShoot = tryingToShoot;
   }
+
+  public void setTryingToStash(boolean tryingToStash){
+    this.tryingToStash = tryingToStash;
+  }
+
+  public boolean getTryingToStash(){
+    return tryingToStash;
+  }
+    
 }
