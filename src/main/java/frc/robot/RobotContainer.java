@@ -104,7 +104,11 @@ public class RobotContainer {
   private final EnableTargetGoal enableTargetGoal = new EnableTargetGoal();
   private final DisableTargetGoal disableTargetGoal = new DisableTargetGoal();
   private final FireNoteForced fireNoteForced = new FireNoteForced();
+
+
   
+  private final AllignWithNote allignWithNoteRed = new AllignWithNote(() -> leftJoystick.getY() * DriveConstants.maxSpeed, () -> leftJoystick.getX() * DriveConstants.maxSpeed, null);
+  private final AllignWithNote allignWithNoteBlue = new AllignWithNote(() -> -leftJoystick.getY() * DriveConstants.maxSpeed, () -> -leftJoystick.getX() * DriveConstants.maxSpeed, null);
  
 
   private final DriveAndPointAtTarget driveAndAimAtGoal = new DriveAndPointAtTarget(() -> leftJoystick.getY() * DriveConstants.maxSpeed, () -> leftJoystick.getX() * DriveConstants.maxSpeed, driveSubsystem::getAngleToGoal);
@@ -182,7 +186,8 @@ public class RobotContainer {
     operatorController.a().whileTrue(superstructureClimb);
     operatorController.rightStick().whileTrue(elevatorHigh);
     rightJoystick.button(1).whileTrue(driveAndAimAtGoal.alongWith(spinUp));
-    rightJoystick.button(2).whileTrue(driveAndAimAtStash.alongWith(spinUpStash));
+    rightJoystick.button(2).whileTrue(driveAndAimAtStash.alongWith(spinUpStash)); 
+    
     rightJoystick.button(4).whileTrue(driveAndAimWhileAtPodium.alongWith(superstructurePodium));
     // operatorController.rightTrigger().whileTrue(elevatorUp);
     // operatorController.leftTrigger().whileTrue(elevatorDown);
@@ -249,9 +254,11 @@ public class RobotContainer {
     
       if (alliance.get() == DriverStation.Alliance.Blue){
         driveSubsystem.setDefaultCommand(containerRobot.driveTeleopBlue);
+        containerRobot.rightJoystick.button(3).whileTrue(containerRobot.allignWithNoteBlue);
       }
       else if (alliance.get() == DriverStation.Alliance.Red){
         driveSubsystem.setDefaultCommand(containerRobot.driveTeleopRed);
+        containerRobot.rightJoystick.button(3).whileTrue(containerRobot.allignWithNoteRed);
       }
       gotAlliance = true;
 

@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.LightSubsystem.LightColours;
+import frc.robot.utils.LimelightHelpers;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 
@@ -53,6 +54,10 @@ public class ActivateLightColour extends Command {
       // Endgame warning
       lightSubsystem.blinkBetweenColours(LightColours.RED, LightColours.WHITE);
     }
+    else if (LimelightHelpers.getTV("limelight") && LimelightHelpers.getTA("limelight") > 1.0){
+      lightSubsystem.setLightColour(LightColours.ORANGE);
+      LimelightHelpers.setLEDMode_ForceBlink("limelight");
+    }
     
     // else if(intakeSubsystem.isNoteCurrentDetection()){
     //   // Note in Intake
@@ -63,6 +68,7 @@ public class ActivateLightColour extends Command {
       lightSubsystem.setLightColour(LightColours.WHITE);
     }
     else {
+      LimelightHelpers.setLEDMode_ForceOff("limelight");
       var alliance = DriverStation.getAlliance();
       if (alliance.get() == DriverStation.Alliance.Blue) {
           lightSubsystem.setLightColour(LightColours.BLUE);
