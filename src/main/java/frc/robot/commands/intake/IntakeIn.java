@@ -4,12 +4,15 @@
 
 package frc.robot.commands.intake;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
 //import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.Command;
-
+import frc.robot.utils.LimelightHelpers;
 
 import static frc.robot.RobotContainer.*;
 public class IntakeIn extends Command {
+  Timer timer = new Timer();
   /** Creates a new IntakeMove. */
   public IntakeIn() {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -81,11 +84,36 @@ public class IntakeIn extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (shooterSubsystem.isFullyInNote() || shooterSubsystem.isNote()){
+    if(DriverStation.isAutonomous()){
+      if (shooterSubsystem.isFullyInNote() ||
+       shooterSubsystem.isNote()){
+        return true;
+      }
+      else if(!LimelightHelpers.getTV("limelight")){
+        timer.start();
+        if (timer.get() > 1){
+          return true;
+        }
+        else{
+          return false;
+        }
+      }
+      else if(LimelightHelpers.getTV("limelight")){
+        timer.reset();
+        return false;
+      }
+      else{
+        return false;
+      }
+    }
+    else{
+      if (shooterSubsystem.isFullyInNote() || shooterSubsystem.isNote()){
       return true;
     }
     else{
       return false;
     }
+    }
+    
   }
 }

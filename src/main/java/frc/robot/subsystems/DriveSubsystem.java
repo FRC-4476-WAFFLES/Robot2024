@@ -370,7 +370,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
     }
     public void periodic() {
         SmartDashboard.putNumber("Robot Angle", getRobotPose().getRotation().getRadians());
-        if(odometryIsValid() && Math.abs(getCurrentRobotChassisSpeeds().vxMetersPerSecond) < 0.6){
+        if(odometryIsValid()){
         //     var visionEstimationLeft = visionLeft.getEstimatedGlobalPose();
         //     visionEstimationLeft.ifPresent(estLeft -> {
         //     var estPoseLeft = estLeft.estimatedPose.toPose2d();

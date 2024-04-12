@@ -48,16 +48,40 @@ public class AllignWithNote extends Command {
   @Override
   public void execute() {
 
-    double translationFieldOrientedAngle = Math.atan2(yVelocitySupplier.getAsDouble(), xVelocitySupplier.getAsDouble());
-    Rotation2d angleDifference = driveSubsystem.getRobotPose().getRotation().minus(new Rotation2d(translationFieldOrientedAngle));
-    double dotProduct = angleDifference.getCos() * Math.hypot(yVelocitySupplier.getAsDouble(), xVelocitySupplier.getAsDouble());
-  
-    request = new SwerveRequest.RobotCentric()
+    
+    if(yVelocitySupplier == null){
+      if(LimelightHelpers.getTV("limelight")){
+        request = new SwerveRequest.RobotCentric()
+      .withDeadband(DriveConstants.maxSpeed * 0.03) // Add a 3% deadband to translation
+      .withDriveRequestType(DriveRequestType.Velocity)
+      .withSteerRequestType(SteerRequestType.MotionMagic)
+      .withVelocityX(3.0)
+      .withVelocityY(-0.05 * LimelightHelpers.getTX("limelight"));
+      }
+      else{
+        request = new SwerveRequest.RobotCentric()
+      .withDeadband(DriveConstants.maxSpeed * 0.03) // Add a 3% deadband to translation
+      .withDriveRequestType(DriveRequestType.Velocity)
+      .withSteerRequestType(SteerRequestType.MotionMagic)
+      .withVelocityX(0)
+      .withVelocityY(0);
+      }
+      
+    
+    }
+    else{
+
+      double translationFieldOrientedAngle = Math.atan2(yVelocitySupplier.getAsDouble(), xVelocitySupplier.getAsDouble());
+      Rotation2d angleDifference = driveSubsystem.getRobotPose().getRotation().minus(new Rotation2d(translationFieldOrientedAngle));
+      double dotProduct = angleDifference.getCos() * Math.hypot(yVelocitySupplier.getAsDouble(), xVelocitySupplier.getAsDouble());
+      request = new SwerveRequest.RobotCentric()
       .withDeadband(DriveConstants.maxSpeed * 0.03) // Add a 3% deadband to translation
       .withDriveRequestType(DriveRequestType.Velocity)
       .withSteerRequestType(SteerRequestType.MotionMagic)
       .withVelocityX(dotProduct)
       .withVelocityY(-0.05 * LimelightHelpers.getTX("limelight"));
+    }
+    
     
     driveSubsystem.setControl(request);
 
@@ -72,6 +96,18 @@ public class AllignWithNote extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return !seesNoteInitially;
+    if(DriverStation.getAlliance().get() == Alliance.Red &&
+    driveSubsystem.getRobotPose().getX() < 8.2){
+      return true;
+    }
+    else if(DriverStation.getAlliance().get() == Alliance.Blue &&
+    driveSubsystem.getRobotPose().getX() > 8.5){
+      return true;
+    }
+    else{
+      return !seesNoteInitially;
+    }
+    
+    
   }
 }

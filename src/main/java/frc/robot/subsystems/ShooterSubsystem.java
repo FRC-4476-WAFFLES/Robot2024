@@ -205,7 +205,7 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public boolean isFullyInNote() {
-    return shooterIR2.getVoltage() > 2.41;  ///DEPLOY DURING ONCMP LNCH DAY 2
+    return shooterIR2.getVoltage() > 2.30;  ///DEPLOY DURING ONCMP LNCH DAY 2
   }
 
   public boolean isTryingToShoot(){

@@ -55,7 +55,8 @@ public class ActivateLightColour extends Command {
       lightSubsystem.blinkBetweenColours(LightColours.RED, LightColours.WHITE);
     }
     else if (LimelightHelpers.getTV("limelight") && LimelightHelpers.getTA("limelight") > 1.0){
-      lightSubsystem.setLightColour(LightColours.ORANGE);
+      lightSubsystem.setBlinkTime(0.08);
+      lightSubsystem.blinkBetweenColours(LightColours.ORANGE, LightColours.BLUE);
       LimelightHelpers.setLEDMode_ForceBlink("limelight");
     }
     
@@ -69,6 +70,7 @@ public class ActivateLightColour extends Command {
     }
     else {
       LimelightHelpers.setLEDMode_ForceOff("limelight");
+      lightSubsystem.setBlinkTime(0.1);
       var alliance = DriverStation.getAlliance();
       if (alliance.get() == DriverStation.Alliance.Blue) {
           lightSubsystem.setLightColour(LightColours.BLUE);

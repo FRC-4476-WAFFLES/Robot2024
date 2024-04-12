@@ -109,7 +109,7 @@ public class RobotContainer {
   
   private final AllignWithNote allignWithNoteRed = new AllignWithNote(() -> leftJoystick.getY() * DriveConstants.maxSpeed, () -> leftJoystick.getX() * DriveConstants.maxSpeed, null);
   private final AllignWithNote allignWithNoteBlue = new AllignWithNote(() -> -leftJoystick.getY() * DriveConstants.maxSpeed, () -> -leftJoystick.getX() * DriveConstants.maxSpeed, null);
- 
+  private final AllignWithNote allignWithNoteAuto = new AllignWithNote(null,null, null);
 
   private final DriveAndPointAtTarget driveAndAimAtGoal = new DriveAndPointAtTarget(() -> leftJoystick.getY() * DriveConstants.maxSpeed, () -> leftJoystick.getX() * DriveConstants.maxSpeed, driveSubsystem::getAngleToGoal);
   private final DriveAndPointAtTarget driveAndAimAtGoalAuto = new DriveAndPointAtTarget(() -> 0, () -> 0, driveSubsystem::getAngleToGoal);
@@ -231,6 +231,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("enableTargetGoal", enableTargetGoal);
     NamedCommands.registerCommand("disableTargetGoal", disableTargetGoal);
     NamedCommands.registerCommand("fireNoteForced", fireNoteForced);
+    NamedCommands.registerCommand("alignWithNote", allignWithNoteAuto);
   
 
   }
