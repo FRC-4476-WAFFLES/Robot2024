@@ -23,8 +23,8 @@ public class SpinUpStash extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    double upperRandomYAdjustment = 0.2;
-    double lowerRandomYAdjustment = -0.2;
+    double upperRandomYAdjustment = 0.1;
+    double lowerRandomYAdjustment = -0.1;
     double randomYAdjustment = (Math.random() * (upperRandomYAdjustment - lowerRandomYAdjustment) + lowerRandomYAdjustment);
     driveSubsystem.randomYStashAdjustment = randomYAdjustment;
   }
@@ -43,7 +43,7 @@ public class SpinUpStash extends Command {
     double angleToLeftStagePole = -0.3;
     double angleToRightStagePole = -0.85;
     double minDistanceFromStage = 7.9;
-    double maxDistanceFromStage = 11.0;
+    double maxDistanceFromStage = 10.75;
 
     if(DriverStation.getAlliance().get() == DriverStation.Alliance.Red){
       angleToLeftStagePole = 3.8;
@@ -107,9 +107,9 @@ public class SpinUpStash extends Command {
     shooterSpeedMap.put(2.54, 50.0);
     shooterSpeedMap.put(3.0988, 47.0);
     shooterSpeedMap.put(3.556, 52.0);
-    shooterSpeedMap.put(6.0, 57.0);
-    shooterSpeedMap.put(9.0, 67.0);
-    shooterSpeedMap.put(12.0,73.0);
+    shooterSpeedMap.put(6.0, 60.0);
+    shooterSpeedMap.put(9.0, 72.0);
+    shooterSpeedMap.put(12.0,76.0);
    
 
     return shooterSpeedMap.get(distance);
@@ -122,9 +122,9 @@ public class SpinUpStash extends Command {
     final InterpolatingDoubleTreeMap shooterAngleMap = new InterpolatingDoubleTreeMap();
 
     shooterAngleMap.put(6.3,63.0);
-    shooterAngleMap.put(9.0, 57.0);
-    shooterAngleMap.put(9.2, 52.0);
-    shooterAngleMap.put(9.6, 49.0);
+    shooterAngleMap.put(9.0, 59.0);
+    shooterAngleMap.put(9.2, 53.0);
+    shooterAngleMap.put(9.6, 51.0);
 
     return shooterAngleMap.get(distance);
 
