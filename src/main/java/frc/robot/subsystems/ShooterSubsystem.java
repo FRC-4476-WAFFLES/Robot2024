@@ -35,7 +35,7 @@ public class ShooterSubsystem extends SubsystemBase {
   // Configs
   
   private double shooterTargetSpeed = 0;
-  private double shooterPercentDifferent = 30;
+  private double shooterPercentDifferent = 20;
   
   
   // Constants

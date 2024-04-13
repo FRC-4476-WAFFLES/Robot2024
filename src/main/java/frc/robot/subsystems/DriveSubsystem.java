@@ -125,7 +125,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
     public boolean notMoving() {
         return Math.abs(getCurrentRobotChassisSpeeds().vxMetersPerSecond) < 0.1
                 && Math.abs(getCurrentRobotChassisSpeeds().vyMetersPerSecond) < 0.1
-                && Math.abs(getCurrentRobotChassisSpeeds().omegaRadiansPerSecond) < 0.1;
+                && Math.abs(getCurrentRobotChassisSpeeds().omegaRadiansPerSecond) < 0.4;
     }
     
     public boolean slowMoving() {
