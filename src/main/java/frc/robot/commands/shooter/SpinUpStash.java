@@ -80,7 +80,12 @@ public class SpinUpStash extends Command {
     }
 
     if(!shooterSubsystem.isFullyInNote()){
-      shooterSubsystem.setShooterTargetSpeed(speed);
+      if(isCloseToStage){
+        shooterSubsystem.setShooterTargetSpeed(speed+5);
+      }
+      else{
+        shooterSubsystem.setShooterTargetSpeed(speed);
+      }
     }
   }
 
@@ -108,7 +113,7 @@ public class SpinUpStash extends Command {
     shooterSpeedMap.put(3.0988, 47.0);
     shooterSpeedMap.put(3.556, 52.0);
     shooterSpeedMap.put(6.0, 60.0);
-    shooterSpeedMap.put(9.0, 6.8);
+    shooterSpeedMap.put(9.0, 65.8);
     shooterSpeedMap.put(12.0,76.0);
    
 
