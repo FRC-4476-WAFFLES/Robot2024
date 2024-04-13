@@ -43,7 +43,7 @@ public class SpinUpStash extends Command {
     double angleToLeftStagePole = -0.3;
     double angleToRightStagePole = -0.85;
     double minDistanceFromStage = 7.9;
-    double maxDistanceFromStage = 10.75;
+    double maxDistanceFromStage = 11.0;
 
     if(DriverStation.getAlliance().get() == DriverStation.Alliance.Red){
       angleToLeftStagePole = 3.8;
@@ -80,7 +80,12 @@ public class SpinUpStash extends Command {
     }
 
     if(!shooterSubsystem.isFullyInNote()){
-      shooterSubsystem.setShooterTargetSpeed(speed);
+      if(isCloseToStage){
+        shooterSubsystem.setShooterTargetSpeed(speed+5);
+      }
+      else{
+        shooterSubsystem.setShooterTargetSpeed(speed);
+      }
     }
   }
 
@@ -108,7 +113,7 @@ public class SpinUpStash extends Command {
     shooterSpeedMap.put(3.0988, 47.0);
     shooterSpeedMap.put(3.556, 52.0);
     shooterSpeedMap.put(6.0, 60.0);
-    shooterSpeedMap.put(9.0, 72.0);
+    shooterSpeedMap.put(9.0, 6.8);
     shooterSpeedMap.put(12.0,76.0);
    
 
