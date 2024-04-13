@@ -97,11 +97,13 @@ public class AllignWithNote extends Command {
   @Override
   public boolean isFinished() {
     if(DriverStation.getAlliance().get() == Alliance.Red &&
-    driveSubsystem.getRobotPose().getX() < 8.2){
+    driveSubsystem.getRobotPose().getX() < 8.2 &&
+    DriverStation.isAutonomous()){
       return true;
     }
     else if(DriverStation.getAlliance().get() == Alliance.Blue &&
-    driveSubsystem.getRobotPose().getX() > 8.5){
+    driveSubsystem.getRobotPose().getX() > 8.5 && 
+    DriverStation.isAutonomous()){
       return true;
     }
     else{

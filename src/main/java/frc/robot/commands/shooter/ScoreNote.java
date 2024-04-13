@@ -39,6 +39,7 @@ public class ScoreNote extends Command {
     }
     else if(shooterSubsystem.getTryingToStash() && shooterSubsystem.isGoodSpeed() && anglerSubsystem.isGoodShooterAngle() && elevatorSubsystem.isGoodElevatorPosition() && 
       shooterSubsystem.isShooterRunning()){
+        feederSubsystem.setFeederTargetSpeed(100);
 
     }
     else{

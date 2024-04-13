@@ -32,7 +32,7 @@ public class SpinUpStash extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //shooterSubsystem.setTryingToStash(true);
+    shooterSubsystem.setTryingToStash(true);
     double distance = driveSubsystem.getDistanceToStash();
     double angleToStash = driveSubsystem.getAngleToStash().getRadians();
     double speed = calculateSpeedOffDistanceShoot(distance);
@@ -43,7 +43,7 @@ public class SpinUpStash extends Command {
     double angleToLeftStagePole = -0.3;
     double angleToRightStagePole = -0.85;
     double minDistanceFromStage = 7.9;
-    double maxDistanceFromStage = 11.25;
+    double maxDistanceFromStage = 11.0;
 
     if(DriverStation.getAlliance().get() == DriverStation.Alliance.Red){
       angleToLeftStagePole = 3.8;
@@ -88,7 +88,7 @@ public class SpinUpStash extends Command {
   @Override
   public void end(boolean interrupted) {
     shooterSubsystem.setShooterTargetSpeed(0);
-    //
+    shooterSubsystem.setTryingToStash(false);
   }
 
   // Returns true when the command should end.
