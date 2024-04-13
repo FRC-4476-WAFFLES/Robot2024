@@ -80,12 +80,7 @@ public class SpinUpStash extends Command {
     }
 
     if(!shooterSubsystem.isFullyInNote()){
-      if(isCloseToStage){
-        shooterSubsystem.setShooterTargetSpeed(speed+5);
-      }
-      else{
-        shooterSubsystem.setShooterTargetSpeed(speed);
-      }
+      shooterSubsystem.setShooterTargetSpeed(speed);
     }
   }
 

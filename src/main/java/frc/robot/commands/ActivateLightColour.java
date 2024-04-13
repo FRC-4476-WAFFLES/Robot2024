@@ -31,6 +31,7 @@ public class ActivateLightColour extends Command {
     // CANdleLights.setColors();
 
     final double matchTimer = Timer.getMatchTime();
+    LimelightHelpers.setLEDMode_ForceOff("limelight");
     
     // If certain conditions are fufilled, the robot's lights change colours
     if(shooterSubsystem.isGoodSpeed() && anglerSubsystem.isGoodShooterAngle() && 
@@ -69,7 +70,7 @@ public class ActivateLightColour extends Command {
       lightSubsystem.setLightColour(LightColours.WHITE);
     }
     else {
-      LimelightHelpers.setLEDMode_ForceOff("limelight");
+      
       lightSubsystem.setBlinkTime(0.1);
       var alliance = DriverStation.getAlliance();
       if (alliance.get() == DriverStation.Alliance.Blue) {
