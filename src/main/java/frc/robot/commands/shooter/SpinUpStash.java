@@ -105,11 +105,11 @@ public class SpinUpStash extends Command {
     shooterSpeedMap.put(0.9, 50.0);
     shooterSpeedMap.put(1.8542, 50.0);
     shooterSpeedMap.put(2.54, 50.0);
-    shooterSpeedMap.put(3.0988, 45.0);
-    shooterSpeedMap.put(3.556, 50.0);
-    shooterSpeedMap.put(6.0, 55.0);
-    shooterSpeedMap.put(9.0, 65.0);
-    shooterSpeedMap.put(12.0,71.0);
+    shooterSpeedMap.put(3.0988, 47.0);
+    shooterSpeedMap.put(3.556, 52.0);
+    shooterSpeedMap.put(6.0, 57.0);
+    shooterSpeedMap.put(9.0, 67.0);
+    shooterSpeedMap.put(12.0,73.0);
    
 
     return shooterSpeedMap.get(distance);
@@ -121,10 +121,10 @@ public class SpinUpStash extends Command {
 
     final InterpolatingDoubleTreeMap shooterAngleMap = new InterpolatingDoubleTreeMap();
 
-    shooterAngleMap.put(6.3,61.0);
-    shooterAngleMap.put(9.0, 55.0);
-    shooterAngleMap.put(9.2, 51.0);
-    shooterAngleMap.put(9.6, 47.0);
+    shooterAngleMap.put(6.3,63.0);
+    shooterAngleMap.put(9.0, 57.0);
+    shooterAngleMap.put(9.2, 52.0);
+    shooterAngleMap.put(9.6, 49.0);
 
     return shooterAngleMap.get(distance);
 

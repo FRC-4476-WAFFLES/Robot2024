@@ -107,7 +107,7 @@ public class AllignWithNote extends Command {
       return true;
     }
     else{
-      return !seesNoteInitially;
+      return false;
     }
     
     
