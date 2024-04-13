@@ -79,8 +79,8 @@ public class SpinUp extends Command {
     shooterSpeedMap.put(3.0988, 75.0);
     shooterSpeedMap.put(3.556, 77.0);
     shooterSpeedMap.put(4.0, 80.0);
-    shooterSpeedMap.put(6.0, 90.0);
-    shooterSpeedMap.put(9.0, 95.0);
+    shooterSpeedMap.put(6.0, 85.0);
+    shooterSpeedMap.put(9.0, 92.0);
    
 
     return shooterSpeedMap.get(distance);
