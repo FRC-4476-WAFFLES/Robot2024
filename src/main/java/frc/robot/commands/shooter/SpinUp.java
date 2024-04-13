@@ -103,8 +103,8 @@ public class SpinUp extends Command {
     shooterAngleMap.put(3.556, 43.2 + generalAnglerAdjustment + 0.5);
     shooterAngleMap.put(3.8813, 40.5 + generalAnglerAdjustment + 0.25);
     shooterAngleMap.put(4.1, 39.25 + generalAnglerAdjustment - 0.5);
-    shooterAngleMap.put(4.3688, 38.4 + generalAnglerAdjustment);
-    shooterAngleMap.put(4.5626, 36.3 + generalAnglerAdjustment);
+    shooterAngleMap.put(4.3688, 37.4 + generalAnglerAdjustment);
+    shooterAngleMap.put(4.5626, 35.3 + generalAnglerAdjustment);
     shooterAngleMap.put(5.8711, 31.35 + generalAnglerAdjustment+0.25);
     shooterAngleMap.put(6.0, 30.55 + generalAnglerAdjustment); //approx alliance line
     shooterAngleMap.put(6.5, 30.03 + generalAnglerAdjustment - 1);
