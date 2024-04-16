@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.3041949160821418,
-        "y": 8.208803775228532
+        "x": 2.1505992102893297,
+        "y": 8.050707737779112
       },
       "isLocked": false,
       "linkedName": "Start Anti"
@@ -50,7 +50,7 @@
   },
   "goalEndState": {
     "velocity": 0.0,
-    "rotation": 15.474918151805527,
+    "rotation": 10.975112049942696,
     "rotateFast": true
   },
   "reversed": false,

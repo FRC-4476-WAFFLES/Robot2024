@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.407706324685116,
-      "y": 7.272429494930317
+      "x": 1.4225982298118458,
+      "y": 7.321271565620054
     },
     "rotation": 0
   },
@@ -18,22 +18,16 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Fast Amp Preload"
+                  "pathName": "Anti 2056-1"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "spinUpReal"
+                  "name": "superstructureYeet"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "completeShot"
           }
         },
         {
@@ -41,9 +35,9 @@
           "data": {
             "commands": [
               {
-                "type": "path",
+                "type": "named",
                 "data": {
-                  "pathName": "Amp Preload to Left 1 Center"
+                  "name": "alignWithNote"
                 }
               },
               {
@@ -53,12 +47,6 @@
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "intakeInDeadline"
           }
         },
         {
