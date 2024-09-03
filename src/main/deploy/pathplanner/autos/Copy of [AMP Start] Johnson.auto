@@ -18,51 +18,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Anti 2056-1"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "superstructureYeet"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "deadline",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Left Middle to Shoot"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "spinUpReal"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "completeShot"
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Shoot to Left Center 2"
+                  "pathName": "2nd mid Speed"
                 }
               },
               {
@@ -72,12 +28,6 @@
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "intakeInDeadline"
           }
         },
         {
@@ -131,19 +81,13 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "enableTargetGoal"
-          }
-        },
-        {
           "type": "deadline",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Center Midline to Score"
+                  "pathName": "Left Center 2 to Shoot"
                 }
               },
               {
@@ -153,6 +97,43 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "completeShot"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Preload Pickup"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "intakeIn"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "intakeInDeadline"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "enableTargetGoal"
           }
         },
         {

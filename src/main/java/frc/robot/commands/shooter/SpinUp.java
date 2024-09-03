@@ -73,13 +73,13 @@ public class SpinUp extends Command {
     
     final InterpolatingDoubleTreeMap shooterSpeedMap = new InterpolatingDoubleTreeMap();
    
-    shooterSpeedMap.put(0.9, 57.0);
-    shooterSpeedMap.put(1.8542, 69.0);
-    shooterSpeedMap.put(2.54, 69.0);
-    shooterSpeedMap.put(3.0988, 75.0);
-    shooterSpeedMap.put(3.556, 77.0);
+    shooterSpeedMap.put(0.9, 56.0);
+    shooterSpeedMap.put(1.8542, 68.0);
+    shooterSpeedMap.put(2.54, 68.0);
+    shooterSpeedMap.put(3.0988, 74.0);
+    shooterSpeedMap.put(3.556, 76.0);
     shooterSpeedMap.put(4.0, 80.0);
-    shooterSpeedMap.put(6.0, 85.0);
+    shooterSpeedMap.put(6.0, 84.0);
     shooterSpeedMap.put(9.0, 92.0);
    
 
@@ -102,13 +102,13 @@ public class SpinUp extends Command {
     shooterAngleMap.put(3.0988, 46.55 + generalAnglerAdjustment + 0.5);
     shooterAngleMap.put(3.556, 43.2 + generalAnglerAdjustment + 0.5);
     shooterAngleMap.put(3.8813, 40.5 + generalAnglerAdjustment + 0.25);
-    shooterAngleMap.put(4.1, 39.25 + generalAnglerAdjustment - 0.5);
-    shooterAngleMap.put(4.3688, 37.4 + generalAnglerAdjustment);
-    shooterAngleMap.put(4.5626, 35.3 + generalAnglerAdjustment);
-    shooterAngleMap.put(5.8711, 31.35 + generalAnglerAdjustment+0.25);
-    shooterAngleMap.put(6.0, 30.55 + generalAnglerAdjustment); //approx alliance line
-    shooterAngleMap.put(6.5, 30.03 + generalAnglerAdjustment - 1);
-    shooterAngleMap.put(7.9, 28.25 + generalAnglerAdjustment - 2);
+    shooterAngleMap.put(4.1, 39.15 + generalAnglerAdjustment - 0.5);
+    shooterAngleMap.put(4.3688, 37.0 + generalAnglerAdjustment);
+    shooterAngleMap.put(4.5626, 35.0 + generalAnglerAdjustment);
+    shooterAngleMap.put(5.8711, 31.0 + generalAnglerAdjustment+0.25);
+    shooterAngleMap.put(6.0, 30.45 + generalAnglerAdjustment); //approx alliance line
+    shooterAngleMap.put(6.5, 29.9 + generalAnglerAdjustment - 1);
+    shooterAngleMap.put(7.9, 28.15 + generalAnglerAdjustment - 2);
     shooterAngleMap.put(8.3, 28.0 + generalAnglerAdjustment - 2);
     shooterAngleMap.put(8.7, 28.0 + generalAnglerAdjustment - 2);
     double predictedAngle = shooterAngleMap.get(distance);

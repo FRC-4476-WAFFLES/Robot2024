@@ -61,7 +61,7 @@ public class IntakeIn extends Command {
     if(shooterSubsystem.isNote()){
       feederSubsystem.setFeederTargetSpeed(1);
     }
-    else{
+    else if(shooterSubsystem.isSlowedDown()){
       feederSubsystem.setFeederTargetSpeed(100);
     }
     
@@ -89,19 +89,19 @@ public class IntakeIn extends Command {
        shooterSubsystem.isNote()){
         return true;
       }
-      else if(!LimelightHelpers.getTV("limelight")){
-        timer.start();
-        if (timer.get() > 1){
-          return true;
-        }
-        else{
-          return false;
-        }
-      }
-      else if(LimelightHelpers.getTV("limelight")){
-        timer.reset();
-        return false;
-      }
+      // else if(!LimelightHelpers.getTV("limelight")){
+      //   timer.start();
+      //   if (timer.get() > 1){
+      //     return true;
+      //   }
+      //   else{
+      //     return false;
+      //   }
+      // }
+      // else if(LimelightHelpers.getTV("limelight")){
+      //   timer.reset();
+      //   return false;
+      // }
       else{
         return false;
       }

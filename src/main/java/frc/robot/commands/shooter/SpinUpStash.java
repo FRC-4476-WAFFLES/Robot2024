@@ -110,11 +110,11 @@ public class SpinUpStash extends Command {
     shooterSpeedMap.put(0.9, 50.0);
     shooterSpeedMap.put(1.8542, 50.0);
     shooterSpeedMap.put(2.54, 50.0);
-    shooterSpeedMap.put(3.0988, 47.0);
-    shooterSpeedMap.put(3.556, 52.0);
-    shooterSpeedMap.put(6.0, 60.0);
-    shooterSpeedMap.put(9.0, 65.8);
-    shooterSpeedMap.put(12.0,76.0);
+    shooterSpeedMap.put(3.0988, 50.0);
+    shooterSpeedMap.put(3.556, 50.0);
+    shooterSpeedMap.put(6.0, 55.0);
+    shooterSpeedMap.put(9.0, 60.8);
+    shooterSpeedMap.put(12.0,70.0);
    
 
     return shooterSpeedMap.get(distance);

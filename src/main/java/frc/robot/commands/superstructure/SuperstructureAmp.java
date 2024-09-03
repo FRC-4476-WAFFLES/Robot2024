@@ -26,10 +26,10 @@ public class SuperstructureAmp extends Command {
   public void execute() {
     elevatorSubsystem.isClimbing = false;
     intakeSubsystem.SetIntakeSpeed(0);
-    elevatorSubsystem.setElevatorTargetPosition(40);
-    shooterSubsystem.setShooterTargetSpeed(16);
+    elevatorSubsystem.setElevatorTargetPosition(41);
+    shooterSubsystem.setShooterTargetSpeed(17);
     
-    anglerSubsystem.setAnglerTargetPosition(-32);
+    anglerSubsystem.setAnglerTargetPosition(-37.5);
 
      if(feederSubsystem.isFeederRunning()){
       // Reseed the robots position if scoring in amp

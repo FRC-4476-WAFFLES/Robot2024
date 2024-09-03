@@ -92,7 +92,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
                                                                              // robot
                 new HolonomicPathFollowerConfig(
                         new PIDConstants(4.7, 0, 0.1),
-                        new PIDConstants(6.2, 0, 0.1),
+                        new PIDConstants(6.1, 0, 0.1),
                         TunerConstants.kSpeedAt12VoltsMps,
                         driveBaseRadius,
                         new ReplanningConfig()),
@@ -326,12 +326,12 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
 
     public Rotation2d angleToGoalOffsetCalculation(double inputtedAngle){
         final InterpolatingDoubleTreeMap angleToGoalOffsetMap = new InterpolatingDoubleTreeMap();
-        angleToGoalOffsetMap.put(2.3, -2.3);
+        angleToGoalOffsetMap.put(2.3, -2.0);
         angleToGoalOffsetMap.put(2.6, -0.58);
         angleToGoalOffsetMap.put(Math.PI,0.0);
         angleToGoalOffsetMap.put(3.2,0.05);
-        angleToGoalOffsetMap.put(3.6,0.57);
-        angleToGoalOffsetMap.put(4.0, 1.1);
+        angleToGoalOffsetMap.put(3.6,0.45);
+        angleToGoalOffsetMap.put(4.0, 0.9);
         
         if (DriverStation.getAlliance().get() == Alliance.Blue) {
             inputtedAngle += Math.PI;

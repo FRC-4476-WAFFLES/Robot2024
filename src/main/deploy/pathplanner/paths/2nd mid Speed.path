@@ -3,50 +3,56 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.092651569918525,
-        "y": 2.387800160215706
+        "x": 1.4225982298118458,
+        "y": 7.321271565620054
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.592876262675603,
-        "y": 3.808639924972158
+        "x": 1.454549670868242,
+        "y": 8.115609726226584
       },
       "isLocked": false,
-      "linkedName": "Right 2 Center"
+      "linkedName": "Start Anti"
     },
     {
       "anchor": {
-        "x": 4.6096207577030555,
-        "y": 4.647330063890897
+        "x": 8.151853226783379,
+        "y": 5.782028487133897
       },
       "prevControl": {
-        "x": 6.296867978351342,
-        "y": 3.5126316406478972
+        "x": 6.671811805162074,
+        "y": 7.913288134268576
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "under Stage Shoot"
+      "linkedName": "Amp Center 2"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 5.0,
-    "maxAcceleration": 4.65,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 9000.0,
     "maxAngularAcceleration": 1000.0
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": -13.841914408154908,
+    "velocity": 0.0,
+    "rotation": -28.300755766006432,
     "rotateFast": false
   },
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": 19.885165113855404,
+    "rotation": 0,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

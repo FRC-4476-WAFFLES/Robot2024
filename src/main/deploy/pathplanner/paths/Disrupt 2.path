@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.092651569918525,
-        "y": 2.387800160215706
+        "x": 8.246834867421518,
+        "y": 7.436381206571257
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.592876262675603,
-        "y": 3.808639924972158
+        "x": 8.645003309978087,
+        "y": 6.640044321458115
       },
       "isLocked": false,
-      "linkedName": "Right 2 Center"
+      "linkedName": "Anti 2056 Link 1"
     },
     {
       "anchor": {
-        "x": 4.6096207577030555,
-        "y": 4.647330063890897
+        "x": 8.246834867421518,
+        "y": 5.855418272890754
       },
       "prevControl": {
-        "x": 6.296867978351342,
-        "y": 3.5126316406478972
+        "x": 8.223413194329954,
+        "y": 6.405827590542485
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "under Stage Shoot"
+      "linkedName": "Champs Link"
     }
   ],
   "rotationTargets": [],
@@ -39,13 +39,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -13.841914408154908,
-    "rotateFast": false
+    "rotation": -82.87498365109832,
+    "rotateFast": true
   },
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": 19.885165113855404,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": true

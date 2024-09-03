@@ -40,9 +40,9 @@ public class ShooterSubsystem extends SubsystemBase {
   
   // Constants
   
-  private final double SHOOTER_DEAD_ZONE = 1.75;
+  private final double SHOOTER_DEAD_ZONE = 4;
 
-  private final double IR_RANGE = 1.9;
+  private final double IR_RANGE = 2.2;
   private boolean tryingToShoot = false;
   public boolean tryingToStash = false;
 
@@ -224,4 +224,7 @@ public class ShooterSubsystem extends SubsystemBase {
     return tryingToStash;
   }
     
+  public boolean isSlowedDown(){
+    return Math.abs(shooter1.getVelocity().getValueAsDouble()) < 1;
+  }
 }
