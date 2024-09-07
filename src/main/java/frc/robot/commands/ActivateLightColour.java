@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.LightSubsystem.LedRange;
 import frc.robot.subsystems.LightSubsystem.LightColours;
 import frc.robot.utils.LimelightHelpers;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -46,7 +47,8 @@ public class ActivateLightColour extends Command {
     }
     else if (intakeSubsystem.isRunningIn() && anglerSubsystem.isGoodShooterAngle() && elevatorSubsystem.isGoodElevatorPosition()){
       // Intake running
-      lightSubsystem.blinkBetweenColours(LightColours.YELLOW, LightColours.BLACK);
+      lightSubsystem.setLEDRangeGroup(LedRange.RIGHT_SIDE_FULL, LightColours.YELLOW);
+      lightSubsystem.setLEDRangeGroup(LedRange.LEFT_SIDE_FULL, LightColours.YELLOW);
     }
     else if (intakeSubsystem.isRunningOut()){
       lightSubsystem.blinkBetweenColours(LightColours.RED, LightColours.BLACK);
@@ -74,10 +76,10 @@ public class ActivateLightColour extends Command {
       lightSubsystem.setBlinkTime(0.1);
       var alliance = DriverStation.getAlliance();
       if (alliance.get() == DriverStation.Alliance.Blue) {
-          lightSubsystem.setLightColour(LightColours.BLUE);
+          lightSubsystem.setAllLEDs(LightColours.BLUE);
       }
       else {
-          lightSubsystem.setLightColour(LightColours.RED);
+          lightSubsystem.setAllLEDs(LightColours.RED);
       }
 
     }
