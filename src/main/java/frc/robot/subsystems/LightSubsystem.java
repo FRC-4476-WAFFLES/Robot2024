@@ -162,8 +162,11 @@ public class LightSubsystem extends SubsystemBase {
     candle.setLEDs(colour.red, colour.green, colour.blue, 0, start, end-start);
   }
 
-  public void setLEDRangeGroup(LedRange range, LightColours colour) {
+  public void setLEDRangeGroup(LedRange range, LightColours colour, LightColours blinkColour, boolean canBlink) {
     ledRangeColours.put(range, colour);
+    if(canBlink){
+      blinkBetweenColours(colour, blinkColour);
+    }
   }
 
   public void setAllLEDs(LightColours colour) {
