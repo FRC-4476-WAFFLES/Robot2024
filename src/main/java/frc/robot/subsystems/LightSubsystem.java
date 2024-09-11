@@ -31,11 +31,8 @@ public class LightSubsystem extends SubsystemBase {
   private static final int LED_COUNT = 64;
 
   private static final Timer blinkTimer = new Timer();
-  private int[] colour1 = {255, 255, 255};
-  private int[] colour2 = {255, 255, 255};
   private boolean isBlinkColour = true;
   
-  private Animation m_currentAnimation;
   private double blinkRate = 0.1;
 
   private Map<LedRange, LightColours> ledRangeColours = new EnumMap<>(LedRange.class);
@@ -99,6 +96,26 @@ public class LightSubsystem extends SubsystemBase {
     }
   }
 
+  public enum LedAnimation {
+    STROBE(new StrobeAnimation(255, 0, 0, 0, 98.0 / 256.0, LED_COUNT)),
+    LARSON(new LarsonAnimation(255, 255, 0, 0, 0.2, LED_COUNT, BounceMode.Front, 2)),
+    COLOR_FLOW(new ColorFlowAnimation(255, 255, 0, 0, 0.05, LED_COUNT, Direction.Forward));
+
+    private final Animation animation;
+
+    LedAnimation(Animation animation) {
+        this.animation = animation;
+    }
+
+    public Animation getAnimation() {
+        return animation;
+    }
+  }
+
+  /**
+   * Constructs a new LightSubsystem.
+   * Initializes the blink timer and configures the CANdle settings.
+   */
   public LightSubsystem() {
     blinkTimer.reset();
     blinkTimer.start();
@@ -108,56 +125,73 @@ public class LightSubsystem extends SubsystemBase {
     candle.configAllSettings(configAll, 100);
   }
 
+  /**
+   * This method is called periodically by the CommandScheduler.
+   * It updates the LED animations based on the robot's state.
+   */
   @Override
   public void periodic() {
     if(DriverStation.isDisabled()){
-      if (elevatorSubsystem.getElevatorPosition() < -0.5 || anglerSubsystem.getAnglerDegrees() < -30.0){
-        m_currentAnimation = new StrobeAnimation(255, 0, 0, 0, 98.0 / 256.0, LED_COUNT);
-      }
-      else if(Math.abs(elevatorSubsystem.getElevatorPosition()) > 0.5 
-      || Math.abs(anglerSubsystem.getAnglerDegrees()) > 1){
-        m_currentAnimation = new LarsonAnimation(255, 255, 0, 0, 0.2, LED_COUNT, BounceMode.Front, 2);
-      }
-      else{
-        m_currentAnimation = new ColorFlowAnimation(255, 255, 0, 0, 0.05, LED_COUNT, Direction.Forward);
-      }
-      candle.animate(m_currentAnimation);
+      LedAnimation currentAnimation = getLedAnimation();
+      candle.animate(currentAnimation.getAnimation());
     }
     else{
       candle.animate(null);
-      if (blinkTimer.get() > blinkRate) {
-      
-        isBlinkColour = !isBlinkColour;
-        blinkTimer.reset();
-      }
-      
+      updateBlinkTimer();
       updateLedRanges();
     }
   }
 
-  public void setRawLightColour(int red, int green, int blue) {
-    this.colour1 = new int[]{red, green, blue};
-    this.colour2 = new int[]{red, green, blue};
+  /**
+   * Determines the appropriate LED animation based on the robot's state.
+   * @return The LedAnimation to be displayed
+   */
+  private LedAnimation getLedAnimation() {
+    if (elevatorSubsystem.getElevatorPosition() < -0.5 || anglerSubsystem.getAnglerDegrees() < -30.0) {
+        return LedAnimation.STROBE;
+    } else if (Math.abs(elevatorSubsystem.getElevatorPosition()) > 0.5 
+               || Math.abs(anglerSubsystem.getAnglerDegrees()) > 1) {
+        return LedAnimation.LARSON;
+    } else {
+        return LedAnimation.COLOR_FLOW;
+    }
   }
 
-  public void setLightColour(LightColours colour) {
-    this.colour1 = colour.getRGBValues();
-    this.colour2 = colour.getRGBValues();
+  /**
+   * Updates the blink timer and toggles the blink state if necessary.
+   */
+  private void updateBlinkTimer() {
+    if (blinkTimer.get() > blinkRate) {
+        isBlinkColour = !isBlinkColour;
+        blinkTimer.reset();
+    }
   }
 
-  public void blinkBetweenColours(LightColours colour1, LightColours colour2) {
-    this.colour1 = colour1.getRGBValues();
-    this.colour2 = colour2.getRGBValues();
-  }
-
+  /**
+   * Sets the blink rate for LED animations.
+   * @param seconds The time in seconds between blinks
+   */
   public void setBlinkTime(double seconds) {
     blinkRate = seconds;
   }
 
+  /**
+   * Sets the LED color for a specific range of LEDs.
+   * @param start The starting index of the LED range
+   * @param end The ending index of the LED range
+   * @param colour The color to set for the LED range
+   */
   public void setLEDRange(int start, int end, LightColours colour) {
     candle.setLEDs(colour.red, colour.green, colour.blue, 0, start, end-start);
   }
 
+  /**
+   * Sets the LED color for a predefined LED range group, with optional blinking.
+   * @param range The predefined LED range
+   * @param colour The primary color for the LED range
+   * @param blinkColour The secondary color for blinking (if enabled)
+   * @param canBlink Whether the LED range should blink
+   */
   public void setLEDRangeGroup(LedRange range, LightColours colour, LightColours blinkColour, boolean canBlink) {
     ledRangeColours.put(range, colour);
     if(canBlink){
@@ -169,6 +203,10 @@ public class LightSubsystem extends SubsystemBase {
     }
   }
 
+  /**
+   * Sets all LEDs to a single color.
+   * @param colour The color to set for all LEDs
+   */
   public void setAllLEDs(LightColours colour) {
     ledRangeColours.clear();
     for (LedRange range : LedRange.values()) {
@@ -176,11 +214,12 @@ public class LightSubsystem extends SubsystemBase {
     }
   }
 
+  /**
+   * Updates the LED colors based on the current ledRangeColours map.
+   */
   private void updateLedRanges() {
-    for (Map.Entry<LedRange, LightColours> entry : ledRangeColours.entrySet()) {
-      LedRange range = entry.getKey();
-      LightColours colour = entry.getValue();
-      candle.setLEDs(colour.red, colour.green, colour.blue, 0, range.getStart(), range.getEnd() - range.getStart());
-    }
+    ledRangeColours.forEach((range, colour) -> 
+        candle.setLEDs(colour.red, colour.green, colour.blue, 0, range.getStart(), range.getEnd() - range.getStart())
+    );
   }
 }
