@@ -33,7 +33,7 @@ public class LightSubsystem extends SubsystemBase {
   private static final Timer blinkTimer = new Timer();
   private int[] colour1 = {255, 255, 255};
   private int[] colour2 = {255, 255, 255};
-  private boolean isBlinkColour1 = true;
+  private boolean isBlinkColour = true;
   
   private Animation m_currentAnimation;
   private double blinkRate = 0.1;
@@ -126,15 +126,11 @@ public class LightSubsystem extends SubsystemBase {
     else{
       candle.animate(null);
       if (blinkTimer.get() > blinkRate) {
-        if(isBlinkColour1) {
-          candle.setLEDs(colour1[0], colour1[1], colour1[2]);
-        } else {
-          candle.setLEDs(colour2[0], colour2[1], colour2[2]);
-        }
       
-        isBlinkColour1 = !isBlinkColour1;
+        isBlinkColour = !isBlinkColour;
         blinkTimer.reset();
       }
+      
       updateLedRanges();
     }
   }
@@ -165,7 +161,11 @@ public class LightSubsystem extends SubsystemBase {
   public void setLEDRangeGroup(LedRange range, LightColours colour, LightColours blinkColour, boolean canBlink) {
     ledRangeColours.put(range, colour);
     if(canBlink){
-      blinkBetweenColours(colour, blinkColour);
+      if(isBlinkColour) {
+        ledRangeColours.put(range, colour);
+      } else {
+        ledRangeColours.put(range, blinkColour);
+      }
     }
   }
 

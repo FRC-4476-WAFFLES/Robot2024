@@ -41,29 +41,23 @@ public class ActivateLightColour extends Command {
       // Ready to shoot  
       lightSubsystem.setLEDRangeGroup(LedRange.RIGHT_SIDE_FULL, LightColours.GREEN,LightColours.GREEN,false);
       lightSubsystem.setLEDRangeGroup(LedRange.LEFT_SIDE_FULL, LightColours.GREEN,LightColours.GREEN,false);
-      lightSubsystem.setLEDRangeGroup(LedRange.MIDDLE_FULL, LightColours.GREEN,LightColours.GREEN,false);
+      //lightSubsystem.setLEDRangeGroup(LedRange.MIDDLE_FULL, LightColours.GREEN,LightColours.GREEN,false);
     } 
     else if (shooterSubsystem.isNote()) {
       // Note in Shooter
       lightSubsystem.setLEDRangeGroup(LedRange.RIGHT_SIDE_FULL, LightColours.PINK,LightColours.PINK,false);
       lightSubsystem.setLEDRangeGroup(LedRange.LEFT_SIDE_FULL, LightColours.PINK,LightColours.PINK,false);
-      lightSubsystem.setLEDRangeGroup(LedRange.MIDDLE_FULL, LightColours.PINK,LightColours.PINK,false);
+      //lightSubsystem.setLEDRangeGroup(LedRange.MIDDLE_FULL, LightColours.PINK,LightColours.PINK,false);
     }
     else if (intakeSubsystem.isRunningIn() && anglerSubsystem.isGoodShooterAngle() && elevatorSubsystem.isGoodElevatorPosition()){
       // Intake running
-      lightSubsystem.setLEDRangeGroup(LedRange.RIGHT_SIDE_FULL, LightColours.YELLOW,LightColours.YELLOW,false);
-      lightSubsystem.setLEDRangeGroup(LedRange.RIGHT_SIDE_FULL, LightColours.YELLOW,LightColours.YELLOW,false);
+      lightSubsystem.setLEDRangeGroup(LedRange.RIGHT_SIDE_FULL, LightColours.YELLOW,LightColours.BLACK,true);
+      lightSubsystem.setLEDRangeGroup(LedRange.LEFT_SIDE_FULL, LightColours.YELLOW,LightColours.BLACK,true);
     }
     else if (intakeSubsystem.isRunningOut()){
       lightSubsystem.setLEDRangeGroup(LedRange.RIGHT_SIDE_FULL, LightColours.RED,LightColours.BLACK,true);
           lightSubsystem.setLEDRangeGroup(LedRange.LEFT_SIDE_FULL, LightColours.RED,LightColours.BLACK,true);
-          lightSubsystem.setLEDRangeGroup(LedRange.MIDDLE_FULL, LightColours.RED,LightColours.BLACK,true);
-    }
-    else if (20 < matchTimer && matchTimer < 25){
-      // Endgame warning
-       lightSubsystem.setLEDRangeGroup(LedRange.RIGHT_SIDE_FULL, LightColours.RED,LightColours.WHITE,true);
-          lightSubsystem.setLEDRangeGroup(LedRange.LEFT_SIDE_FULL, LightColours.RED,LightColours.WHITE,true);
-          lightSubsystem.setLEDRangeGroup(LedRange.MIDDLE_FULL, LightColours.RED,LightColours.WHITE,true);
+          //lightSubsystem.setLEDRangeGroup(LedRange.MIDDLE_FULL, LightColours.RED,LightColours.BLACK,true);
     }
     else if (LimelightHelpers.getTV("limelight") && LimelightHelpers.getTA("limelight") > 1.0){
       lightSubsystem.setBlinkTime(0.08);
@@ -100,7 +94,17 @@ public class ActivateLightColour extends Command {
 
     }
         
-      
+       if (20 < matchTimer && matchTimer < 25){
+      // Endgame warning
+          lightSubsystem.setLEDRangeGroup(LedRange.RIGHT_SIDE_TOP, LightColours.RED,LightColours.WHITE,true);
+          lightSubsystem.setLEDRangeGroup(LedRange.LEFT_SIDE_TOP, LightColours.RED,LightColours.WHITE,true);
+          lightSubsystem.setLEDRangeGroup(LedRange.MIDDLE_FULL, LightColours.RED,LightColours.WHITE,true);
+    }
+      else if(0 < matchTimer && matchTimer < 5){
+      lightSubsystem.setLEDRangeGroup(LedRange.RIGHT_SIDE_FULL, LightColours.PURPLE,LightColours.ORANGE,true);
+      lightSubsystem.setLEDRangeGroup(LedRange.MIDDLE_FULL, LightColours.PURPLE,LightColours.ORANGE,true);
+      lightSubsystem.setLEDRangeGroup(LedRange.LEFT_SIDE_FULL, LightColours.PURPLE,LightColours.ORANGE,true);
+    }  
 
   }
 
