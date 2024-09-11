@@ -45,7 +45,8 @@ public class LightSubsystem extends SubsystemBase {
     RIGHT_SIDE_TOP(17,26),
     RIGHT_SIDE_BOTTOM(8,17),
     LEFT_SIDE_TOP(44,54),
-    LEFT_SIDE_BOTTOM(54,64);
+    LEFT_SIDE_BOTTOM(54,64),
+    FULL_RANGE(0,64);
 
     private final int start;
     private final int end;
