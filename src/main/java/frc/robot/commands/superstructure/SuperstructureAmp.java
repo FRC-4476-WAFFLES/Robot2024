@@ -10,6 +10,9 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import static frc.robot.RobotContainer.*;
 
+/**
+ * Sets superstructure to go to amp position
+ */
 public class SuperstructureAmp extends Command {
   /** Creates a new SuperstructureAmp. */
   public SuperstructureAmp() {

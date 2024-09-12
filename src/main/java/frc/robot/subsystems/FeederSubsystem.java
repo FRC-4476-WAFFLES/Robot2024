@@ -114,11 +114,9 @@ public class FeederSubsystem extends SubsystemBase {
   }
   
 
-
   /**
    * Sets speed of the feeder wheels
-   * @param speed
-   * in rotations per second
+   * @param speed The target speed in rotations per second
    */
   public void setFeederTargetSpeed(double speed){
     feederVelocityControl = true;
@@ -128,8 +126,7 @@ public class FeederSubsystem extends SubsystemBase {
 
   /**
    * Sets position of the feeder wheels
-   * @param position
-   * in rotations
+   * @param position The target position in rotations
    */
   public void setFeederTargetPosition(double position){
       feederVelocityControl = false;
@@ -137,19 +134,34 @@ public class FeederSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Feeder Target Position", position);
   }
 
+  /**
+   * Gets the current position of the feeder
+   * @return The current position of the feeder in rotations
+   */
   public double getFeederPosition() {
     return feeder.getPosition().getValueAsDouble();
   }
 
+  /**
+   * Resets the feeder position to zero
+   */
   public void resetFeederPosition() {
     feeder.setPosition(0);
   }
   
+  /**
+   * Checks if the feeder is at the target position
+   * @return true if the feeder is within the dead zone of the target position, false otherwise
+   */
   public boolean isFeederAtTargetPosition() {
     SmartDashboard.putNumber("AnglerPosError", Math.abs(feeder.getPosition().getValueAsDouble() - feederTargetPosition));
     return Math.abs(feeder.getPosition().getValueAsDouble() - feederTargetPosition) < POSITION_DEAD_ZONE;
   }
 
+  /**
+   * Checks if the feeder is currently running
+   * @return true if the feeder target speed is not zero, false otherwise
+   */
   public boolean isFeederRunning(){
     return feederTargetSpeed != 0;
   }
