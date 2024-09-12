@@ -25,6 +25,10 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 
 import frc.robot.Constants;
 
+/**
+ * Subsystem for controlling the angler mechanism of the robot.
+ * This subsystem manages the positioning and movement of the angler.
+ */
 public class AnglerSubsystem extends SubsystemBase {
     private static final double OVERALL_REDUCTION = (62 / 18) * 15 * (48 / 16); // Ratio from the motor to the shooter pivot shaft
     private static final double ANGLER_DEAD_ZONE = 0.1;
@@ -43,6 +47,10 @@ public class AnglerSubsystem extends SubsystemBase {
     private boolean previousEnabled = false;
     private boolean previousSwitchState;
 
+    /**
+     * Constructs a new AnglerSubsystem.
+     * Initializes the angler motor, configurations, and SmartDashboard entries.
+     */
     public AnglerSubsystem() {
         initializeSmartDashboard();
         initializeSubsystem();
@@ -95,6 +103,10 @@ public class AnglerSubsystem extends SubsystemBase {
 
 
 
+    /**
+     * Periodic method called by the command scheduler.
+     * Updates the angler's position and executes motion profiling.
+     */
     @Override
     public void periodic() {
         if(DriverStation.isDisabled()){
@@ -169,10 +181,18 @@ public class AnglerSubsystem extends SubsystemBase {
     //     angler.getConfigurator().apply(anglerSlot0Configs);
     // }
 
+    /**
+     * Gets the current angle of the angler in degrees.
+     * @return The current angle in degrees.
+     */
     public double getAnglerDegrees() {
         return angler.getPosition().getValueAsDouble() * 360 / OVERALL_REDUCTION;
     }
 
+    /**
+     * Checks if the angler is at the target angle within a dead zone.
+     * @return true if the angler is at the target angle, false otherwise.
+     */
     public boolean isGoodShooterAngle() {
         return Math.abs(getAnglerDegrees() - this.anglerTargetPositonDegrees) < ANGLER_DEAD_ZONE;
     }

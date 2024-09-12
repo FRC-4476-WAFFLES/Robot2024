@@ -162,9 +162,8 @@ public class ShooterSubsystem extends SubsystemBase {
 
   
   /**
-   * Returns if the shooter is at the desired speed
-   * @return true: if shooter is at desired speed
-   * <li>false: if shooter is not at desired speed</li>
+   * Checks if the shooter is at the desired speed.
+   * @return true if shooter is at desired speed, false otherwise
    */
   public boolean isGoodSpeed() {
     if(Math.abs(shooterTargetSpeed) > shooterPercentDifferent){
@@ -180,23 +179,25 @@ public class ShooterSubsystem extends SubsystemBase {
 
   
   /**
-   * Sets speed of the shooter wheels
-   * @param speed
-   * in rotations per second
+   * Sets the target speed of the shooter wheels.
+   * @param speed The desired speed in rotations per second
    */
   public void setShooterTargetSpeed(double speed){
     this.shooterTargetSpeed = speed;
   }
 
 
+  /**
+   * Checks if the shooter is currently running.
+   * @return true if the shooter is running, false otherwise
+   */
   public boolean isShooterRunning(){
     return shooterTargetSpeed != 0;
   }
   
   /**
-   * Returns if there is a note in the shooter
-   * @return true: if note is in shooter
-   * <li>false: if note is not in shooter</li>
+   * Checks if there is a note in the shooter.
+   * @return true if a note is in the shooter, false otherwise
    */
   public boolean isNote() {
     return shooterIR.getVoltage() > IR_RANGE;
@@ -204,22 +205,42 @@ public class ShooterSubsystem extends SubsystemBase {
     // 1.6 no note
   }
 
+  /**
+   * Checks if a note is fully inserted into the shooter.
+   * @return true if a note is fully inserted, false otherwise
+   */
   public boolean isFullyInNote() {
     return shooterIR2.getVoltage() > 2.20;  ///DEPLOY DURING ONCMP LNCH DAY 2
   }
 
+  /**
+   * Checks if the shooter is currently trying to shoot.
+   * @return true if the shooter is trying to shoot, false otherwise
+   */
   public boolean isTryingToShoot(){
     return tryingToShoot;
   }
 
+  /**
+   * Sets whether the shooter is trying to shoot.
+   * @param tryingToShoot true if the shooter should try to shoot, false otherwise
+   */
   public void setTryingToShoot(boolean tryingToShoot){
     this.tryingToShoot = tryingToShoot;
   }
 
+  /**
+   * Sets whether the shooter is trying to stash a note.
+   * @param tryingToStash true if the shooter should try to stash, false otherwise
+   */
   public void setTryingToStash(boolean tryingToStash){
     this.tryingToStash = tryingToStash;
   }
 
+  /**
+   * Checks if the shooter is currently trying to stash a note.
+   * @return true if the shooter is trying to stash, false otherwise
+   */
   public boolean getTryingToStash(){
     return tryingToStash;
   }

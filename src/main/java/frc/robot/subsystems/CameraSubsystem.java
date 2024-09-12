@@ -14,6 +14,10 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+/**
+ * Subsystem for managing the camera and vision processing.
+ * This subsystem handles camera modes, pipelines, and vision data.
+ */
 public class CameraSubsystem extends SubsystemBase {
   public enum CameraLEDMode {
     Default, Off, Strobe, On
@@ -41,12 +45,17 @@ public class CameraSubsystem extends SubsystemBase {
   private double tyFiltered = 0;
 
   /**
-   * Creates a new CameraSubsystem.
+   * Constructs a new CameraSubsystem.
+   * Initializes the camera network table.
    */
   public CameraSubsystem() {
     camera = NetworkTableInstance.getDefault().getTable("limelight");
   }
 
+  /**
+   * Periodic method called by the command scheduler.
+   * Updates filtered vision data.
+   */
   @Override
   public void periodic() {
     super.periodic();
@@ -55,6 +64,10 @@ public class CameraSubsystem extends SubsystemBase {
 
   }
 
+  /**
+   * Sets the LED mode of the camera.
+   * @param mode The desired LED mode.
+   */
   public void setLEDMode(CameraLEDMode mode) {
     camera.getEntry("ledMode").setNumber(mode.ordinal());
     System.out.println("Camera mode being set to: " + mode.ordinal());
@@ -68,11 +81,19 @@ public class CameraSubsystem extends SubsystemBase {
     camera.getEntry("pipeline").setNumber(line.ordinal());
   }
 
+  /**
+   * Checks if the camera has a valid target.
+   * @return true if a target is detected, false otherwise.
+   */
   public boolean getHasTarget() {
     // tv: Whether the limelight has any valid targets (0 or 1)
     return camera.getEntry("tv").getDouble(0) != 0;
   }
 
+  /**
+   * Gets the horizontal offset to the target.
+   * @return The horizontal offset in degrees.
+   */
   public double getHorizontal() {
     // tx: Horizontal Offset From Crosshair To Target (LL1: -27 degrees to 27
     // degrees | LL2: -29.8 to 29.8 degrees)

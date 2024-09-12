@@ -37,9 +37,8 @@ import frc.robot.generated.TunerConstants;
 import frc.robot.utils.Vision;
 
 /**
- * Class that extends the Phoenix SwerveDrivetrain class and implements
- * subsystem
- * so it can be used in command-based projects easily.
+ * Subsystem for controlling the robot's drivetrain.
+ * This subsystem manages swerve drive modules and odometry.
  */
 public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
     private static final double kSimLoopPeriod = 0.005; // 5 ms
@@ -61,6 +60,12 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
 
     public double randomYStashAdjustment = 0; // This value is changed everytime spinUpStash is initialized
 
+    /**
+     * Constructs a new DriveSubsystem.
+     * @param driveTrainConstants Constants for the drivetrain.
+     * @param OdometryUpdateFrequency Frequency of odometry updates.
+     * @param modules Swerve module constants.
+     */
     public DriveSubsystem(SwerveDrivetrainConstants driveTrainConstants, double OdometryUpdateFrequency,
             SwerveModuleConstants... modules) {
         super(driveTrainConstants, OdometryUpdateFrequency, modules);
@@ -70,6 +75,11 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
         }
     }
 
+    /**
+     * Constructs a new DriveSubsystem.
+     * @param driveTrainConstants Constants for the drivetrain.
+     * @param modules Swerve module constants.
+     */
     public DriveSubsystem(SwerveDrivetrainConstants driveTrainConstants, SwerveModuleConstants... modules) {
         super(driveTrainConstants, modules);
         configurePathPlanner();
@@ -114,26 +124,48 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
         PPHolonomicDriveController.setRotationTargetOverride(this::getRotationTargetOverride);
     }
 
+    /**
+     * Applies a swerve drive request to the drivetrain.
+     * @param requestSupplier Supplier for the swerve request.
+     * @return A command that applies the request.
+     */
     public Command applyRequest(Supplier<SwerveRequest> requestSupplier) {
         return run(() -> this.setControl(requestSupplier.get()));
     }
 
+    /**
+     * Gets a PathPlannerAuto command for the specified path.
+     * @param pathName The name of the path.
+     * @return A PathPlannerAuto command.
+     */
     public Command getAutoPath(String pathName) {
         return new PathPlannerAuto(pathName);
     }
 
+    /**
+     * Checks if the robot is not moving.
+     * @return true if the robot is stationary, false otherwise.
+     */
     public boolean notMoving() {
         return Math.abs(getCurrentRobotChassisSpeeds().vxMetersPerSecond) < 0.1
                 && Math.abs(getCurrentRobotChassisSpeeds().vyMetersPerSecond) < 0.1
                 && Math.abs(getCurrentRobotChassisSpeeds().omegaRadiansPerSecond) < 0.4;
     }
     
+    /**
+     * Checks if the robot is moving slowly.
+     * @return true if the robot is moving slowly, false otherwise.
+     */
     public boolean slowMoving() {
         return Math.abs(getCurrentRobotChassisSpeeds().vxMetersPerSecond) < 1
                 && Math.abs(getCurrentRobotChassisSpeeds().vyMetersPerSecond) < 1
                 && Math.abs(getCurrentRobotChassisSpeeds().omegaRadiansPerSecond) < 1;
     }
 
+    /**
+     * Gets the rotation target override for the drivetrain.
+     * @return An Optional containing the rotation override, or an empty Optional if no override is needed.
+     */
     public Optional<Rotation2d> getRotationTargetOverride() {
         // If SWM in auto
         if (autoSWM) {
@@ -156,34 +188,57 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
         }
     }
 
+    /**
+     * Checks if the drivetrain is in auto SWM mode.
+     * @return true if in auto SWM mode, false otherwise.
+     */
     public boolean isAutoSWM() {
         return autoSWM;
     }
 
+    /**
+     * Sets the override left flag for the drivetrain.
+     * @param overrideFaceLeft true to enable override left, false to disable.
+     */
     public void setOverrideLeft(boolean overrideFaceLeft) {
         this.overrideFaceLeft = overrideFaceLeft;
     }
 
+    /**
+     * Sets the override right flag for the drivetrain.
+     * @param overrideFaceRight true to enable override right, false to disable.
+     */
     public void setOverrideRight(boolean overrideFaceRight) {
         this.overrideFaceRight = overrideFaceRight;
     }
 
+    /**
+     * Sets the target goal flag for the drivetrain.
+     * @param targetGoal true to enable target goal, false to disable.
+     */
     public void setTargetGoal(boolean targetGoal) {
         this.targetGoal = targetGoal;
     }
 
+    /**
+     * Sets the auto SWM flag for the drivetrain.
+     * @param autoSWM true to enable auto SWM, false to disable.
+     */
     public void setAutoSWM(boolean autoSWM) {
         this.autoSWM = autoSWM;
     }
 
+    /**
+     * Gets the current chassis speeds of the robot.
+     * @return The current chassis speeds.
+     */
     public ChassisSpeeds getCurrentRobotChassisSpeeds() {
         return m_kinematics.toChassisSpeeds(getState().ModuleStates);
     }
 
     /**
-     * Get the current field-relative pose of the robot according to odometry
-     * 
-     * @return Current robot pose
+     * Gets the current field-relative pose of the robot according to odometry.
+     * @return The current robot pose.
      */
     public Pose2d getRobotPose() {
         return this.getState().Pose;
@@ -204,33 +259,18 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
         m_simNotifier.startPeriodic(kSimLoopPeriod);
     }
 
-    // public void updateOdometryFromLimeLight() {
-    // LimelightHelpers.Results limeLightRightResult =
-    // LimelightHelpers.getLatestResults(Constants.limeLightRight).targetingResults;
-    // LimelightHelpers.Results limeLightLeftResult =
-    // LimelightHelpers.getLatestResults(Constants.limeLightLeft).targetingResults;
-
-    // if (limeLightRightResult.valid
-    // && limeLightLeftResult.valid &&
-    // Math.abs(getCurrentRobotChassisSpeeds().vxMetersPerSecond) < 1
-    // && Math.abs(getCurrentRobotChassisSpeeds().vyMetersPerSecond) < 1
-    // && Math.abs(getCurrentRobotChassisSpeeds().omegaRadiansPerSecond) < 1)
-    // {
-    // this.m_odometry.addVisionMeasurement(limeLightRightResult.getBotPose2d_wpiBlue(),
-    // Timer.getFPGATimestamp()
-    // - (limeLightRightResult.latency_capture / 1000.0)
-    // - (limeLightRightResult.latency_pipeline / 1000.0));
-    // this.m_odometry.addVisionMeasurement(limeLightLeftResult.getBotPose2d_wpiBlue(),
-    // Timer.getFPGATimestamp()
-    // - (limeLightLeftResult.latency_capture / 1000.0)
-    // - (limeLightLeftResult.latency_pipeline / 1000.0));
-    // }
-    // }
-
+    /**
+     * Checks if the shooter is toward the goal.
+     * @return true if the shooter is toward the goal, false otherwise.
+     */
     public boolean isShooterTowardGoal() {
         return Math.abs(getRobotPose().getRotation().getDegrees()) > 90;
     }
 
+    /**
+     * Gets the static angle to the podium target.
+     * @return The static angle to the podium target in radians.
+     */
     public Rotation2d getStaticAngleToPodium() {
         if (DriverStation.getAlliance().get() == Alliance.Red) {
             return new Rotation2d(Units.degreesToRadians(-159));
@@ -240,6 +280,10 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
 
     }
 
+    /**
+     * Gets the angle to the stash target.
+     * @return The angle to the stash target in radians.
+     */
     public Rotation2d getAngleToStash() {
         Pose2d poseOfStash;
         
@@ -262,6 +306,10 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
         return new Rotation2d(angleToGoal);
     }
 
+    /**
+     * Gets the distance to the stash target.
+     * @return The distance to the stash target in meters.
+     */
     public double getDistanceToStash() {
         Pose2d poseOfStash;
 
@@ -280,6 +328,10 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
         return distance;
     }
 
+    /**
+     * Gets the angle to the goal.
+     * @return The angle to the goal.
+     */
     public Rotation2d getAngleToGoal() {
         Pose2d poseOfGoal;
 
@@ -305,6 +357,10 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
         // return new Rotation2d(Math.PI);
     }
 
+    /**
+     * Gets the distance to the goal.
+     * @return The distance to the goal in meters.
+     */
     public double getDistanceToGoal() {
         Pose2d poseOfGoal;
 
@@ -324,6 +380,11 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
         return distance;
     }
 
+    /**
+     * Calculates the angle to the goal with offset.
+     * @param inputtedAngle The inputted angle.
+     * @return The angle to the goal with offset.
+     */
     public Rotation2d angleToGoalOffsetCalculation(double inputtedAngle){
         final InterpolatingDoubleTreeMap angleToGoalOffsetMap = new InterpolatingDoubleTreeMap();
         angleToGoalOffsetMap.put(2.3, -2.0);
@@ -368,39 +429,15 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
 
 
     }
+
+    /**
+     * Periodic method called by the command scheduler.
+     * Updates vision measurements and other periodic tasks.
+     */
+    @Override
     public void periodic() {
         SmartDashboard.putNumber("Robot Angle", getRobotPose().getRotation().getRadians());
         if(odometryIsValid()){
-        //     var visionEstimationLeft = visionLeft.getEstimatedGlobalPose();
-        //     visionEstimationLeft.ifPresent(estLeft -> {
-        //     var estPoseLeft = estLeft.estimatedPose.toPose2d();
-        //     var estStdDevs = visionLeft.getEstimationStdDevs(estPoseLeft);
-        //     if (Math.abs(getCurrentRobotChassisSpeeds().vxMetersPerSecond) < 0.1) {
-                
-        //             Pose2d newEstimationPositionLeft = new Pose2d(estPoseLeft.getTranslation(), getRobotPose().getRotation());
-        //             m_odometry.addVisionMeasurement(newEstimationPositionLeft, estLeft.timestampSeconds, estStdDevs);
-                
-
-        //     }
-        //     debugVisionEstimationPoseLeft.setRobotPose(estPoseLeft);
-        //     SmartDashboard.putData("Camera Left1", debugVisionEstimationPoseLeft);
-
-        // });
-        // var visionEstimationRight = visionRight.getEstimatedGlobalPose();
-        // visionEstimationRight.ifPresent(estRight -> {
-        //     var estPoseRight = estRight.estimatedPose.toPose2d();
-        //     var estStdDevs = visionRight.getEstimationStdDevs(estPoseRight);
-        //     if (Math.abs(getCurrentRobotChassisSpeeds().vxMetersPerSecond) < 0.1) {
-                
-        //             Pose2d newEstimationPositionRight = new Pose2d(estPoseRight.getTranslation(), getRobotPose().getRotation());
-        //             m_odometry.addVisionMeasurement(newEstimationPositionRight, estRight.timestampSeconds, estStdDevs);
-               
-
-        //     }
-        //     debugVisionEstimationPoseRight.setRobotPose(estPoseRight);
-        //     SmartDashboard.putData("Camera Right1", debugVisionEstimationPoseRight);
-        // });
-
             var visionEstimationLeft = visionLeft.getEstimatedGlobalPose();
             var visionEstimationRight = visionRight.getEstimatedGlobalPose();
 
