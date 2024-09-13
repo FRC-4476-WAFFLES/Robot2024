@@ -285,23 +285,24 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
      * @return The angle to the stash target in radians.
      */
     public Rotation2d getAngleToStash() {
+        Alliance alliance = DriverStation.getAlliance().get(); // Cache alliance
         Pose2d poseOfStash;
-        
-
-        // Set goal pose based on alliance
-        if (DriverStation.getAlliance().get() == Alliance.Red) {
+        if (alliance == Alliance.Red) {
             poseOfStash = Constants.DriveConstants.redStash;
         } else {
             poseOfStash = Constants.DriveConstants.blueStash;
         }
-        
+
         poseOfStash = new Pose2d(poseOfStash.getX(), poseOfStash.getY() + randomYStashAdjustment, poseOfStash.getRotation());
 
-        double angleToGoal = Math
-                .atan((getRobotPose().getY() - poseOfStash.getY()) / (getRobotPose().getX() - poseOfStash.getX()));
-        if (DriverStation.getAlliance().get() == Alliance.Red) {
+        double deltaX = getRobotPose().getX() - poseOfStash.getX();
+        double deltaY = getRobotPose().getY() - poseOfStash.getY();
+        double angleToGoal = Math.atan2(deltaY, deltaX); // Use atan2 for better handling
+
+        if (alliance == Alliance.Red) {
             angleToGoal += Math.PI;
         }
+
         SmartDashboard.putNumber("AngleToStash", angleToGoal);
         return new Rotation2d(angleToGoal);
     }
