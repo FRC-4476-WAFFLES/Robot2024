@@ -23,7 +23,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.Map;
 
 public class LightSubsystem extends SubsystemBase {
@@ -194,14 +193,17 @@ public class LightSubsystem extends SubsystemBase {
    * @param canBlink Whether the LED range should blink
    */
   public void setLEDRangeGroup(LedRange range, LightColours colour, LightColours blinkColour, boolean canBlink) {
-    ledRangeColours.put(range, colour);
     if(canBlink){
       if(isBlinkColour) {
         ledRangeColours.put(range, colour);
       } else {
         ledRangeColours.put(range, blinkColour);
-      }
+      } 
+    } else {
+       ledRangeColours.put(range, colour);
     }
+       
+
   }
 
   /**
