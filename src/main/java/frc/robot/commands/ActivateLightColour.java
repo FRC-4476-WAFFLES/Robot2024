@@ -72,11 +72,12 @@ public class ActivateLightColour extends Command {
     //   lightSubsystem.setLightColour(LightColours.VIOLET);
     // }
    
-    else if(0 < matchTimer && matchTimer < 5){
-      lightSubsystem.setLEDRangeGroup(LedRange.RIGHT_SIDE_FULL, LightColours.WHITE,LightColours.YELLOW,false);
-      lightSubsystem.setLEDRangeGroup(LedRange.MIDDLE_FULL, LightColours.WHITE,LightColours.YELLOW,false);
-      lightSubsystem.setLEDRangeGroup(LedRange.LEFT_SIDE_FULL, LightColours.WHITE,LightColours.YELLOW,false);
-    }
+    //Same as line 105-108 change?
+    //else if(0 < matchTimer && matchTimer < 5){
+      //lightSubsystem.setLEDRangeGroup(LedRange.RIGHT_SIDE_FULL, LightColours.WHITE,LightColours.YELLOW,false);
+      //lightSubsystem.setLEDRangeGroup(LedRange.MIDDLE_FULL, LightColours.WHITE,LightColours.YELLOW,false);
+      //lightSubsystem.setLEDRangeGroup(LedRange.LEFT_SIDE_FULL, LightColours.WHITE,LightColours.YELLOW,false);
+    //}
     else {
       
       lightSubsystem.setBlinkTime(0.1);
