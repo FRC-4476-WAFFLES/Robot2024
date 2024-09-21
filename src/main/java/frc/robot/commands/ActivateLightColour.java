@@ -35,7 +35,7 @@ public class ActivateLightColour extends Command {
     final double matchTimer = Timer.getMatchTime();
     LimelightHelpers.setLEDMode_ForceOff("limelight");
 
-    if (lightSubsystem.isEndgameWarning = false) {
+    if (lightSubsystem.isEndgameWarning == false) {
       // If certain conditions are fufilled, the robot's lights change colours
       if (shooterSubsystem.isGoodSpeed() && anglerSubsystem.isGoodShooterAngle() &&
           elevatorSubsystem.isGoodElevatorPosition() && shooterSubsystem.isShooterRunning() &&
@@ -97,7 +97,7 @@ public class ActivateLightColour extends Command {
           lightSubsystem.setLEDRangeGroup(LedRange.MIDDLE_FULL, LightColours.RED, LightColours.YELLOW, false);
         }
       }
-    } else if (lightSubsystem.isEndgameWarning = true) {
+    } else if (lightSubsystem.isEndgameWarning == true) {
       if (shooterSubsystem.isGoodSpeed() && anglerSubsystem.isGoodShooterAngle() &&
           elevatorSubsystem.isGoodElevatorPosition() && shooterSubsystem.isShooterRunning() &&
           shooterSubsystem.isTryingToShoot() && driveSubsystem.notMoving()) {
