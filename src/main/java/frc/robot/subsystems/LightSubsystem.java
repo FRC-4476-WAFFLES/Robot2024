@@ -34,7 +34,7 @@ public class LightSubsystem extends SubsystemBase {
   private int[] colour1 = {255, 255, 255};
   private int[] colour2 = {255, 255, 255};
   private boolean isBlinkColour = true;
-  
+  public boolean isEndgameWarning = false;
   private Animation m_currentAnimation;
   private double blinkRate = 0.1;
 
