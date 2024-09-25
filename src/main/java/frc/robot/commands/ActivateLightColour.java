@@ -66,7 +66,6 @@ public class ActivateLightColour extends Command {
           lightSubsystem.setLEDRangeGroup(LedRange.RIGHT_SIDE_FULL, LightColours.BLUE, LightColours.YELLOW, false);
           lightSubsystem.setLEDRangeGroup(LedRange.LEFT_SIDE_FULL, LightColours.BLUE, LightColours.YELLOW, false);
           lightSubsystem.setLEDRangeGroup(LedRange.MIDDLE_FULL, LightColours.BLUE, LightColours.YELLOW, false);
-          System.out.println("GREEN LIGHTS NOW");
         } else {
           lightSubsystem.setLEDRangeGroup(LedRange.RIGHT_SIDE_FULL, LightColours.RED, LightColours.YELLOW, false);
           lightSubsystem.setLEDRangeGroup(LedRange.LEFT_SIDE_FULL, LightColours.RED, LightColours.YELLOW, false);
@@ -75,22 +74,14 @@ public class ActivateLightColour extends Command {
     }
     if (20 < matchTimer && matchTimer < 25) {
       // Endgame warning
-      lightSubsystem.isEndgameWarning = true;
       lightSubsystem.setLEDRangeGroup(LedRange.RIGHT_SIDE_TOP, LightColours.RED, LightColours.WHITE, true);
       lightSubsystem.setLEDRangeGroup(LedRange.LEFT_SIDE_TOP, LightColours.RED, LightColours.WHITE, true);
       lightSubsystem.setLEDRangeGroup(LedRange.MIDDLE_FULL, LightColours.RED, LightColours.WHITE, true);
-      System.out.println("ENDGAME WARNING!!!");
     } else if (0 < matchTimer && matchTimer < 5) {
-      lightSubsystem.isEndgameWarning = true;
-      lightSubsystem.setLEDRangeGroup(LedRange.RIGHT_SIDE_TOP, LightColours.NAVY, LightColours.DARKGREEN, true);
-      lightSubsystem.setLEDRangeGroup(LedRange.MIDDLE_FULL, LightColours.NAVY, LightColours.DARKGREEN, true);
-      lightSubsystem.setLEDRangeGroup(LedRange.LEFT_SIDE_TOP, LightColours.NAVY, LightColours.DARKGREEN, true);
-      System.out.println("ENDGAME AGAIN");
-    } else {
-      lightSubsystem.isEndgameWarning = false;
-      System.out.println("NOT ENDGAME");
+      lightSubsystem.setLEDRangeGroup(LedRange.RIGHT_SIDE_TOP, LightColours.LIME, LightColours.LIGHTRED, true);
+      lightSubsystem.setLEDRangeGroup(LedRange.MIDDLE_FULL, LightColours.LIME, LightColours.LIGHTRED, true);
+      lightSubsystem.setLEDRangeGroup(LedRange.LEFT_SIDE_TOP, LightColours.LIME, LightColours.LIGHTRED, true);
     }
-
   }
 
   // Called once the command ends or is interrupted.

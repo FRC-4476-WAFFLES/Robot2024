@@ -52,8 +52,8 @@ public class LightSubsystem extends SubsystemBase {
     LEFT_SIDE_FULL(44,64),
     RIGHT_SIDE_TOP(20,26),
     RIGHT_SIDE_BOTTOM(8,20),
-    LEFT_SIDE_TOP(44,50),
-    LEFT_SIDE_BOTTOM(50,64);
+    LEFT_SIDE_TOP(44,52),
+    LEFT_SIDE_BOTTOM(52,64);
 
     private final int start;
     private final int end;
@@ -87,7 +87,10 @@ public class LightSubsystem extends SubsystemBase {
     MAGENTA(150, 15, 92),
     NAVY(9, 15, 79),
     DARKGREEN(21, 102, 13),
-    LIGHTGREEN(130, 247, 119);
+    LIGHTGREEN(130, 247, 119),
+    LIME(187, 255, 0),
+    LIGHTRED(255, 105, 105);
+
 
     private final int red;
     private final int green;
@@ -184,7 +187,7 @@ public class LightSubsystem extends SubsystemBase {
 
    private void updateLedRanges() {
     // Initialize ledColors[] to default color
-    int[] defaultRGB = LightColours.YELLOW.getRGBValues();
+    int[] defaultRGB = LightColours.BLACK.getRGBValues();
     for (int i = 0; i < LED_COUNT; i++) {
         ledColors[i][0] = defaultRGB[0];
         ledColors[i][1] = defaultRGB[1];
