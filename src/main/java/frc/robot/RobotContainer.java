@@ -107,8 +107,8 @@ public class RobotContainer {
 
 
   
-  private final AllignWithNote allignWithNoteRed = new AllignWithNote(() -> leftJoystick.getY() * DriveConstants.maxSpeed, () -> leftJoystick.getX() * DriveConstants.maxSpeed, null);
-  private final AllignWithNote allignWithNoteBlue = new AllignWithNote(() -> -leftJoystick.getY() * DriveConstants.maxSpeed, () -> -leftJoystick.getX() * DriveConstants.maxSpeed, null);
+  private final AllignWithNote allignWithNoteRed = new AllignWithNote(() -> leftJoystick.getY() * DriveConstants.maxSpeed, () -> leftJoystick.getX() * DriveConstants.maxSpeed, () -> -rightJoystick.getX() * DriveConstants.maxAngularSpeed);
+  private final AllignWithNote allignWithNoteBlue = new AllignWithNote(() -> -leftJoystick.getY() * DriveConstants.maxSpeed, () -> -leftJoystick.getX() * DriveConstants.maxSpeed, () -> -rightJoystick.getX() * DriveConstants.maxAngularSpeed);
   private final AllignWithNote allignWithNoteAuto = new AllignWithNote(null,null, null);
 
   private final DriveAndPointAtTarget driveAndAimAtGoal = new DriveAndPointAtTarget(() -> leftJoystick.getY() * DriveConstants.maxSpeed, () -> leftJoystick.getX() * DriveConstants.maxSpeed, driveSubsystem::getAngleToGoal);
@@ -189,8 +189,6 @@ public class RobotContainer {
     rightJoystick.button(2).whileTrue(driveAndAimAtStash.alongWith(spinUpStash)); 
     
     rightJoystick.button(4).whileTrue(driveAndAimWhileAtPodium.alongWith(superstructurePodium));
-    // operatorController.rightTrigger().whileTrue(elevatorUp);
-    // operatorController.leftTrigger().whileTrue(elevatorDown);
 
     rightJoystick.button(8).whileTrue(basicFieldReset);
     leftJoystick.button(8).whileTrue(basicFieldReset);

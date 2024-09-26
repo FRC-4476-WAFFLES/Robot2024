@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.commands.drive;
 
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -10,110 +6,108 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.utils.LimelightHelpers;
-
-import static frc.robot.RobotContainer.*;
+import static frc.robot.RobotContainer.driveSubsystem;
+import static frc.robot.RobotContainer.intakeSubsystem;
+import static frc.robot.RobotContainer.shooterSubsystem;
 
 import java.util.function.DoubleSupplier;
-import java.util.function.Supplier;
 
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.SteerRequestType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
-import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest.FieldCentricFacingAngle;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest.RobotCentric;
 
 public class AllignWithNote extends Command {
 
-  private boolean seesNoteInitially;
+  private static final String LIMELIGHT_KEY = "limelight";
+
   private final DoubleSupplier xVelocitySupplier;
   private final DoubleSupplier yVelocitySupplier;
   private RobotCentric request;
-  private final Supplier<Rotation2d> thetaSupplier;
+  private final DoubleSupplier thetaVelocitySupplier;
+  private Alliance alliance;
+
   /** Creates a new AllignWithNote. */
-  public AllignWithNote(DoubleSupplier xVelocitySupplier, DoubleSupplier yVelocitySupplier, Supplier<Rotation2d> thetaSupplier) {
-    addRequirements(driveSubsystem);
-    this.xVelocitySupplier = xVelocitySupplier;
-    this.yVelocitySupplier = yVelocitySupplier;
-    this.thetaSupplier = thetaSupplier;
-    // Use addRequirements() here to declare subsystem dependencies.
+  public AllignWithNote(DoubleSupplier xVelocitySupplier, DoubleSupplier yVelocitySupplier, DoubleSupplier thetaVelocitySupplier) {
+      addRequirements(driveSubsystem);
+      this.xVelocitySupplier = xVelocitySupplier;
+      this.yVelocitySupplier = yVelocitySupplier;
+      this.thetaVelocitySupplier = thetaVelocitySupplier;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    seesNoteInitially = LimelightHelpers.getTV("limelight");
+  
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    
-    if(yVelocitySupplier == null){
-      if(LimelightHelpers.getTV("limelight")){
-        request = new SwerveRequest.RobotCentric()
-      .withDeadband(DriveConstants.maxSpeed * 0.03) // Add a 3% deadband to translation
-      .withDriveRequestType(DriveRequestType.Velocity)
-      .withSteerRequestType(SteerRequestType.MotionMagic)
-      .withVelocityX(3.0)
-      .withVelocityY(-0.05 * LimelightHelpers.getTX("limelight"));
+    if (!shooterSubsystem.isNote() && LimelightHelpers.getTV(LIMELIGHT_KEY)) {  
+      if (yVelocitySupplier == null) {
+          // if we don't supply a y velocity, move forward at a set speed and allign with the note
+          if (LimelightHelpers.getTV(LIMELIGHT_KEY)) {
+              request = createSwerveRequest(3.0, -0.05 * LimelightHelpers.getTX(LIMELIGHT_KEY));
+          } else {
+              request = createSwerveRequest(0, 0);
+          }
+      } else if(intakeSubsystem.isRunningIn()) {
+          // if we supply a y velocity, and the intake is running in, allign with the note and move forward at the set speed  
+          double translationFieldOrientedAngle = Math.atan2(yVelocitySupplier.getAsDouble(), xVelocitySupplier.getAsDouble());
+          Rotation2d angleDifference = driveSubsystem.getRobotPose().getRotation().minus(new Rotation2d(translationFieldOrientedAngle));
+          // scale the dot product by the y velocity to make the robot movements less sudden at lower speeds  
+          double scaledDotProduct = angleDifference.getCos() * Math.hypot(yVelocitySupplier.getAsDouble(), xVelocitySupplier.getAsDouble()) * (Math.abs(yVelocitySupplier.getAsDouble()) / DriveConstants.maxSpeed);
+          request = createSwerveRequest(scaledDotProduct, -0.05 * LimelightHelpers.getTX(LIMELIGHT_KEY));
       }
-      else{
-        request = new SwerveRequest.RobotCentric()
-      .withDeadband(DriveConstants.maxSpeed * 0.03) // Add a 3% deadband to translation
-      .withDriveRequestType(DriveRequestType.Velocity)
-      .withSteerRequestType(SteerRequestType.MotionMagic)
-      .withVelocityX(0)
-      .withVelocityY(0);
-      }
-      
-    
+      driveSubsystem.setControl(request);
+    } else {
+      // if we do have a note, don't apply any note alignment
+      driveSubsystem.setControl(
+      new SwerveRequest.FieldCentric()
+        .withDeadband(DriveConstants.maxSpeed * 0.05)
+        .withRotationalDeadband(DriveConstants.maxAngularSpeed * 0.01)
+        .withDriveRequestType(DriveRequestType.Velocity)
+        .withSteerRequestType(SteerRequestType.MotionMagic)
+        .withVelocityX(xVelocitySupplier.getAsDouble())
+        .withVelocityY(yVelocitySupplier.getAsDouble())
+        .withRotationalRate(thetaVelocitySupplier.getAsDouble())
+    );
     }
-    else{
+  }
 
-      double translationFieldOrientedAngle = Math.atan2(yVelocitySupplier.getAsDouble(), xVelocitySupplier.getAsDouble());
-      Rotation2d angleDifference = driveSubsystem.getRobotPose().getRotation().minus(new Rotation2d(translationFieldOrientedAngle));
-      double dotProduct = angleDifference.getCos() * Math.hypot(yVelocitySupplier.getAsDouble(), xVelocitySupplier.getAsDouble());
-      request = new SwerveRequest.RobotCentric()
-      .withDeadband(DriveConstants.maxSpeed * 0.03) // Add a 3% deadband to translation
-      .withDriveRequestType(DriveRequestType.Velocity)
-      .withSteerRequestType(SteerRequestType.MotionMagic)
-      .withVelocityX(dotProduct)
-      .withVelocityY(-0.05 * LimelightHelpers.getTX("limelight"));
-    }
-    
-    
-    driveSubsystem.setControl(request);
-
+  // Helper to create SwerveRequest
+  private RobotCentric createSwerveRequest(double velocityX, double velocityY) {
+      return new SwerveRequest.RobotCentric()
+              .withDeadband(DriveConstants.maxSpeed * 0.03)
+              .withDriveRequestType(DriveRequestType.Velocity)
+              .withSteerRequestType(SteerRequestType.MotionMagic)
+              .withVelocityX(velocityX)
+              .withVelocityY(velocityY);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    driveSubsystem.setControl(new SwerveRequest.Idle());
+      // Stop the robot 
+      driveSubsystem.setControl(new SwerveRequest.Idle());
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(DriverStation.getAlliance().get() == Alliance.Red &&
-    driveSubsystem.getRobotPose().getX() < 8.2 &&
-    DriverStation.isAutonomous() || 
-    (!LimelightHelpers.getTV("limelight") &&
-    DriverStation.isAutonomous())){
-      return true;
-    }
-    else if(DriverStation.getAlliance().get() == Alliance.Blue &&
-    driveSubsystem.getRobotPose().getX() > 8.5 && 
-    DriverStation.isAutonomous() ||
-    (!LimelightHelpers.getTV("limelight") &&
-    DriverStation.isAutonomous())){
-      return true;
-    }
-    else{
-      return false;
-    }
-    
-    
+      double robotX = driveSubsystem.getRobotPose().getX();
+      boolean seesTarget = LimelightHelpers.getTV(LIMELIGHT_KEY);
+  
+      // Unwrap the Optional and return false if no alliance is available (or handle in some other way)
+      if (alliance == null || alliance != DriverStation.getAlliance().orElseThrow(() -> new IllegalStateException("Alliance not set"))) {
+          alliance = DriverStation.getAlliance().orElseThrow(() -> new IllegalStateException("Alliance not set"));
+      }
+  
+      // End command if autonomous and the robot is driving to the other side of the field and could get a penalty  
+      return DriverStation.isAutonomous() &&
+             ((alliance == Alliance.Red && robotX < 8.2) ||
+             (alliance == Alliance.Blue && robotX > 8.5) ||
+             !seesTarget);
   }
 }
