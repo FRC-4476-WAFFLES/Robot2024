@@ -407,15 +407,21 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
         return new Rotation2d(angleToGoalAdjusted);
     }
 
+    /**
+     * Performs element-wise division with improved handling for zero denominators.
+     *
+     * @param numerator The numerator matrix.
+     * @param denominator The denominator matrix.
+     * @return The result of element-wise division.
+     */
     private Matrix<N3, N1> elementWiseDivide(Matrix<N3, N1> numerator, Matrix<N3, N1> denominator) {
         Matrix<N3, N1> result = new Matrix<>(N3.instance, N1.instance);
         for (int i = 0; i < numerator.getNumRows(); i++) {
             for (int j = 0; j < numerator.getNumCols(); j++) {
                 double denomValue = denominator.get(i, j);
                 if (denomValue == 0) {
-                    // Handle division by zero appropriately
-                    // You can set it to a default value or throw an exception
-                    result.set(i, j, 0);
+                    // Assign a very high inverse variance to effectively ignore this measurement axis
+                    result.set(i, j, Double.MAX_VALUE);
                 } else {
                     result.set(i, j, numerator.get(i, j) / denomValue);
                 }
