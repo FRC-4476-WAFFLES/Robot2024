@@ -78,9 +78,9 @@ public class ActivateLightColour extends Command {
       lightSubsystem.setLEDRangeGroup(LedRange.LEFT_SIDE_TOP, LightColours.RED, LightColours.WHITE, true);
       lightSubsystem.setLEDRangeGroup(LedRange.MIDDLE_FULL, LightColours.RED, LightColours.WHITE, true);
     } else if (0 < matchTimer && matchTimer < 5) {
-      lightSubsystem.setLEDRangeGroup(LedRange.RIGHT_SIDE_TOP, LightColours.LIME, LightColours.LIGHTRED, true);
-      lightSubsystem.setLEDRangeGroup(LedRange.MIDDLE_FULL, LightColours.LIME, LightColours.LIGHTRED, true);
-      lightSubsystem.setLEDRangeGroup(LedRange.LEFT_SIDE_TOP, LightColours.LIME, LightColours.LIGHTRED, true);
+      lightSubsystem.setLEDRangeGroup(LedRange.RIGHT_SIDE_TOP, LightColours.SUN, LightColours.CYAN, true);
+      lightSubsystem.setLEDRangeGroup(LedRange.MIDDLE_FULL, LightColours.SUN, LightColours.CYAN, true);
+      lightSubsystem.setLEDRangeGroup(LedRange.LEFT_SIDE_TOP, LightColours.SUN, LightColours.CYAN, true);
     }
   }
 

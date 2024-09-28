@@ -52,8 +52,9 @@ public class LightSubsystem extends SubsystemBase {
     LEFT_SIDE_FULL(44,64),
     RIGHT_SIDE_TOP(20,26),
     RIGHT_SIDE_BOTTOM(8,20),
-    LEFT_SIDE_TOP(44,52),
-    LEFT_SIDE_BOTTOM(52,64);
+    LEFT_SIDE_TOP(44,51),
+    LEFT_SIDE_BOTTOM(51,64);
+
 
     private final int start;
     private final int end;
@@ -73,24 +74,28 @@ public class LightSubsystem extends SubsystemBase {
   }
 
   public enum LightColours {
-    RED(255, 0, 0),
-    GREEN(0, 255, 0),
-    BLUE(0, 0, 255),
-    WHITE(255, 255, 255),
     BLACK(0, 0, 0),
-    YELLOW(255, 255, 0),
-    PURPLE(150, 0, 255),
+    BROWN(96, 32, 8),
+    INFRARED(50, 0, 0),
+    RED(255, 0, 0),
+    LIGHTRED(255, 105, 105),
+    SUN(255, 60, 0),
     ORANGE(255, 18, 0),
-    CYAN(0, 255, 179),
-    PINK(255, 0, 255),
-    LIGHTBLUE(103, 120, 214),
-    MAGENTA(150, 15, 92),
-    NAVY(9, 15, 79),
-    DARKGREEN(21, 102, 13),
-    LIGHTGREEN(130, 247, 119),
+    YELLOW(255, 255, 0),
     LIME(187, 255, 0),
-    LIGHTRED(255, 105, 105);
-
+    LIGHTGREEN(130, 247, 119),
+    GREEN(0, 255, 0),
+    DARKGREEN(21, 102, 13),
+    CYAN(0, 255, 179),
+    LIGHTBLUE(103, 120, 214),
+    BLUE(0, 0, 255),
+    NAVY(9, 15, 79),
+    ULTRAVIOLET(50, 0, 100),
+    PURPLE(150, 0, 255),
+    MAGENTA(150, 15, 92),
+    PINK(255, 0, 255),
+    WHITE(255, 255, 255),
+    GRAY(127, 127, 127);
 
     private final int red;
     private final int green;
