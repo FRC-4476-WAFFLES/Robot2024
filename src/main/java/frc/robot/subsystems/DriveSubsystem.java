@@ -449,29 +449,25 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
             Pose2d estPoseRight = estRight.estimatedPose.toPose2d();
             Matrix<N3, N1> estStdDevsRight = visionRight.getEstimationStdDevs(estPoseRight);
 
-            // Calculate inverse variances (1/variance)
-            Matrix<N3, N1> invVarianceLeft = estStdDevsLeft.elementPower(-2);
-            Matrix<N3, N1> invVarianceRight = estStdDevsRight.elementPower(-2);
+            // Determine which camera has a better estimate based on total variance
+            double totalVarianceLeft = Math.pow(estStdDevsLeft.get(0, 0), 2) + Math.pow(estStdDevsLeft.get(1, 0), 2);
+            double totalVarianceRight = Math.pow(estStdDevsRight.get(0, 0), 2) + Math.pow(estStdDevsRight.get(1, 0), 2);
 
-            // Combined inverse variance
-            Matrix<N3, N1> combinedInvVariance = invVarianceLeft.plus(invVarianceRight);
+            Pose2d selectedPose;
+            double selectedTimestamp;
+            Matrix<N3, N1> selectedStdDevs;
 
-            // Calculate combined standard deviations
-            Matrix<N3, N1> combinedStdDevs = combinedInvVariance.elementPower(-0.5);
+            if (totalVarianceLeft < totalVarianceRight) {
+                selectedPose = estPoseLeft;
+                selectedTimestamp = estLeft.timestampSeconds;
+                selectedStdDevs = estStdDevsLeft;
+            } else {
+                selectedPose = estPoseRight;
+                selectedTimestamp = estRight.timestampSeconds;
+                selectedStdDevs = estStdDevsRight;
+            }
 
-            // Calculate weights for interpolation based on inverse variances
-            Matrix<N3, N1> weightLeft = elementWiseDivide(invVarianceLeft, combinedInvVariance);
-            Matrix<N3, N1> weightRight = elementWiseDivide(invVarianceRight, combinedInvVariance);
-
-            // Interpolate positions using weighted averages
-            Pose2d estPose = new Pose2d(
-                estPoseLeft.getX() * weightLeft.get(0, 0) + estPoseRight.getX() * weightRight.get(0, 0),
-                estPoseLeft.getY() * weightLeft.get(1, 0) + estPoseRight.getY() * weightRight.get(1, 0),
-                getRobotPose().getRotation() // Retain current rotation or consider vision-based rotation if applicable
-            );
-
-            double averageTimestamp = (estLeft.timestampSeconds + estRight.timestampSeconds) / 2.0;
-            addVisionMeasurement(estPose, averageTimestamp, combinedStdDevs);
+            addVisionMeasurement(selectedPose, selectedTimestamp, selectedStdDevs);
         } else {
             var presentEstimation = visionEstimationLeft.isPresent() ? visionEstimationLeft : visionEstimationRight;
             if (presentEstimation.isPresent()) {
