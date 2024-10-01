@@ -303,18 +303,20 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
         Pose2d poseOfStash = (alliance == Alliance.Red)
             ? Constants.DriveConstants.redStash
             : Constants.DriveConstants.blueStash;
-
+    
         poseOfStash = new Pose2d(poseOfStash.getX(), poseOfStash.getY() + randomYStashAdjustment, poseOfStash.getRotation());
-
+    
         double deltaX = getRobotPose().getX() - poseOfStash.getX();
         double deltaY = getRobotPose().getY() - poseOfStash.getY();
-        double angleToGoal = Math.atan2(deltaY, deltaX); // Use atan2 for better handling
-
+        double angleToGoal = Math.atan2(deltaY, deltaX);
+    
         if (alliance == Alliance.Red) {
             angleToGoal += Math.PI;
         }
-
-        SmartDashboard.putNumber("AngleToStash", angleToGoal);
+    
+        angleToGoal = Rotation2d.fromRadians(angleToGoal).getRadians();
+    
+        SmartDashboard.putNumber("Angle to Goal Adjusted", angleToGoal);
         return new Rotation2d(angleToGoal);
     }
 
@@ -373,36 +375,30 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
      * @return The angle to the goal with offset.
      */
     public Rotation2d angleToGoalOffsetCalculation(double inputtedAngle) {
-
-        if (DriverStation.getAlliance().get() == Alliance.Blue) {
-            inputtedAngle += Math.PI;
-            inputtedAngle = Math.PI - (inputtedAngle - Math.PI);
-        }
-        SmartDashboard.putNumber("inputted Angle", inputtedAngle);
-
-        Pose2d poseOfGoal;
-
-        // Set goal pose based on alliance
-        if (DriverStation.getAlliance().get() == Alliance.Red) {
-            poseOfGoal = new Pose2d(
-                Constants.DriveConstants.redGoalPoseCenter.getX(),
-                Constants.DriveConstants.redGoalPoseCenter.getY() + angleToGoalOffsetMap.get(inputtedAngle),
-                new Rotation2d(0)
-            );
-        }
-        else {
-            poseOfGoal = new Pose2d(
-                Constants.DriveConstants.blueGoalPoseCenter.getX(),
-                Constants.DriveConstants.blueGoalPoseCenter.getY() + angleToGoalOffsetMap.get(inputtedAngle),
-                new Rotation2d(0)
-            );
-        }
-
-        double angleToGoalAdjusted = Math.atan((getRobotPose().getY() - poseOfGoal.getY()) / (getRobotPose().getX() - poseOfGoal.getX()));
-        if (DriverStation.getAlliance().get() == Alliance.Red) {
+        Alliance alliance = DriverStation.getAlliance().get(); // Cached alliance
+        Pose2d poseOfGoal = (alliance == Alliance.Red)
+                ? Constants.DriveConstants.redGoalPoseCenter
+                : Constants.DriveConstants.blueGoalPoseCenter;
+    
+        poseOfGoal = new Pose2d(
+            poseOfGoal.getX(),
+            poseOfGoal.getY() + angleToGoalOffsetMap.get(inputtedAngle),
+            new Rotation2d(0)
+        );
+    
+        double deltaX = getRobotPose().getX() - poseOfGoal.getX();
+        double deltaY = getRobotPose().getY() - poseOfGoal.getY();
+        
+        // Use atan2 for accurate angle calculation
+        double angleToGoalAdjusted = Math.atan2(deltaY, deltaX);
+        
+        if (alliance == Alliance.Red) {
             angleToGoalAdjusted += Math.PI;
         }
-
+        
+        // Normalize angle between -π to π
+        angleToGoalAdjusted = Rotation2d.fromRadians(angleToGoalAdjusted).getRadians();
+        
         SmartDashboard.putNumber("Angle to Goal Adjusted", angleToGoalAdjusted);
         return new Rotation2d(angleToGoalAdjusted);
     }
