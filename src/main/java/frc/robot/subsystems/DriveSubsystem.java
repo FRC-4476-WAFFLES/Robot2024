@@ -420,8 +420,8 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
             for (int j = 0; j < numerator.getNumCols(); j++) {
                 double denomValue = denominator.get(i, j);
                 if (denomValue == 0) {
-                    // Assign a very high inverse variance to effectively ignore this measurement axis
-                    result.set(i, j, Double.MAX_VALUE);
+                    // Assign a default high inverse variance instead of Double.MAX_VALUE
+                    result.set(i, j, 1e6);
                 } else {
                     result.set(i, j, numerator.get(i, j) / denomValue);
                 }
@@ -490,5 +490,4 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
             }
         }
     }
-    
 }
