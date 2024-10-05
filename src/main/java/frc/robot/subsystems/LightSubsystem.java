@@ -22,7 +22,11 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class LightSubsystem extends SubsystemBase {
@@ -31,8 +35,11 @@ public class LightSubsystem extends SubsystemBase {
 
   private static final Timer blinkTimer = new Timer();
   private boolean isBlinkColour = true;
-  
+  public boolean isEndgameWarning = false;
+  private Animation m_currentAnimation;
   private double blinkRate = 0.1;
+  private int[][] ledColors;
+  
 
   private Map<LedRange, LightColours> ledRangeColours = new EnumMap<>(LedRange.class);
 
@@ -41,11 +48,11 @@ public class LightSubsystem extends SubsystemBase {
     RIGHT_SIDE_FULL(8,26),
     MIDDLE_FULL(26,44),
     LEFT_SIDE_FULL(44,64),
-    RIGHT_SIDE_TOP(17,26),
-    RIGHT_SIDE_BOTTOM(8,17),
-    LEFT_SIDE_TOP(44,54),
-    LEFT_SIDE_BOTTOM(54,64),
-    FULL_RANGE(0,64);
+    RIGHT_SIDE_TOP(20,26),
+    RIGHT_SIDE_BOTTOM(8,20),
+    LEFT_SIDE_TOP(44,51),
+    LEFT_SIDE_BOTTOM(51,64);
+
 
     private final int start;
     private final int end;
@@ -65,21 +72,28 @@ public class LightSubsystem extends SubsystemBase {
   }
 
   public enum LightColours {
-    RED(255, 0, 0),
-    GREEN(0, 255, 0),
-    BLUE(0, 0, 255),
-    WHITE(255, 255, 255),
     BLACK(0, 0, 0),
-    YELLOW(255, 255, 0),
-    PURPLE(150, 0, 255),
+    BROWN(96, 32, 8),
+    INFRARED(50, 0, 0),
+    RED(255, 0, 0),
+    LIGHTRED(255, 105, 105),
+    SUN(255, 60, 0),
     ORANGE(255, 18, 0),
-    CYAN(0, 255, 179),
-    PINK(255, 0, 255),
-    LIGHTBLUE(103, 120, 214),
-    MAGENTA(150, 15, 92),
-    NAVY(9, 15, 79),
+    YELLOW(255, 255, 0),
+    LIME(187, 255, 0),
+    LIGHTGREEN(130, 247, 119),
+    GREEN(0, 255, 0),
     DARKGREEN(21, 102, 13),
-    LIGHTGREEN(130, 247, 119);
+    CYAN(0, 255, 179),
+    LIGHTBLUE(103, 120, 214),
+    BLUE(0, 0, 255),
+    NAVY(9, 15, 79),
+    ULTRAVIOLET(50, 0, 100),
+    PURPLE(150, 0, 255),
+    MAGENTA(150, 15, 92),
+    PINK(255, 0, 255),
+    WHITE(255, 255, 255),
+    GRAY(127, 127, 127);
 
     private final int red;
     private final int green;
@@ -123,6 +137,7 @@ public class LightSubsystem extends SubsystemBase {
     configAll.stripType = LEDStripType.GRB;
     configAll.v5Enabled = true;
     candle.configAllSettings(configAll, 100);
+    ledColors = new int[LED_COUNT][3];
   }
 
   /**
@@ -217,12 +232,55 @@ public class LightSubsystem extends SubsystemBase {
     }
   }
 
-  /**
-   * Updates the LED colors based on the current ledRangeColours map.
-   */
-  private void updateLedRanges() {
-    ledRangeColours.forEach((range, colour) -> 
-        candle.setLEDs(colour.red, colour.green, colour.blue, 0, range.getStart(), range.getEnd() - range.getStart())
-    );
-  }
+   private void updateLedRanges() {
+    // Initialize ledColors[] to default color
+    int[] defaultRGB = LightColours.BLACK.getRGBValues();
+    for (int i = 0; i < LED_COUNT; i++) {
+        ledColors[i][0] = defaultRGB[0];
+        ledColors[i][1] = defaultRGB[1];
+        ledColors[i][2] = defaultRGB[2];
+    }
+
+    // Convert ledRangeColours entries to a list for sorting
+    List<Map.Entry<LedRange, LightColours>> entries = new ArrayList<>(ledRangeColours.entrySet());
+
+    // Sort ranges from largest to smallest to give precedence to smaller ranges
+    entries.sort((entry1, entry2) -> {
+        int size1 = entry1.getKey().getEnd() - entry1.getKey().getStart();
+        int size2 = entry2.getKey().getEnd() - entry2.getKey().getStart();
+        return Integer.compare(size2, size1); // Largest size first
+    });
+
+    // Apply colors to ledColors[] array
+    for (Map.Entry<LedRange, LightColours> entry : entries) {
+        LedRange range = entry.getKey();
+        LightColours colour = entry.getValue();
+        int[] rgb = colour.getRGBValues();
+        for (int i = range.getStart(); i < range.getEnd(); i++) {
+            ledColors[i][0] = rgb[0];
+            ledColors[i][1] = rgb[1];
+            ledColors[i][2] = rgb[2];
+        }
+    }
+
+    // Optimize LED updates by grouping contiguous colors
+    int idx = 0;
+    while (idx < LED_COUNT) {
+        int[] currentColor = ledColors[idx];
+        int startIdx = idx;
+        int count = 1;
+        idx++;
+        while (idx < LED_COUNT && Arrays.equals(ledColors[idx], currentColor)) {
+            count++;
+            idx++;
+        }
+        // Update the LEDs for this contiguous range
+        candle.setLEDs(currentColor[0], currentColor[1], currentColor[2], 0, startIdx, count);
+    }
+
+    // Clear ledRangeColours for the next update cycle
+    ledRangeColours.clear();
+}
+    
+  
 }
