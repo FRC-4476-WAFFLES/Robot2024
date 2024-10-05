@@ -56,9 +56,12 @@ public class AllignWithNote extends Command {
           // if we supply a y velocity, and the intake is running in, allign with the note and move forward at the set speed  
           double translationFieldOrientedAngle = Math.atan2(yVelocitySupplier.getAsDouble(), xVelocitySupplier.getAsDouble());
           Rotation2d angleDifference = driveSubsystem.getRobotPose().getRotation().minus(new Rotation2d(translationFieldOrientedAngle));
-          // scale the dot product by the y velocity to make the robot movements less sudden at lower speeds  
-          double scaledDotProduct = angleDifference.getCos() * Math.hypot(yVelocitySupplier.getAsDouble(), xVelocitySupplier.getAsDouble()) * (Math.abs(yVelocitySupplier.getAsDouble()) / DriveConstants.maxSpeed);
-          request = createSwerveRequest(scaledDotProduct, -0.05 * LimelightHelpers.getTX(LIMELIGHT_KEY));
+          // Calculate the dot product
+          double dotProduct = angleDifference.getCos() * Math.hypot(yVelocitySupplier.getAsDouble(), xVelocitySupplier.getAsDouble());
+          // Scale the Limelight TX adjustment based on the magnitude of the dot product
+          double scaleFactor = Math.abs(dotProduct) / DriveConstants.maxSpeed;
+          double scaledTXAdjustment = -0.05 * LimelightHelpers.getTX(LIMELIGHT_KEY) * scaleFactor;
+          request = createSwerveRequest(dotProduct, scaledTXAdjustment);
       }
       driveSubsystem.setControl(request);
     } else {

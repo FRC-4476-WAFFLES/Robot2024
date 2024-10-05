@@ -253,11 +253,11 @@ public class RobotContainer {
     
       if (alliance.get() == DriverStation.Alliance.Blue){
         driveSubsystem.setDefaultCommand(containerRobot.driveTeleopBlue);
-        containerRobot.rightJoystick.button(3).whileTrue(containerRobot.allignWithNoteBlue);
+        operatorController.povLeft().whileTrue(containerRobot.allignWithNoteBlue);
       }
       else if (alliance.get() == DriverStation.Alliance.Red){
         driveSubsystem.setDefaultCommand(containerRobot.driveTeleopRed);
-        containerRobot.rightJoystick.button(3).whileTrue(containerRobot.allignWithNoteRed);
+        operatorController.povLeft().whileTrue(containerRobot.allignWithNoteRed);
       }
       gotAlliance = true;
 
