@@ -44,16 +44,17 @@ public class AllignWithNote extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (!shooterSubsystem.isNote() && LimelightHelpers.getTV(LIMELIGHT_KEY)) {  
+    boolean hasTarget = LimelightHelpers.getTV(LIMELIGHT_KEY);
+    if (!shooterSubsystem.isNote() && hasTarget) {  
       if (yVelocitySupplier == null) {
-          // if we don't supply a y velocity, move forward at a set speed and allign with the note
-          if (LimelightHelpers.getTV(LIMELIGHT_KEY)) {
+          // if we don't supply a y velocity, move forward at a set speed and align with the note
+          if (hasTarget) {
               request = createSwerveRequest(3.0, -0.05 * LimelightHelpers.getTX(LIMELIGHT_KEY));
           } else {
               request = createSwerveRequest(0, 0);
           }
       } else if(intakeSubsystem.isRunningIn()) {
-          // if we supply a y velocity, and the intake is running in, allign with the note and move forward at the set speed  
+          // if we supply a y velocity, and the intake is running in, align with the note and move forward at the set speed  
           double translationFieldOrientedAngle = Math.atan2(yVelocitySupplier.getAsDouble(), xVelocitySupplier.getAsDouble());
           Rotation2d angleDifference = driveSubsystem.getRobotPose().getRotation().minus(new Rotation2d(translationFieldOrientedAngle));
           // Calculate the dot product
