@@ -3,6 +3,7 @@ package frc.robot.commands.drive;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.utils.LimelightHelpers;
@@ -45,7 +46,8 @@ public class AllignWithNote extends Command {
   @Override
   public void execute() {
     boolean hasTarget = LimelightHelpers.getTV(LIMELIGHT_KEY);
-    if (!shooterSubsystem.isNote() && hasTarget) {  
+    SmartDashboard.putNumber("TA", LimelightHelpers.getTA(LIMELIGHT_KEY));
+    if (!shooterSubsystem.isNote() && hasTarget  && LimelightHelpers.getTA(LIMELIGHT_KEY)>1) {  
       if (yVelocitySupplier == null) {
           // if we don't supply a y velocity, move forward at a set speed and align with the note
           if (hasTarget) {
@@ -60,7 +62,8 @@ public class AllignWithNote extends Command {
           // Calculate the dot product
           double dotProduct = angleDifference.getCos() * Math.hypot(yVelocitySupplier.getAsDouble(), xVelocitySupplier.getAsDouble());
           // Scale the Limelight TX adjustment based on the magnitude of the dot product
-          double scaleFactor = Math.abs(dotProduct) / DriveConstants.maxSpeed;
+          double scaleFactor = Math.abs(dotProduct) / 2.8;
+          SmartDashboard.putNumber("scaleFactor", scaleFactor);
           double scaledTXAdjustment = -0.05 * LimelightHelpers.getTX(LIMELIGHT_KEY) * scaleFactor;
           request = createSwerveRequest(dotProduct, scaledTXAdjustment);
       }
