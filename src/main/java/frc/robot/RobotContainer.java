@@ -107,8 +107,8 @@ public class RobotContainer {
 
 
   
-  private final AllignWithNote allignWithNoteRed = new AllignWithNote(() -> -leftJoystick.getY() * DriveConstants.maxSpeed, () -> -(leftJoystick.getX()) * DriveConstants.maxSpeed, () -> rightJoystick.getX() * DriveConstants.maxAngularSpeed);
-  private final AllignWithNote allignWithNoteBlue = new AllignWithNote(() -> -leftJoystick.getY() * DriveConstants.maxSpeed, () -> -(leftJoystick.getX()) * DriveConstants.maxSpeed, () -> -rightJoystick.getX() * DriveConstants.maxAngularSpeed);
+  private final AllignWithNote allignWithNoteRed = new AllignWithNote(() -> leftJoystick.getY() * DriveConstants.maxSpeed, () -> leftJoystick.getX() * DriveConstants.maxSpeed, () -> -rightJoystick.getX() * DriveConstants.maxAngularSpeed);
+  private final AllignWithNote allignWithNoteBlue = new AllignWithNote(() -> -leftJoystick.getY() * DriveConstants.maxSpeed, () -> -leftJoystick.getX() * DriveConstants.maxSpeed, () -> -rightJoystick.getX() * DriveConstants.maxAngularSpeed);
   private final AllignWithNote allignWithNoteAuto = new AllignWithNote(null,null, null);
 
   private final DriveAndPointAtTarget driveAndAimAtGoal = new DriveAndPointAtTarget(() -> leftJoystick.getY() * DriveConstants.maxSpeed, () -> leftJoystick.getX() * DriveConstants.maxSpeed, driveSubsystem::getAngleToGoal);
@@ -253,11 +253,11 @@ public class RobotContainer {
     
       if (alliance.get() == DriverStation.Alliance.Blue){
         driveSubsystem.setDefaultCommand(containerRobot.driveTeleopBlue);
-        operatorController.povLeft().whileTrue(containerRobot.allignWithNoteBlue);
+        containerRobot.rightJoystick.button(3).whileTrue(containerRobot.allignWithNoteBlue);
       }
       else if (alliance.get() == DriverStation.Alliance.Red){
         driveSubsystem.setDefaultCommand(containerRobot.driveTeleopRed);
-        operatorController.povLeft().whileTrue(containerRobot.allignWithNoteRed);
+        containerRobot.rightJoystick.button(3).whileTrue(containerRobot.allignWithNoteRed);
       }
       gotAlliance = true;
 
