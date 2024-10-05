@@ -16,6 +16,7 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 //import com.reduxrobotics.sensors.canandcolor.Canandcolor;
+import au.grapplerobotics.LaserCan;
 
 import java.lang.Math;
 
