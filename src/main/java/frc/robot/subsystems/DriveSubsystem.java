@@ -16,7 +16,6 @@ import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -60,6 +59,9 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
 
     public double randomYStashAdjustment = 0; // This value is changed everytime spinUpStash is initialized
 
+    // Add angleToGoalOffsetMap as a class member
+    private InterpolatingDoubleTreeMap angleToGoalOffsetMap;
+
     /**
      * Constructs a new DriveSubsystem.
      * @param driveTrainConstants Constants for the drivetrain.
@@ -70,6 +72,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
             SwerveModuleConstants... modules) {
         super(driveTrainConstants, OdometryUpdateFrequency, modules);
         configurePathPlanner();
+        initializeAngleToGoalOffsetMap(); // Initialize the map
         if (Utils.isSimulation()) {
             startSimThread();
         }
@@ -83,9 +86,23 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
     public DriveSubsystem(SwerveDrivetrainConstants driveTrainConstants, SwerveModuleConstants... modules) {
         super(driveTrainConstants, modules);
         configurePathPlanner();
+        initializeAngleToGoalOffsetMap(); // Initialize the map
         if (Utils.isSimulation()) {
             startSimThread();
         }
+    }
+
+    /**
+     * Initializes the angleToGoalOffsetMap with predefined values.
+     */
+    private void initializeAngleToGoalOffsetMap() {
+        angleToGoalOffsetMap = new InterpolatingDoubleTreeMap();
+        angleToGoalOffsetMap.put(2.3, -2.0);
+        angleToGoalOffsetMap.put(2.6, -0.58);
+        angleToGoalOffsetMap.put(Math.PI, 0.0);
+        angleToGoalOffsetMap.put(3.2, 0.05);
+        angleToGoalOffsetMap.put(3.6, 0.45);
+        angleToGoalOffsetMap.put(4.0, 0.9);
     }
 
     private void configurePathPlanner() {
@@ -147,19 +164,21 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
      * @return true if the robot is stationary, false otherwise.
      */
     public boolean notMoving() {
-        return Math.abs(getCurrentRobotChassisSpeeds().vxMetersPerSecond) < 0.1
-                && Math.abs(getCurrentRobotChassisSpeeds().vyMetersPerSecond) < 0.1
-                && Math.abs(getCurrentRobotChassisSpeeds().omegaRadiansPerSecond) < 0.4;
+        ChassisSpeeds speeds = getCurrentRobotChassisSpeeds();
+        return Math.abs(speeds.vxMetersPerSecond) < 0.1
+                && Math.abs(speeds.vyMetersPerSecond) < 0.1
+                && Math.abs(speeds.omegaRadiansPerSecond) < 0.4;
     }
-    
+
     /**
      * Checks if the robot is moving slowly.
      * @return true if the robot is moving slowly, false otherwise.
      */
     public boolean slowMoving() {
-        return Math.abs(getCurrentRobotChassisSpeeds().vxMetersPerSecond) < 1
-                && Math.abs(getCurrentRobotChassisSpeeds().vyMetersPerSecond) < 1
-                && Math.abs(getCurrentRobotChassisSpeeds().omegaRadiansPerSecond) < 1;
+        ChassisSpeeds speeds = getCurrentRobotChassisSpeeds();
+        return Math.abs(speeds.vxMetersPerSecond) < 1
+                && Math.abs(speeds.vyMetersPerSecond) < 1
+                && Math.abs(speeds.omegaRadiansPerSecond) < 1;
     }
 
     /**
@@ -167,10 +186,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
      * @return An Optional containing the rotation override, or an empty Optional if no override is needed.
      */
     public Optional<Rotation2d> getRotationTargetOverride() {
-        // If SWM in auto
         if (autoSWM) {
-            // Return an optional containing the rotation override (this should be a field
-            // relative rotation)
             return Optional.of(autoSWMHeading);
         } 
         else if (targetGoal) {
@@ -214,7 +230,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
 
     /**
      * Sets the target goal flag for the drivetrain.
-     * @param targetGoal true to enable target goal, false to disable.
+     * @param targetGoal true to enable target goal, false otherwise.
      */
     public void setTargetGoal(boolean targetGoal) {
         this.targetGoal = targetGoal;
@@ -253,7 +269,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
             double deltaTime = currentTime - m_lastSimTime;
             m_lastSimTime = currentTime;
 
-            /* use the measured time delta, get battery voltage from WPILib */
+            /* Use the measured time delta, get battery voltage from WPILib */
             updateSimState(deltaTime, RobotController.getBatteryVoltage());
         });
         m_simNotifier.startPeriodic(kSimLoopPeriod);
@@ -272,12 +288,10 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
      * @return The static angle to the podium target in radians.
      */
     public Rotation2d getStaticAngleToPodium() {
-        if (DriverStation.getAlliance().get() == Alliance.Red) {
-            return new Rotation2d(Units.degreesToRadians(-159));
-        } else {
-            return new Rotation2d(Units.degreesToRadians(-31));
-        }
-
+        double angleDegrees = (DriverStation.getAlliance().get() == Alliance.Red)
+            ? -159
+            : -31;
+        return new Rotation2d(Units.degreesToRadians(angleDegrees));
     }
 
     /**
@@ -286,24 +300,23 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
      */
     public Rotation2d getAngleToStash() {
         Alliance alliance = DriverStation.getAlliance().get(); // Cache alliance
-        Pose2d poseOfStash;
-        if (alliance == Alliance.Red) {
-            poseOfStash = Constants.DriveConstants.redStash;
-        } else {
-            poseOfStash = Constants.DriveConstants.blueStash;
-        }
-
+        Pose2d poseOfStash = (alliance == Alliance.Red)
+            ? Constants.DriveConstants.redStash
+            : Constants.DriveConstants.blueStash;
+    
         poseOfStash = new Pose2d(poseOfStash.getX(), poseOfStash.getY() + randomYStashAdjustment, poseOfStash.getRotation());
-
+    
         double deltaX = getRobotPose().getX() - poseOfStash.getX();
         double deltaY = getRobotPose().getY() - poseOfStash.getY();
-        double angleToGoal = Math.atan2(deltaY, deltaX); // Use atan2 for better handling
-
+        double angleToGoal = Math.atan2(deltaY, deltaX);
+    
         if (alliance == Alliance.Red) {
             angleToGoal += Math.PI;
         }
-
-        SmartDashboard.putNumber("AngleToStash", angleToGoal);
+    
+        angleToGoal = Rotation2d.fromRadians(angleToGoal).getRadians();
+    
+        SmartDashboard.putNumber("Angle to Goal Adjusted", angleToGoal);
         return new Rotation2d(angleToGoal);
     }
 
@@ -312,20 +325,12 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
      * @return The distance to the stash target in meters.
      */
     public double getDistanceToStash() {
-        Pose2d poseOfStash;
-
-        // Set goal pose based on alliance
-        if (DriverStation.getAlliance().get() == Alliance.Red) {
-            poseOfStash = Constants.DriveConstants.redStash;
-        } else {
-            poseOfStash = Constants.DriveConstants.blueStash;
-        }
+        Pose2d poseOfStash = (DriverStation.getAlliance().get() == Alliance.Red)
+            ? Constants.DriveConstants.redStash
+            : Constants.DriveConstants.blueStash;
 
         double distance = poseOfStash.minus(getRobotPose()).getTranslation().getNorm();
-        //distance = filter.calculate(distance);
-
         SmartDashboard.putNumber("DistanceToStash", distance);
-
         return distance;
     }
 
@@ -334,28 +339,23 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
      * @return The angle to the goal.
      */
     public Rotation2d getAngleToGoal() {
-        Pose2d poseOfGoal;
+        Pose2d poseOfGoal = getAllianceGoalPose();
+        double angleToGoal = Math.atan2(getRobotPose().getY() - poseOfGoal.getY(),
+                                       getRobotPose().getX() - poseOfGoal.getX());
 
-        // Set goal pose based on alliance
-        if (DriverStation.getAlliance().get() == Alliance.Red) {
-            poseOfGoal = Constants.DriveConstants.redGoalPoseCenter;
-        }
-        else {
-            poseOfGoal = Constants.DriveConstants.blueGoalPoseCenter;
-        }
-
-        double angleToGoal = Math
-                .atan((getRobotPose().getY() - poseOfGoal.getY()) / (getRobotPose().getX() - poseOfGoal.getX()));
         if (DriverStation.getAlliance().get() == Alliance.Red) {
             angleToGoal += Math.PI;
         }
 
-        // return poseOfGoal.minus(getRobotPose()).getTranslation().getAngle();
         SmartDashboard.putNumber("Angle to Goal", angleToGoal);
         SmartDashboard.putNumber("Robot Rotation", getRobotPose().getRotation().getRadians());
         return angleToGoalOffsetCalculation(angleToGoal);
-        //return new Rotation2d(angleToGoal);
-        // return new Rotation2d(Math.PI);
+    }
+
+    private Pose2d getAllianceGoalPose() {
+        return (DriverStation.getAlliance().get() == Alliance.Red)
+            ? Constants.DriveConstants.redGoalPoseCenter
+            : Constants.DriveConstants.blueGoalPoseCenter;
     }
 
     /**
@@ -363,21 +363,9 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
      * @return The distance to the goal in meters.
      */
     public double getDistanceToGoal() {
-        Pose2d poseOfGoal;
-
-        // Set goal pose based on alliance
-        if (DriverStation.getAlliance().get() == Alliance.Red) {
-            poseOfGoal = Constants.DriveConstants.redGoalPoseCenter;
-        } 
-        else{
-            poseOfGoal = Constants.DriveConstants.blueGoalPoseCenter;
-        }
-
+        Pose2d poseOfGoal = getAllianceGoalPose();
         double distance = poseOfGoal.minus(getRobotPose()).getTranslation().getNorm();
-
         SmartDashboard.putNumber("DistanceToGoal", distance);
-        //distance = filter.calculate(distance);
-
         return distance;
     }
 
@@ -386,7 +374,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
      * @param inputtedAngle The inputted angle.
      * @return The angle to the goal with offset.
      */
-    public Rotation2d angleToGoalOffsetCalculation(double inputtedAngle){
+    public Rotation2d angleToGoalOffsetCalculation(double inputtedAngle) {
         final InterpolatingDoubleTreeMap angleToGoalOffsetMap = new InterpolatingDoubleTreeMap();
         angleToGoalOffsetMap.put(2.3, -2.0);
         angleToGoalOffsetMap.put(2.6, -0.58);
@@ -428,9 +416,31 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
         return new Rotation2d(angleToGoalAdjusted);
         // return new Rotation2d(Math.PI);
 
-
     }
 
+    /**
+     * Performs element-wise division with improved handling for zero denominators.
+     *
+     * @param numerator The numerator matrix.
+     * @param denominator The denominator matrix.
+     * @return The result of element-wise division.
+     */
+    private Matrix<N3, N1> elementWiseDivide(Matrix<N3, N1> numerator, Matrix<N3, N1> denominator) {
+        Matrix<N3, N1> result = new Matrix<>(N3.instance, N1.instance);
+        for (int i = 0; i < numerator.getNumRows(); i++) {
+            for (int j = 0; j < numerator.getNumCols(); j++) {
+                double denomValue = denominator.get(i, j);
+                if (denomValue == 0) {
+                    // Assign a default high inverse variance instead of Double.MAX_VALUE
+                    result.set(i, j, 1e6);
+                } else {
+                    result.set(i, j, numerator.get(i, j) / denomValue);
+                }
+            }
+        }
+        return result;
+    }
+    
     /**
      * Periodic method called by the command scheduler.
      * Updates vision measurements and other periodic tasks.
@@ -438,46 +448,52 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Robot Angle", getRobotPose().getRotation().getRadians());
-        if(odometryIsValid()){
-            var visionEstimationLeft = visionLeft.getEstimatedGlobalPose();
-            var visionEstimationRight = visionRight.getEstimatedGlobalPose();
+        if (!odometryIsValid()) {
+            return;
+        }
 
-            if (visionEstimationLeft.isPresent() && visionEstimationRight.isPresent()) {
-                var estLeft = visionEstimationLeft.get();
-                var estPoseLeft = estLeft.estimatedPose.toPose2d();
-                Matrix<N3, N1> estStdDevsLeft = visionLeft.getEstimationStdDevs(estPoseLeft);
-                var estRight = visionEstimationRight.get();
-                var estPoseRight = estRight.estimatedPose.toPose2d();
-                Matrix<N3, N1> estStdDevsRight = visionRight.getEstimationStdDevs(estPoseRight);
-                Matrix<N3, N1> estStdDevs = estStdDevsLeft.plus(estStdDevsRight).times(0.5); // Take the average of the std devs
-                Matrix<N3, N1> interpolateValues = estStdDevsLeft.elementTimes(estStdDevsLeft.plus(estStdDevsRight).elementPower(-1)); // is left*(left+right)^-1 which equals left/(left+right)
-                                                                                                                                       // Maps left and right standard devs to [0,1] for interpolation
-                
-                Pose2d estPose = new Pose2d(
-                    MathUtil.interpolate(estPoseLeft.getX(), estPoseRight.getX(), interpolateValues.get(0, 0)), 
-                    MathUtil.interpolate(estPoseLeft.getY(), estPoseRight.getY(), interpolateValues.get(1, 0)), 
-                    getRobotPose().getRotation()
-                );
+        var visionEstimationLeft = visionLeft.getEstimatedGlobalPose();
+        var visionEstimationRight = visionRight.getEstimatedGlobalPose();
 
-                addVisionMeasurement(estPose, (estLeft.timestampSeconds + estRight.timestampSeconds) / 2.0, estStdDevs);
+        if (visionEstimationLeft.isPresent() && visionEstimationRight.isPresent()) {
+            var estLeft = visionEstimationLeft.get();
+            Pose2d estPoseLeft = estLeft.estimatedPose.toPose2d();
+            Matrix<N3, N1> estStdDevsLeft = visionLeft.getEstimationStdDevs(estPoseLeft);
 
-            } else if (visionEstimationLeft.isPresent()) {
-                var estLeft = visionEstimationLeft.get();
-                Pose2d estPoseLeft = estLeft.estimatedPose.toPose2d();
-                Matrix<N3, N1> estStdDevs = visionLeft.getEstimationStdDevs(estPoseLeft);
+            var estRight = visionEstimationRight.get();
+            Pose2d estPoseRight = estRight.estimatedPose.toPose2d();
+            Matrix<N3, N1> estStdDevsRight = visionRight.getEstimationStdDevs(estPoseRight);
 
-                Pose2d estPose = new Pose2d(estPoseLeft.getTranslation(), getRobotPose().getRotation());
+            // Determine which camera has a better estimate based on total variance
+            double totalVarianceLeft = Math.pow(estStdDevsLeft.get(0, 0), 2) + Math.pow(estStdDevsLeft.get(1, 0), 2);
+            double totalVarianceRight = Math.pow(estStdDevsRight.get(0, 0), 2) + Math.pow(estStdDevsRight.get(1, 0), 2);
 
-                addVisionMeasurement(estPose, estLeft.timestampSeconds, estStdDevs);
+            Pose2d selectedPose;
+            double selectedTimestamp;
+            Matrix<N3, N1> selectedStdDevs;
 
-            } else if (visionEstimationRight.isPresent()) {
-                var estRight = visionEstimationRight.get();
-                Pose2d estPoseRight = estRight.estimatedPose.toPose2d();
-                Matrix<N3, N1> estStdDevs = visionRight.getEstimationStdDevs(estPoseRight);
+            if (totalVarianceLeft < totalVarianceRight) {
+                selectedPose = estPoseLeft;
+                selectedTimestamp = estLeft.timestampSeconds;
+                selectedStdDevs = estStdDevsLeft;
+            } else {
+                selectedPose = estPoseRight;
+                selectedTimestamp = estRight.timestampSeconds;
+                selectedStdDevs = estStdDevsRight;
+            }
 
-                Pose2d estPose = new Pose2d(estPoseRight.getTranslation(), getRobotPose().getRotation());
+            addVisionMeasurement(selectedPose, selectedTimestamp, selectedStdDevs);
+        } else {
+            var presentEstimation = visionEstimationLeft.isPresent() ? visionEstimationLeft : visionEstimationRight;
+            if (presentEstimation.isPresent()) {
+                var est = presentEstimation.get();
+                Pose2d estPose = new Pose2d(est.estimatedPose.toPose2d().getTranslation(), getRobotPose().getRotation());
 
-                addVisionMeasurement(estPose, estRight.timestampSeconds, estStdDevs);
+                Matrix<N3, N1> estStdDevs = visionEstimationLeft.isPresent()
+                        ? visionLeft.getEstimationStdDevs(est.estimatedPose.toPose2d())
+                        : visionRight.getEstimationStdDevs(est.estimatedPose.toPose2d());
+
+                addVisionMeasurement(estPose, est.timestampSeconds, estStdDevs);
             }
         }
     }
