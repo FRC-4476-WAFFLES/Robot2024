@@ -16,7 +16,6 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 //import com.reduxrobotics.sensors.canandcolor.Canandcolor;
-import au.grapplerobotics.LaserCan;
 
 import java.lang.Math;
 
@@ -36,7 +35,7 @@ public class ShooterSubsystem extends SubsystemBase {
   // Configs
   
   private double shooterTargetSpeed = 0;
-  private double shooterPercentDifferent = 20;
+  private double shooterPercentDifferent = 15;
   
   
   // Constants

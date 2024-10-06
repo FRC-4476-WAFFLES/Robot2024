@@ -15,7 +15,7 @@ import static frc.robot.RobotContainer.*;
 
 public class SpinUp extends Command {
   /** Creates a new SpinUp. */
-  double generalAnglerAdjustment = 6; 
+  double generalAnglerAdjustment = 0; 
 
   
   public SpinUp() {
@@ -94,24 +94,8 @@ public class SpinUp extends Command {
 
     final InterpolatingDoubleTreeMap shooterAngleMap = new InterpolatingDoubleTreeMap();
 
-    shooterAngleMap.put(1.1977, 76.75 + generalAnglerAdjustment); 
-    shooterAngleMap.put(1.5, 75.75 + generalAnglerAdjustment);
-    shooterAngleMap.put(1.999, 74.35 + generalAnglerAdjustment); 
-    shooterAngleMap.put(2.54, 59.35 + generalAnglerAdjustment + 0.25);//0.25-0.5-0.25 addded mtch 32 ONCMP
-    shooterAngleMap.put(2.773, 57.75 + generalAnglerAdjustment +0.5);
-    shooterAngleMap.put(3.0988, 46.55 + generalAnglerAdjustment + 0.5);
-    shooterAngleMap.put(3.556, 43.2 + generalAnglerAdjustment + 0.5);
-    shooterAngleMap.put(3.8813, 40.5 + generalAnglerAdjustment + 0.25);
-    shooterAngleMap.put(4.1, 39.15 + generalAnglerAdjustment - 0.5);
-    shooterAngleMap.put(4.3688, 37.0 + generalAnglerAdjustment);
-    shooterAngleMap.put(4.5626, 35.0 + generalAnglerAdjustment);
-    shooterAngleMap.put(5.8711, 31.0 + generalAnglerAdjustment+0.25);
-    shooterAngleMap.put(6.0, 30.45 + generalAnglerAdjustment); //approx alliance line
-    shooterAngleMap.put(6.5, 29.9 + generalAnglerAdjustment - 1);
-    shooterAngleMap.put(7.9, 28.15 + generalAnglerAdjustment - 2);
-    shooterAngleMap.put(8.3, 28.0 + generalAnglerAdjustment - 2);
-    shooterAngleMap.put(8.7, 28.0 + generalAnglerAdjustment - 2);
-    double predictedAngle = shooterAngleMap.get(distance);
+    double predictedAngle = 206 - 105 * distance + 25.9 * Math.pow(distance, 2) - 2.94 * Math.pow(distance, 3) + 0.124 * Math.pow(distance, 4);
+    predictedAngle += generalAnglerAdjustment;
     return solveForElevatorHeight(distance, height, predictedAngle);
 
 
