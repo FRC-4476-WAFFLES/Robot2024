@@ -465,8 +465,8 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
             Matrix<N3, N1> estStdDevsRight = visionRight.getEstimationStdDevs(estPoseRight);
 
             // Determine which camera has a better estimate based on total variance
-            double totalVarianceLeft = Math.pow(estStdDevsLeft.get(0, 0), 2) + Math.pow(estStdDevsLeft.get(1, 0), 2);
-            double totalVarianceRight = Math.pow(estStdDevsRight.get(0, 0), 2) + Math.pow(estStdDevsRight.get(1, 0), 2);
+            double totalVarianceLeft = Math.pow(estStdDevsLeft.get(0, 0), 2) + Math.pow(estStdDevsLeft.get(1, 0), 2) + Math.pow(estStdDevsLeft.get(2, 0), 2);
+            double totalVarianceRight = Math.pow(estStdDevsRight.get(0, 0), 2) + Math.pow(estStdDevsRight.get(1, 0), 2) + Math.pow(estStdDevsRight.get(2, 0), 2);
 
             Pose2d selectedPose;
             double selectedTimestamp;
@@ -487,11 +487,11 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
             var presentEstimation = visionEstimationLeft.isPresent() ? visionEstimationLeft : visionEstimationRight;
             if (presentEstimation.isPresent()) {
                 var est = presentEstimation.get();
-                Pose2d estPose = new Pose2d(est.estimatedPose.toPose2d().getTranslation(), getRobotPose().getRotation());
+                Pose2d estPose = est.estimatedPose.toPose2d();
 
                 Matrix<N3, N1> estStdDevs = visionEstimationLeft.isPresent()
-                        ? visionLeft.getEstimationStdDevs(est.estimatedPose.toPose2d())
-                        : visionRight.getEstimationStdDevs(est.estimatedPose.toPose2d());
+                        ? visionLeft.getEstimationStdDevs(estPose)
+                        : visionRight.getEstimationStdDevs(estPose);
 
                 addVisionMeasurement(estPose, est.timestampSeconds, estStdDevs);
             }
