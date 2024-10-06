@@ -94,7 +94,7 @@ public class SpinUp extends Command {
 
     final InterpolatingDoubleTreeMap shooterAngleMap = new InterpolatingDoubleTreeMap();
 
-    double predictedAngle = 206 - 105 * distance + 25.9 * Math.pow(distance, 2) - 2.94 * Math.pow(distance, 3) + 0.124 * Math.pow(distance, 4);
+    double predictedAngle = 205 - 104 * distance + 25.4 * Math.pow(distance, 2) - 2.86 * Math.pow(distance, 3) + 0.12 * Math.pow(distance, 4);
     predictedAngle += generalAnglerAdjustment;
     return solveForElevatorHeight(distance, height, predictedAngle);
 
