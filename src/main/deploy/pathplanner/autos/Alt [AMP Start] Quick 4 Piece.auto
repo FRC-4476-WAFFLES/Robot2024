@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.407706324685116,
-      "y": 7.272429494930317
+      "x": 1.4225982298118458,
+      "y": 7.321271565620054
     },
     "rotation": 0
   },
@@ -163,6 +163,6 @@
       ]
     }
   },
-  "folder": null,
+  "folder": "In Season Autos",
   "choreoAuto": false
 }

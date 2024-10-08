@@ -1,12 +1,6 @@
 {
   "version": 1.0,
-  "startingPose": {
-    "position": {
-      "x": 5.36,
-      "y": 1.716848049080714
-    },
-    "rotation": 0.0
-  },
+  "startingPose": null,
   "command": {
     "type": "sequential",
     "data": {
@@ -33,6 +27,6 @@
       ]
     }
   },
-  "folder": null,
+  "folder": "Testing Autos",
   "choreoAuto": false
 }

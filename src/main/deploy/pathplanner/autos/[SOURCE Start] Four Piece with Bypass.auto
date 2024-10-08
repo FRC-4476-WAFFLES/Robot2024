@@ -5,7 +5,7 @@
       "x": 1.4521990582442719,
       "y": 3.394228326918193
     },
-    "rotation": 0.0
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -200,6 +200,6 @@
       ]
     }
   },
-  "folder": null,
+  "folder": "In Season Autos",
   "choreoAuto": false
 }

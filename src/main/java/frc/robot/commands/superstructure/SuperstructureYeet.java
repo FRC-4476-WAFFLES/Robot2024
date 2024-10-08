@@ -22,7 +22,7 @@ public class SuperstructureYeet extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooterSubsystem.setShooterTargetSpeed(40);
+    shooterSubsystem.setShooterTargetSpeed(25);
     intakeSubsystem.SetIntakeSpeed(1);
     
     elevatorSubsystem.setElevatorTargetPosition(0);
