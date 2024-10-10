@@ -88,6 +88,30 @@ public final class Constants {
     //public static final double anglerLowerLimit = -29;// degrees
     //public static final double anglerUpperLimitInRotations = 0.868; // rotations
     //public static final double anglerLowerLimitInRotations = -0.25; // rotations
+    public static final double SHOOTER_DEAD_ZONE = 4.0;
+    public static final double IR_RANGE = 200.0;
+    public static final double SHOOTER_PERCENT_DIFFERENT = 15.0;
+
+    // Current Limits
+    public static final int SUPPLY_CURRENT_LIMIT = 40;
+    public static final int STATOR_CURRENT_LIMIT = 80;
+    public static final double SUPPLY_CURRENT_THRESHOLD = 40.0;
+    public static final double SUPPLY_TIME_THRESHOLD = 1.0;
+
+    // Voltage Limits
+    public static final double PEAK_FORWARD_VOLTAGE = 12.0;
+    public static final double PEAK_REVERSE_VOLTAGE = -12.0;
+
+    // Torque Current Limits
+    public static final double PEAK_FORWARD_TORQUE_CURRENT = 40.0;
+    public static final double PEAK_REVERSE_TORQUE_CURRENT = -40.0;
+
+    // PID Constants
+    public static final double PID_KP = 0.45;
+    public static final double PID_KI = 0.0;
+    public static final double PID_KD = 0.0001;
+    public static final double PID_KV = 0.117;
+    public static final double PID_KS = 0.0;
   }
 
   public static class DriveConstants {
