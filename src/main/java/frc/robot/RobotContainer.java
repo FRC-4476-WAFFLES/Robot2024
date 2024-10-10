@@ -210,7 +210,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("scoreNote", scoreNoteAuto2);
     // NamedCommands.registerCommand("fenderShot", new ParallelDeadlineGroup(scoreNoteAuto2, spinUpAuto2));
     NamedCommands.registerCommand("completeShot", new ParallelDeadlineGroup(scoreNoteAuto, spinUpAuto, driveAndAimAtGoalAuto));
-    //NamedCommands.registerCommand("findAndPickUpNote",new ParallelRaceGroup(intakeIn, allignWithNoteAuto));
+    NamedCommands.registerCommand("findAndPickUpNote",new ParallelRaceGroup(new IntakeIn(), new AllignWithNote(null, null, null)));
     NamedCommands.registerCommand("intakeIn", intakeInAuto);
     NamedCommands.registerCommand("intakeInThenSpinUp", intakeInAuto2.andThen(spinUpAuto2));
     NamedCommands.registerCommand("intakeInDeadline", intakeInAuto.withTimeout(0.8));
