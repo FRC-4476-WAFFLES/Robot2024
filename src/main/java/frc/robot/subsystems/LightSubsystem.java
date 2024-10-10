@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import static frc.robot.RobotContainer.anglerSubsystem;
 import static frc.robot.RobotContainer.elevatorSubsystem;
+import static frc.robot.RobotContainer.shooterSubsystem;
 
 import com.ctre.phoenix.led.Animation;
 import com.ctre.phoenix.led.CANdle;
@@ -148,6 +149,14 @@ public class LightSubsystem extends SubsystemBase {
   public void periodic() {
     if(DriverStation.isDisabled()){
       LedAnimation currentAnimation = getLedAnimation();
+      if (shooterSubsystem.isNote()){
+        setLEDRangeGroup(LedRange.RIGHT_SIDE_BOTTOM, LightColours.GREEN, LightColours.GREEN, false);
+      }
+      if (shooterSubsystem.isFullyInNote()){
+        setLEDRangeGroup(LedRange.LEFT_SIDE_BOTTOM, LightColours.GREEN, LightColours.GREEN, false);
+      }
+      updateBlinkTimer();
+      updateLedRanges();
       candle.animate(currentAnimation.getAnimation());
     }
     else{
