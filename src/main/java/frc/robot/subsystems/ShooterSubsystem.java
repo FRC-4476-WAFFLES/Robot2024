@@ -15,6 +15,9 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
+
+import au.grapplerobotics.LaserCan;
+import au.grapplerobotics.ConfigurationFailedException;
 //import com.reduxrobotics.sensors.canandcolor.Canandcolor;
 
 import java.lang.Math;
@@ -25,10 +28,9 @@ public class ShooterSubsystem extends SubsystemBase {
 
   private final TalonFX shooter1;
   private final TalonFX shooter2;
-  private final AnalogInput shooterIR;
-  private final AnalogInput shooterIR2;
-  //private final Canandcolor shooterIR;
-  
+  private LaserCan shooterIR;
+  private LaserCan shooterIR2;
+
   
   
   
@@ -42,7 +44,7 @@ public class ShooterSubsystem extends SubsystemBase {
   
   private final double SHOOTER_DEAD_ZONE = 4;
 
-  private final double IR_RANGE = 2.2;
+  private final double IR_RANGE = 200;
   private boolean tryingToShoot = false;
   public boolean tryingToStash = false;
 
@@ -53,7 +55,7 @@ public class ShooterSubsystem extends SubsystemBase {
     TalonFXConfiguration generalConfigs = new TalonFXConfiguration();
     TalonFXConfiguration generalConfigs2 = new TalonFXConfiguration();
 
-  
+    
     
 
 
@@ -64,8 +66,8 @@ public class ShooterSubsystem extends SubsystemBase {
 
     shooter1 = new TalonFX(Constants.shooter1);
     shooter2 = new TalonFX(Constants.shooter2);  
-    shooterIR = new AnalogInput(Constants.shooterIR);
-    shooterIR2 =  new AnalogInput(Constants.shooterIR2);
+    shooterIR = new LaserCan(Constants.firstLaserCan);
+    shooterIR2 =  new LaserCan(Constants.secondLaserCan);
     
     //shooterIR = new Canandcolor(Constants.shooterIR);
 
@@ -147,9 +149,13 @@ public class ShooterSubsystem extends SubsystemBase {
     else{
       shooter2.setControl(shooterSpeedRequest.withVelocity(shooterTargetSpeed-shooterPercentDifferent));
     }
-  
-    SmartDashboard.putNumber("IR Proximity", shooterIR.getVoltage());
-    SmartDashboard.putNumber("IR Proximity 2", shooterIR2.getVoltage());
+    if (shooterIR.getMeasurement() != null){
+      SmartDashboard.putNumber("IR Proximity", shooterIR.getMeasurement().distance_mm);
+    }
+    if (shooterIR2.getMeasurement() != null){
+      SmartDashboard.putNumber("IR Proximity 2", shooterIR2.getMeasurement().distance_mm);
+    }
+    
 
   
     SmartDashboard.putNumber("Shooter Speed", shooter1.getVelocity().getValueAsDouble());
@@ -200,7 +206,13 @@ public class ShooterSubsystem extends SubsystemBase {
    * @return true if a note is in the shooter, false otherwise
    */
   public boolean isNote() {
-    return shooterIR.getVoltage() > IR_RANGE;
+    // return false;
+    if (shooterIR2.getMeasurement() != null){
+      return shooterIR.getMeasurement().distance_mm < IR_RANGE;
+    }
+    else{
+      return false;
+    }
     // 2.1 Note  ready to shoot 
     // 1.6 no note
   }
@@ -210,7 +222,13 @@ public class ShooterSubsystem extends SubsystemBase {
    * @return true if a note is fully inserted, false otherwise
    */
   public boolean isFullyInNote() {
-    return shooterIR2.getVoltage() > 2.20;  ///DEPLOY DURING ONCMP LNCH DAY 2
+    // return false;
+    if(shooterIR2.getMeasurement() != null){
+       return shooterIR2.getMeasurement().distance_mm < 50;
+    }
+    else{
+      return false;
+    }
   }
 
   /**

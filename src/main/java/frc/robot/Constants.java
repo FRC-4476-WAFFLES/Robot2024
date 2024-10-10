@@ -56,6 +56,8 @@ public final class Constants {
   public static final int backRightAbsoluteEncoder = 26; // CANcoder
   public static final int pidgeon = 27;
   public static final int CANdle = 28; // CANdle
+  public static final int firstLaserCan = 29;
+  public static final int secondLaserCan = 30;
 
 
   // Analog

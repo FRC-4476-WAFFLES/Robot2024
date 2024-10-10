@@ -58,7 +58,7 @@ public class IntakeIn extends Command {
     anglerSubsystem.setAnglerTargetPosition(48.5);
   
     intakeSubsystem.SetIntakeSpeed(1);
-    if(shooterSubsystem.isNote()){
+    if(shooterSubsystem.isFullyInNote()){
       feederSubsystem.setFeederTargetSpeed(1);
     }
     else if(shooterSubsystem.isSlowedDown()){
@@ -85,8 +85,7 @@ public class IntakeIn extends Command {
   @Override
   public boolean isFinished() {
     if(DriverStation.isAutonomous()){
-      if (shooterSubsystem.isFullyInNote() ||
-       shooterSubsystem.isNote()){
+      if (shooterSubsystem.isFullyInNote()){
         return true;
       }
       // else if(!LimelightHelpers.getTV("limelight")){
@@ -107,7 +106,7 @@ public class IntakeIn extends Command {
       }
     }
     else{
-      if (shooterSubsystem.isFullyInNote() || shooterSubsystem.isNote()){
+      if (shooterSubsystem.isFullyInNote()){
       return true;
     }
     else{
