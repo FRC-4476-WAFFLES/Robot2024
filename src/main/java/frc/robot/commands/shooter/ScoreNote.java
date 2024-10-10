@@ -7,7 +7,6 @@ package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj.DriverStation;
 
-//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import static frc.robot.RobotContainer.*;

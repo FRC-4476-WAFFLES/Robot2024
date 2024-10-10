@@ -136,10 +136,6 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    // Example: Log sensor data
-    double sensorValue = getSensorReading();
-    log.info("Autonomous Period: Sensor Value = " + sensorValue);
-    SmartDashboard.putNumber("SensorValue", sensorValue);
   }
 
   @Override

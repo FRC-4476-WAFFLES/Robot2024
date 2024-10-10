@@ -131,11 +131,16 @@ public class ShooterSubsystem extends SubsystemBase {
             SmartDashboard.putNumber("IR Proximity 2", -1);
         }
 
-        SmartDashboard.putNumber("Shooter Speed", shooter1.getVelocity().getValueAsDouble());
-        SmartDashboard.putNumber("Shooter Speed2", shooter2.getVelocity().getValueAsDouble());
-        SmartDashboard.putNumber("Shooter Target Speed 1", shooterTargetSpeed);
-        SmartDashboard.putNumber("Shooter Target Speed 2", shooterTargetSpeed - SHOOTER_SPEED_OFFSET);
-        SmartDashboard.putBoolean("GoodShooter", Math.abs(shooter1.getVelocity().getValueAsDouble() - shooterTargetSpeed) < SHOOTER_DEAD_ZONE);
+       
+
+        SmartDashboard.putNumber("Shooter/Current Speed 1 (RPS)", shooter1.getVelocity().getValueAsDouble());
+        SmartDashboard.putNumber("Shooter/Current Speed 2 (RPS)", shooter2.getVelocity().getValueAsDouble());
+        SmartDashboard.putNumber("Shooter/Target Speed (RPS)", shooterTargetSpeed);
+        SmartDashboard.putBoolean("Shooter/At Target Speed", isGoodSpeed());
+        SmartDashboard.putBoolean("Shooter/Note Detected", isNote());
+        SmartDashboard.putBoolean("Shooter/Note Fully In", isFullyInNote());
+        SmartDashboard.putBoolean("Shooter/Trying To Shoot", isTryingToShoot());
+        SmartDashboard.putBoolean("Shooter/Trying To Stash", getTryingToStash());
     }
 
     /**

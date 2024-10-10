@@ -128,9 +128,11 @@ public class AnglerSubsystem extends SubsystemBase {
           }
           previousSwitchState = elevatorSubsystem.getCoastSwitch();
 
-        SmartDashboard.putNumber("Angler Setpoint", anglerTargetPositonDegrees);
-        SmartDashboard.putNumber("Angler Position", getAnglerDegrees());
-        SmartDashboard.putBoolean("GoodAngle", Math.abs(getAnglerDegrees() - this.anglerTargetPositonDegrees) < ANGLER_DEAD_ZONE);
+
+        SmartDashboard.putNumber("Angler/Current Angle (deg)", getAnglerDegrees());
+        SmartDashboard.putNumber("Angler/Target Angle (deg)", anglerTargetPositonDegrees);
+        SmartDashboard.putBoolean("Angler/At Target", isGoodShooterAngle());
+        SmartDashboard.putNumber("Angler/Error (deg)", getAnglerDegrees() - anglerTargetPositonDegrees);
         //updatePIDConstants();
 
     

@@ -108,9 +108,13 @@ public class FeederSubsystem extends SubsystemBase {
       final PositionVoltage feederPositionRequest = new PositionVoltage(0).withSlot(0);
       feeder.setControl(feederPositionRequest.withPosition(feederTargetPosition));
     }
-    SmartDashboard.putNumber("Feeder Speed", feeder.getVelocity().getValueAsDouble());
-    SmartDashboard.putNumber("Feeder Position", getFeederPosition());
-    SmartDashboard.putNumber("Feeder Target speed", feederTargetSpeed);
+
+
+    SmartDashboard.putNumber("Feeder/Current Speed (RPS)", feeder.getVelocity().getValueAsDouble());
+    SmartDashboard.putNumber("Feeder/Target Speed (RPS)", feederTargetSpeed);
+    SmartDashboard.putNumber("Feeder/Current Position (rot)", getFeederPosition());
+    SmartDashboard.putBoolean("Feeder/At Target Position", isFeederAtTargetPosition());
+    SmartDashboard.putBoolean("Feeder/Is Running", isFeederRunning());
   }
   
 

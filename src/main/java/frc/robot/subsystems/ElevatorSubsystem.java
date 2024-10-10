@@ -103,9 +103,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     manageProfileTimer();
     executeElevatorMotionProfiling();
     updateSmartDashboard();
-    SmartDashboard.putBoolean("COAST STUFF", coastSwitch.get());
-    SmartDashboard.putBoolean("GoodElevator", Math.abs(Elevator1.getPosition().getValueAsDouble() - elevatorTargetPosition) < ELEVATOR_DEAD_ZONE);
-    SmartDashboard.putNumber("Elevator Target", elevatorTargetPosition);
+
     if (!getCoastSwitch() && previousSwitchState){
       Elevator1.setNeutralMode(NeutralModeValue.Coast);
       Elevator2.setNeutralMode(NeutralModeValue.Coast);
@@ -115,6 +113,11 @@ public class ElevatorSubsystem extends SubsystemBase {
       Elevator2.setNeutralMode(NeutralModeValue.Brake);
     }
     previousSwitchState = getCoastSwitch();
+    SmartDashboard.putNumber("Elevator/Current Position (m)", getElevatorPositionMeters());
+    SmartDashboard.putNumber("Elevator/Target Position (m)", rotationsToMeters(elevatorTargetPosition));
+    SmartDashboard.putBoolean("Elevator/At Target", isGoodElevatorPosition());
+    SmartDashboard.putString("Elevator/Current Mode", currentShooterMode.toString());
+    SmartDashboard.putBoolean("Elevator/Coast Mode", getCoastSwitch());
   }
 
   /**

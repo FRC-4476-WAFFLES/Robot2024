@@ -58,6 +58,13 @@ public class IntakeSubsystem extends SubsystemBase {
   public void periodic() {
     final DutyCycleOut intakeDutyCycle = new DutyCycleOut(0.0);
     intake.setControl(intakeDutyCycle.withOutput(IntakeSpeed));
+
+    SmartDashboard.putNumber("Intake/Current Speed", IntakeSpeed);
+    SmartDashboard.putBoolean("Intake/Is Running", isRunning());
+    SmartDashboard.putBoolean("Intake/Is Running In", isRunningIn());
+    SmartDashboard.putBoolean("Intake/Is Running Out", isRunningOut());
+    SmartDashboard.putBoolean("Intake/Note Detected", isNoteCurrentDetection());
+    SmartDashboard.putNumber("Intake/Current Draw (A)", intake.getStatorCurrent().getValueAsDouble());
   }
 
   /**
