@@ -11,9 +11,11 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import edu.wpi.first.wpilibj.DataLog;
+import edu.wpi.first.wpilibj.DataLogManager;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-
-
+import edu.wpi.first.wpilibj.DriverStation;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -32,6 +34,7 @@ public class Robot extends TimedRobot {
 
   Timer m_gcTimer = new Timer();
   
+  private DataLog log;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -62,6 +65,16 @@ public class Robot extends TimedRobot {
     m_led.setData(m_ledBuffer);
     m_led.start();
 
+    // Initialize DataLog
+    log = DataLogManager.getLog();
+    DataLogManager.start();
+    // Log a custom message
+    SmartDashboard.putString("Logger", "Robot initialized");
+    log.info("Robot initialized");
+
+    // Enable logging of both DS control and joystick data
+    DriverStation.startDataLog(DataLogManager.getLog());
+  
   }
 
   /**
@@ -122,7 +135,12 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    // Example: Log sensor data
+    double sensorValue = getSensorReading();
+    log.info("Autonomous Period: Sensor Value = " + sensorValue);
+    SmartDashboard.putNumber("SensorValue", sensorValue);
+  }
 
   @Override
   public void teleopInit() {
@@ -190,6 +208,10 @@ public class Robot extends TimedRobot {
     }
   }
 
-  
+  // Add your sensor reading method
+  private double getSensorReading() {
+    // Replace with actual sensor reading code
+    return 0.0;
+  }
 
 }
