@@ -23,11 +23,11 @@ public class ShooterSubsystem extends SubsystemBase {
 
     // Configs
     private double shooterTargetSpeed = 0.0;
-    private static final double SHOOTER_SPEED_OFFSET = Constants.Shooter.SHOOTER_PERCENT_DIFFERENT;
+    private static final double SHOOTER_SPEED_OFFSET = Constants.ShooterConstants.SHOOTER_PERCENT_DIFFERENT;
 
     // Constants
-    private final double SHOOTER_DEAD_ZONE = Constants.Shooter.SHOOTER_DEAD_ZONE;
-    private final double IR_RANGE = Constants.Shooter.IR_RANGE;
+    private final double SHOOTER_DEAD_ZONE = Constants.ShooterConstants.SHOOTER_DEAD_ZONE;
+    private final double IR_RANGE = Constants.ShooterConstants.IR_RANGE;
     private boolean tryingToShoot = false;
     public boolean tryingToStash = false;
 
@@ -48,10 +48,10 @@ public class ShooterSubsystem extends SubsystemBase {
         currentLimitsConfig = initializeCurrentLimits();
         currentLimitsConfig.SupplyCurrentLimitEnable = true;
         currentLimitsConfig.StatorCurrentLimitEnable = true;
-        currentLimitsConfig.SupplyCurrentLimit = 40;
-        currentLimitsConfig.StatorCurrentLimit = 80;
-        currentLimitsConfig.SupplyCurrentThreshold = 40;
-        currentLimitsConfig.SupplyTimeThreshold = 1;
+        currentLimitsConfig.SupplyCurrentLimit = Constants.ShooterConstants.SUPPLY_CURRENT_LIMIT;
+        currentLimitsConfig.StatorCurrentLimit = Constants.ShooterConstants.STATOR_CURRENT_LIMIT;
+        currentLimitsConfig.SupplyCurrentThreshold = Constants.ShooterConstants.SUPPLY_CURRENT_THRESHOLD;
+        currentLimitsConfig.SupplyTimeThreshold = Constants.ShooterConstants.SUPPLY_TIME_THRESHOLD;
 
         generalConfigs.CurrentLimits = currentLimitsConfig;
 
@@ -83,12 +83,12 @@ public class ShooterSubsystem extends SubsystemBase {
         config.CurrentLimits = initializeCurrentLimits();
 
         // Voltage Limits
-        config.Voltage.PeakForwardVoltage = Constants.Shooter.PEAK_FORWARD_VOLTAGE;
-        config.Voltage.PeakReverseVoltage = Constants.Shooter.PEAK_REVERSE_VOLTAGE;
+        config.Voltage.PeakForwardVoltage = Constants.ShooterConstants.PEAK_FORWARD_VOLTAGE;
+        config.Voltage.PeakReverseVoltage = Constants.ShooterConstants.PEAK_REVERSE_VOLTAGE;
 
         // Torque Current Limits
-        config.TorqueCurrent.PeakForwardTorqueCurrent = Constants.Shooter.PEAK_FORWARD_TORQUE_CURRENT;
-        config.TorqueCurrent.PeakReverseTorqueCurrent = Constants.Shooter.PEAK_REVERSE_TORQUE_CURRENT;
+        config.TorqueCurrent.PeakForwardTorqueCurrent = Constants.ShooterConstants.PEAK_FORWARD_TORQUE_CURRENT;
+        config.TorqueCurrent.PeakReverseTorqueCurrent = Constants.ShooterConstants.PEAK_REVERSE_TORQUE_CURRENT;
 
         return config;
     }
@@ -97,10 +97,10 @@ public class ShooterSubsystem extends SubsystemBase {
         CurrentLimitsConfigs limits = new CurrentLimitsConfigs();
         limits.SupplyCurrentLimitEnable = true;
         limits.StatorCurrentLimitEnable = true;
-        limits.SupplyCurrentLimit = Constants.Shooter.SUPPLY_CURRENT_LIMIT;
-        limits.StatorCurrentLimit = Constants.Shooter.STATOR_CURRENT_LIMIT;
-        limits.SupplyCurrentThreshold = Constants.Shooter.SUPPLY_CURRENT_THRESHOLD;
-        limits.SupplyTimeThreshold = Constants.Shooter.SUPPLY_TIME_THRESHOLD;
+        limits.SupplyCurrentLimit = Constants.ShooterConstants.SUPPLY_CURRENT_LIMIT;
+        limits.StatorCurrentLimit = Constants.ShooterConstants.STATOR_CURRENT_LIMIT;
+        limits.SupplyCurrentThreshold = Constants.ShooterConstants.SUPPLY_CURRENT_THRESHOLD;
+        limits.SupplyTimeThreshold = Constants.ShooterConstants.SUPPLY_TIME_THRESHOLD;
         return limits;
     }
 
