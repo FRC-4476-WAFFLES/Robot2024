@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
-import edu.wpi.first.wpilibj.DataLog;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -34,7 +33,7 @@ public class Robot extends TimedRobot {
 
   Timer m_gcTimer = new Timer();
   
-  private DataLog log;
+
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -66,11 +65,8 @@ public class Robot extends TimedRobot {
     m_led.start();
 
     // Initialize DataLog
-    log = DataLogManager.getLog();
     DataLogManager.start();
-    // Log a custom message
-    SmartDashboard.putString("Logger", "Robot initialized");
-    log.info("Robot initialized");
+
 
     // Enable logging of both DS control and joystick data
     DriverStation.startDataLog(DataLogManager.getLog());
