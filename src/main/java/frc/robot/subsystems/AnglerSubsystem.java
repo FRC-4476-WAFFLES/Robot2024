@@ -232,7 +232,7 @@ public class AnglerSubsystem extends SubsystemBase {
         anglerTopLimitMap.put(22.0, 0.0);
         anglerTopLimitMap.put(23.0, -12.0);
 
-        if (elevatorPosition > 25) {
+        if (elevatorPosition > 23) {
             
             return -39
             ;
@@ -253,7 +253,7 @@ public class AnglerSubsystem extends SubsystemBase {
 
       
 
-        if (elevatorPosition > 25) {
+        if (elevatorPosition > 23) {
             
             return 92;
         }

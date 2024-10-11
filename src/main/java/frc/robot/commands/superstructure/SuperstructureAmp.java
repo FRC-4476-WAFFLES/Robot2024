@@ -31,18 +31,23 @@ public class SuperstructureAmp extends Command {
     intakeSubsystem.SetIntakeSpeed(0);
     elevatorSubsystem.setElevatorTargetPosition(41);
     shooterSubsystem.setShooterTargetSpeed(17);
-    
-    anglerSubsystem.setAnglerTargetPosition(-37.5);
 
-     if(feederSubsystem.isFeederRunning()){
-      // Reseed the robots position if scoring in amp
-      if (DriverStation.getAlliance().get() == Alliance.Red){
-        driveSubsystem.seedFieldRelative(new Pose2d(16.4592-1.82, 7.62, driveSubsystem.getRobotPose().getRotation())); //15.0792, 5.53
-      }
-      else{
-        driveSubsystem.seedFieldRelative(new Pose2d(1.82, 7.62, driveSubsystem.getRobotPose().getRotation())); //15.0792, 5.53
-      }
+    if(Math.abs(driveSubsystem.getCurrentRobotChassisSpeeds().vxMetersPerSecond) < 1 && Math.abs(driveSubsystem.getCurrentRobotChassisSpeeds().vyMetersPerSecond) < 1){
+      anglerSubsystem.setAnglerTargetPosition(-37.5);
     }
+    else{
+      anglerSubsystem.setAnglerTargetPosition(0);
+    }
+
+    // if(feederSubsystem.isFeederRunning()){
+    //   // Reseed the robots position if scoring in amp
+    //   if (DriverStation.getAlliance().get() == Alliance.Red){
+    //     driveSubsystem.seedFieldRelative(new Pose2d(16.4592-1.82, 7.62, driveSubsystem.getRobotPose().getRotation())); //15.0792, 5.53
+    //   }
+    //   else{
+    //     driveSubsystem.seedFieldRelative(new Pose2d(1.82, 7.62, driveSubsystem.getRobotPose().getRotation())); //15.0792, 5.53
+    //   }
+    // }
     
     
   }
