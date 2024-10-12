@@ -496,5 +496,9 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
                 addVisionMeasurement(estPose, est.timestampSeconds, estStdDevs);
             }
         }
+
+      
+        SmartDashboard.putNumber("Drive/Distance To Goal (m)", getDistanceToGoal());
+        SmartDashboard.putNumber("Drive/Angle To Goal (deg)", getAngleToGoal().getDegrees());
     }
 }

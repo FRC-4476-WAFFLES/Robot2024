@@ -68,7 +68,7 @@ public class AllignWithNote extends Command {
           request = createSwerveRequest(dotProduct, scaledTXAdjustment);
       }
       driveSubsystem.setControl(request);
-    } else {
+    } else if (!DriverStation.isAutonomous()) {
       // if we do have a note, don't apply any note alignment
       driveSubsystem.setControl(
       new SwerveRequest.FieldCentric()

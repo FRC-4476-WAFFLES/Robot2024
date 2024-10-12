@@ -54,7 +54,7 @@ public class DriveTeleop extends Command {
         .withRotationalRate(thetaVelocitySupplier.getAsDouble())
     );
     
-    SmartDashboard.putNumber("Robot Pose Stuff", driveSubsystem.getRobotPose().getRotation().getDegrees());
+    SmartDashboard.putNumber("Robot Pose", driveSubsystem.getRobotPose().getRotation().getDegrees());
   }
 
   // Called once the command ends or is interrupted.

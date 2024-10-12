@@ -67,7 +67,7 @@ public class FeederSubsystem extends SubsystemBase {
 
     // PID for feeder
     Slot0Configs feederSlot0Configs = new Slot0Configs();
-    feederSlot0Configs.kP = 0.15; 
+    feederSlot0Configs.kP = 0.17; 
     feederSlot0Configs.kD = 0.00001;
     feederSlot0Configs.kV = 0.15;
 
@@ -93,7 +93,7 @@ public class FeederSubsystem extends SubsystemBase {
 
       if (shooterSubsystem.isFullyInNote()){
         adjusting = true;
-        setFeederTargetSpeed(-1.0);
+        setFeederTargetSpeed(-1.3);
       }
       else if(adjusting){
         adjusting = false;
@@ -108,9 +108,13 @@ public class FeederSubsystem extends SubsystemBase {
       final PositionVoltage feederPositionRequest = new PositionVoltage(0).withSlot(0);
       feeder.setControl(feederPositionRequest.withPosition(feederTargetPosition));
     }
-    SmartDashboard.putNumber("Feeder Speed", feeder.getVelocity().getValueAsDouble());
-    SmartDashboard.putNumber("Feeder Position", getFeederPosition());
-    SmartDashboard.putNumber("Feeder Target speed", feederTargetSpeed);
+
+
+    SmartDashboard.putNumber("Feeder/Current Speed (RPS)", feeder.getVelocity().getValueAsDouble());
+    SmartDashboard.putNumber("Feeder/Target Speed (RPS)", feederTargetSpeed);
+    SmartDashboard.putNumber("Feeder/Current Position (rot)", getFeederPosition());
+    SmartDashboard.putBoolean("Feeder/At Target Position", isFeederAtTargetPosition());
+    SmartDashboard.putBoolean("Feeder/Is Running", isFeederRunning());
   }
   
 

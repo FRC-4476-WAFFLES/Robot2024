@@ -15,7 +15,7 @@ import static frc.robot.RobotContainer.*;
 
 public class SpinUp extends Command {
   /** Creates a new SpinUp. */
-  double generalAnglerAdjustment = 0; 
+  double generalAnglerAdjustment = 2; 
 
   
   public SpinUp() {
@@ -94,7 +94,7 @@ public class SpinUp extends Command {
 
     final InterpolatingDoubleTreeMap shooterAngleMap = new InterpolatingDoubleTreeMap();
 
-    double predictedAngle = 205 - 104 * distance + 25.4 * Math.pow(distance, 2) - 2.86 * Math.pow(distance, 3) + 0.12 * Math.pow(distance, 4);
+    double predictedAngle = 205 + generalAnglerAdjustment - 104 * distance + 25.4 * Math.pow(distance, 2) - 2.86 * Math.pow(distance, 3) + 0.12 * Math.pow(distance, 4);
     predictedAngle += generalAnglerAdjustment;
     return solveForElevatorHeight(distance, height, predictedAngle);
 

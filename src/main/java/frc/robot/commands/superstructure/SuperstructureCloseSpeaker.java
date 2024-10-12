@@ -28,17 +28,17 @@ public class SuperstructureCloseSpeaker extends Command {
     intakeSubsystem.SetIntakeSpeed(0);
     elevatorSubsystem.setElevatorTargetPosition(25);
     anglerSubsystem.setAnglerTargetPosition(68);
-    shooterSubsystem.setShooterTargetSpeed(80);
+    shooterSubsystem.setShooterTargetSpeed(70);
 
-    if(feederSubsystem.isFeederRunning()){
-      // Reseed the robots position if scoring in amp
-      if (DriverStation.getAlliance().get() == Alliance.Red){
-        driveSubsystem.seedFieldRelative(new Pose2d(15.0792, driveSubsystem.getRobotPose().getY(), driveSubsystem.getRobotPose().getRotation())); //15.0792, 5.53
-      }
-      else{
-        driveSubsystem.seedFieldRelative(new Pose2d(1.4, driveSubsystem.getRobotPose().getY(), driveSubsystem.getRobotPose().getRotation())); //15.0792, 5.53
-      }
-    }
+    // if(feederSubsystem.isFeederRunning()){
+    //   // Reseed the robots position if scoring in amp
+    //   if (DriverStation.getAlliance().get() == Alliance.Red){
+    //     driveSubsystem.seedFieldRelative(new Pose2d(15.0792, driveSubsystem.getRobotPose().getY(), driveSubsystem.getRobotPose().getRotation())); //15.0792, 5.53
+    //   }
+    //   else{
+    //     driveSubsystem.seedFieldRelative(new Pose2d(1.4, driveSubsystem.getRobotPose().getY(), driveSubsystem.getRobotPose().getRotation())); //15.0792, 5.53
+    //   }
+    // }
   }
 
   // Called once the command ends or is interrupted.
