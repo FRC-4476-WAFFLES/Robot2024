@@ -112,7 +112,7 @@ public class ShooterSubsystem extends SubsystemBase {
         final VelocityVoltage shooterSpeedRequest = new VelocityVoltage(0).withSlot(0);
         shooter1.setControl(shooterSpeedRequest.withVelocity(shooterTargetSpeed));
         
-        if (Math.abs(shooterTargetSpeed) < SHOOTER_SPEED_OFFSET) {
+        if (Math.abs(shooterTargetSpeed) < 20) {
             shooter2.setControl(shooterSpeedRequest.withVelocity(shooterTargetSpeed));
         } else {
             shooter2.setControl(shooterSpeedRequest.withVelocity(shooterTargetSpeed - SHOOTER_SPEED_OFFSET));
@@ -150,7 +150,7 @@ public class ShooterSubsystem extends SubsystemBase {
     public boolean isGoodSpeed() {
         boolean shooter1Good = Math.abs(shooter1.getVelocity().getValueAsDouble() - shooterTargetSpeed) < SHOOTER_DEAD_ZONE;
 
-        if (Math.abs(shooterTargetSpeed) > SHOOTER_SPEED_OFFSET) {
+        if (Math.abs(shooterTargetSpeed) > 20) {
             boolean shooter2Good = Math.abs(shooter2.getVelocity().getValueAsDouble() - (shooterTargetSpeed - SHOOTER_SPEED_OFFSET)) < SHOOTER_DEAD_ZONE;
             return shooter1Good && shooter2Good;
         }

@@ -32,11 +32,11 @@ public class SuperstructureAmp extends Command {
     elevatorSubsystem.setElevatorTargetPosition(41);
     shooterSubsystem.setShooterTargetSpeed(17);
 
-    if(Math.abs(driveSubsystem.getCurrentRobotChassisSpeeds().vxMetersPerSecond) < 1 && Math.abs(driveSubsystem.getCurrentRobotChassisSpeeds().vyMetersPerSecond) < 1){
+    if(Math.abs(driveSubsystem.getCurrentRobotChassisSpeeds().vxMetersPerSecond) < 0.6 && Math.abs(driveSubsystem.getCurrentRobotChassisSpeeds().vyMetersPerSecond) < 0.6){
       anglerSubsystem.setAnglerTargetPosition(-37.5);
     }
     else{
-      anglerSubsystem.setAnglerTargetPosition(0);
+      anglerSubsystem.setAnglerTargetPosition(48.5);
     }
 
     // if(feederSubsystem.isFeederRunning()){
