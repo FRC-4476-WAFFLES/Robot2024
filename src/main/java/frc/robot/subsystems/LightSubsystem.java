@@ -155,9 +155,18 @@ public class LightSubsystem extends SubsystemBase {
       if (shooterSubsystem.isFullyInNote()){
         setLEDRangeGroup(LedRange.LEFT_SIDE_BOTTOM, LightColours.GREEN, LightColours.GREEN, false);
       }
+      if (elevatorSubsystem.getElevatorPosition() < -0.5 || anglerSubsystem.getAnglerDegrees() < -30.0) {
+        setLEDRangeGroup(LedRange.MIDDLE_FULL, LightColours.RED, LightColours.RED, false);
+    } else if (Math.abs(elevatorSubsystem.getElevatorPosition()) > 0.5 
+               || Math.abs(anglerSubsystem.getAnglerDegrees()) > 1) {
+        setLEDRangeGroup(LedRange.MIDDLE_FULL, LightColours.YELLOW, LightColours.GREEN, false);
+    } else {
+        setLEDRangeGroup(LedRange.MIDDLE_FULL, LightColours.GREEN, LightColours.GREEN, false);
+    }
       updateBlinkTimer();
       updateLedRanges();
-      candle.animate(currentAnimation.getAnimation());
+      candle.animate(null);
+      //candle.animate(currentAnimation.getAnimation());
     }
     else{
       candle.animate(null);
