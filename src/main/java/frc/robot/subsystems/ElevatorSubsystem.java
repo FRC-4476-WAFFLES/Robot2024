@@ -15,8 +15,10 @@ import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.PositionVoltage;
+import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import com.ctre.phoenix6.configs.MotionMagicConfigs;
 
 import frc.robot.Constants;
 
@@ -33,6 +35,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     private final double ELEVATOR_DEAD_ZONE = 1;
 
     private final CurrentLimitsConfigs elevatorCurrentLimits = new CurrentLimitsConfigs();
+
+    private MotionMagicVoltage motionMagicRequest = new MotionMagicVoltage(0);
 
     private Timer profileTimer = new Timer();
     private boolean previousEnabled = false;
@@ -79,11 +83,19 @@ public class ElevatorSubsystem extends SubsystemBase {
     elevatorConfig.CurrentLimits = elevatorCurrentLimits;
 
     var slot0Configs = new Slot0Configs();
-    slot0Configs.kS = 0;
-    slot0Configs.kP = 2;
-    slot0Configs.kD = 0.01;
+    slot0Configs.kS = 0; // Keeping the existing value
+    slot0Configs.kP = 2; // Keeping the existing value
+    slot0Configs.kI = 0; // Keeping the existing value
+    slot0Configs.kD = 0.01; // Keeping the existing value
 
     elevatorConfig.Slot0 = slot0Configs;
+
+    // Configure MotionMagic
+    MotionMagicConfigs motionMagicConfigs = new MotionMagicConfigs();
+    motionMagicConfigs.MotionMagicCruiseVelocity = 110; // Using the existing velocity value
+    motionMagicConfigs.MotionMagicAcceleration = 190; // Using the existing acceleration value
+    motionMagicConfigs.MotionMagicJerk = 1900; // Setting jerk to 10x acceleration as a starting point
+    elevatorConfig.MotionMagic = motionMagicConfigs;
 
     Elevator1.getConfigurator().apply(elevatorConfig);
     Elevator2.getConfigurator().apply(elevatorConfig);
@@ -100,8 +112,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     if(DriverStation.isDisabled()){
       this.profileStartPosition = this.Elevator1.getPosition().getValueAsDouble();
     }
-    manageProfileTimer();
-    executeElevatorMotionProfiling();
+    executeElevatorMotionMagic();
     updateSmartDashboard();
 
     if (!getCoastSwitch() && previousSwitchState){
@@ -113,11 +124,6 @@ public class ElevatorSubsystem extends SubsystemBase {
       Elevator2.setNeutralMode(NeutralModeValue.Brake);
     }
     previousSwitchState = getCoastSwitch();
-    SmartDashboard.putNumber("Elevator/Current Position (m)", getElevatorPositionMeters());
-    SmartDashboard.putNumber("Elevator/Target Position (m)", rotationsToMeters(elevatorTargetPosition));
-    SmartDashboard.putBoolean("Elevator/At Target", isGoodElevatorPosition());
-    SmartDashboard.putString("Elevator/Current Mode", currentShooterMode.toString());
-    SmartDashboard.putBoolean("Elevator/Coast Mode", getCoastSwitch());
   }
 
   /**
@@ -126,42 +132,20 @@ public class ElevatorSubsystem extends SubsystemBase {
   private void updateSmartDashboard(){
     SmartDashboard.putNumber("Elevator Position", Elevator1.getPosition().getValueAsDouble());
     SmartDashboard.putNumber("Elevator Velocity", Elevator1.getVelocity().getValueAsDouble());
-  }
-
-  /**
-   * Manages the profile timer based on robot enabled state.
-   */
-  private void manageProfileTimer() {
-    boolean isEnabled = DriverStation.isEnabled();
-    if (isEnabled && !previousEnabled) {
-        profileTimer.restart();
-    } else if (!isEnabled) {
-        profileTimer.stop();
-        previousEnabled = false;
-    }
-    previousEnabled = isEnabled;
+    SmartDashboard.putNumber("Elevator/Current Position (m)", getElevatorPositionMeters());
+    SmartDashboard.putNumber("Elevator/Target Position (m)", rotationsToMeters(elevatorTargetPosition));
+    SmartDashboard.putBoolean("Elevator/At Target", isGoodElevatorPosition());
+    SmartDashboard.putString("Elevator/Current Mode", currentShooterMode.toString());
+    SmartDashboard.putBoolean("Elevator/Coast Mode", getCoastSwitch());
   }
 
   /**
    * Executes motion profiling for the elevator.
    */
-  private void executeElevatorMotionProfiling() {
-    TrapezoidProfile anglerTrapezoidProfile = new TrapezoidProfile(new TrapezoidProfile.Constraints(
-            110,
-            190)
-    );
-
-    TrapezoidProfile.State elevatorGoal = new TrapezoidProfile.State(elevatorTargetPosition, 0);
-    TrapezoidProfile.State elevatorSetpoint = new TrapezoidProfile.State(profileStartPosition, profileStartVelocity);
-
-    elevatorSetpoint = anglerTrapezoidProfile.calculate(profileTimer.get(), elevatorSetpoint, elevatorGoal);
-
-    PositionVoltage elevatorRequest = new PositionVoltage(0).withSlot(0);
-    elevatorRequest.Position = elevatorSetpoint.position;
-    elevatorRequest.Velocity = elevatorSetpoint.velocity;
-    Elevator1.setControl(elevatorRequest);
-
-    SmartDashboard.putNumber("Elevator Setpoint Step", elevatorSetpoint.position);
+  private void executeElevatorMotionMagic() {
+    motionMagicRequest.Position = elevatorTargetPosition;
+    motionMagicRequest.Slot = 0; // Use the Slot0 gains
+    Elevator1.setControl(motionMagicRequest);
   }
 
   /**
