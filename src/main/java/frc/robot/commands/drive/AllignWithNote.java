@@ -18,6 +18,8 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.SteerRequestType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest.RobotCentric;
 
+import edu.wpi.first.wpilibj.Timer;
+
 public class AllignWithNote extends Command {
 
   private static final String LIMELIGHT_KEY = "limelight";
@@ -27,6 +29,8 @@ public class AllignWithNote extends Command {
   private RobotCentric request;
   private final DoubleSupplier thetaVelocitySupplier;
   private Alliance alliance;
+
+  private Timer targetLostTimer = new Timer();
 
   /** Creates a new AllignWithNote. */
   public AllignWithNote(DoubleSupplier xVelocitySupplier, DoubleSupplier yVelocitySupplier, DoubleSupplier thetaVelocitySupplier) {
@@ -39,7 +43,8 @@ public class AllignWithNote extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-  
+      targetLostTimer.reset();
+      targetLostTimer.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -79,7 +84,11 @@ public class AllignWithNote extends Command {
         .withVelocityX(xVelocitySupplier.getAsDouble())
         .withVelocityY(yVelocitySupplier.getAsDouble())
         .withRotationalRate(thetaVelocitySupplier.getAsDouble())
-    );
+      );
+    }
+    else if (DriverStation.isAutonomous() && !hasTarget) {
+      // if we are in autonomous and don't have a target, stop the robot
+      driveSubsystem.setControl(new SwerveRequest.Idle());
     }
   }
 
@@ -106,6 +115,10 @@ public class AllignWithNote extends Command {
       double robotX = driveSubsystem.getRobotPose().getX();
       boolean seesTarget = LimelightHelpers.getTV(LIMELIGHT_KEY);
   
+      if (seesTarget) {
+          targetLostTimer.reset();
+      }
+  
       // Unwrap the Optional and return false if no alliance is available (or handle in some other way)
       if (alliance == null || alliance != DriverStation.getAlliance().orElseThrow(() -> new IllegalStateException("Alliance not set"))) {
           alliance = DriverStation.getAlliance().orElseThrow(() -> new IllegalStateException("Alliance not set"));
@@ -115,6 +128,6 @@ public class AllignWithNote extends Command {
       return DriverStation.isAutonomous() &&
              ((alliance == Alliance.Red && robotX < 8.2) ||
              (alliance == Alliance.Blue && robotX > 8.5) ||
-             !seesTarget);
+             (!seesTarget && targetLostTimer.hasElapsed(1.0)));
   }
 }
