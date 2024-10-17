@@ -67,7 +67,7 @@ public class FeederSubsystem extends SubsystemBase {
 
     // PID for feeder
     Slot0Configs feederSlot0Configs = new Slot0Configs();
-    feederSlot0Configs.kP = 0.17; 
+    feederSlot0Configs.kP = 0.18; 
     feederSlot0Configs.kD = 0.00001;
     feederSlot0Configs.kV = 0.15;
 
@@ -92,11 +92,9 @@ public class FeederSubsystem extends SubsystemBase {
       // If feeder is stopped, back off the feeder
 
       if (shooterSubsystem.isFullyInNote()){
-        adjusting = true;
         setFeederTargetSpeed(-1.3);
       }
-      else if(adjusting){
-        adjusting = false;
+      else{
         setFeederTargetSpeed(0);
       }
       

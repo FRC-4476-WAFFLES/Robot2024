@@ -62,7 +62,7 @@ public class IntakeIn extends Command {
       feederSubsystem.setFeederTargetSpeed(1);
     }
     else if(shooterSubsystem.isSlowedDown()){
-      feederSubsystem.setFeederTargetSpeed(100);
+      feederSubsystem.setFeederTargetSpeed(90);
     }
     
 

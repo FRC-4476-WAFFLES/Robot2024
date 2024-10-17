@@ -235,7 +235,7 @@ public class ShooterSubsystem extends SubsystemBase {
      * @return true if slowed down, false otherwise
      */
     public boolean isSlowedDown(){
-        return Math.abs(shooter1.getVelocity().getValueAsDouble()) < 1;
+        return Math.abs(shooter1.getVelocity().getValueAsDouble()) < 0.5;
     }
 
     private boolean hasValidShooterIRMeasurement() {

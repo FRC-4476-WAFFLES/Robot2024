@@ -15,7 +15,7 @@ import static frc.robot.RobotContainer.*;
 
 public class SpinUp extends Command {
   /** Creates a new SpinUp. */
-  double generalAnglerAdjustment = 2; 
+  double generalAnglerAdjustment = 1.5; 
 
   
   public SpinUp() {
@@ -35,10 +35,16 @@ public class SpinUp extends Command {
    // double height = solveForElevatorHeight(distance, speed, angle);
 
     //intakeSubsystem.SetIntakeSpeed(0);
-    elevatorSubsystem.setElevatorTargetPosition(elevatorSubsystem.getElevatorMode().getHeight());
-    anglerSubsystem.setAnglerTargetPosition(calculateAngleOffDistance(driveSubsystem.getDistanceToGoal()));
-    if (!shooterSubsystem.isFullyInNote()){
-      shooterSubsystem.setShooterTargetSpeed(calculateSpeedOffDistanceShoot(driveSubsystem.getDistanceToGoal()));
+    if (shooterSubsystem.isNote()){
+      elevatorSubsystem.setElevatorTargetPosition(elevatorSubsystem.getElevatorMode().getHeight());
+      anglerSubsystem.setAnglerTargetPosition(calculateAngleOffDistance(driveSubsystem.getDistanceToGoal()));
+      if (!shooterSubsystem.isFullyInNote()){
+        shooterSubsystem.setShooterTargetSpeed(calculateSpeedOffDistanceShoot(driveSubsystem.getDistanceToGoal()));
+      }
+    }
+    
+    else{
+      shooterSubsystem.setShooterTargetSpeed(0);
     }
     
   }

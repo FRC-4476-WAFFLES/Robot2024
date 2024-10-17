@@ -119,13 +119,13 @@ public final class Constants {
     public static final double maxAngularSpeed = 6; // Max Rad/s
 
    
-    public static final Pose2d redGoalPoseCenter = new Pose2d((16.4592 + 0.7), 5.68, new Rotation2d(0));
-    public static final Pose2d blueGoalPoseCenter = new Pose2d(0 - 0.7, 5.68, new Rotation2d(0));
+    public static final Pose2d redGoalPoseCenter = new Pose2d((16.4592 + 0.7), 5.69, new Rotation2d(0));
+    public static final Pose2d blueGoalPoseCenter = new Pose2d(0 - 0.7, 5.69, new Rotation2d(0));
 
    
-    public static final Pose2d blueStash = new Pose2d(-1, 8.7, new Rotation2d(0));
+    public static final Pose2d blueStash = new Pose2d(-1, 9.3, new Rotation2d(0));
     // RED IS INTENTIONALLY DIFFERENT FROM BLUE
-    public static final Pose2d redStash = new Pose2d((16.4592 + 1), 7.1, new Rotation2d(0));
+    public static final Pose2d redStash = new Pose2d((16.4592 + 1), 7.7, new Rotation2d(0));
 
   }
 
