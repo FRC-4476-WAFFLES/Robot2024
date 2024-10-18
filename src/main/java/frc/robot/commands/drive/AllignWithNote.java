@@ -56,7 +56,7 @@ public class AllignWithNote extends Command {
       if (yVelocitySupplier == null) {
           // if we don't supply a y velocity, move forward at a set speed and align with the note
           if (hasTarget) {
-              request = createSwerveRequest(3.0, -0.05 * LimelightHelpers.getTX(LIMELIGHT_KEY));
+              request = createSwerveRequest(1.0, -0.05 * LimelightHelpers.getTX(LIMELIGHT_KEY));
           } else {
               request = createSwerveRequest(0, 0);
           }
