@@ -23,6 +23,8 @@ public class SpinUp extends Command {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
+  private boolean feederCheckCompleted = false;
+
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
@@ -32,21 +34,21 @@ public class SpinUp extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-   // double height = solveForElevatorHeight(distance, speed, angle);
+    if (!feederCheckCompleted && !feederSubsystem.isFeederRunningIn()) {
+        feederCheckCompleted = true;
+    }
 
-    //intakeSubsystem.SetIntakeSpeed(0);
-    if (shooterSubsystem.isNote()){
-      elevatorSubsystem.setElevatorTargetPosition(elevatorSubsystem.getElevatorMode().getHeight());
-      anglerSubsystem.setAnglerTargetPosition(calculateAngleOffDistance(driveSubsystem.getDistanceToGoal()));
-      if (!shooterSubsystem.isFullyInNote()){
-        shooterSubsystem.setShooterTargetSpeed(calculateSpeedOffDistanceShoot(driveSubsystem.getDistanceToGoal()));
+    if (feederCheckCompleted) {
+      if (shooterSubsystem.isNote()) {
+        elevatorSubsystem.setElevatorTargetPosition(elevatorSubsystem.getElevatorMode().getHeight());
+        anglerSubsystem.setAnglerTargetPosition(calculateAngleOffDistance(driveSubsystem.getDistanceToGoal()));
+        if (!shooterSubsystem.isFullyInNote()) {
+          shooterSubsystem.setShooterTargetSpeed(calculateSpeedOffDistanceShoot(driveSubsystem.getDistanceToGoal()));
+        }
+      } else {
+        shooterSubsystem.setShooterTargetSpeed(0);
       }
     }
-    
-    else{
-      shooterSubsystem.setShooterTargetSpeed(0);
-    }
-    
   }
 
   // Called once the command ends or is interrupted.
@@ -64,13 +66,7 @@ public class SpinUp extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // if (shooterSubsystem.isGoodSpeed() && anglerSubsystem.isGoodShooterAngle() && elevatorSubsystem.isGoodElevatorPosition()) {
-    //   if(DriverStation.isTeleop()){
-    //     return false;
-    //   }
-    //   return false;
-    // }
-    return false;
+    return !shooterSubsystem.isNote() && !shooterSubsystem.isFullyInNote();
   }
 
   private double calculateSpeedOffDistanceShoot(double distance) {
@@ -98,14 +94,9 @@ public class SpinUp extends Command {
 
     // Key is distance from goal in meters, value is angle in degrees
 
-    final InterpolatingDoubleTreeMap shooterAngleMap = new InterpolatingDoubleTreeMap();
-
     double predictedAngle = 205 + generalAnglerAdjustment - 104 * distance + 25.4 * Math.pow(distance, 2) - 2.86 * Math.pow(distance, 3) + 0.12 * Math.pow(distance, 4);
     predictedAngle += generalAnglerAdjustment;
     return solveForElevatorHeight(distance, height, predictedAngle);
-
-
- 
 
   }
 

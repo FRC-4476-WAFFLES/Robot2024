@@ -14,6 +14,8 @@ import com.ctre.phoenix6.configs.Slot0Configs;
 
 import au.grapplerobotics.LaserCan;
 
+import edu.wpi.first.wpilibj.Timer;
+
 public class ShooterSubsystem extends SubsystemBase {
     // Motors and Sensors
     private final TalonFX shooter1;
@@ -32,6 +34,12 @@ public class ShooterSubsystem extends SubsystemBase {
     public boolean tryingToStash = false;
 
     private final CurrentLimitsConfigs currentLimitsConfig;
+
+    // Add these member variables
+    private boolean noteStabilized = false;
+    private Timer noteTimer = new Timer();
+    private static final double NOTE_STABILIZATION_TIME = 0.5; // seconds
+    private boolean noteTimerRunning = false;
 
     /** Creates a new ShooterSubsystem. */
     public ShooterSubsystem() {
@@ -141,6 +149,23 @@ public class ShooterSubsystem extends SubsystemBase {
         SmartDashboard.putBoolean("Shooter/Note Fully In", isFullyInNote());
         SmartDashboard.putBoolean("Shooter/Trying To Shoot", isTryingToShoot());
         SmartDashboard.putBoolean("Shooter/Trying To Stash", getTryingToStash());
+
+        // Update note stability
+        if (isFullyInNote()) {
+            if (!noteTimerRunning) { // Check if the timer has not started
+                noteTimer.reset();
+                noteTimer.start();
+                noteTimerRunning = true;
+            } else if (noteTimer.get() >= NOTE_STABILIZATION_TIME) {
+                noteTimer.stop();
+                noteTimerRunning = false;
+                noteStabilized = true;
+            }
+        } else {
+            noteTimer.stop();
+            noteTimerRunning = false;
+            noteStabilized = false;
+        }
     }
 
     /**
@@ -244,5 +269,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
     private boolean hasValidShooterIR2Measurement() {
         return shooterIR2.getMeasurement() != null;
+    }
+
+
+    public boolean isNoteStabilized() {
+        return noteStabilized;
     }
 }
