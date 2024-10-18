@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.9317252423678632,
+        "y": 2.4440782784699477
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.488116404804239,
+        "y": 2.023005188867521
+      },
+      "isLocked": false,
+      "linkedName": "SOURCE SHOOT"
+    },
+    {
+      "anchor": {
+        "x": 5.309046046663522,
+        "y": 1.6858376573896008
+      },
+      "prevControl": {
+        "x": 4.722667731049748,
+        "y": 1.847091694183389
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "MID 4D"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 4.65,
+    "maxAngularVelocity": 9000.0,
+    "maxAngularAcceleration": 1000.0
+  },
+  "goalEndState": {
+    "velocity": 0.0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "New Paths",
+  "previewStartingState": {
+    "rotation": -39.96612151553351,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

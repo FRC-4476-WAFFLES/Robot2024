@@ -1,0 +1,182 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.4291761916857164,
+      "y": 3.356222324980263
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Source - Mid4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "superstructureYeet"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Mid4 - Mid 5"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "intakeIn"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Mid5 - SourceShoot"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "spinUpReal"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "completeShot"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "SourceShot - Mid4D"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "intakeIn"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "findAndPickUpNote"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Mid4D - SourceShot"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "spinUpReal"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "completeShot"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "SourceShot - SourcePD"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "intakeIn"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "findAndPickUpNote"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "SourcePD - SourceShot"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "spinUpReal"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "completeShot"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}
