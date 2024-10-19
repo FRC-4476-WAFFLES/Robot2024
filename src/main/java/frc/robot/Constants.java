@@ -89,7 +89,7 @@ public final class Constants {
     //public static final double anglerUpperLimitInRotations = 0.868; // rotations
     //public static final double anglerLowerLimitInRotations = -0.25; // rotations
     public static final double SHOOTER_DEAD_ZONE = 4.0;
-    public static final double IR_RANGE = 200.0;
+    public static final double IR_RANGE = 100.0;
     public static final double SHOOTER_PERCENT_DIFFERENT = 15.0;
 
     // Current Limits
@@ -123,7 +123,7 @@ public final class Constants {
     public static final Pose2d blueGoalPoseCenter = new Pose2d(0 - 0.7, 5.69, new Rotation2d(0));
 
    
-    public static final Pose2d blueStash = new Pose2d(-1, 9.3, new Rotation2d(0));
+    public static final Pose2d blueStash = new Pose2d(-1, 9.2, new Rotation2d(0));
     // RED IS INTENTIONALLY DIFFERENT FROM BLUE
     public static final Pose2d redStash = new Pose2d((16.4592 + 1), 7.7, new Rotation2d(0));
 

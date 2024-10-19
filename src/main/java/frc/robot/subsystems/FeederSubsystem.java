@@ -169,6 +169,6 @@ public class FeederSubsystem extends SubsystemBase {
   }
 
   public boolean isFeederRunningIn(){
-    return feeder.getVelocity().getValueAsDouble() > 1;
+    return Math.abs(feeder.getVelocity().getValueAsDouble()) > 10;
   }
 }

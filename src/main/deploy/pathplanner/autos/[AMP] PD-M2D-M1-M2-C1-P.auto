@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.4291761916857164,
-      "y": 3.356222324980263
+      "x": 1.3959954881393342,
+      "y": 7.29585116802188
     },
     "rotation": 0
   },
@@ -18,7 +18,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Source - Mid4"
+                  "pathName": "AmpStart - Mid2"
                 }
               },
               {
@@ -31,13 +31,19 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.3
+          }
+        },
+        {
           "type": "race",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Mid4 - Mid 5"
+                  "pathName": "Mid2 - Mid1"
                 }
               },
               {
@@ -56,57 +62,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Mid5 - SourceShoot"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "spinUpReal"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "completeShot"
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "SourceShot - Mid4D"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "intakeIn"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "findAndPickUpNote"
-          }
-        },
-        {
-          "type": "deadline",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Mid4D - SourceShot"
+                  "pathName": "Mid1 - AmpShoot"
                 }
               },
               {
@@ -131,7 +87,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "SourceShot - SourcePD"
+                  "pathName": "AmpShoot - Mid 2 Drop"
                 }
               },
               {
@@ -156,7 +112,82 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "SourcePD - SourceShot"
+                  "pathName": "Mid 2 Drop - Ampshoot"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "spinUpReal"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "completeShot"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "AmpShoot - C1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "intakeIn"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "completeShot"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "C1 - AMP Drop"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "intakeIn"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "findAndPickUpNote"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Amp Drop - C1"
                 }
               },
               {

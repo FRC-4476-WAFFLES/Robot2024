@@ -299,24 +299,24 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
      * @return The angle to the stash target in radians.
      */
     public Rotation2d getAngleToStash() {
-        Alliance alliance = DriverStation.getAlliance().get(); // Cache alliance
-        Pose2d poseOfStash = (alliance == Alliance.Red)
-            ? Constants.DriveConstants.redStash
-            : Constants.DriveConstants.blueStash;
-    
+        Pose2d poseOfStash;
+        
+
+        // Set goal pose based on alliance
+        if (DriverStation.getAlliance().get() == Alliance.Red) {
+            poseOfStash = Constants.DriveConstants.redStash;
+        } else {
+            poseOfStash = Constants.DriveConstants.blueStash;
+        }
+        
         poseOfStash = new Pose2d(poseOfStash.getX(), poseOfStash.getY() + randomYStashAdjustment, poseOfStash.getRotation());
-    
-        double deltaX = getRobotPose().getX() - poseOfStash.getX();
-        double deltaY = getRobotPose().getY() - poseOfStash.getY();
-        double angleToGoal = Math.atan2(deltaY, deltaX);
-    
-        if (alliance == Alliance.Red) {
+
+        double angleToGoal = Math
+                .atan((getRobotPose().getY() - poseOfStash.getY()) / (getRobotPose().getX() - poseOfStash.getX()));
+        if (DriverStation.getAlliance().get() == Alliance.Red) {
             angleToGoal += Math.PI;
         }
-    
-        angleToGoal = Rotation2d.fromRadians(angleToGoal).getRadians();
-    
-        SmartDashboard.putNumber("Angle to Goal Adjusted", angleToGoal);
+        SmartDashboard.putNumber("AngleToStash", angleToGoal);
         return new Rotation2d(angleToGoal);
     }
 
@@ -339,23 +339,28 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
      * @return The angle to the goal.
      */
     public Rotation2d getAngleToGoal() {
-        Pose2d poseOfGoal = getAllianceGoalPose();
-        double angleToGoal = Math.atan2(getRobotPose().getY() - poseOfGoal.getY(),
-                                       getRobotPose().getX() - poseOfGoal.getX());
+        Pose2d poseOfGoal;
 
+        // Set goal pose based on alliance
+        if (DriverStation.getAlliance().get() == Alliance.Red) {
+            poseOfGoal = Constants.DriveConstants.redGoalPoseCenter;
+        }
+        else {
+            poseOfGoal = Constants.DriveConstants.blueGoalPoseCenter;
+        }
+
+        double angleToGoal = Math
+                .atan((getRobotPose().getY() - poseOfGoal.getY()) / (getRobotPose().getX() - poseOfGoal.getX()));
         if (DriverStation.getAlliance().get() == Alliance.Red) {
             angleToGoal += Math.PI;
         }
 
+        // return poseOfGoal.minus(getRobotPose()).getTranslation().getAngle();
         SmartDashboard.putNumber("Angle to Goal", angleToGoal);
         SmartDashboard.putNumber("Robot Rotation", getRobotPose().getRotation().getRadians());
         return angleToGoalOffsetCalculation(angleToGoal);
-    }
-
-    private Pose2d getAllianceGoalPose() {
-        return (DriverStation.getAlliance().get() == Alliance.Red)
-            ? Constants.DriveConstants.redGoalPoseCenter
-            : Constants.DriveConstants.blueGoalPoseCenter;
+        //return new Rotation2d(angleToGoal);
+        // return new Rotation2d(Math.PI);
     }
 
     /**
@@ -363,9 +368,21 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
      * @return The distance to the goal in meters.
      */
     public double getDistanceToGoal() {
-        Pose2d poseOfGoal = getAllianceGoalPose();
+        Pose2d poseOfGoal;
+
+        // Set goal pose based on alliance
+        if (DriverStation.getAlliance().get() == Alliance.Red) {
+            poseOfGoal = Constants.DriveConstants.redGoalPoseCenter;
+        } 
+        else{
+            poseOfGoal = Constants.DriveConstants.blueGoalPoseCenter;
+        }
+
         double distance = poseOfGoal.minus(getRobotPose()).getTranslation().getNorm();
+
         SmartDashboard.putNumber("DistanceToGoal", distance);
+        //distance = filter.calculate(distance);
+
         return distance;
     }
 
