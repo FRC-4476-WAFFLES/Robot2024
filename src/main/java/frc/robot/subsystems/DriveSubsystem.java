@@ -397,7 +397,7 @@ public class DriveSubsystem extends SwerveDrivetrain implements Subsystem {
         angleToGoalOffsetMap.put(2.6, -0.58);
         angleToGoalOffsetMap.put(Math.PI,0.0);
         angleToGoalOffsetMap.put(3.2,0.05);
-        angleToGoalOffsetMap.put(3.6,0.45);
+        angleToGoalOffsetMap.put(3.6,0.47);
         angleToGoalOffsetMap.put(4.0, 0.9);
         
         if (DriverStation.getAlliance().get() == Alliance.Blue) {

@@ -52,11 +52,11 @@ public class AllignWithNote extends Command {
   public void execute() {
     boolean hasTarget = LimelightHelpers.getTV(LIMELIGHT_KEY);
     SmartDashboard.putNumber("TA", LimelightHelpers.getTA(LIMELIGHT_KEY));
-    if (!shooterSubsystem.isNote() && hasTarget  && LimelightHelpers.getTA(LIMELIGHT_KEY)>1) {  
+    if (!shooterSubsystem.isNote() && hasTarget  && LimelightHelpers.getTA(LIMELIGHT_KEY)>0.75) {  
       if (yVelocitySupplier == null) {
           // if we don't supply a y velocity, move forward at a set speed and align with the note
           if (hasTarget) {
-              request = createSwerveRequest(1.0, -0.05 * LimelightHelpers.getTX(LIMELIGHT_KEY));
+              request = createSwerveRequest(2.0, -0.05 * LimelightHelpers.getTX(LIMELIGHT_KEY));
           } else {
               request = createSwerveRequest(0, 0);
           }
