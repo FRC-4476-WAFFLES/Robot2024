@@ -23,7 +23,7 @@ import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import frc.robot.Constants;
 
 public class ElevatorSubsystem extends SubsystemBase {
-    private final TalonFX Elevator1;
+    public final TalonFX Elevator1;
     private final TalonFX Elevator2;
 
     public boolean isClimbing = false;
@@ -137,6 +137,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     SmartDashboard.putBoolean("Elevator/At Target", isGoodElevatorPosition());
     SmartDashboard.putString("Elevator/Current Mode", currentShooterMode.toString());
     SmartDashboard.putBoolean("Elevator/Coast Mode", getCoastSwitch());
+    SmartDashboard.putNumber("Elevator Current",Elevator1.getStatorCurrent().getValueAsDouble());
   }
 
   /**

@@ -105,6 +105,7 @@ public class RobotContainer {
   private final EnableTargetGoal enableTargetGoal = new EnableTargetGoal();
   private final DisableTargetGoal disableTargetGoal = new DisableTargetGoal();
   private final FireNoteForced fireNoteForced = new FireNoteForced();
+  private final ElevatorZero elevatorZero = new ElevatorZero();
 
 
   
@@ -186,6 +187,7 @@ public class RobotContainer {
     operatorController.y().whileTrue(superstructureBlock);
     operatorController.a().whileTrue(superstructureClimb);
     operatorController.rightStick().whileTrue(elevatorHigh);
+    operatorController.povDown().whileTrue(elevatorZero);
     rightJoystick.button(1).whileTrue(driveAndAimAtGoal.alongWith(spinUp));
     rightJoystick.button(2).whileTrue(driveAndAimAtStash.alongWith(spinUpStash)); 
     
